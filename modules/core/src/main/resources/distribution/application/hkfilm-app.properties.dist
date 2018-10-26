@@ -1,0 +1,13 @@
+app.theme=hkfilm
+app.max.items.per.page=15
+app.min.password.length=5
+app.license.public=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtOt1o3Sj84M66TjMSxKF/fK+iVgNX+Ki+qGjHnFufRVOEkuDmUO9esSxLVcvZ1Rke2TcMMuL95cuOtWCaR+DbsRHOgDkhb5+DBsw0xk/3iX6YQcZcqakQQmjO36VSy/+4WBWacYywCcxGUhbVPyZMIcUHmmSkeke7Dgq5gHooP37JQLSVpfyfU1zCMby11pRjVmP9Xxy5hy33AvpRQehCav3NyCcgcyO0t15vpOE1ID6CM196sbeAZazJKy3aFdBrncDuxWFipE13KUwlvkJdTMOrROEepTSF5iG/XhXgOaf6D3H7kr9duhQqjOebU0kyGKHE/4R6J6Y3fntZCCqmQIDAQAB
+app.program.duedate.separator=;
+
+#---------------------------------------------------
+# SEARCH LIKE OPERATOR
+#		- PREFIX: abc%
+#		- SUFFIX: %abc
+#		- CONTAIN: %abc%
+#---------------------------------------------------
+app.search.like.operator=PREFIX

@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<barcode>
+	<code128>
+		<human-readable>
+			<placement>bottom</placement>
+		</human-readable>
+	</code128>
+</barcode>
+<!-- Interleaved 2 of 5 -->
+<!-- <barcode>
+	<intl2of5>
+		<height>{length:15mm}</height>
+		<module-width>{length:0.21mm}</module-width>
+		<wide-factor>{number:3.0}</wide-factor>
+		<quiet-zone enabled="{boolean:true}">{length:10mw}</quiet-zone>
+		<checksum>{checksum-mode:auto=ignore}</checksum>
+		<human-readable>
+			<placement>{human-readable-placement:bottom}</placement>
+			<font-name>{font-name:Helvetica}</font-name>
+			<font-size>{length:8pt}</font-size>
+			<display-checksum>{boolean:false}</display-checksum>
+		</human-readable>
+	</intl2of5>
+</barcode> -->
+<!-- ITF-14 -->
+<!-- <barcode>
+	<itf-14>
+		<height>{length:32mm}</height>
+		<module-width>{length:1.106mm}</module-width>
+		<wide-factor>{number:2.5}</wide-factor>
+		<quiet-zone enabled="{boolean:true}">{length:10mw}</quiet-zone>
+		<checksum>{checksum-mode:auto}</checksum>
+		<bearer-bar-width>{length:4.8mm}</bearer-bar-width>
+		<bearer-box>{boolean:true}</bearer-box>
+		<human-readable>
+			<placement>{human-readable-placement:bottom}</placement>
+			<font-name>{font-name:Helvetica}</font-name>
+			<font-size>{length:8pt}</font-size>
+			<display-checksum>{boolean:true}</display-checksum>
+		</human-readable>
+	</itf-14>
+</barcode> -->
+<!-- Codabar -->
+<!-- <barcode>
+	<codabar>
+		<height>{length:15mm}</height>
+		<module-width>{length:0.21mm}</module-width>
+		<wide-factor>{number:3.0}</wide-factor>
+		<quiet-zone enabled="{boolean:true}">{length:10mw}</quiet-zone>
+		<human-readable>
+			<placement>{human-readable-placement:bottom}</placement>
+			<font-name>{font-name:Helvetica}</font-name>
+			<font-size>{length:8pt}</font-size>
+			<display-start-stop>{boolean:false}</display-start-stop>
+		</human-readable>
+	</codabar>
+</barcode> -->
+<!-- Code 39 -->
+<!-- <barcode>
+	<code39>
+		<height>{length:15mm}</height>
+		<module-width>{length:0.19mm}</module-width>
+		<wide-factor>{number:2.5}</wide-factor>
+		<interchar-gap-width>{length:1mw}</interchar-gap-width>
+		<quiet-zone enabled="{boolean:true}">{length:10mw}</quiet-zone>
+		<checksum>{checksum-mode:auto=ignore}</checksum>
+		<extended-charset>{boolean:false}</extended-charset>
+		<human-readable>
+			<placement>{human-readable-placement:bottom}</placement>
+			<font-name>{font-name:Helvetica}</font-name>
+			<font-size>{length:8pt}</font-size>
+			<display-start-stop>{boolean:false}</display-start-stop>
+			<display-checksum>{boolean:false}</display-checksum>
+		</human-readable>
+	</code39>
+</barcode> -->
+<!-- Code 128 -->
+<!-- <barcode>
+	<code128>
+		<height>{length:15mm}</height>
+		<module-width>{length:0.21mm}</module-width>
+		<codesets>{string:ABC}</codesets>
+		<quiet-zone enabled="{boolean:true}">{length:10mw}</quiet-zone>
+		<human-readable>
+			<placement>{human-readable-placement:bottom}</placement>
+			<font-name>{font-name:Helvetica}</font-name>
+			<font-size>{length:8pt}</font-size>
+		</human-readable>
+	</code128>
+</barcode> -->
+<!-- UPC-A -->
+<!-- <barcode>
+	<upc-a>
+		<height>{length:15mm}</height>
+		<module-width>{length:0.33mm}</module-width>
+		<quiet-zone enabled="{boolean:true}">{length:10mw}</quiet-zone>
+		<checksum>{checksum-mode:auto=add|check}</checksum>
+		<human-readable>
+			<placement>{human-readable-placement:bottom}</placement>
+			<font-name>{font-name:Helvetica}</font-name>
+			<font-size>{length:8pt}</font-size>
+		</human-readable>
+	</upc-a>
+</barcode> -->
+<!-- UPC-E -->
+<!-- <barcode>
+	<upc-e>
+		<height>{length:15mm}</height>
+		<module-width>{length:0.33mm}</module-width>
+		<quiet-zone enabled="{boolean:true}">{length:10mw}</quiet-zone>
+		<checksum>{checksum-mode:auto=add|check}</checksum>
+		<human-readable>
+			<placement>{human-readable-placement:bottom}</placement>
+			<font-name>{font-name:Helvetica}</font-name>
+			<font-size>{length:8pt}</font-size>
+		</human-readable>
+	</upc-e>
+</barcode> -->
+<!-- EAN-13 -->
+<!-- <barcode>
+	<ean-13>
+		<height>{length:15mm}</height>
+		<module-width>{length:0.33mm}</module-width>
+		<quiet-zone enabled="{boolean:true}">{length:10mw}</quiet-zone>
+		<checksum>{checksum-mode:auto=add|check}</checksum>
+		<human-readable>
+			<placement>{human-readable-placement:bottom}</placement>
+			<font-name>{font-name:Helvetica}</font-name>
+			<font-size>{length:8pt}</font-size>
+		</human-readable>
+	</ean-13>
+</barcode> -->
+<!-- EAN-8 -->
+<!-- <barcode>
+	<ean-8>
+		<height>{length:15mm}</height>
+		<module-width>{length:0.33mm}</module-width>
+		<quiet-zone enabled="{boolean:true}">{length:10mw}</quiet-zone>
+		<checksum>{checksum-mode:auto=add|check}</checksum>
+		<human-readable>
+			<placement>{human-readable-placement:bottom}</placement>
+			<font-name>{font-name:Helvetica}</font-name>
+			<font-size>{length:8pt}</font-size>
+		</human-readable>
+	</ean-8>
+</barcode> -->
+<!-- EAN-128 -->
+<!-- <barcode>
+	<ean-128>
+		<height>{length:15mm}</height>
+		<module-width>{length:0.21mm}</module-width>
+		<check-digit-marker>{char:&#x00f0}</check-digit-marker>
+		<group-separator>{char:&#x00f1}</group-separator>
+		<template>{string}</template>
+		<quiet-zone enabled="{boolean:true}">{length:10mw}</quiet-zone>
+		<human-readable>
+			<placement>{human-readable-placement:bottom}</placement>
+			<font-name>{font-name:Helvetica}</font-name>
+			<font-size>{length:8pt}</font-size>
+			<omit-brackets>{boolean:false}</omit-brackets>
+		</human-readable>
+	</ean-128>
+</barcode> -->
+<!-- POSTNET -->
+<!-- <barcode>
+	<postnet>
+		<height>{length:15mm}</height>
+		<module-width>{length:0.02in}</module-width>
+		<quiet-zone enabled="{boolean:true}">{length:10mw}</quiet-zone>
+		<checksum>{checksum-mode:auto=ignore}</checksum>
+		<interchar-gap-width>{length:0.026in}</interchar-gap-width>
+		<tall-bar-height>{length:0.125in}</tall-bar-height>
+		<short-bar-height>{length:0.050in}</short-bar-height>
+		<baseline-alignment>{baseline-alignment:bottom}</baseline-alignment>
+		<human-readable>
+			<placement>{human-readable-placement:none}</placement>
+			<font-name>{font-name:Helvetica}</font-name>
+			<font-size>{length:8pt}</font-size>
+			<display-checksum>{boolean:false}</display-checksum>
+		</human-readable>
+	</postnet>
+</barcode> -->
+<!-- Royal Mail Customer Barcode -->
+<!-- <barcode>
+	<royal-mail-cbc>
+		<module-width>{length:0.53mm}</module-width>
+		<track-height>{length:1.25mm}</track-height>
+		<ascender-height>{length:1.25mm}</ascender-height>
+		<interchar-gap-width>{length:1mw}</interchar-gap-width>
+		<quiet-zone enabled="{boolean:true}">{length:10mw}</quiet-zone>
+		<checksum>{checksum-mode:auto=add}</checksum>
+	</royal-mail-cbc>
+</barcode> -->
+<!-- USPS Intelligent Mail (4-State Customer Barcode) -->
+<!-- <barcode>
+	<usps4cb>
+		<module-width>{length:0.020in}</module-width>
+		<track-height>{length:0.050in}</track-height>
+		<ascender-height>{length:0.050in}</ascender-height>
+		<interchar-gap-width>{length:0.025in}</interchar-gap-width>
+		<quiet-zone enabled="{boolean:true}">{length:0.125in}</quiet-zone>
+		<vertical-quiet-zone>{length:0.028in}</vertical-quiet-zone>
+		<human-readable>
+			<placement>{human-readable-placement:none}</placement>
+			<font-name>{font-name:Helvetica}</font-name>
+			<font-size>{length:8pt}</font-size>
+		</human-readable>
+	</usps4cb>
+</barcode> -->
+<!-- PDF417 -->
+<!-- <barcode>
+	<pdf417>
+		<module-width>{length:0.352777mm}</module-width> 1 pixel at 72dpi
+		<row-height>{length:3mw}</row-height>
+		<columns>{number:2}</columns>
+		<min-columns>{number:2}</min-columns>
+		<max-columns>{number:2}</max-columns>
+		<min-rows>{number:3}</min-rows>
+		<max-rows>{number:90}</max-rows>
+		<ec-level>{number:0}</ec-level>
+		<quiet-zone enabled="{boolean:true}">{length:2mw}</quiet-zone>
+		<vertical-quiet-zone>{length:default is same as quiet-zone}
+		</vertical-quiet-zone>
+		<width-to-height-ratio>{number:3.0}</width-to-height-ratio>
+	</pdf417>
+</barcode> -->
+<!-- DataMatrix -->
+<!-- <barcode>
+	<datamatrix>
+		<module-width>{length:0.352777mm}</module-width> 1 pixel at 72dpi
+		<quiet-zone enabled="{boolean:true}">{length:1mw}</quiet-zone>
+		<shape>{shape:force-none}</shape>
+		<min-symbol-size>{dimension}</min-symbol-size>
+		<max-symbol-size>{dimension}</max-symbol-size>
+	</datamatrix>
+</barcode> -->

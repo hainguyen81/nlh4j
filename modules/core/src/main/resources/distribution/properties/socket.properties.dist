@@ -1,0 +1,13 @@
+#####################################
+# Web Socket configuration
+#####################################
+socket.enabled = false
+socket.broker = /topic,/queue,/online,/notification
+socket.handlerClass = org.nlh4j.core.socket.TextWebSocketHandler
+socket.handshakeInterceptorClass = org.nlh4j.core.socket.SessionHandshakeInterceptor
+socket.handshakeHandlerClass = org.springframework.web.socket.server.support.DefaultHandshakeHandler
+socket.strategyClass = org.springframework.web.socket.server.standard.TomcatRequestUpgradeStrategy
+socket.messageCodecClass = org.springframework.web.socket.sockjs.frame.Jackson2SockJsMessageCodec
+socket.pollingHandlerClass = org.springframework.web.socket.sockjs.transport.handler.XhrPollingTransportHandler
+socket.streamingHandlerClass = org.springframework.web.socket.sockjs.transport.handler.XhrStreamingTransportHandler
+socket.receivingHandlerClass = org.springframework.web.socket.sockjs.transport.handler.XhrReceivingTransportHandler

@@ -1,0 +1,270 @@
+/*************************************************
+ * Starting from the Gradle guide for Android results in the following initial build.gradle file:
+ *
+ * buildscript {
+ *     repositories {
+ *         mavenCentral()
+ *     }
+ *     dependencies {
+ *         classpath 'com.android.tools.build:gradle:0.5.+'
+ *     }
+ * }
+ * apply plugin: 'android'
+ *
+ * android {
+ *     compileSdkVersion 18
+ *     buildToolsVersion "18.1.0"
+ *
+ *     defaultConfig {
+ *         minSdkVersion 16
+ *         targetSdkVersion 16
+ *     }
+ * }
+ *************************************************/
+buildscript {
+    repositories {
+        /** using maven local repository */
+	    mavenLocal()
+	    /** using maven central repository */
+	    mavenCentral()
+	    /** java repository */
+	    jcenter()
+		maven { url "http://maven.seasar.org/maven2" }
+		maven { url "https://repository.jboss.org/nexus/content/groups/developer/" }
+		maven { url "http://maven.nuiton.org/nexus/content/repositories" }
+		maven { url "http://projectlombok.org/mavenrepo" }
+		maven { url "https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient" }
+		maven { url "http://repo.maven.apache.org/maven2" }
+    }
+    dependencies {
+    	classpath 'net.sf.proguard:proguard-base:5.3'
+        classpath 'net.sf.proguard:proguard-gradle:5.3'
+    }
+}
+
+/*************************************************
+ * Gradle Plugins Configuration
+ *************************************************/
+apply plugin: 'java'
+
+/** maven */
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+// JAR signing
+apply plugin: 'signing'
+
+/*************************************************
+ * Maven Configuration
+ *************************************************/
+group = groupId
+version = version
+description = description
+
+// maven plugin
+configurations {
+    deployerJars
+}
+uploadArchives {
+    repositories {
+        mavenDeployer {
+        	configuration = configurations.deployerJars
+        	/** using maven local repository */
+        	repository(url: mavenLocal().url)
+        }
+    }
+}
+
+// maven-publish plugin
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+            ext.repo = 'local'
+        }
+    }
+    repositories {
+        maven {
+        	name 'local'
+            /** using maven local repository */
+        	url mavenLocal().url
+        }
+    }
+}
+
+/*************************************************
+ * Java Configuration
+ *************************************************/
+sourceCompatibility = jdk
+targetCompatibility = jdk
+tasks.withType(JavaCompile) {
+	options.fork = true
+	options.incremental = true
+	options.encoding = 'UTF-8'
+
+	sourceSets {
+	    main {
+	        java {
+	            srcDirs 'src/main/java'
+	        }
+	        resources {
+	            srcDirs 'src/main/resources'
+	            include '*.*'
+	      		exclude '*.java'
+	      		exclude '*.class'
+	        }
+	    }
+	}
+}
+
+/*************************************************
+ * Proguard Configuration
+ *************************************************/
+task proguard(type: proguard.gradle.ProGuardTask) {
+	configuration 'proguard.cnf'
+
+	injars { 'build/libs/' + artifactId + '-' + version + '.jar' }
+	outjars { 'build/libs/' + artifactId + '-' + version + '-obf.jar' }
+
+	libraryjars "${System.getProperty('java.home')}/lib/rt.jar"
+	libraryjars "${System.getProperty('java.home')}/lib/jce.jar"
+	libraryjars "${System.getProperty('java.home')}/lib/ext/sunjce_provider.jar"
+}
+task obfuscate(dependsOn: tasks.withType(proguard.gradle.ProGuardTask)) << {}
+install.dependsOn(obfuscate)
+assemble.dependsOn(obfuscate)
+
+/*************************************************
+ * JAR Signing Configuration
+ *************************************************/
+signing {
+    sign configurations.archives
+}
+
+/*************************************************
+ * More Repository Configuration
+ *************************************************/
+repositories {
+	/** using maven local repository */
+    mavenLocal()
+    /** using maven central repository */
+    mavenCentral()
+    /** java repository */
+    jcenter()
+	maven { url "http://maven.seasar.org/maven2" }
+	maven { url "https://repository.jboss.org/nexus/content/groups/developer/" }
+	maven { url "http://maven.nuiton.org/nexus/content/repositories" }
+	maven { url "http://projectlombok.org/mavenrepo" }
+	maven { url "https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient" }
+	maven { url "http://repo.maven.apache.org/maven2" }
+	/* See https://mvnrepository.com/artifact/com.googlecode/openbeans */
+	maven { url "https://maven.repository.redhat.com/ga" }
+}
+
+/*************************************************
+ * Dependencies Configuration
+ *************************************************/
+dependencies {
+	/* Servlet */
+	compileOnly(group: 'javax.servlet', name: 'javax.servlet-api', version:'3.1.0') {
+		/* This dependency was originally in the Maven provided scope, but the project was not of type war.
+		This behavior is not yet supported by Gradle, so this dependency has been converted to a compile dependency.
+		Please review and delete this closure when resolved. */
+	}
+	compileOnly(group: 'javax', name: 'javaee-web-api', version:'7.0') {
+		/* This dependency was originally in the Maven provided scope, but the project was not of type war.
+		This behavior is not yet supported by Gradle, so this dependency has been converted to a compile dependency.
+		Please review and delete this closure when resolved. */
+	}
+
+	/* Spring framework */
+	compile group: 'org.springframework', name: 'spring-aop', version:'5.0.0.M5'
+	compile group: 'org.springframework', name: 'spring-beans', version:'5.0.0.M5'
+	compile group: 'org.springframework', name: 'spring-core', version:'5.0.0.M5'
+	compile(group: 'org.springframework', name: 'spring-context', version:'5.0.0.M5') {
+		/* This dependency was originally in the Maven provided scope, but the project was not of type war.
+		This behavior is not yet supported by Gradle, so this dependency has been converted to a compile dependency.
+		Please review and delete this closure when resolved. */
+		/* No need logging */
+		exclude group: 'commons-logging', module: 'commons-logging'
+	}
+	compile group: 'org.springframework', name: 'spring-context-support', version:'5.0.0.M5'
+	compile group: 'org.springframework', name: 'spring-orm', version:'5.0.0.M5'
+	compile group: 'org.springframework', name: 'spring-expression', version:'5.0.0.M5'
+
+	/* Spring MVC */
+	compile group: 'org.springframework', name: 'spring-webmvc', version:'5.0.0.M5'
+	compile group: 'org.springframework', name: 'spring-web', version:'5.0.0.M5'
+
+	/* JodaTime */
+	compile group: 'joda-time', name: 'joda-time', version:'2.7'
+
+	/* Jersey client */
+	compile group: 'com.sun.jersey', name: 'jersey-json', version:'1.17.1'
+	compile group: 'com.sun.jersey', name: 'jersey-client', version:'1.17.1'
+	compile group: 'com.sun.jersey.contribs', name: 'jersey-multipart', version:'1.17.1'
+
+	/* Jackson: Java to Json conversion */
+	compile group: 'org.codehaus.jackson', name: 'jackson-core-asl', version:'1.9.13'
+	compile group: 'org.codehaus.jackson', name: 'jackson-jaxrs', version:'1.9.13'
+	compile group: 'org.codehaus.jackson', name: 'jackson-mapper-asl', version:'1.9.13'
+	compile group: 'org.codehaus.jackson', name: 'jackson-xc', version:'1.9.13'
+
+	/* Jackson: Java to Xml conversion */
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version:'2.8.3'
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version:'2.8.3'
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version:'2.8.3'
+	compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-jaxb-annotations', version:'2.8.3'
+	compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version:'2.8.3'
+	// Required by jackson-dataformat-xml
+	compile group: 'com.fasterxml.woodstox', name: 'woodstox-core', version:'5.0.3'
+	// Required by jackson-dataformat-xml
+	compile group: 'org.codehaus.woodstox', name: 'stax2-api', version:'4.0.0'
+
+	/* Apache Commons */
+	compile group: 'org.apache.commons', name: 'commons-lang3', version:'3.3.2'
+	compile group: 'org.apache.commons', name: 'commons-io', version:'1.3.2'
+	compile group: 'commons-beanutils', name: 'commons-beanutils', version:'1.9.2'
+	compile group: 'commons-configuration', name: 'commons-configuration', version:'1.10'
+
+	/* Apache POI */
+	compile group: 'org.apache.poi', name: 'poi', version:'3.12'
+	compile group: 'org.apache.poi', name: 'poi-ooxml', version:'3.12'
+
+	/* Apache HTTP Components */
+	compile group: 'org.apache.httpcomponents', name: 'httpcore', version:'4.4.5'
+	compile group: 'org.apache.httpcomponents', name: 'httpclient', version:'4.5.2'
+
+	/* HTML */
+	compile group: 'net.sourceforge.htmlcleaner', name: 'htmlcleaner', version:'2.16'
+	compile group: 'org.jsoup', name: 'jsoup', version:'1.9.1'
+
+	/* Browser Utils */
+	compile group: 'eu.bitwalker', name: 'UserAgentUtils', version:'1.19'
+
+	/* Beans
+	Use openbeans (not using java.beans) for all Java and Android */
+	compile group: 'com.googlecode', name: 'openbeans', version:'1.0'
+
+	/* Lombok */
+	compileOnly(group: 'org.projectlombok', name: 'lombok', version:'1.14.4') {
+		/* This dependency was originally in the Maven provided scope, but the project was not of type war.
+		This behavior is not yet supported by Gradle, so this dependency has been converted to a compile dependency.
+		Please review and delete this closure when resolved. */
+	}
+
+	/* JUNIT Test */
+	testCompile(group: 'junit', name: 'junit', version:'4.11') {
+		/* This dependency was originally in the Maven provided scope, but the project was not of type war.
+		This behavior is not yet supported by Gradle, so this dependency has been converted to a compile dependency.
+		Please review and delete this closure when resolved. */
+		exclude(module: 'hamcrest-core')
+	}
+
+	/* Others - support for JUNIT Test */
+	testCompile(group: 'org.hamcrest', name: 'hamcrest-all', version:'1.3') {
+		/* This dependency was originally in the Maven provided scope, but the project was not of type war.
+		This behavior is not yet supported by Gradle, so this dependency has been converted to a compile dependency.
+		Please review and delete this closure when resolved. */
+	}
+}

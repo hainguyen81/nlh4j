@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-fragment
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+						http://java.sun.com/xml/ns/javaee/web-fragment_3_0.xsd"
+	id="nlh4jWebAppBaseID"
+	version="3.0">
+
+    <name>nlh4jWebBase</name>
+    <distributable />
+
+	<ordering>
+	    <after>
+	        <name>nlh4jWebTemplate</name>
+	    </after>
+		<before>
+			<others />
+		</before>
+	</ordering>
+
+	<!-- profile configuration: default (or simple or null),quartz,mail,template,socket,full -->
+	<context-param>
+		<param-name>spring.profiles.default</param-name>
+		<param-value>default</param-value>
+	</context-param>
+	<context-param>
+		<param-name>spring.profiles.active</param-name>
+		<param-value>default</param-value>
+	</context-param>
+
+	<!-- servlet context configuration -->
+    <context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath*:spring/root-context.xml</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>org.nlh4j.core.servlet.ServletContextListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+	</listener>
+	<servlet>
+		<servlet-name>nh4j-web-base</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath*:spring/servlet/mvc-dispatcher-servlet.xml</param-value>
+		</init-param>
+		<init-param>
+			<param-name>dispatchOptionsRequest</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+		<async-supported>true</async-supported>
+		<!--
+		Required to avoid error:
+			+ Unable to process parts as no multi-part configuration has been provided
+			+ And no need config tomcat context.xml with allowCasualMultipartParsing="true"
+			+ The lastest xml node
+		-->
+		<multipart-config />
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>nlh4j-web-base</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<async-supported>true</async-supported>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter>
+		<filter-name>CompressingFilter</filter-name>
+		<filter-class>com.github.ziplet.filter.compression.CompressingFilter</filter-class>
+		<async-supported>true</async-supported>
+		<init-param>
+			<param-name>excludePathPatterns</param-name>
+			<param-value>/topic,/queue,/online,/notification,/socket/.*,/ws/.*</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>CompressingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!-- Add a MultipartFilter to web.xml as described by @holmis83 in the answer above,
+	ensuring that it is added before the Spring Security configuration -->
+	<filter>
+		<filter-name>multipartFilter</filter-name>
+		<filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class>
+		<async-supported>true</async-supported>
+	</filter>
+	<filter-mapping>
+		<filter-name>multipartFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		<async-supported>true</async-supported>
+	</filter>
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+</web-fragment>

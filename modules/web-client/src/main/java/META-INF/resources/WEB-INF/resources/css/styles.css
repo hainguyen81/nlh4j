@@ -1,0 +1,1042 @@
+@font-face {
+	font-family: 'codropsicons';
+	src: url('../fonts/codropsicons/codropsicons.eot');
+	src: url('../fonts/codropsicons/codropsicons.eot?#iefix')
+		format('embedded-opentype'),
+		url('../fonts/codropsicons/codropsicons.woff') format('woff'),
+		url('../fonts/codropsicons/codropsicons.ttf') format('truetype'),
+		url('../fonts/codropsicons/codropsicons.svg#codropsicons')
+		format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+*, *:after, *:before {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+body, html {
+	font-size: 100%;
+	margin: 0;
+	height: 100%;
+	background: #3f82ab;
+	/*padding-top: 30px;*/
+	/*padding-bottom: 60px;*/
+	color: #ffffff;
+	/* background: url("../image/bkgimg/sansho_bg_temp.png") repeat center; */
+	background-size: 100% 100%;
+	-webkit-background-size: cover;
+  	-moz-background-size: cover;
+ 	-o-background-size: cover;
+	font-size: 13px;
+	/* font-family: 'Open Sans', sans-serif; */
+	/* overflow: hidden; */
+	font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;
+
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+
+.container.page-content {
+	/* max-height: 90%; */
+	display: block;
+	overflow: hidden;
+	/*margin-bottom: 45px;*/
+	margin-top: 45px;
+	padding-top: 15px;
+	padding-bottom: 30px;
+	height: auto;
+	min-height: 70%;
+	position: initial;
+}
+.container.page-header {
+    padding-bottom: 0;
+    margin: 0;
+    border-bottom: none;
+}
+
+/* Clearfix hack by Nicolas Gallagher: http://nicolasgallagher.com/micro-clearfix-hack/ */
+.clearfix:before, .clearfix:after {
+	content: " ";
+	display: table;
+}
+
+.clearfix:after {
+	clear: both;
+}
+
+a {
+	color: #ccc;
+	text-decoration: none;
+}
+
+.no-touch a:hover, .no-touch a:active {
+	color: #333;
+}
+
+footer {
+	/* position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 45px;
+	background-color: #f9f9f9;
+	background-color: transparent;
+	border-top: 1px solid #e5e5e5; */
+}
+
+footer .text-muted {
+	padding-top: 0;
+}
+
+.form-control {
+	font-size: 12px;
+	height: 25px;
+	/* padding: 6px 12px; */
+	padding: 0px 12px 0px 6px
+}
+
+.form-horizontal .form-group {
+	margin-bottom: 5px;
+}
+.form-horizontal *[class*="col-"] {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.form-control-feedback {
+	height: 32px;
+	line-height: 32px;
+	cursor: pointer;
+	pointer-events: auto;
+}
+
+.has-feedback .form-control {
+	padding-right: 36px;
+}
+
+@media ( max-width : 768px) {
+	.no-padding-left {
+		padding-left: 15px;
+	}
+	.no-padding-right {
+		padding-right: 15px;
+	}
+}
+
+@media ( min-width : 768px) {
+	.no-padding-left {
+		padding-left: 0;
+	}
+	.no-padding-right {
+		padding-right: 0;
+	}
+}
+
+form .control-label:after {
+	color: transparent;
+	content: "\00a0*";
+	font-weight: 600;
+}
+
+.control-label.required-field:after,
+.control-label.required:after {
+	color: #d00;
+	content: " * ";
+}
+.form-horizontal .control-label,
+.control-label {
+	padding-top: 5px;
+}
+
+/* START ui-grid */
+.ui-grid-pager-max-pages-number {
+	vertical-align: top;
+	line-height: 26px;
+}
+/* END ui-grid */
+
+/* START avatar */
+.avatar-default {
+	background-image: url(../../resources/image/avatar.gif);
+}
+
+.avatar {
+	width: 150px;
+	height: 150px;
+	background-size: 150px 150px;
+	background-position: center;
+	background-repeat: no-repeat;
+	border-radius: 50%;
+	position: relative;
+	cursor: pointer;
+	box-shadow: inset 0 0 0 0 rgba(222, 222, 222, 0.4), inset 0 0 0 2px
+		rgba(255, 255, 255, 0.6), 0 1px 2px rgba(0, 0, 0, 0.1);
+	transition: all 0.4s ease-in-out;
+}
+
+.avatar:hover {
+	box-shadow: inset 0 0 0 110px rgba(222, 222, 222, 0.4), inset 0 0 0 1px
+		rgba(255, 255, 255, 0.8), 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.avatar-info {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	opacity: 0;
+	-webkit-transition: all 0.4s ease-in-out;
+	-moz-transition: all 0.4s ease-in-out;
+	-o-transition: all 0.4s ease-in-out;
+	-ms-transition: all 0.4s ease-in-out;
+	transition: all 0.4s ease-in-out;
+	-webkit-transform: scale(0);
+	-moz-transform: scale(0);
+	-o-transform: scale(0);
+	-ms-transform: scale(0);
+	transform: scale(0);
+	-webkit-backface-visibility: hidden;
+}
+
+.avatar-info p {
+	line-height: 125px;
+	margin: 0;
+	text-align: center;
+}
+
+.avatar-info p a {
+	display: block;
+	color: #e7251b;
+	color: rgba(231, 37, 27, 0.7);
+	font-style: normal;
+	font-weight: 700;
+	text-transform: uppercase;
+	font-size: 9px;
+	letter-spacing: 1px;
+	padding-top: 4px;
+}
+
+.avatar:hover .avatar-info {
+	opacity: 1;
+	transform: scale(1);
+}
+/* END avatar */
+.validate-waiting {
+	color: #ff6600;
+	position: absolute;
+    z-index: 10;
+    right: 15px;
+    top: 7px;
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+
+.blinking {
+	-webkit-animation: blink 2s infinite;
+	-moz-animation: blink 2s infinite;
+	animation: blink 2s infinite;
+}
+
+@
+-webkit-keyframes blink { 0%{
+	opacity: 0.2;
+}
+
+100%{
+opacity
+
+
+
+
+
+
+
+
+
+
+
+
+:
+
+
+
+
+
+
+
+
+
+
+
+
+1;
+}
+}
+@
+-moz-keyframes blink { 0%{
+	opacity: 0.2;
+}
+
+100%{
+opacity
+
+
+
+
+
+
+
+
+
+
+
+
+:
+
+
+
+
+
+
+
+
+
+
+
+
+1;
+}
+}
+@
+keyframes blink { 0%{
+	opacity: 0.2;
+}
+
+100%{
+opacity
+
+
+
+
+
+
+
+
+
+
+
+
+:
+
+
+
+
+
+
+
+
+
+
+
+
+1;
+}
+}
+.exexNotification {
+	margin: 0 0 6px;
+	padding: 15px 15px 15px 50px;
+	width: 300px;
+	-moz-border-radius: 3px 3px 3px 3px;
+	-webkit-border-radius: 3px 3px 3px 3px;
+	border-radius: 3px 3px 3px 3px;
+	background-position: 15px center;
+	background-repeat: no-repeat;
+	background-color: #030303;
+	-moz-box-shadow: 0 0 12px #999999;
+	-webkit-box-shadow: 0 0 12px #999999;
+	box-shadow: 0 0 12px #999999;
+	color: #ffffff;
+	opacity: 0.8;
+	-ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+	filter: alpha(opacity = 80);
+}
+
+.exexNotification:hover {
+	-moz-box-shadow: 0 0 12px #000000;
+	-webkit-box-shadow: 0 0 12px #000000;
+	box-shadow: 0 0 12px #000000;
+	opacity: 1;
+	-ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+	filter: alpha(opacity = 100);
+	cursor: pointer;
+}
+
+.info {
+	background-image:
+		url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGwSURBVEhLtZa9SgNBEMc9sUxxRcoUKSzSWIhXpFMhhYWFhaBg4yPYiWCXZxBLERsLRS3EQkEfwCKdjWJAwSKCgoKCcudv4O5YLrt7EzgXhiU3/4+b2ckmwVjJSpKkQ6wAi4gwhT+z3wRBcEz0yjSseUTrcRyfsHsXmD0AmbHOC9Ii8VImnuXBPglHpQ5wwSVM7sNnTG7Za4JwDdCjxyAiH3nyA2mtaTJufiDZ5dCaqlItILh1NHatfN5skvjx9Z38m69CgzuXmZgVrPIGE763Jx9qKsRozWYw6xOHdER+nn2KkO+Bb+UV5CBN6WC6QtBgbRVozrahAbmm6HtUsgtPC19tFdxXZYBOfkbmFJ1VaHA1VAHjd0pp70oTZzvR+EVrx2Ygfdsq6eu55BHYR8hlcki+n+kERUFG8BrA0BwjeAv2M8WLQBtcy+SD6fNsmnB3AlBLrgTtVW1c2QN4bVWLATaIS60J2Du5y1TiJgjSBvFVZgTmwCU+dAZFoPxGEEs8nyHC9Bwe2GvEJv2WXZb0vjdyFT4Cxk3e/kIqlOGoVLwwPevpYHT+00T+hWwXDf4AJAOUqWcDhbwAAAAASUVORK5CYII=")
+		!important;
+	background-color: #2f96b4;
+	background-repeat: no-repeat;
+	background-position: 0 5px;
+}
+
+.wait {
+	background-image:
+		url("data:image/gif;base64,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")
+		!important;
+	background-color: #2f96b4;
+	background-repeat: no-repeat;
+	background-position: 0 5px;
+}
+
+.error {
+	background-image:
+		url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHOSURBVEhLrZa/SgNBEMZzh0WKCClSCKaIYOED+AAKeQQLG8HWztLCImBrYadgIdY+gIKNYkBFSwu7CAoqCgkkoGBI/E28PdbLZmeDLgzZzcx83/zZ2SSXC1j9fr+I1Hq93g2yxH4iwM1vkoBWAdxCmpzTxfkN2RcyZNaHFIkSo10+8kgxkXIURV5HGxTmFuc75B2RfQkpxHG8aAgaAFa0tAHqYFfQ7Iwe2yhODk8+J4C7yAoRTWI3w/4klGRgR4lO7Rpn9+gvMyWp+uxFh8+H+ARlgN1nJuJuQAYvNkEnwGFck18Er4q3egEc/oO+mhLdKgRyhdNFiacC0rlOCbhNVz4H9FnAYgDBvU3QIioZlJFLJtsoHYRDfiZoUyIxqCtRpVlANq0EU4dApjrtgezPFad5S19Wgjkc0hNVnuF4HjVA6C7QrSIbylB+oZe3aHgBsqlNqKYH48jXyJKMuAbiyVJ8KzaB3eRc0pg9VwQ4niFryI68qiOi3AbjwdsfnAtk0bCjTLJKr6mrD9g8iq/S/B81hguOMlQTnVyG40wAcjnmgsCNESDrjme7wfftP4P7SP4N3CJZdvzoNyGq2c/HWOXJGsvVg+RA/k2MC/wN6I2YA2Pt8GkAAAAASUVORK5CYII=")
+		!important;
+	background-color: #bd362f;
+	background-repeat: no-repeat;
+	background-position: 0 5px;
+}
+
+.success {
+	background-image:
+		url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADsSURBVEhLY2AYBfQMgf///3P8+/evAIgvA/FsIF+BavYDDWMBGroaSMMBiE8VC7AZDrIFaMFnii3AZTjUgsUUWUDA8OdAH6iQbQEhw4HyGsPEcKBXBIC4ARhex4G4BsjmweU1soIFaGg/WtoFZRIZdEvIMhxkCCjXIVsATV6gFGACs4Rsw0EGgIIH3QJYJgHSARQZDrWAB+jawzgs+Q2UO49D7jnRSRGoEFRILcdmEMWGI0cm0JJ2QpYA1RDvcmzJEWhABhD/pqrL0S0CWuABKgnRki9lLseS7g2AlqwHWQSKH4oKLrILpRGhEQCw2LiRUIa4lwAAAABJRU5ErkJggg==")
+		!important;
+	background-color: #51a351;
+	background-repeat: no-repeat;
+	background-position: 0 5px;
+}
+
+.warning {
+	background-image:
+		url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGYSURBVEhL5ZSvTsNQFMbXZGICMYGYmJhAQIJAICYQPAACiSDB8AiICQQJT4CqQEwgJvYASAQCiZiYmJhAIBATCARJy+9rTsldd8sKu1M0+dLb057v6/lbq/2rK0mS/TRNj9cWNAKPYIJII7gIxCcQ51cvqID+GIEX8ASG4B1bK5gIZFeQfoJdEXOfgX4QAQg7kH2A65yQ87lyxb27sggkAzAuFhbbg1K2kgCkB1bVwyIR9m2L7PRPIhDUIXgGtyKw575yz3lTNs6X4JXnjV+LKM/m3MydnTbtOKIjtz6VhCBq4vSm3ncdrD2lk0VgUXSVKjVDJXJzijW1RQdsU7F77He8u68koNZTz8Oz5yGa6J3H3lZ0xYgXBK2QymlWWA+RWnYhskLBv2vmE+hBMCtbA7KX5drWyRT/2JsqZ2IvfB9Y4bWDNMFbJRFmC9E74SoS0CqulwjkC0+5bpcV1CZ8NMej4pjy0U+doDQsGyo1hzVJttIjhQ7GnBtRFN1UarUlH8F3xict+HY07rEzoUGPlWcjRFRr4/gChZgc3ZL2d8oAAAAASUVORK5CYII=")
+		!important;
+	background-color: #f89406;
+	background-repeat: no-repeat;
+	background-position: 0 5px;
+}
+
+.fa-language.flags {
+	background-color: transparent;
+	text-indent: 15px;
+}
+
+.fa-language.flags:before {
+	content: none;
+}
+
+.fa-language.flags.en_US, .fa-language.flags.en_US a:hover {
+	background-image: url('../image/flags/en_US.png');
+	background-position: 10px;
+	background-repeat: no-repeat;
+}
+
+.fa-language.flags.ja_JP, .fa-language.flags.ja_JP a:hover {
+	background-image: url('../image/flags/ja_JP.png');
+	background-position: 10px;
+	background-repeat: no-repeat;
+}
+
+.fa-language.flags.en_US_2, .fa-language.flags.en_US_2 a:hover {
+	background-image: url('../image/flags/en_US_2.png');
+	background-position: 10px;
+	background-repeat: no-repeat;
+}
+
+.fa-language.flags.ja_JP_2, .fa-language.flags.ja_JP_2 a:hover {
+	background-image: url('../image/flags/ja_JP_2.png');
+	background-position: 10px;
+	background-repeat: no-repeat;
+}
+
+.fa-language.flags.vi_VN, .fa-language.flags.vi_VN a:hover {
+	background-image: url('../image/flags/vi_VN.png');
+	background-position: 10px;
+	background-repeat: no-repeat;
+}
+
+.button-group {
+	margin-top: 15px;
+}
+
+.button-right-margin {
+	margin-right: 10px;
+}
+
+input[type="date"],
+input[type="time"],
+.input-group input[type="date"].form-control,
+.input-group input[type="time"].form-control {
+	text-align: center;
+}
+
+.input-group select.form-control,
+.input-group input[type="text"].form-control {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.input-group-addon {
+	padding: 3px 6px;
+}
+
+.form-inline .input-group .input-group-addon,
+.input-group .input-group-addon {
+	max-width: 35px;
+    min-width: 35px;
+	width: 35px;
+}
+
+/* END:		common css*/
+.box-shadow {
+	box-shadow: rgba(0, 0, 0, 0.472549) 3px 6px 12px;
+}
+.box-sm-shadow {
+	box-shadow: rgba(0, 0, 0, 0.472549) 0px 3px 6px;
+}
+
+.border-radius-4 {
+	border-radius: 4px;
+	border: 1px solid #c3c3c3;
+}
+
+select:focus,
+select.form-control:focus,
+input:focus,
+input[type="text"].form-control:focus,
+input[type="number"].form-control:focus {
+	border: 1px solid #66afe9;
+}
+
+.input-group .form-control:last-child,
+.input-group-addon:last-child {
+	border-bottom-right-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
+/*-----------------------------*/
+.container {
+	height: auto;
+	position: relative;
+	/*width: 100%;*/
+	display: block;
+}
+
+.container>header {
+	margin: 0 auto;
+	padding: 2em 1em 2em;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	text-align: center;
+	background: #fff;
+	z-index: 999999;
+	-webkit-backface-visibility: hidden;
+}
+
+.container>header h1 {
+	font-size: 2.625em;
+	line-height: 1.3;
+	margin: 0;
+	font-weight: 300;
+}
+
+.container>header span {
+	display: block;
+	font-size: 60%;
+	opacity: 0.6;
+	padding: 0 0 0.6em 0.1em;
+}
+
+.container>section p {
+	color: #fff;
+	text-align: center;
+	padding: 1em;
+	margin: 0;
+}
+
+/* To Navigation Style */
+.codrops-top {
+	background: #fff;
+	background: rgba(255, 255, 255, 0.6);
+	text-transform: uppercase;
+	width: 100%;
+	font-size: 0.69em;
+	line-height: 2.2;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 9999999;
+}
+
+.codrops-top a {
+	padding: 0 1em;
+	letter-spacing: 0.1em;
+	display: inline-block;
+}
+
+.codrops-top a:hover {
+	background: rgba(255, 255, 255, 0.95);
+	color: #777;
+}
+
+.codrops-top span.right {
+	float: right;
+}
+
+.codrops-top span.right a {
+	float: left;
+	display: block;
+}
+
+.codrops-icon:before {
+	font-family: 'codropsicons';
+	margin: 0 4px;
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+
+/* Demo Buttons Style */
+.codrops-demos {
+	padding-top: 1em;
+	font-size: 0.9em;
+}
+
+.touch .codrops-demos {
+	display: none;
+}
+
+.codrops-demos a {
+	display: inline-block;
+	margin: 0.5em;
+	padding: 0.6em 1em;
+	border: 3px solid #ddd;
+	font-weight: 700;
+}
+
+.codrops-demos a:hover {
+	opacity: 0.6;
+}
+
+.codrops-demos a.current-demo, .codrops-demos a.current-demo:hover {
+	border: 3px solid #aaa;
+	opacity: 1;
+	color: #aaa;
+}
+
+#set-8 {
+	margin-left: -15px;
+	margin-right: -15px;
+}
+
+@media screen and (max-width: 25em) {
+	.codrops-icon span {
+		display: none;
+	}
+}
+
+.unselectable {
+				user-select: none; /* CSS3 (little to no support) */
+			-ms-user-select: none; /* IE 10+ */
+		-moz-user-select: none; /* Gecko (Firefox) */
+	-webkit-user-select: none; /* Webkit (Safari, Chrome) */
+	 -khtml-user-select: none;
+	     -o-user-select: none;
+}
+
+.has-error {
+	font: normal normal normal 14px/1 FontAwesome;
+	color: #f04124;
+	display: block;
+	height: 30px;
+}
+.has-error .help-block {
+	float: left;
+	margin: 0;
+	margin-left: 5px;
+	line-height: 30px;
+	display: inline-block;
+	vertical-align: middle;
+}
+.has-error:before {
+	content: "\f071";
+	float: left;
+	line-height: 30px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.pageTop {
+	bottom: 30px;
+	margin: 0;
+	padding-bottom: 0 !important;
+	position: fixed;
+	right: 30px;
+	vertical-align: bottom;
+}
+
+form.ng-submitted .form-control.ng-invalid.ng-invalid-required,
+form.ng-submitted .form-control.ng-invalid.ng-invalid-unique-cd,
+form .form-control.ng-invalid.ng-invalid-required.ng-touched,
+form .form-control.ng-invalid.ng-invalid-unique-cd.ng-touched,
+form.ng-submitted input.ng-invalid.ng-invalid-required,
+form.ng-submitted input.ng-invalid.ng-invalid-unique-cd,
+form input.ng-invalid.ng-invalid-required.ng-touched,
+form input.ng-invalid.ng-invalid-unique-cd.ng-touched,
+form.ng-submitted select.ng-invalid.ng-invalid-required,
+form.ng-submitted select.ng-invalid.ng-invalid-unique-cd,
+form select.ng-invalid.ng-invalid-required.ng-touched,
+form select.ng-invalid.ng-invalid-unique-cd.ng-touched,
+form.ng-submitted .form-control.ng-invalid.ng-invalid-required,
+form.ng-submitted .form-control.ng-invalid.ng-invalid-unique-cd,
+form .form-control.ng-invalid.ng-invalid-required.ng-touched,
+form .form-control.ng-invalid.ng-invalid-unique-cd.ng-touched,
+form.ng-submitted .form-control.ng-invalid.ng-invalid-less-than,
+form.ng-submitted .form-control.ng-invalid.ng-invalid-greater-than,
+form .form-control.ng-invalid.ng-invalid-less-than.ng-touched,
+form .form-control.ng-invalid.ng-invalid-greater-than.ng-touched,
+form.ng-submitted [class*="ng-invalid ng-invalid-"],
+form [class*="ng-invalid ng-invalid-"][class$="ng-touched"],
+form.ng-submitted [class*="ng-invalid ng-invalid-"] .select2-choice,
+form [class*="ng-invalid ng-invalid-"][class$="ng-touched"] .select2-choice,
+form input[class*="ng-invalid ng-invalid-"][class$="ng-touched"],
+form.ng-submitted select[class*="ng-invalid ng-invalid-"],
+form select[class*="ng-invalid ng-invalid-"][class$="ng-touched"],
+form.ng-submitted [class*="ng-invalid ng-touched ng-invalid-"],
+form [class*="ng-invalid ng-touched ng-invalid-"],
+form input[class*="ng-invalid ng-touched ng-invalid-"],
+form.ng-submitted select[class*="ng-invalid ng-touched ng-invalid-"],
+form select[class*="ng-invalid ng-touched ng-invalid-"],
+form.ng-submitted [class*="ng-invalid ng-dirty ng-invalid-"],
+form [class*="ng-invalid ng-dirty ng-invalid-"][class$="ng-touched"],
+form input[class*="ng-invalid ng-dirty ng-invalid-"][class$="ng-touched"],
+form.ng-submitted select[class*="ng-invalid ng-dirty ng-invalid-"],
+form select[class*="ng-invalid ng-dirty ng-invalid-"][class$="ng-touched"],
+form.ng-submitted [class*="ng-dirty ng-touched ng-invalid ng-invalid-"],
+form [class*="ng-dirty ng-touched ng-invalid ng-invalid-"],
+form input[class*="ng-dirty ng-touched ng-invalid ng-invalid-"],
+form.ng-submitted select[class*="ng-dirty ng-touched ng-invalid ng-invalid-"],
+form select[class*="ng-dirty ng-touched ng-invalid ng-invalid-"],
+form.ng-submitted [class*="ng-touched ng-dirty ng-invalid ng-invalid-"],
+form [class*="ng-touched ng-dirty ng-invalid ng-invalid-"],
+form input[class*="ng-touched ng-dirty ng-invalid ng-invalid-"],
+form.ng-submitted select[class*="ng-touched ng-dirty ng-invalid ng-invalid-"],
+form select[class*="ng-touched ng-dirty ng-invalid ng-invalid-"],
+form.ng-submitted div[class^="ui-select-container"][class*="ng-touched ng-dirty ng-invalid ng-invalid-"] .select2-choice,
+form div[class^="ui-select-container"][class*="ng-touched ng-dirty ng-invalid ng-invalid-"] .select2-choice,
+/** any elemenet with ng-form attribute */
+[ng-form][class*="ng-submitted"] .form-control.ng-invalid.ng-invalid-required,
+[ng-form][class*="ng-submitted"] .form-control.ng-invalid.ng-invalid-unique-cd,
+[ng-form] .form-control.ng-invalid.ng-invalid-required.ng-touched,
+[ng-form] .form-control.ng-invalid.ng-invalid-unique-cd.ng-touched,
+[ng-form][class*="ng-submitted"] input.ng-invalid.ng-invalid-required,
+[ng-form][class*="ng-submitted"] input.ng-invalid.ng-invalid-unique-cd,
+[ng-form] input.ng-invalid.ng-invalid-required.ng-touched,
+[ng-form] input.ng-invalid.ng-invalid-unique-cd.ng-touched,
+[ng-form][class*="ng-submitted"] select.ng-invalid.ng-invalid-required,
+[ng-form][class*="ng-submitted"] select.ng-invalid.ng-invalid-unique-cd,
+[ng-form] select.ng-invalid.ng-invalid-required.ng-touched,
+[ng-form] select.ng-invalid.ng-invalid-unique-cd.ng-touched,
+[ng-form][class*="ng-submitted"] .form-control.ng-invalid.ng-invalid-required,
+[ng-form][class*="ng-submitted"] .form-control.ng-invalid.ng-invalid-unique-cd,
+[ng-form] .form-control.ng-invalid.ng-invalid-required.ng-touched,
+[ng-form] .form-control.ng-invalid.ng-invalid-unique-cd.ng-touched,
+[ng-form][class*="ng-submitted"] .form-control.ng-invalid.ng-invalid-less-than,
+[ng-form][class*="ng-submitted"] .form-control.ng-invalid.ng-invalid-greater-than,
+[ng-form] .form-control.ng-invalid.ng-invalid-less-than.ng-touched,
+[ng-form] .form-control.ng-invalid.ng-invalid-greater-than.ng-touched,
+[ng-form][class*="ng-submitted"] [class*="ng-invalid ng-invalid-"],
+[ng-form] [class*="ng-invalid ng-invalid-"][class$="ng-touched"],
+[ng-form][class*="ng-submitted"] [class*="ng-invalid ng-invalid-"] .select2-choice,
+[ng-form] [class*="ng-invalid ng-invalid-"][class$="ng-touched"] .select2-choice,
+[ng-form] input[class*="ng-invalid ng-invalid-"][class$="ng-touched"],
+[ng-form][class*="ng-submitted"] select[class*="ng-invalid ng-invalid-"],
+[ng-form] select[class*="ng-invalid ng-invalid-"][class$="ng-touched"],
+[ng-form][class*="ng-submitted"] [class*="ng-invalid ng-touched ng-invalid-"],
+[ng-form] [class*="ng-invalid ng-touched ng-invalid-"],
+[ng-form] input[class*="ng-invalid ng-touched ng-invalid-"],
+[ng-form][class*="ng-submitted"] select[class*="ng-invalid ng-touched ng-invalid-"],
+[ng-form] select[class*="ng-invalid ng-touched ng-invalid-"],
+[ng-form][class*="ng-submitted"] [class*="ng-invalid ng-dirty ng-invalid-"],
+[ng-form] [class*="ng-invalid ng-dirty ng-invalid-"][class$="ng-touched"],
+[ng-form] input[class*="ng-invalid ng-dirty ng-invalid-"][class$="ng-touched"],
+[ng-form][class*="ng-submitted"] select[class*="ng-invalid ng-dirty ng-invalid-"],
+[ng-form] select[class*="ng-invalid ng-dirty ng-invalid-"][class$="ng-touched"],
+[ng-form][class*="ng-submitted"] [class*="ng-dirty ng-touched ng-invalid ng-invalid-"],
+[ng-form] [class*="ng-dirty ng-touched ng-invalid ng-invalid-"],
+[ng-form] input[class*="ng-dirty ng-touched ng-invalid ng-invalid-"],
+[ng-form][class*="ng-submitted"] select[class*="ng-dirty ng-touched ng-invalid ng-invalid-"],
+[ng-form] select[class*="ng-dirty ng-touched ng-invalid ng-invalid-"],
+[ng-form][class*="ng-submitted"] [class*="ng-touched ng-dirty ng-invalid ng-invalid-"],
+[ng-form] [class*="ng-touched ng-dirty ng-invalid ng-invalid-"],
+[ng-form] input[class*="ng-touched ng-dirty ng-invalid ng-invalid-"],
+[ng-form][class*="ng-submitted"] select[class*="ng-touched ng-dirty ng-invalid ng-invalid-"],
+[ng-form] select[class*="ng-touched ng-dirty ng-invalid ng-invalid-"],
+[ng-form][class*="ng-submitted"] div[class^="ui-select-container"][class*="ng-touched ng-dirty ng-invalid ng-invalid-"] .select2-choice,
+[ng-form] div[class^="ui-select-container"][class*="ng-touched ng-dirty ng-invalid ng-invalid-"] .select2-choice,
+/** any elemenet with data-ng-form attribute */
+[data-ng-form][class*="ng-submitted"] .form-control.ng-invalid.ng-invalid-required,
+[data-ng-form][class*="ng-submitted"] .form-control.ng-invalid.ng-invalid-unique-cd,
+[data-ng-form] .form-control.ng-invalid.ng-invalid-required.ng-touched,
+[data-ng-form] .form-control.ng-invalid.ng-invalid-unique-cd.ng-touched,
+[data-ng-form][class*="ng-submitted"] input.ng-invalid.ng-invalid-required,
+[data-ng-form][class*="ng-submitted"] input.ng-invalid.ng-invalid-unique-cd,
+[data-ng-form] input.ng-invalid.ng-invalid-required.ng-touched,
+[data-ng-form] input.ng-invalid.ng-invalid-unique-cd.ng-touched,
+[data-ng-form][class*="ng-submitted"] select.ng-invalid.ng-invalid-required,
+[data-ng-form][class*="ng-submitted"] select.ng-invalid.ng-invalid-unique-cd,
+[data-ng-form] select.ng-invalid.ng-invalid-required.ng-touched,
+[data-ng-form] select.ng-invalid.ng-invalid-unique-cd.ng-touched,
+[data-ng-form][class*="ng-submitted"] .form-control.ng-invalid.ng-invalid-required,
+[data-ng-form][class*="ng-submitted"] .form-control.ng-invalid.ng-invalid-unique-cd,
+[data-ng-form] .form-control.ng-invalid.ng-invalid-required.ng-touched,
+[data-ng-form] .form-control.ng-invalid.ng-invalid-unique-cd.ng-touched,
+[data-ng-form][class*="ng-submitted"] .form-control.ng-invalid.ng-invalid-less-than,
+[data-ng-form][class*="ng-submitted"] .form-control.ng-invalid.ng-invalid-greater-than,
+[data-ng-form] .form-control.ng-invalid.ng-invalid-less-than.ng-touched,
+[data-ng-form] .form-control.ng-invalid.ng-invalid-greater-than.ng-touched,
+[data-ng-form][class*="ng-submitted"] [class*="ng-invalid ng-invalid-"],
+[data-ng-form] [class*="ng-invalid ng-invalid-"][class$="ng-touched"],
+[data-ng-form][class*="ng-submitted"] [class*="ng-invalid ng-invalid-"] .select2-choice,
+[data-ng-form] [class*="ng-invalid ng-invalid-"][class$="ng-touched"] .select2-choice,
+[data-ng-form] input[class*="ng-invalid ng-invalid-"][class$="ng-touched"],
+[data-ng-form][class*="ng-submitted"] select[class*="ng-invalid ng-invalid-"],
+[data-ng-form] select[class*="ng-invalid ng-invalid-"][class$="ng-touched"],
+[data-ng-form][class*="ng-submitted"] [class*="ng-invalid ng-touched ng-invalid-"],
+[data-ng-form] [class*="ng-invalid ng-touched ng-invalid-"],
+[data-ng-form] input[class*="ng-invalid ng-touched ng-invalid-"],
+[data-ng-form][class*="ng-submitted"] select[class*="ng-invalid ng-touched ng-invalid-"],
+[data-ng-form] select[class*="ng-invalid ng-touched ng-invalid-"],
+[data-ng-form][class*="ng-submitted"] [class*="ng-invalid ng-dirty ng-invalid-"],
+[data-ng-form] [class*="ng-invalid ng-dirty ng-invalid-"][class$="ng-touched"],
+[data-ng-form] input[class*="ng-invalid ng-dirty ng-invalid-"][class$="ng-touched"],
+[data-ng-form][class*="ng-submitted"] select[class*="ng-invalid ng-dirty ng-invalid-"],
+[data-ng-form] select[class*="ng-invalid ng-dirty ng-invalid-"][class$="ng-touched"],
+[data-ng-form][class*="ng-submitted"] [class*="ng-dirty ng-touched ng-invalid ng-invalid-"],
+[data-ng-form] [class*="ng-dirty ng-touched ng-invalid ng-invalid-"],
+[data-ng-form] input[class*="ng-dirty ng-touched ng-invalid ng-invalid-"],
+[data-ng-form][class*="ng-submitted"] select[class*="ng-dirty ng-touched ng-invalid ng-invalid-"],
+[data-ng-form] select[class*="ng-dirty ng-touched ng-invalid ng-invalid-"],
+[data-ng-form][class*="ng-submitted"] [class*="ng-touched ng-dirty ng-invalid ng-invalid-"],
+[data-ng-form] [class*="ng-touched ng-dirty ng-invalid ng-invalid-"],
+[data-ng-form] input[class*="ng-touched ng-dirty ng-invalid ng-invalid-"],
+[data-ng-form][class*="ng-submitted"] select[class*="ng-touched ng-dirty ng-invalid ng-invalid-"],
+[data-ng-form] select[class*="ng-touched ng-dirty ng-invalid ng-invalid-"],
+[data-ng-form][class*="ng-submitted"] div[class^="ui-select-container"][class*="ng-touched ng-dirty ng-invalid ng-invalid-"] .select2-choice,
+[data-ng-form] div[class^="ui-select-container"][class*="ng-touched ng-dirty ng-invalid ng-invalid-"] .select2-choice {
+	border-color: #f04124 !important;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+.ng-invalid + .tooltip > .tooltip-inner {
+	background-color: #f00;
+}
+
+.text-ellipsis {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow:ellipsis;
+}
+.border-radius-3 {
+	border-radius: 3px;
+}
+.border-radius-up {
+	border-bottom-left-radius: 0 !important;
+	border-bottom-right-radius: 0 !important;
+}
+.border-radius-down {
+	border-top-left-radius: 0 !important;
+	border-top-right-radius: 0 !important;
+}
+.border-radius-left {
+	border-top-right-radius: 0 !important;
+	border-bottom-right-radius: 0 !important;
+}
+.border-radius-right {
+	border-top-left-radius: 0 !important;
+	border-bottom-left-radius: 0 !important;
+}
+
+/*-----------------------------*/
+.alert {
+	border-radius:3px
+}
+.alert h4 {
+	font-weight:600
+}
+.alert .icon {
+	margin-right:10px
+}
+.alert .close {
+	color:#000;
+	opacity:.2;
+	filter:alpha(opacity=20)
+}
+.alert .close:hover {
+	opacity:.5;
+	filter:alpha(opacity=50)
+}
+.alert a {
+	color:#fff;
+	text-decoration:underline
+}
+.alert-success {
+	border-color:#008d4c
+}
+.alert-danger,.alert-error {
+	border-color:#d73925
+}
+.alert-warning {
+	border-color:#e08e0b
+}
+.alert-info {
+	border-color:#00acd6
+}
+.notification-socket {
+	position: absolute;
+	right: 50px;
+	z-index: 99999;
+	display: none;
+	padding: 10px 10px 10px 25px;
+	max-width: 300px;
+	max-height: 150px;
+	/** ellipsis content */
+	vertical-align: middle;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+    overflow: hidden;
+}
+.chat-window {
+	position: absolute;
+	z-index: 99998;
+	cursor: pointer;
+	width: 70px;
+	height: 60px;
+	text-align: right;
+	vertical-align: bottom;
+}
+.scroll-top {
+	position: fixed;
+	bottom: 20px;
+	right: 25px;
+	width: 40px;
+	height: 40px;
+	color: rgb(238, 238, 238);
+	line-height: 40px;
+	text-align: center;
+	background-color: rgb(34, 45, 50);
+	cursor: pointer;
+	border-radius: 5px;
+	z-index: 99999;
+	opacity: 0.7;
+	display: none;
+}
+/** disable click event on disabled HREF */
+a[disabled="disabled"],
+a[disabled] {
+	pointer-events: none;
+}
+/** disable like as read-only */
+textarea
+, input:not([type])
+, input[type="color" i]
+, input[type="date" i]
+, input[type="datetime" i]
+, input[type="datetime-local" i]
+, input[type="email" i]
+, input[type="month" i]
+, input[type="password" i]
+, input[type="number" i]
+, input[type="search" i]
+, input[type="tel" i]
+, input[type="text" i]
+, input[type="time" i]
+, input[type="url" i]
+, input[type="week" i] {
+    background-color: transparent;
+    cursor: default;
+    color: #444;
+    border: 1px solid #6f6f6f !important;
+    padding: 3px !important;
+    border-radius: 2px;
+    resize: none;
+}
+textarea:disabled
+, input:not([type]):disabled
+, input[type="color" i]:disabled
+, input[type="date" i]:disabled
+, input[type="datetime" i]:disabled
+, input[type="datetime-local" i]:disabled
+, input[type="email" i]:disabled
+, input[type="month" i]:disabled
+, input[type="password" i]:disabled
+, input[type="number" i]:disabled
+, input[type="search" i]:disabled
+, input[type="tel" i]:disabled
+, input[type="text" i]:disabled
+, input[type="time" i]:disabled
+, input[type="url" i]:disabled
+, input[type="week" i]:disabled
+, textarea[readonly]
+, input[readonly]:not([type])
+, input[type="color" i][readonly]
+, input[type="date" i][readonly]
+, input[type="datetime" i][readonly]
+, input[type="datetime-local" i][readonly]
+, input[type="email" i][readonly]
+, input[type="month" i][readonly]
+, input[type="password" i][readonly]
+, input[type="number" i][readonly]
+, input[type="search" i][readonly]
+, input[type="tel" i][readonly]
+, input[type="text" i][readonly]
+, input[type="time" i][readonly]
+, input[type="url" i][readonly]
+, input[type="week" i][readonly] {
+    /* background-color: rgb(235, 235, 228); */
+    background-color: #eee;
+    cursor: not-allowed;
+    color: #444;
+    border-radius: 2px;
+    resize: none;
+}
+input:not([type])
+, input[type="color" i]
+, input[type="date" i]
+, input[type="datetime" i]
+, input[type="datetime-local" i]
+, input[type="email" i]
+, input[type="month" i]
+, input[type="password" i]
+, input[type="number" i]
+, input[type="search" i]
+, input[type="tel" i]
+, input[type="text" i]
+, input[type="time" i]
+, input[type="url" i]
+, input[type="week" i]
+, select
+, .ui-select-container
+, .ui-select-container.select2-container .select2-choice
+, .ui-select-container.select2-container .select2-choices {
+	height: 25px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+.ui-select-container
+, .ui-select-container.select2-container .select2-choice
+, .ui-select-container.select2-container .select2-choices {
+	margin: 0;
+}

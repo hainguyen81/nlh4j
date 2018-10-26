@@ -1,0 +1,30 @@
+.ng-invalid + .tooltip[placement="top"] > .tooltip-arrow {
+	border-top-color: #f00;
+}
+.ng-invalid + .tooltip[placement="bottom"] > .tooltip-arrow {
+	border-bottom-color: #f00;
+}
+.popover {
+	background-color: #0e7935;
+	max-width: 300px;
+	border-radius: 5px;
+}
+.popover.right > .arrow:after {
+	border-right-color: #86d8a4;
+}
+.popover.bottom > .arrow:after {
+	border-bottom-color: #86d8a4;
+}
+.popover-title {
+	color: #ffffff;
+    background-color: #008cba;
+    border-color: #008cba;
+}
+.popover-content {
+	padding: 5px;
+	background-color: #d2efdc;
+	border: none;
+	border-radius: 5px;
+	max-height: 200px;
+	overflow: auto;
+}

@@ -1,0 +1,110 @@
+#popup_container {
+	font-family: MS UI Gothic;
+	font-size: 10pt;
+	width: 50%;
+	background: #f0f8ff;
+	border: solid 2pt #0099ff;
+	-ms-border-radius: 1px;
+	-moz-border-radius: 1px;
+	-webkit-border-radius: 1px;
+	border-radius: 1px;
+}
+
+#popup_container_OnTitle {
+	font-family: MS UI Gothic;
+	font-size: 10pt;
+	width: 50%;
+	background: #ffffff;
+	-ms-border-radius: 1px;
+	-moz-border-radius: 1px;
+	-webkit-border-radius: 1px;
+	border-radius: 1px;
+}
+
+#popup_title {
+	font-family: MS UI Gothic;
+	font-size: 11pt;
+	font-weight: bold;
+	text-align: left;
+	color: #ffffff;
+	background: #0099ff;
+	border: solid 2pt #0099ff;
+	cursor: default;
+	padding: 3px 3px;
+	margin: 0em;
+}
+
+#popup_content {
+	background: 16px 16px no-repeat url(info.png);
+	padding: 1em 1.75em;
+	margin: 0em;
+}
+
+#popup_content_noImage {
+	border: solid 2pt #0099ff;
+	background: #f0f8ff;
+	padding: 0em 0em 1em 0em;
+	margin: 0em;
+}
+
+#popup_content.alert {
+	background-image: url(info.png);
+}
+
+#popup_content.confirm {
+	background-image: url(info.png);
+}
+
+#popup_content.prompt {
+	background-image: url(info.png);
+}
+
+#popup_message {
+	color: #000000;
+	padding-top: 10px;
+	padding-bottom: 25px;
+}
+
+#popup_panel {
+	text-align: center;
+	margin: 1em 0em 0em 1em;
+}
+
+#popup_prompt {
+	margin: .5em 0em;
+}
+
+/* custom dialog styles */
+#popup_container.buttom_style input[type='button'] {
+	font-family: MS UI Gothic;
+	font-size: 11pt;
+	font-weight: bold;
+	border: outset 1px #76a5cc;
+	color: #FFFFFF;
+	background: #0099ff;
+	margin: 1px 5px;
+	width: 160px;
+	height: 18pt;
+	border-radius: 20px;
+	-ms-border-radius: 20px;
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+	outline: none;
+}
+
+#popup_container_OnTitle.buttom_style input[type='button'] {
+	font-family: MS UI Gothic;
+	font-size: 11pt;
+	font-weight: bold;
+	border: outset 1px #76a5cc;
+	color: #FFFFFF;
+	background: #0099ff;
+	margin: 1px 5px;
+	width: 160px;
+	height: 18pt;
+	border-radius: 20px;
+	-ms-border-radius: 20px;
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+	outline: none;
+}

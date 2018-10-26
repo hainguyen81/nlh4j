@@ -1,0 +1,215 @@
+<style>
+.unselectable {
+				user-select: none; /* CSS3 (little to no support) */
+			-ms-user-select: none; /* IE 10+ */
+		-moz-user-select: none; /* Gecko (Firefox) */
+	-webkit-user-select: none; /* Webkit (Safari, Chrome) */
+	 -khtml-user-select: none;
+	     -o-user-select: none;
+}
+</style>
+<div class="listview unselectable">
+	<table class="table">
+		<thead ng-if="(!hideHeader)">
+			<tr>
+				<th ng-repeat="column in columns">{{column.title | capitalize}}</th>
+			</tr>
+		</thead>
+
+		<!-- Not readonly / Sortable (allow removing if moved out) -->
+		<tbody ng-if="(items && items.length > 0 && sortable && allowRemoveIfMovedOut && !readonly)"
+		data-as-sortable="listeners"
+		data-allow-remove-if-moved-out="true"
+		data-ng-model="items"
+		data-listview-id="{{lvId}}">
+			<tr ng-repeat="item in items" class="item"
+			ng-click="_click($event)"
+			ng-dblclick="_dbclick($event)"
+			model-in-data="item"
+			data-listview-id="{{lvId}}"
+			data-as-sortable-item="item"
+			title="{{item[itemDescription]}}"
+			ng-if="itemDescription && itemDescription.length > 0 && item[itemDescription] && item[itemDescription].length > 0"
+			>
+				<td ng-repeat="column in columns"
+					class="column column-{{column.key}}"
+					ng-include="getTemplate(column,item)"
+					data-as-sortable-item-handle></td>
+			</tr>
+			<tr ng-repeat="item in items" class="item"
+			ng-click="_click($event)"
+			ng-dblclick="_dbclick($event)"
+			model-in-data="item"
+			data-listview-id="{{lvId}}"
+			data-as-sortable-item="item"
+			ng-if="!itemDescription || itemDescription.length <= 0 || !item[itemDescription] || item[itemDescription].length <= 0"
+			>
+				<td ng-repeat="column in columns"
+					class="column column-{{column.key}}"
+					ng-include="getTemplate(column,item)"
+					data-as-sortable-item-handle></td>
+			</tr>
+		</tbody>
+		<tbody ng-if="((!items || items.length <= 0) && sortable && allowRemoveIfMovedOut && !readonly)"
+		data-as-sortable="listeners"
+		data-allow-remove-if-moved-out="true"
+		data-ng-model="items"
+		data-listview-id="{{lvId}}">
+			<tr class="item"
+			data-listview-id="{{lvId}}"
+			data-as-sortable-item>
+				<td ng-repeat="column in columns"
+				class="column column-{{column.key}} empty"
+				data-as-sortable-item-handle>&nbsp;</td>
+			</tr>
+		</tbody>
+		
+		<!-- Not readonly / Sortable (not allow removing if moved out) -->
+		<tbody ng-if="(items && items.length > 0 && sortable && !allowRemoveIfMovedOut && !readonly)"
+		data-as-sortable="listeners"
+		data-allow-remove-if-moved-out="false"
+		data-ng-model="items"
+		data-listview-id="{{lvId}}">
+			<tr ng-repeat="item in items" class="item"
+			ng-click="_click($event)"
+			ng-dblclick="_dbclick($event)"
+			model-in-data="item"
+			data-listview-id="{{lvId}}"
+			data-as-sortable-item="item"
+			title="{{item[itemDescription]}}"
+			ng-if="itemDescription && itemDescription.length > 0 && item[itemDescription] && item[itemDescription].length > 0"
+			>
+				<td ng-repeat="column in columns"
+					class="column column-{{column.key}}"
+					ng-include="getTemplate(column,item)"
+					data-as-sortable-item-handle></td>
+			</tr>
+			<tr ng-repeat="item in items" class="item"
+			ng-click="_click($event)"
+			ng-dblclick="_dbclick($event)"
+			model-in-data="item"
+			data-listview-id="{{lvId}}"
+			data-as-sortable-item="item"
+			ng-if="!itemDescription || itemDescription.length <= 0 || !item[itemDescription] || item[itemDescription].length <= 0"
+			>
+				<td ng-repeat="column in columns"
+					class="column column-{{column.key}}"
+					ng-include="getTemplate(column,item)"
+					data-as-sortable-item-handle></td>
+			</tr>
+		</tbody>
+		<tbody ng-if="((!items || items.length <= 0) && sortable && !allowRemoveIfMovedOut && !readonly)"
+		data-as-sortable="listeners"
+		data-allow-remove-if-moved-out="false"
+		data-ng-model="items"
+		data-listview-id="{{lvId}}">
+			<tr class="item"
+			data-listview-id="{{lvId}}"
+			data-as-sortable-item>
+				<td ng-repeat="column in columns"
+				class="column column-{{column.key}} empty"
+				data-as-sortable-item-handle>&nbsp;</td>
+			</tr>
+		</tbody>
+
+		<!-- Not readonly / Not sortable -->
+		<tbody ng-if="(items && items.length > 0 && !sortable && !readonly)"
+		data-listview-id="{{lvId}}">
+			<tr ng-repeat="item in items" class="item"
+			ng-click="_click($event, item)"
+			ng-dblclick="_dbclick($event, item)"
+			model-in-data="item"
+			data-listview-id="{{lvId}}"
+			title="{{item[itemDescription]}}"
+			ng-if="itemDescription && itemDescription.length > 0 && item[itemDescription] && item[itemDescription].length > 0"
+			>
+				<td ng-repeat="column in columns"
+					class="column column-{{column.key}}"
+					ng-include="getTemplate(column,item)"></td>
+			</tr>
+			<tr ng-repeat="item in items" class="item"
+			ng-click="_click($event, item)"
+			ng-dblclick="_dbclick($event, item)"
+			model-in-data="item"
+			data-listview-id="{{lvId}}"
+			ng-if="!itemDescription || itemDescription.length <= 0 || !item[itemDescription] || item[itemDescription].length <= 0"
+			>
+				<td ng-repeat="column in columns"
+					class="column column-{{column.key}}"
+					ng-include="getTemplate(column,item)"></td>
+			</tr>
+		</tbody>
+		<tbody ng-if="((!items || items.length <= 0) && !sortable && !readonly)"
+		data-listview-id="{{lvId}}">
+			<tr class="item"
+			data-listview-id="{{lvId}}">
+				<td ng-repeat="column in columns"
+				class="column column-{{column.key}} empty">&nbsp;</td>
+			</tr>
+		</tbody>
+
+		<!-- Readonly -->
+		<tbody ng-if="(items && items.length > 0 && readonly)"
+		data-ng-model="items"
+		data-listview-id="{{lvId}}">
+			<tr ng-repeat="item in items" class="item"
+			ng-click="_click($event)"
+			ng-dblclick="_dbclick($event)"
+			model-in-data="item"
+			data-listview-id="{{lvId}}"
+			title="{{item[itemDescription]}}"
+			ng-if="itemDescription && itemDescription.length > 0 && item[itemDescription] && item[itemDescription].length > 0"
+			>
+				<td ng-repeat="column in columns"
+					class="column column-{{column.key}}"
+					ng-include="getTemplate(column,item)"></td>
+			</tr>
+			<tr ng-repeat="item in items" class="item"
+			ng-click="_click($event)"
+			ng-dblclick="_dbclick($event)"
+			model-in-data="item"
+			data-listview-id="{{lvId}}"
+			ng-if="!itemDescription || itemDescription.length <= 0 || !item[itemDescription] || item[itemDescription].length <= 0"
+			>
+				<td ng-repeat="column in columns"
+					class="column column-{{column.key}}"
+					ng-include="getTemplate(column,item)"></td>
+			</tr>
+		</tbody>
+		<tbody ng-if="((!items || items.length <= 0) && readonly)"
+		data-ng-model="items"
+		data-listview-id="{{lvId}}">
+			<tr class="item"
+			data-listview-id="{{lvId}}">
+				<td ng-repeat="column in columns"
+				class="column column-{{column.key}} empty">&nbsp;</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<!-- default -->
+<script type="text/ng-template" id="column-default.html">
+	{{_format(column,item)}}
+</script>
+<!-- customize column -->
+<script type="text/ng-template" id="column-title.html">
+	<div class="thumb">
+		<img ng-src="{{methods.thumb(item)}}" alt="">
+	</div>
+	<span>{{_format(column,item)}}</span>
+</script>
+<script type="text/ng-template" id="column-dimension.html">
+	<span>{{_format(column,item)}}</span>
+</script>
+<script type="text/ng-template" id="column-tags.html">
+	<div ng-repeat="tag in item[column]" class="tag">
+		<span>{{tag}}</span>
+	</div>
+</script>
+<!-- checkbox -->
+<script type="text/ng-template" id="column-chkbox.html">
+	<input name="chkcol" type="checkbox" ng-model="item[column.key]" ng-change="_change(column, item)" ng-if="_getValue(column,item) && !readonly" checked>
+	<input name="chkcol" type="checkbox" ng-model="item[column.key]" ng-change="_change(column, item)" ng-if="!_getValue(column,item) && !readonly">
+	<input name="chkcol" type="checkbox" ng-model="item[column.key]" ng-change="_change(column, item)" ng-if="_getValue(column,item) && readonly" checked disabled="disabled">
+	<input name="chkcol" type="checkbox" ng-model="item[column.key]" ng-change="_change(column, item)" ng-if="!_getValue(column,item) && readonly" disabled="disabled">
+</script>

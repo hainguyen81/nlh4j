@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib version="2.1" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
+	<display-name>NLH4J JSTL UTILITIES</display-name>
+	<tlib-version>1.0</tlib-version>
+	<short-name>base-jstl</short-name>
+	<uri>http://nlh4j.org.vn/base-jstl</uri>
+	<function>
+		<name>sidebarModules</name>
+		<function-class>org.nlh4j.web.base.util.TagUtils</function-class>
+		<function-signature>java.lang.Object getSidebarModules()</function-signature>
+	</function>
+	<function>
+		<name>isSystemAdmin</name>
+		<function-class>org.nlh4j.web.base.util.TagUtils</function-class>
+		<function-signature>boolean isSystemAdmin()</function-signature>
+	</function>
+</taglib>

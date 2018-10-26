@@ -1,0 +1,4 @@
+importModuleController(
+		'errModule',
+		'ErrorCtrl',
+		function() {});

@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc
+						http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+    					http://www.springframework.org/schema/beans
+    					http://www.springframework.org/schema/beans/spring-beans.xsd
+    					http://www.springframework.org/schema/context
+    					http://www.springframework.org/schema/context/spring-context-4.0.xsd"
+	profile=",default,simple,quartz,mail,template,socket,socket-notification,socket-chat,socket-online,socket-queue,full">
+
+	<!-- Use SPRING configuration -->
+    <context:spring-configured/>
+
+	<!-- BEGIN: Internationalization and Localization -->
+	<mvc:interceptors>
+		<bean id="localeChangeInterceptor"
+			class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="lang" />
+		</bean>
+	</mvc:interceptors>
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
+		lazy-init="false">
+		<!--
+        Load from sub classpath resources, and classpath resources fisrt.
+        Then loading from webapp resources file.
+        Resource files from root will override properties of sub classpath resources
+        if they overlap property key
+        -->
+		<property name="basenames">
+			<list>
+			    <!-- System -->
+			    <value>classpath*:**/properties/i18n/systemResources</value>
+				<value>classpath*:**/properties/i18n/systemMessages</value>
+				<value>classpath:**/properties/i18n/systemResources</value>
+				<value>classpath:**/properties/i18n/systemMessages</value>
+				<value>classpath*:/properties/i18n/systemResources</value>
+				<value>classpath*:/properties/i18n/systemMessages</value>
+				<value>classpath:/properties/i18n/systemResources</value>
+				<value>classpath:/properties/i18n/systemMessages</value>
+				<value>classpath*:**/i18n/systemResources</value>
+				<value>classpath*:**/i18n/systemMessages</value>
+				<value>classpath:**/i18n/systemResources</value>
+				<value>classpath:**/i18n/systemMessages</value>
+				<value>classpath*:/i18n/systemResources</value>
+				<value>classpath*:/i18n/systemMessages</value>
+				<value>classpath:/i18n/systemResources</value>
+				<value>classpath:/i18n/systemMessages</value>
+				<value>classpath*:**/systemResources</value>
+				<value>classpath*:**/systemMessages</value>
+				<value>classpath:**/systemResources</value>
+				<value>classpath:**/systemMessages</value>
+				<value>classpath*:systemResources</value>
+				<value>classpath*:systemMessages</value>
+				<value>classpath:systemResources</value>
+				<value>classpath:systemMessages</value>
+
+			    <!-- Base -->
+			    <value>classpath*:**/properties/i18n/baseResources</value>
+				<value>classpath*:**/properties/i18n/baseMessages</value>
+				<value>classpath:**/properties/i18n/baseResources</value>
+				<value>classpath:**/properties/i18n/baseMessages</value>
+				<value>classpath*:/properties/i18n/baseResources</value>
+				<value>classpath*:/properties/i18n/baseMessages</value>
+				<value>classpath:/properties/i18n/baseResources</value>
+				<value>classpath:/properties/i18n/baseMessages</value>
+				<value>classpath*:**/i18n/baseResources</value>
+				<value>classpath*:**/i18n/baseMessages</value>
+				<value>classpath:**/i18n/baseResources</value>
+				<value>classpath:**/i18n/baseMessages</value>
+				<value>classpath*:/i18n/baseResources</value>
+				<value>classpath*:/i18n/baseMessages</value>
+				<value>classpath:/i18n/baseResources</value>
+				<value>classpath:/i18n/baseMessages</value>
+				<value>classpath*:**/baseResources</value>
+				<value>classpath*:**/baseMessages</value>
+				<value>classpath:**/baseResources</value>
+				<value>classpath:**/baseMessages</value>
+				<value>classpath*:baseResources</value>
+				<value>classpath*:baseMessages</value>
+				<value>classpath:baseResources</value>
+				<value>classpath:baseMessages</value>
+
+				<!-- Application -->
+				<value>classpath*:**/properties/i18n/ApplicationResources</value>
+				<value>classpath*:**/properties/i18n/messages</value>
+				<value>classpath:**/properties/i18n/ApplicationResources</value>
+				<value>classpath:**/properties/i18n/messages</value>
+				<value>classpath*:/properties/i18n/ApplicationResources</value>
+				<value>classpath*:/properties/i18n/messages</value>
+				<value>classpath:/properties/i18n/ApplicationResources</value>
+				<value>classpath:/properties/i18n/messages</value>
+				<value>classpath*:**/i18n/ApplicationResources</value>
+				<value>classpath*:**/i18n/messages</value>
+				<value>classpath:**/i18n/ApplicationResources</value>
+				<value>classpath:**/i18n/messages</value>
+				<value>classpath*:/i18n/ApplicationResources</value>
+				<value>classpath*:/i18n/messages</value>
+				<value>classpath:/i18n/ApplicationResources</value>
+				<value>classpath:/i18n/messages</value>
+				<value>classpath*:**/ApplicationResources</value>
+				<value>classpath*:**/messages</value>
+				<value>classpath:**/ApplicationResources</value>
+				<value>classpath:**/messages</value>
+				<value>classpath*:ApplicationResources</value>
+				<value>classpath*:messages</value>
+				<value>classpath:ApplicationResources</value>
+				<value>classpath:messages</value>
+
+				<!-- Module -->
+				<value>classpath*:**/properties/i18n/moduleResources</value>
+				<value>classpath*:**/properties/i18n/moduleMessages</value>
+				<value>classpath:**/properties/i18n/moduleResources</value>
+				<value>classpath:**/properties/i18n/moduleMessages</value>
+				<value>classpath*:/properties/i18n/moduleResources</value>
+				<value>classpath*:/properties/i18n/moduleMessages</value>
+				<value>classpath:/properties/i18n/moduleResources</value>
+				<value>classpath:/properties/i18n/moduleMessages</value>
+				<value>classpath*:**/i18n/moduleResources</value>
+				<value>classpath*:**/i18n/moduleMessages</value>
+				<value>classpath:**/i18n/moduleResources</value>
+				<value>classpath:**/i18n/moduleMessages</value>
+				<value>classpath*:/i18n/moduleResources</value>
+				<value>classpath*:/i18n/moduleMessages</value>
+				<value>classpath:/i18n/moduleResources</value>
+				<value>classpath:/i18n/moduleMessages</value>
+				<value>classpath*:**/moduleResources</value>
+				<value>classpath*:**/moduleMessages</value>
+				<value>classpath:**/moduleResources</value>
+				<value>classpath:**/moduleMessages</value>
+				<value>classpath*:moduleResources</value>
+				<value>classpath*:moduleMessages</value>
+				<value>classpath:moduleResources</value>
+				<value>classpath:moduleMessages</value>
+
+				<!-- By Theme -->
+				<value>classpath*:**/properties/i18n/${app.theme}Resources</value>
+				<value>classpath*:**/properties/i18n/${app.theme}Messages</value>
+				<value>classpath:**/properties/i18n/${app.theme}Resources</value>
+				<value>classpath:**/properties/i18n/${app.theme}Messages</value>
+				<value>classpath*:/properties/i18n/${app.theme}Resources</value>
+				<value>classpath*:/properties/i18n/${app.theme}Messages</value>
+				<value>classpath:/properties/i18n/${app.theme}Resources</value>
+				<value>classpath:/properties/i18n/${app.theme}Messages</value>
+				<value>classpath*:**/i18n/${app.theme}Resources</value>
+				<value>classpath*:**/i18n/${app.theme}Messages</value>
+				<value>classpath:**/i18n/${app.theme}Resources</value>
+				<value>classpath:**/i18n/${app.theme}Messages</value>
+				<value>classpath*:/i18n/${app.theme}Resources</value>
+				<value>classpath*:/i18n/${app.theme}Messages</value>
+				<value>classpath:/i18n/${app.theme}Resources</value>
+				<value>classpath:/i18n/${app.theme}Messages</value>
+				<value>classpath*:**/${app.theme}Resources</value>
+				<value>classpath*:**/${app.theme}Messages</value>
+				<value>classpath:**/${app.theme}Resources</value>
+				<value>classpath:**/${app.theme}Messages</value>
+				<value>classpath*:${app.theme}Resources</value>
+				<value>classpath*:${app.theme}Messages</value>
+				<value>classpath:${app.theme}Resources</value>
+				<value>classpath:${app.theme}Messages</value>
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ -->
+				<!-- Validation -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ -->
+
+			    <!-- System -->
+				<value>classpath*:**/properties/i18n/systemValidationMessages</value>
+				<value>classpath:**/properties/i18n/systemValidationMessages</value>
+				<value>classpath*:/properties/i18n/systemValidationMessages</value>
+				<value>classpath:/properties/i18n/systemValidationMessages</value>
+				<value>classpath*:**/i18n/systemValidationMessages</value>
+				<value>classpath:**/i18n/systemValidationMessages</value>
+				<value>classpath*:/i18n/systemValidationMessages</value>
+				<value>classpath:/i18n/systemValidationMessages</value>
+				<value>classpath*:**/systemValidationMessages</value>
+				<value>classpath:**/systemValidationMessages</value>
+				<value>classpath*:systemValidationMessages</value>
+				<value>classpath:systemValidationMessages</value>
+
+			    <!-- Base -->
+				<value>classpath*:**/properties/i18n/baseValidationMessages</value>
+				<value>classpath:**/properties/i18n/baseValidationMessages</value>
+				<value>classpath*:/properties/i18n/baseValidationMessages</value>
+				<value>classpath:/properties/i18n/baseValidationMessages</value>
+				<value>classpath*:**/i18n/baseValidationMessages</value>
+				<value>classpath:**/i18n/baseValidationMessages</value>
+				<value>classpath*:/i18n/baseValidationMessages</value>
+				<value>classpath:/i18n/baseValidationMessages</value>
+				<value>classpath*:**/baseValidationMessages</value>
+				<value>classpath:**/baseValidationMessages</value>
+				<value>classpath*:baseValidationMessages</value>
+				<value>classpath:baseValidationMessages</value>
+
+				<!-- Application -->
+				<value>classpath*:**/properties/i18n/validationMessages</value>
+				<value>classpath:**/properties/i18n/validationMessages</value>
+				<value>classpath*:/properties/i18n/validationMessages</value>
+				<value>classpath:/properties/i18n/validationMessages</value>
+				<value>classpath*:**/i18n/validationMessages</value>
+				<value>classpath:**/i18n/validationMessages</value>
+				<value>classpath*:/i18n/validationMessages</value>
+				<value>classpath:/i18n/validationMessages</value>
+				<value>classpath*:**/validationMessages</value>
+				<value>classpath:**/validationMessages</value>
+				<value>classpath*:validationMessages</value>
+				<value>classpath:validationMessages</value>
+
+				<!-- Module -->
+				<value>classpath*:**/properties/i18n/moduleValidationMessages</value>
+				<value>classpath:**/properties/i18n/moduleValidationMessages</value>
+				<value>classpath*:/properties/i18n/moduleValidationMessages</value>
+				<value>classpath:/properties/i18n/moduleValidationMessages</value>
+				<value>classpath*:**/i18n/moduleValidationMessages</value>
+				<value>classpath:**/i18n/moduleValidationMessages</value>
+				<value>classpath*:/i18n/moduleValidationMessages</value>
+				<value>classpath:/i18n/moduleValidationMessages</value>
+				<value>classpath*:**/moduleValidationMessages</value>
+				<value>classpath:**/moduleValidationMessages</value>
+				<value>classpath*:moduleValidationMessages</value>
+				<value>classpath:moduleValidationMessages</value>
+
+				<!-- By Theme -->
+				<value>classpath*:**/properties/i18n/${app.theme}ValidationMessages</value>
+				<value>classpath:**/properties/i18n/${app.theme}ValidationMessages</value>
+				<value>classpath*:/properties/i18n/${app.theme}ValidationMessages</value>
+				<value>classpath:/properties/i18n/${app.theme}ValidationMessages</value>
+				<value>classpath*:**/i18n/${app.theme}ValidationMessages</value>
+				<value>classpath:**/i18n/${app.theme}ValidationMessages</value>
+				<value>classpath*:/i18n/${app.theme}ValidationMessages</value>
+				<value>classpath:/i18n/${app.theme}ValidationMessages</value>
+				<value>classpath*:**/${app.theme}ValidationMessages</value>
+				<value>classpath:**/${app.theme}ValidationMessages</value>
+				<value>classpath*:${app.theme}ValidationMessages</value>
+				<value>classpath:${app.theme}ValidationMessages</value>
+			</list>
+		</property>
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="useCodeAsDefaultMessage" value="true" />
+		<property name="cacheSeconds" value="480" />
+	</bean>
+
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		<property name="defaultLocale" value="vi_VN" />
+	</bean>
+	<!-- END: Internationalization and Localization -->
+
+</beans>

@@ -1,0 +1,94 @@
+#################################################
+# Specify using minimum version
+#################################################
+ver.min=false
+
+#################################################
+# Base Javascript library version
+#################################################
+ver.jquery=1.11.1
+ver.jquery.ui=1.11.4
+ver.angular=1.4.7
+ver.fontawesome=4.6.1
+ver.boostrap=3.3.6
+
+#################################################
+# Helper Javascript library version
+#################################################
+ver.moment=2.11.0
+ver.sockjs=1.0.0
+ver.stomp=1.7.1
+ver.html5shiv=3.7.3
+ver.es5.shim=15.3.4.5
+ver.respond=1.4.2
+
+#################################################
+# Helper CSS library version
+#################################################
+ver.bootswatch=3.3.4
+ver.simple.line.icons=1.0
+
+#################################################
+# Jquery Plugins Javascript library version
+#################################################
+ver.jquery.chosen=1.1.0
+ver.jquery.chart=1.0.2
+ver.jquery.animsition=4.0.1
+ver.jquery.dialogue=1.0.8
+ver.jquery.datetimepicker=2.3.0
+ver.jquery.metis.menu=2.6.1
+ver.jquery.bootstrap.autohidingnavbar=1.0.5
+ver.jquery.bootstrap.clockpicker=0.0.7
+ver.jquery.bootstrap.sidebar=0.2.0
+# Require jQuery-metisMenu
+ver.jquery.startbootstrap.sidebar.admin=1.0
+ver.jquery.ajaxsubmit=3.51.0
+ver.jquery.template=1.0.0pre
+ver.jquery.file.download=1.4.2
+ver.jquery.fullcalendar=3.1.0
+ver.jquery.scrollTo=2.1.2
+ver.jquery.utils=1.0
+
+#################################################
+# Angular Plugins Javascript library version
+#################################################
+ver.angular.defer.bootstrap=1.0
+ver.angular.ui.bootstrap=0.14.3
+ver.angular.ui.calendar=1.0.2
+ver.angular.once=0.1.7
+ver.angular.xeditable=0.1.9
+ver.angular.toaster=0.4.8
+ver.angular.gridster=0.13.2
+ver.angular.spring.security.csrf.token.interceptor=0.2.0
+ver.angular.local.storage=0.2.2
+ver.angular.dateparser=1.0.14
+ver.angular.timepicker=1.0.8
+ver.angular.ui.router=0.2.15
+ver.angular.sanitize=1.5.0
+# Require jQuery-chart library
+ver.angular.chart=0.7.2
+ver.angular.listview=1.0
+ver.angular.sortable=1.3.0
+ver.angular.table=1.0.0-alpha.6
+ver.angular.ui.select=0.13.2
+ver.angular.slimscroll=0.6.0
+ver.angular.confirm=1.1.0
+ver.angular.clock=0.5
+# Require jQuery and moment libraries
+ver.angular.bootstrap3.datepicker=3.1.3
+ver.angular.progress=1.0.7
+ver.angular.ui.grid=3.0.5
+ver.angular.responsive=0.3.0
+ver.angular.file.upload=4.2.1
+ver.angular.context.menu=0.7.5
+ver.angular.socket=0.0.1-alpha.1
+ver.angular.imgcrop=0.3.2
+ver.angular.loading.bar=0.7.1
+ver.angular.resize=1.2.0
+ver.angular.modal=0.10.1
+
+#################################################
+# Angular Wiz Validation Plugins Javascript library version
+#################################################
+ver.angular.wiz.validation=1.2.0
+

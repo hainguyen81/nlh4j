@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc
+                        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+                        http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                        http://www.springframework.org/schema/tx
+                        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+                        http://www.springframework.org/schema/aop
+                        http://www.springframework.org/schema/aop/spring-aop-4.0.xsd"
+	profile="quartz,full">
+
+	<!-- Use SPRING configuration -->
+    <context:spring-configured/>
+
+	<bean id="schedulerFactory" destroy-method="destroy"
+	    class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<!-- name used to publish applicationContext to Quartz Job instances, so they can call business services -->
+		<property name="applicationContextSchedulerContextKey" value="applicationContext" />
+
+		<!-- IMPORTANT - scheduler name used to get old jobs from existing database for server restarting -->
+		<property name="schedulerName" value="nlh4j_scheduler" />
+		<property name="waitForJobsToCompleteOnShutdown" value="true" />
+		<property name="overwriteExistingJobs" value="true"/>
+		<!--
+		<property name="dataSource" ref="dataSource" />
+		-->
+		<property name="transactionManager" ref="transactionManager" />
+
+		<!-- Quartz properties - Be able use quartz.properties for replacing -->
+		<property name="quartzProperties">
+			<props>
+				<prop key="org.quartz.threadPool.class">${quartz.threadPoolClass}</prop>
+				<prop key="org.quartz.threadPool.threadCount">${quartz.threadCount}</prop>
+				<prop key="org.quartz.scheduler.skipUpdateCheck">true</prop>
+
+				<!-- Datasource -->
+				<prop key="org.quartz.jobStore.dataSource">qrtzDs</prop>
+				<prop key="org.quartz.dataSource.qrtzDs.driver">${jdbc.driverClassName}</prop>
+				<prop key="org.quartz.dataSource.qrtzDs.URL">${jdbc.url}</prop>
+				<prop key="org.quartz.dataSource.qrtzDs.user">${jdbc.username}</prop>
+				<prop key="org.quartz.dataSource.qrtzDs.password">${jdbc.password}</prop>
+				<prop key="org.quartz.dataSource.qrtzDs.maxConnections">${quartz.maxConnections}</prop>
+
+				<!-- JDBC JobStore configuration -->
+				<prop key="org.quartz.jobStore.misfireThreshold">6000</prop>
+				<prop key="org.quartz.jobStore.class">${quartz.jobStoreClass}</prop>
+				<prop key="org.quartz.jobStore.driverDelegateClass">${quartz.delegateClass}</prop>
+				<prop key="org.quartz.jobStore.useProperties">${quartz.useProperties}</prop>
+				<prop key="org.quartz.jobStore.tablePrefix">${quartz.tablePrefix}</prop>
+				<prop key="org.quartz.jobStore.isClustered">false</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="org.nlh4j.core.util.JobSchedulerUtils"
+	    class="org.nlh4j.core.util.JobSchedulerUtils"
+	    scope="singleton">
+		<property name="schedulerFactory" ref="schedulerFactory" />
+	</bean>
+
+</beans>

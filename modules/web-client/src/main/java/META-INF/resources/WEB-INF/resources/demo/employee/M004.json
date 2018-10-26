@@ -1,0 +1,75 @@
+[
+	{
+		"employee_id": "VN001",
+		"employee_name": "Nguyễn Trần Đăng Khoa",
+		"date_of_birth": "2015/07/01",
+		"gender": "Nữ",
+		"hire_date": "2015/07/01",
+		"depart_id": "IT",
+		"position":"learder"
+
+	},
+	{
+		"employee_id": "VN001",
+		"employee_name": "Lê Ngọc Trinh",
+		"date_of_birth": "2015/07/01",
+		"gender": "Nữ",
+		"hire_date": "2015/07/01",
+		"depart_id": "IT",
+		"position":"learder"
+	},
+	{
+		"employee_id": "VN001",
+		"employee_name": "Lê Ngọc Trinh",
+		"date_of_birth": "2015/07/01",
+		"gender": "Nữ",
+		"hire_date": "2015/07/01",
+		"depart_id": "IT",
+		"position":"learder"
+	},
+	{
+		"employee_id": "VN001",
+		"employee_name": "Lê Ngọc Trinh",
+		"date_of_birth": "2015/07/01",
+		"gender": "Nữ",
+		"hire_date": "2015/07/01",
+		"depart_id": "IT",
+		"position":"learder"
+	},
+	{
+		"employee_id": "VN001",
+		"employee_name": "Lê Ngọc Trinh",
+		"date_of_birth": "2015/07/01",
+		"gender": "Nữ",
+		"hire_date": "2015/07/01",
+		"depart_id": "IT",
+		"position":"learder"
+	},
+	{
+		"employee_id": "VN001",
+		"employee_name": "Lê Ngọc Trinh",
+		"date_of_birth": "2015/07/01",
+		"gender": "Nữ",
+		"hire_date": "2015/07/01",
+		"depart_id": "IT",
+		"position":"learder"
+	},
+	{
+		"employee_id": "VN001",
+		"employee_name": "Lê Ngọc Trinh",
+		"date_of_birth": "2015/07/01",
+		"gender": "Nữ",
+		"hire_date": "2015/07/01",
+		"depart_id": "IT",
+		"position":"learder"
+	},
+	{
+		"employee_id": "VN001",
+		"employee_name": "Lê Ngọc Trinh",
+		"date_of_birth": "2015/07/01",
+		"gender": "Nữ",
+		"hire_date": "2015/07/01",
+		"depart_id": "IT",
+		"position":"learder"
+	}
+]

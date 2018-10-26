@@ -1,0 +1,243 @@
+/* ************************************************ */
+/* MAIN BACKDROP FOR PROGRESS						*/
+/* ************************************************ */
+.main-backdrop {
+	visibility: hidden;
+	position: absolute;
+	pointer-events: none;
+	min-width: 100%;
+	min-height: 100%;
+	left: 0;
+	top: 0;
+	text-align: center;
+	vertical-align: middle;
+	background-color: #cccccc;
+	z-index: 99998;
+	opacity: 0.3;
+}
+.main-backdrop-loading,
+.main-backdrop-offline {
+	visibility: hidden;
+	width: 64px;
+	height: 64px;
+	position: absolute;
+	pointer-events: none;
+	z-index: 9999;
+	top: calc(50% - 32px);
+	left: calc(50% - 32px);
+	opacity: 1;
+}
+/* Firefox old*/
+@-moz-keyframes blink {
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
+}
+
+@-webkit-keyframes blink {
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
+}
+/* IE */
+@-ms-keyframes blink {
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
+}
+/* Opera and prob css3 final iteration */
+@keyframes blink {
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
+}
+.main-backdrop-offline img {
+    -moz-animation: blink normal 2s infinite ease-in-out; /* Firefox */
+    -webkit-animation: blink normal 2s infinite ease-in-out; /* Webkit */
+    -ms-animation: blink normal 2s infinite ease-in-out; /* IE */
+    animation: blink normal 2s infinite ease-in-out; /* Opera and prob css3 final iteration */
+}
+
+/* ************************************************ */
+/* STYLE 1											*/
+/* ************************************************ */
+/* position the bars and balls correctly (rotate them and translate them outward)*/
+.spinner.style1 div {
+	width: 10px;
+	height: 30px;
+	background: #ef59b4;
+	position: absolute;
+	top: 35px;
+	left: 45px;
+}
+.spinner.style1 .bar1 {
+	transform: rotate(0deg) translate(0, -40px);
+	-o-transform: rotate(0deg) translate(0, -40px);
+	-ms-transform: rotate(0deg) translate(0, -40px);
+	-moz-transform: rotate(0deg) translate(0, -40px);
+	-webkit-transform: rotate(0deg) translate(0, -40px);
+	opacity: 0.12;
+}
+.spinner.style1 .bar2 {
+	transform: rotate(45deg) translate(0, -40px);
+	-o-transform: rotate(45deg) translate(0, -40px);
+	-ms-transform: rotate(45deg) translate(0, -40px);
+	-moz-transform: rotate(45deg) translate(0, -40px);
+	-webkit-transform: rotate(45deg) translate(0, -40px);
+	opacity: 0.25;
+}
+.spinner.style1 .bar3 {
+	transform: rotate(90deg) translate(0, -40px);
+	-o-transform: rotate(90deg) translate(0, -40px);
+	-ms-transform: rotate(90deg) translate(0, -40px);
+	-moz-transform: rotate(90deg) translate(0, -40px);
+	-webkit-transform: rotate(90deg) translate(0, -40px);
+	opacity: 0.37;
+}
+.spinner.style1 .bar4 {
+	transform: rotate(135deg) translate(0, -40px);
+	-o-transform: rotate(135deg) translate(0, -40px);
+	-ms-transform: rotate(135deg) translate(0, -40px);
+	-moz-transform: rotate(135deg) translate(0, -40px);
+	-webkit-transform: rotate(135deg) translate(0, -40px);
+	opacity: 0.50;
+}
+.spinner.style1 .bar5 {
+	transform: rotate(180deg) translate(0, -40px);
+	-o-transform: rotate(180deg) translate(0, -40px);
+	-ms-transform: rotate(180deg) translate(0, -40px);
+	-moz-transform: rotate(180deg) translate(0, -40px);
+	-webkit-transform: rotate(180deg) translate(0, -40px);
+	opacity: 0.62;
+}
+.spinner.style1 .bar6 {
+	transform: rotate(225deg) translate(0, -40px);
+	-o-transform: rotate(225deg) translate(0, -40px);
+	-ms-transform: rotate(225deg) translate(0, -40px);
+	-moz-transform: rotate(225deg) translate(0, -40px);
+	-webkit-transform: rotate(225deg) translate(0, -40px);
+	opacity: 0.75;
+}
+.spinner.style1 .bar7 {
+	transform: rotate(270deg) translate(0, -40px);
+	-o-transform: rotate(270deg) translate(0, -40px);
+	-ms-transform: rotate(270deg) translate(0, -40px);
+	-moz-transform: rotate(270deg) translate(0, -40px);
+	-webkit-transform: rotate(270deg) translate(0, -40px);
+	opacity: 0.87;
+}
+.spinner.style1 .bar8 {
+	transform:rotate(315deg) translate(0, -40px);
+	-o-transform:rotate(315deg) translate(0, -40px);
+	-ms-transform: rotate(315deg) translate(0, -40px);
+	-moz-transform: rotate(315deg) translate(0, -40px);
+	-webkit-transform: rotate(315deg) translate(0, -40px);
+	opacity: 1;
+}
+
+/* set up the three ball spinners */
+.spinner.style1 {
+	position: relative;
+	width: 100px;
+	height: 100px;
+	border-radius: 100px;
+	-o-border-radius: 100px;
+	-ms-border-radius: 100px;
+	-moz-border-radius: 100px;
+	-webkit-border-radius: 100px;
+	float:left;
+
+	transform: scale(0.5);
+	-o-transform: scale(0.5);
+	-ms-transform: scale(0.5);
+	-moz-transform: scale(0.5);
+	-webkit-transform: scale(0.5);
+
+	-webkit-animation-name: rotateThis;
+	-webkit-animation-duration: 2s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;
+}
+@-webkit-keyframes rotateThis {
+  from { -webkit-transform: scale(0.5) rotate(0deg); }
+  to { -webkit-transform: scale(0.5) rotate(360deg); }
+}
+
+/* ************************************************ */
+/* STYLE 2											*/
+/* ************************************************ */
+.spinner.style2 {
+	position: relative;
+	width: auto;
+	height: 50px;
+	padding: 10px;
+}
+.spinner.style2 .bar {
+	display: inline-block;
+	width: 4px;
+	height: 18px;
+	border-radius: 4px;
+	animation: loading 1s ease-in-out infinite;
+}
+.spinner.style2 .bar:nth-child(1) {
+	background-color: #3498db;
+	animation-delay: 0;
+}
+.spinner.style2 .bar:nth-child(2) {
+	background-color: #c0392b;
+	animation-delay: 0.09s;
+}
+.spinner.style2 .bar:nth-child(3) {
+	background-color: #f1c40f;
+	animation-delay: .18s;
+}
+.spinner.style2 .bar:nth-child(4) {
+	background-color: #27ae60;
+	animation-delay: .27s;
+}
+
+@keyframes loading {
+	0% {
+		transform: scale(1);
+	}
+	20% {
+		transform: scale(1, 2.2);
+	}
+	40% {
+		transform: scale(1);
+	}
+}
+
+/* ************************************************ */
+/* STYLE 3											*/
+/* ************************************************ */
+.spinner.style3 {
+  width: 30px;
+  height: 30px;
+  margin: 10px;
+  animation: rotate 1.4s infinite ease-in-out, background 1.4s infinite ease-in-out alternate;
+}
+
+@keyframes rotate {
+	0% {
+		transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+	}
+	50% {
+		transform: perspective(120px) rotateX(-180deg) rotateY(0deg);
+	}
+	100% {
+		transform: perspective(120px) rotateX(-180deg) rotateY(-180deg);
+	}
+}
+@keyframes background {
+	0% {
+		background-color: #27ae60;
+	}
+	50% {
+		background-color: #9b59b6;
+	}
+	100% {
+		background-color: #c0392b;
+	}
+}
+

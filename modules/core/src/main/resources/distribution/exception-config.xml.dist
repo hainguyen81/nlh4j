@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc
+						http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+    					http://www.springframework.org/schema/beans
+    					http://www.springframework.org/schema/beans/spring-beans.xsd
+    					http://www.springframework.org/schema/context
+    					http://www.springframework.org/schema/context/spring-context-4.0.xsd"
+	profile=",default,simple,quartz,mail,template,socket,full">
+
+	<!-- BEGIN: Exception handlers -->
+	<bean id="handlerExceptionResolver"
+		class="org.nlh4j.core.handlers.HandlerExceptionResolver"
+		scope="singleton">
+		<!-- Error pages by status -->
+        <property name="errorStatusPages">
+            <map>
+                <entry key="403" value="error/403" />
+                <entry key="404" value="error/404" />
+                <entry key="405" value="error/405" />
+                <entry key="409" value="error/409" />
+                <entry key="415" value="error/415" />
+                <entry key="500" value="error/500" />
+            </map>
+        </property>
+		<!-- Expose context bean to JSP -->
+        <property name="exposedContextBeanNames">
+            <list><value>properties</value></list>
+        </property>
+	</bean>
+	<!-- END: Exception handlers -->
+
+</beans>

@@ -1,0 +1,199 @@
+.context-menu.dropdown-menu {
+	background-color: #03485f;
+	border-radius: 7px;
+	padding: 5px;
+}
+.context-menu.dropdown-menu li {
+	cursor: pointer;
+	/* box effect */
+	-webkit-transition: all 0.7s ease;
+	transition: all 0.7s ease;
+}
+.context-menu.dropdown-menu > li > a {
+	color: #ffffff;
+	font-size: small;
+}
+.context-menu.dropdown-menu > li.disabled > a {
+	color: #cccccc;
+}
+.context-menu.dropdown-menu li:hover {
+	background-color: #669fd0;
+	/* box effect */
+	-webkit-box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, .75);
+	-moz-box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, .75);
+	-o-box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, .75);
+	-ms-box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, .75);
+	box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, .75);
+}
+.context-menu.dropdown-menu li:first-child:hover {
+	/* border-top-right-radius: 7px;
+    border-top-left-radius: 7px; */
+}
+.context-menu.dropdown-menu li:last-child:hover {
+	/* border-bottom-right-radius: 7px;
+    border-bottom-left-radius: 7px; */
+}
+.context-menu.dropdown-menu > li:hover > a,
+.context-menu.dropdown-menu > li:hover > a:hover,
+.context-menu.dropdown-menu > li:hover > a:focus,
+.context-menu.dropdown-menu > li:hover > a:active,
+.context-menu.dropdown-menu > li > a:hover,
+.context-menu.dropdown-menu > li > a:focus,
+.context-menu.dropdown-menu > li > a:active {
+	color: #ffffff;
+	outline: none;
+	background-color: transparent;
+}
+.context-menu.dropdown-menu > li.disabled:hover > a,
+.context-menu.dropdown-menu > li.disabled:hover > a:hover,
+.context-menu.dropdown-menu > li.disabled:hover > a:focus,
+.context-menu.dropdown-menu > li.disabled:hover > a:active,
+.context-menu.dropdown-menu > li.disabled > a:hover,
+.context-menu.dropdown-menu > li.disabled > a:focus,
+.context-menu.dropdown-menu > li.disabled > a:active {
+	color: #cccccc;
+}
+.context-menu.dropdown-menu > li.menu-item > a:before {
+	font: normal normal normal 14px/1 FontAwesome;
+	padding-right: 5px;
+	width: 20px;
+	display: inline-block;
+}
+.context-menu.dropdown-menu > li.divider {
+	margin: 1px 0;
+}
+/** save menu **/
+.context-menu.dropdown-menu > li.menu-item > a.save:before {
+	content: "\f0c7";
+	color: #43ac6a;
+}
+.context-menu.dropdown-menu > li.menu-item.disabled > a.save:before {
+	color: #cccccc;
+}
+/** view menu **/
+.context-menu.dropdown-menu > li.menu-item > a.view:before {
+	content: "\f06e";
+	color: #5bc0de;
+}
+.context-menu.dropdown-menu > li.menu-item.disabled > a.view:before {
+	color: #cccccc;
+}
+/** edit menu **/
+.context-menu.dropdown-menu > li.menu-item > a.edit:before {
+	content: "\f044";
+	color: #e99002;
+}
+.context-menu.dropdown-menu > li.menu-item.disabled > a.edit:before {
+	color: #cccccc;
+}
+/** assign company menu **/
+.context-menu.dropdown-menu > li.menu-item > a.assign-company:before {
+	content: "\f1e0";
+	color: #e99002;
+}
+.context-menu.dropdown-menu > li.menu-item.disabled > a.assign-company:before {
+	color: #cccccc;
+}
+/** delete menu **/
+.context-menu.dropdown-menu > li.menu-item > a.delete:before {
+	content: "\f1f8";
+	color: #f04124;
+}
+.context-menu.dropdown-menu > li.menu-item.disabled > a.delete:before {
+	color: #cccccc;
+}
+/** asset-remove menu **/
+.context-menu.dropdown-menu > li.menu-item > a.asset-remove:before {
+	content: "\f1e0";
+	color: #421505;
+}
+.context-menu.dropdown-menu > li.menu-item.disabled > a.asset-remove:before {
+	color: #cccccc;
+}
+/** amort menu **/
+.context-menu.dropdown-menu > li.menu-item > a.amort:before {
+	content: "\f079";
+	color: #d06f4c;
+}
+.context-menu.dropdown-menu > li.menu-item.disabled > a.amort:before {
+	color: #cccccc;
+}
+/** furlough-reject menu **/
+.context-menu.dropdown-menu > li.menu-item > a.furlough-reject:before {
+	content: "\f056";
+	color: #f04124;
+}
+.context-menu.dropdown-menu > li.menu-item.disabled > a.furlough-reject:before {
+	color: #cccccc;
+}
+/** furlough-approve menu **/
+.context-menu.dropdown-menu > li.menu-item > a.furlough-approve:before {
+	content: "\f00c";
+	color: #ffffff;
+}
+.context-menu.dropdown-menu > li.menu-item.disabled > a.furlough-approve:before {
+	color: #cccccc;
+}
+/** excel menu **/
+.context-menu.dropdown-menu > li.menu-item > a.xls:before {
+	content: "\f1c3";
+	color: #c3338b;
+}
+.context-menu.dropdown-menu > li.menu-item > a.xls.xlsp:before {
+	color: #e99002;
+}
+.context-menu.dropdown-menu > li.menu-item.disabled > a.xls:before {
+	color: #cccccc;
+}
+/** print menu **/
+.context-menu.dropdown-menu > li.menu-item > a.print:before {
+	content: "\f02f";
+	color: #c17139;
+}
+.context-menu.dropdown-menu > li.menu-item.disabled > a.print:before {
+	color: #cccccc;
+}
+/** forward menu **/
+.context-menu.dropdown-menu > li.menu-item > a.forward:before {
+	content: "\f064";
+	color: #61c12f;
+}
+.context-menu.dropdown-menu > li.menu-item.disabled > a.forward:before {
+	color: #cccccc;
+}
+/** settings menu **/
+.context-menu.dropdown-menu > li.menu-item > a.settings:before {
+	content: "\f013";
+	color: #528ec3;
+}
+.context-menu.dropdown-menu > li.menu-item.disabled > a.settings:before {
+	color: #cccccc;
+}
+/** confirm menu **/
+.context-menu.dropdown-menu > li.menu-item > a.confirm:before {
+	content: "\f00c";
+	color: #5bc0de;
+}
+.context-menu.dropdown-menu > li.menu-item.disabled > a.confirm:before {
+	color: #cccccc;
+}
+/** pay menu **/
+.context-menu.dropdown-menu > li.menu-item > a.pay:before {
+	content: "\f1ee";
+	color: #008cba;
+}
+.context-menu.dropdown-menu > li.menu-item.disabled > a.pay:before {
+	color: #cccccc;
+}
+/** un-confirm menu **/
+.context-menu.dropdown-menu > li.menu-item > a.un-confirm:before {
+	content: "\f00d";
+	color: #d26982;
+}
+.context-menu.dropdown-menu > li.menu-item.disabled > a.un-confirm:before {
+	color: #cccccc;
+}
+
+
+
+

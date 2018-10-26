@@ -1,0 +1,52 @@
+.sticky-wrapper { position: relative; }
+.sticky-scroller {
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+    width: 100%;
+}
+.sticky-scroller table {
+	border-left: none !important;
+	border-right: none !important;
+}
+.sticky-scroller table {
+	box-sizing: border-box;
+}
+.sticky-column {
+    left: 0;
+    position: absolute;
+    top: auto;
+    width: auto;
+    transition: all .125s ease-in-out;
+    z-index: 50;
+    width: auto; /* Prevent table from stretching to full size */
+}
+.sticky-row {
+    left: auto;
+    position: absolute;
+    top: 0;
+    width: auto;
+    box-shadow: 0 0.25em 0.1em -0.1em rgba(0,0,0,.125);
+	transition: all .125s ease-in-out;
+    z-index: 50;
+    width: 100%; /* Force stretch */
+}
+.sticky-intersect {
+	opacity: 1;
+    position: absolute;
+    top: auto;
+    left: auto;
+    transition: all .125s ease-in-out;
+    width: auto; /* Prevent table from stretching to full size */
+	z-index: 150;
+}
+.sticky-row tr {
+	width: 100%;
+}
+.sticky-row tr,
+.sticky-row th,
+.sticky-row td {
+	display: inline-block;
+	position: relative;
+	float: left;
+}

@@ -1,0 +1,12 @@
+app.theme=<application theme name>
+app.max.items.per.page=15
+app.min.password.length=5
+app.license.public=
+
+#---------------------------------------------------
+# SEARCH LIKE OPERATOR
+#		- PREFIX: abc%
+#		- SUFFIX: %abc
+#		- CONTAIN: %abc%
+#---------------------------------------------------
+app.search.like.operator=PREFIX

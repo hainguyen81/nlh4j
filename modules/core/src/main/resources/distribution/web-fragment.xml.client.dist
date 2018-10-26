@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-fragment
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+						http://java.sun.com/xml/ns/javaee/web-fragment_3_0.xsd"
+	id="nlh4jWebAppClientID"
+	version="3.0">
+
+    <name>nlh4jWebClient</name>
+    <distributable />
+
+	<ordering>
+		<before>
+		    <name>nlh4jWebTemplate</name>
+			<others />
+		</before>
+	</ordering>
+</web-fragment>

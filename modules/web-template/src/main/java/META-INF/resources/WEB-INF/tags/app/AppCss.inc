@@ -1,0 +1,20 @@
+<%@ include file="/WEB-INF/tags/Common.inc" %>
+
+<nlh4jTags:Css src="skins/global.css" />
+<nlh4jTags:Css src="skins/tooltip.css" />
+<nlh4jTags:Css src="skins/select.css" />
+<nlh4jTags:Css src="skins/buttons.css" />
+<nlh4jTags:Css src="skins/checkbox.css" />
+<nlh4jTags:Css src="skins/contextmenu.css" />
+<nlh4jTags:Css src="skins/datepicker.css" />
+<nlh4jTags:Css src="skins/listview.css" />
+<nlh4jTags:Css src="skins/modal.css" />
+<nlh4jTags:Css src="skins/panel.css" />
+<nlh4jTags:Css src="skins/tables.css" />
+<nlh4jTags:Css src="skins/filters.css" />
+<nlh4jTags:Css src="skins/sidebar.css" />
+<nlh4jTags:Css src="skins/spins.css" />
+<nlh4jTags:Css src="skins/sticky.css" />
+<nlh4jTags:Css src="skins/clear.css" />
+<nlh4jTags:Css src="skins/skins.css" />
+<nlh4jTags:Css src="styles.css" />

@@ -1,0 +1,13 @@
+.clear { clear: both; }
+.vspace-5 { height: 5px; }
+.vspace-10 { height: 10px; }
+.vspace-15 { height: 15px; }
+.vspace-20 { height: 20px; }
+.vspace-25 { height: 25px; }
+.vspace-30 { height: 30px; }
+.hspace-5 { width: 5px; }
+.hspace-10 { width: 10px; }
+.hspace-15 { width: 15px; }
+.hspace-20 { width: 20px; }
+.hspace-25 { width: 25px; }
+.hspace-30 { width: 30px; }

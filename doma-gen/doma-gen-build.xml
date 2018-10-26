@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2016.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<project name="doma-gen-example" default="gen" basedir=".">
+
+	<property name="javaDestDir" value="src/main/java"/>
+	<property name="sqlDestDir" value="src/main/resources"/>
+	<property name="dialectName" value="postgres"/>
+	<property name="driverClassName" value="org.postgresql.Driver"/>
+	<property name="url" value="jdbc:postgresql://192.168.240.10:5433/hkfilm"/>
+	<property name="user" value="postgres"/>
+	<property name="password" value="123456"/>
+	<property name="schemaName" value="public"/>
+	<property name="useAccessor" value="false"/>
+	<property name="showDbComment" value="true"/>
+	<property name="useListener" value="true"/>
+	<property name="useUtilDate" value="false"/>
+	<property name="entityPackageName" value="org.nlh4j.web.db.domain.entity"/>
+	<property name="dtoPackageName" value="org.nlh4j.web.db.domain.dto"/>
+	<property name="daoPackageName" value="org.nlh4j.web.db.domain.dao"/>
+	<property name="configClassName" value="org.nlh4j.web.db.domain.config.AppConfig"/>
+	<property name="sqlTestClassName" value="org.nlh4j.web.db.domain.SqlTest"/>
+	<property name="sqlFilePattern" value="META-INF/**/*.sql"/>
+	<property name="tableNamePattern" value="customer_agent"/>
+	<path id="classpath">
+		<fileset dir="lib"/>
+	</path>
+
+	<taskdef name="gen" classname="org.seasar.doma.extension.gen.task.Gen" classpathref="classpath" loaderref="loader"/>
+	<taskdef name="genTest" classname="org.seasar.doma.extension.gen.task.GenTest" loaderref="loader"/>
+	<typedef name="entityConfig" classname="org.seasar.doma.extension.gen.task.EntityConfig" loaderref="loader"/>
+	<typedef name="daoConfig" classname="org.seasar.doma.extension.gen.task.DaoConfig" loaderref="loader"/>
+	<typedef name="sqlConfig" classname="org.seasar.doma.extension.gen.task.SqlConfig" loaderref="loader"/>
+
+	<target name="gen">
+		<gen
+			dialectName="${dialectName}"
+			driverClassName="${driverClassName}"
+			url="${url}"
+			user="${user}"
+			password="${password}"
+			templatePrimaryDir="mytemplate"
+			schemaname="${schemaName}"
+			tableNamePattern="${tableNamePattern}"
+			tableTypes="TABLE,MATERIALIZED VIEW,VIEW">
+			<entityConfig
+				destdir="${javaDestDir}"
+				packageName="${entityPackageName}"
+				useUtilDate="${useUtilDate}"
+				useListener="${useListener}"
+				overwrite="true"
+				showDbComment="${showDbComment}"
+				useAccessor="${useAccessor}"
+			/>
+
+			<daoConfig
+				destdir="${javaDestDir}"
+				overwrite="true"
+				packageName="${daoPackageName}"
+
+			/>
+			<sqlConfig
+				overwrite="true"
+				destdir="${sqlDestDir}"
+			/>
+		</gen>
+	</target>
+
+	<target name="gen-view">
+		<gen
+			dialectName="${dialectName}"
+			driverClassName="${driverClassName}"
+			url="${url}"
+			user="${user}"
+			password="${password}"
+			templatePrimaryDir="mytemplate"
+			tableTypes="VIEW,sequence">
+			<entityConfig
+				destdir="${javaDestDir}"
+				packageName="${entityPackageName}"
+				useUtilDate="true"
+				useListener="false"
+				overwrite="true"
+				showDbComment="${showDbComment}"
+				useAccessor="${useAccessor}"
+			/>
+
+			<dtoConfig
+				destdir="${javaDestDir}"
+				overwrite="true"
+				packageName="${dtoPackageName}"
+			/>
+			<daoConfig
+				destdir="${javaDestDir}"
+				overwrite="true"
+				packageName="${daoPackageName}"
+
+			/>
+			<sqlConfig
+				overwrite="true"
+				destdir="${sqlDestDir}"
+			/>
+		</gen>
+	</target>
+
+	<target name="genTest">
+		<genTest
+			dialectName="${dialectName}"
+			driverClassName="${driverClassName}"
+			url="${url}"
+			user="${user}"
+			password="${password}">
+			<sqlTestConfig
+				destdir="${javaDestDir}"
+				testClassName="${sqlTestClassName}">
+				<fileset dir="${sqlDestDir}">
+					<include name="${sqlFilePattern}"/>
+				</fileset>
+			</sqlTestConfig>
+		</genTest>
+	</target>
+
+</project>

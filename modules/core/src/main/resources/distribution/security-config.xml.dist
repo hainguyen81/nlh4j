@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+					    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+					    http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context-4.0.xsd
+					    http://www.springframework.org/schema/security
+					    http://www.springframework.org/schema/security/spring-security-3.2.xsd"
+	profile=",default,simple,quartz,mail,template,socket,full">
+
+    <http security="none" pattern="/resources/**" />
+	<http pattern="/**" auto-config="false" use-expressions="true"
+	    authentication-manager-ref="authenticationManager"
+	    entry-point-ref="authenticationEntryPoint">
+
+	    <intercept-url pattern="${sec.auth.entry.login.url}" access="permitAll" />
+	    <!-- <intercept-url pattern="/j_spring_security_check" access="permitAll" /> -->
+		<intercept-url pattern="${sec.auth.logout.url}" access="permitAll" />
+		<!-- Fix problem redirecting to "/favicon.ico" -->
+        <intercept-url pattern="${sec.auth.favicon.url}" access="permitAll"/>
+		<intercept-url pattern="/**" access="isAuthenticated()" />
+
+        <security:headers>
+		    <security:frame-options policy="SAMEORIGIN" />
+		</security:headers>
+
+ 		<security:custom-filter ref="csrfTokenGeneratorFilter" after="CSRF_FILTER" />
+ 		<!-- <security:custom-filter ref="customFiltersBeforeSecurityFilter" before="FILTER_SECURITY_INTERCEPTOR" /> -->
+ 		<security:custom-filter ref="loginAuthenticationFilter" position="FORM_LOGIN_FILTER" />
+ 		<security:custom-filter ref="rememberMeFilter" before="FORM_LOGIN_FILTER" />
+ 		<security:custom-filter ref="customFiltersAfterSecurityFilter" after="FILTER_SECURITY_INTERCEPTOR" />
+ 		<security:csrf token-repository-ref="httpSessionCsrfTokenRepository" />
+
+		<logout logout-url="${sec.auth.logout.url}"
+		    delete-cookies="JSESSIONID,JREMEMBERME,JCSRFTOKEN,JCSRFTOKENCOOKIE"
+		    success-handler-ref="${sec.auth.logout.handler}" />
+		<security:session-management session-authentication-strategy-ref="sas"/>
+	</http>
+
+	<global-method-security secured-annotations="enabled" pre-post-annotations="enabled" />
+
+	<security:authentication-manager id="authenticationManager" alias="authenticationManager">
+		<security:authentication-provider ref="${sec.auth.prov}" />
+	</security:authentication-manager>
+
+	<!-- Authentication Provider -->
+	<!-- Using @Component with name value to scan component (using autowired and extened if necessary) -->
+	<!-- <beans:bean id="authenticationProvider"
+	    class="org.nlh4j.web.base.authentication.AuthenticationProvider"
+   	    scope="singleton">
+	    <beans:property name="rememberKey" value="${sec.auth.remember.key}" />
+	</beans:bean> -->
+
+	<!-- Remeber Provider -->
+	<beans:bean id="tokenRememberMeServices"
+        class="org.nlh4j.core.authentication.TokenRememberMeServices"
+   	    scope="singleton"
+   	    autowire="constructor">
+        <beans:constructor-arg index="0"
+            value="${sec.auth.remember.key}" type="java.lang.String" />
+	    <beans:property name="alwaysRemember"
+	        value="${sec.auth.remember.always}" />
+        <beans:property name="tokenValiditySeconds"
+            value="${sec.auth.remember.token.validity.seconds}" />
+        <beans:property name="cookieName"
+            value="${sec.auth.remember.token.cookie}" />
+        <beans:property name="parameter"
+            value="${sec.auth.remember.param.name}" />
+        <beans:property name="useSecureCookie"
+            value="${sec.auth.remember.cookie.secure}" />
+    </beans:bean>
+	<beans:bean id="rememberMeFilter"
+	    class="org.nlh4j.core.authentication.RememberMeAuthenticationFilter"
+   	    scope="singleton"
+   	    autowire="constructor">
+	    <beans:constructor-arg index="0" ref="authenticationManager" />
+	    <beans:constructor-arg index="1" ref="tokenRememberMeServices" />
+    </beans:bean>
+
+	<!-- Login entry point -->
+	<beans:bean id="authenticationEntryPoint"
+	    class="org.nlh4j.core.authentication.ExexAuthenticationEntryPoint"
+   	    scope="singleton"
+   	    autowire="constructor">
+        <beans:constructor-arg index="0" value="${sec.auth.entry.login.url}" type="java.lang.String" />
+        <beans:property name="forceHttps" value="false" />
+    </beans:bean>
+
+	<!-- Token filter -->
+	<beans:bean id="csrfTokenGeneratorFilter"
+	    class="org.nlh4j.core.authentication.CsrfTokenGeneratorFilter"
+   	    scope="singleton" />
+	<beans:bean id="httpSessionCsrfTokenRepository"
+	    class="org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository"
+   	    scope="singleton">
+		<beans:property name="headerName"
+		    value="JCSRFTOKEN" />
+    </beans:bean>
+
+	<!-- AFTER SECURITY FILTER INTERCEPTOR -->
+	<!-- Locale filter -->
+	<!-- Using @Component with name value to scan component (using autowired and extened if necessary) -->
+	<!-- <beans:bean id="localeConfigurerFilter"
+	    class="org.nlh4j.web.base.authentication.LocaleConfigurerFilter"
+   	    scope="singleton" /> -->
+	<!-- Company filter -->
+	<!-- Using @Component with name value to scan component (using autowired and extened if necessary) -->
+	<!-- <beans:bean id="companyConfigurerFilter"
+	    class="org.nlh4j.web.base.authentication.CompanyConfigurerFilter"
+   	    scope="singleton" /> -->
+   	<!-- Composite filters after security filter -->
+   	<beans:bean id="customFiltersAfterSecurityFilter"
+   	    class="org.nlh4j.core.authentication.CompositeFilter"
+   	    scope="singleton">
+        <beans:property name="filterBeanNames"
+            value="functionAuthenticationFilter,${sec.auth.locale.filter}" />
+	</beans:bean>
+
+	<!-- BEFORE SECURITY FILTER INTERCEPTOR -->
+	<!-- Function authentication filter -->
+   	<beans:bean id="functionAuthenticationFilter"
+   	    class="org.nlh4j.core.authentication.FunctionAuthenticationFilter"
+   	    scope="singleton">
+        <beans:property name="redirectURI"
+            value="${sec.auth.entry.login.url}" />
+    </beans:bean>
+   	<!-- Composite filters before security filter -->
+   	<beans:bean id="customFiltersBeforeSecurityFilter"
+   	    class="org.nlh4j.core.authentication.CompositeFilter"
+   	    scope="singleton">
+        <beans:property name="filterBeanNames" value="functionAuthenticationFilter" />
+	</beans:bean>
+
+   	<!-- Login authentication filter -->
+	<beans:bean id="loginAuthenticationFilter"
+	    class="org.nlh4j.core.authentication.LoginAuthenticationFilter"
+   	    scope="singleton"
+   	    depends-on="tokenRememberMeServices,sas,authenticationManager,customAuthenticationFailureHandler,customAuthenticationSuccessHandler"
+		p:rememberMeServices-ref="tokenRememberMeServices"
+		p:sessionAuthenticationStrategy-ref="sas"
+		p:username-parameter="username"
+		p:password-parameter="password"
+		p:authenticationManager-ref="authenticationManager"
+		p:authenticationFailureHandler-ref="customAuthenticationFailureHandler"
+		p:authenticationSuccessHandler-ref="customAuthenticationSuccessHandler" />
+
+	<!-- We just actually need to set the default failure url here -->
+	<beans:bean id="customAuthenticationFailureHandler"
+	    class="org.nlh4j.core.authentication.SimpleUrlAuthenticationFailureHandler"
+   	    scope="singleton"
+		p:defaultFailureUrl="${sec.auth.entry.login.url}" />
+
+	<!-- We just actually need to set the default target url here -->
+	<beans:bean id="customAuthenticationSuccessHandler"
+		class="org.nlh4j.core.authentication.SimpleUrlAuthenticationSuccessHandler"
+   	    scope="singleton"
+		p:defaultTargetUrl="/dashboard" />
+
+	<!-- Filter required by concurrent session handling package The ConcurrentSessionFilter
+		requires two properties, sessionRegistry, which generally points to an instance
+		of SessionRegistryImpl, and expiredUrl, which points to the page to display
+		when a session has expired. See: http://static.springsource.org/spring-security/site/docs/3.1.x/reference/session-mgmt.html#list-authenticated-principals -->
+	<!-- <beans:bean id="concurrencyFilter"
+		class="org.springframework.security.web.session.ConcurrentSessionFilter"
+		p:sessionRegistry-ref="sessionRegistry" p:expiredUrl="/login?expired=true" /> -->
+
+	<!-- Maintains a registry of SessionInformation instances See: http://static.springsource.org/spring-security/site/docs/3.0.x/apidocs/org/springframework/security/core/session/SessionRegistry.html -->
+	<beans:bean id="sessionRegistry"
+	    class="org.springframework.security.core.session.SessionRegistryImpl"
+   	    scope="singleton" />
+
+	<!-- Defines a concrete concurrent control strategy Checks whether the user
+		in question should be allowed to proceed, by comparing the number of sessions
+		they already have active with the configured maximumSessions value. The SessionRegistry
+		is used as the source of data on authenticated users and session data. See:
+		http://static.springsource.org/spring-security/site/docs/3.0.x/apidocs/org/springframework/security/web/authentication/session/ConcurrentSessionControlStrategy.html -->
+	<beans:bean id="sas"
+		class="org.nlh4j.core.authentication.ConcurrentSessionControlStrategy"
+		p:maximumSessions="1"
+   	    autowire="constructor">
+		<beans:constructor-arg index="0" ref="sessionRegistry" />
+	</beans:bean>
+
+</beans:beans>

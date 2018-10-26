@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+	<display-name>Web Application Name</display-name>
+	<absolute-ordering>
+	    <name>nlh4jWebClient</name>
+	    <!-- <name>nlh4jWebClientHkFilm</name> -->
+	    <name>nlh4jWebTemplate</name>
+	    <!-- <name>nlh4jWebTemplateHkFilm</name> -->
+		<name>nlh4jWebBase</name>
+		<others/>
+	</absolute-ordering>
+	<session-config>
+		<session-timeout>480</session-timeout>
+	</session-config>
+
+	<error-page>
+		<error-code>403</error-code>
+		<location>/WEB-INF/views/hkfilm/error/403.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/WEB-INF/views/hkfilm/error/404.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>405</error-code>
+		<location>/WEB-INF/views/hkfilm/error/404.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>415</error-code>
+		<location>/WEB-INF/views/hkfilm/error/500.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/WEB-INF/views/hkfilm/error/500.jsp</location>
+	</error-page>
+</web-app>
