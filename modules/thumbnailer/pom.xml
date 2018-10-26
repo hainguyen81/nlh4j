@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<!-- Parent -->
+	<parent>
+		<groupId>org.nlh4j</groupId>
+		<artifactId>nlh4j</artifactId>
+		<version>1.0</version>
+		<relativePath>../../pom.xml</relativePath>
+	</parent>
+
+	<!-- Present package -->
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>${project.parent.groupId}</groupId>
+	<artifactId>nlh4j-thumbnailer</artifactId>
+	<version>${project.parent.version}</version>
+	<packaging>jar</packaging>
+	<name>nlh4j-thumbnailer</name>
+	<description>Thumbnail Generator Package for Java Web/Mobile</description>
+
+	<!-- Dependencies -->
+	<dependencies>
+		<!-- NLH4J -->
+      	<dependency>
+			<groupId>${project.parent.groupId}</groupId>
+			<artifactId>nlh4j-utilities</artifactId>
+			<version>${module.version}</version>
+      	</dependency>
+
+		<!-- JOD Converter -->
+		<dependency>
+			<groupId>com.artofsolving</groupId>
+			<artifactId>jodconverter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jodconverter</groupId>
+			<artifactId>jodconverter-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jodconverter</groupId>
+			<artifactId>jodconverter-spring</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jodconverter</groupId>
+			<artifactId>jodconverter-local</artifactId>
+		</dependency>
+
+		<!-- Lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Test -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Others -->
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-all</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>

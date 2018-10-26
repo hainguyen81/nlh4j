@@ -1,0 +1,45 @@
+# #################################################
+# Database Login Properties
+# #################################################
+jdbc.server=
+jdbc.port=
+jdbc.database=
+jdbc.username=
+jdbc.password=
+
+# #################################################
+# Database Configuration
+# #################################################
+jdbc.driverClassName=org.postgresql.Driver
+jdbc.server.version=postgresql
+jdbc.useUnicode=true
+jdbc.charsetEncoding=utf8
+jdbc.autoReconnect=true
+jdbc.url.prefix=jdbc\:${jdbc.server.version}\://
+jdbc.url=${jdbc.url.prefix}${jdbc.server}:${jdbc.port}/${jdbc.database}?useUnicode=${jdbc.useUnicode}&characterEncoding=${jdbc.charsetEncoding}&autoReconnect=${jdbc.autoReconnect}
+
+# #################################################
+# Database Connection Properties
+# #################################################
+jdbc.initial.pool.size=2
+jdbc.min.pool.size=1
+jdbc.max.pool.size=100
+jdbc.max.statements=10000
+jdbc.max.idle.time=300
+jdbc.acquire.increment=10
+jdbc.acquire.retry.attempts=2
+jdbc.acquire.retry.delay=1000
+jdbc.unreturned.connection.timeout=90
+jdbc.max.connection.age=120
+jdbc.idle.test.period=10
+jdbc.test.connection.on.checkout=true
+
+# #################################################
+# Database Dialect
+# #################################################
+jdbc.dialect=org.nlh4j.core.dialects.PostgresDialect
+
+# #################################################
+# Doma Custom Repository
+# #################################################
+doma.repository.prefix=

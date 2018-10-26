@@ -1,0 +1,25 @@
+Date.Format.Pattern = dd/MM/yyyy
+Customer.Name = Hoan Khue Film Corp.
+Purchase.Order.No = 01/12/HD-BTT/BTC/HKFilm
+Purchase.Order.Date = 01/12/2016
+Service.Start.Date = 27/02/2017
+Service.Expires.Date = Unlimited
+Maintenance.Start.Date =
+Maintenance.End.Date =
+
+# A.Trung License
+#License.Server = DC-4A-3E-F5-BC-C6
+
+# Hai License
+#License.Server = FC-AA-14-20-E4-30
+#License.Server = 30-10-B3-D7-EB-2D
+License.Server = 30-10-B3-D7-EB-2D
+
+# Phuc License
+#License.Server = FC-AA-14-21-38-D7
+
+# Khoa License
+#License.Server = 60-A4-4C-38-5D-6E
+
+# Server CentOS
+#License.Server = 34-64-A9-36-5A-CF

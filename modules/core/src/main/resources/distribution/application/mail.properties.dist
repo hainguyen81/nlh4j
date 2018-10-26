@@ -1,0 +1,7 @@
+#####################################
+# SMTP configuration
+#####################################
+smtp.host = mail.system-exe.com.vn
+smtp.username = account@email.com
+smtp.password = sysexe
+mail.smtp.from = no-reply@email.com

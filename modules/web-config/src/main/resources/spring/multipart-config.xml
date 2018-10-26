@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc
+                           http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+                           http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context-4.0.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+
+	<!-- Use SPRING configuration -->
+    <context:spring-configured/>
+
+	<!-- Upload file -->
+	<!-- Using Apache Commons Multipart Resolver -->
+	<bean id="filterMultipartResolver" class="org.nlh4j.core.handlers.CommonsMultipartResolver">
+	    <!--
+	    Required to avoid error:
+			+ Unable to process parts as no multi-part configuration has been provided
+			+ And no need config tomcat context.xml with allowCasualMultipartParsing="true"
+		-->
+		<property name="resolveLazily" value="${multipart.resolveLazily}"/>
+		<property name="maxUploadSize" value="${multipart.maximum.size}"/>
+		<property name="maxInMemorySize" value="${multipart.buffer.size}"/>
+		<property name="defaultEncoding" value="${multipart.encoding}"/>
+		<property name="uploadTempDir" value="${multipart.upload.temp}"/>
+	</bean>
+	<!-- Using Spring StandardServletMultipartResolver -->
+	<!-- <bean id="filterMultipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"> -->
+	 	<!--
+	    Required to avoid error:
+			+ Unable to process parts as no multi-part configuration has been provided
+			+ And no need config tomcat context.xml with allowCasualMultipartParsing="true"
+		-->
+	    <!-- <property name="resolveLazily" value="${multipart.resolveLazily}"/>
+	</bean> -->
+
+</beans>

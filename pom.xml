@@ -1,0 +1,2011 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<!-- License -->
+	<licenses>
+		<license>
+			<name>GNU Lesser General Public License (LGPL), Version 3</name>
+			<url>http://www.gnu.org/licenses/lgpl.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<!-- Authors -->
+	<developers>
+		<developer>
+			<name>Hai Nguyen</name>
+			<email>hainguyenjc@gmail.com</email>
+		</developer>
+	</developers>
+
+	<!-- Contributors -->
+	<inceptionYear>2017</inceptionYear>
+	<contributors>
+		<contributor>
+			<name>Hai Nguyen</name>
+			<email>hainguyenjc@gmail.com</email>
+			<roles>
+				<role><![CDATA[ Technical/Team/Project Leader ]]></role>
+			</roles>
+		</contributor>
+	</contributors>
+
+	<!-- Profile configuration -->
+	<profiles>
+		<!-- The configuration of the development profile -->
+		<profile>
+			<id>dev</id>
+			<!-- The development profile is active by default -->
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<!-- Specifies the build.profile.id property that must be equal than
+					the name of the directory that contains the profile specific configuration
+					file. Because the name of the directory that contains the configuration file
+					of the development profile is dev, we must set the value of the build.profile.id
+					property to dev. -->
+				<build.profile.id>dev</build.profile.id>
+			</properties>
+		</profile>
+		<!-- The configuration of the production profile -->
+		<profile>
+			<id>prod</id>
+			<properties>
+				<!-- Specifies the build.profile.id property that must be equal than
+					the name of the directory that contains the profile specific configuration
+					file. Because the name of the directory that contains the configuration file
+					of the production profile is prod, we must set the value of the build.profile.id
+					property to prod. -->
+				<build.profile.id>prod</build.profile.id>
+			</properties>
+		</profile>
+		<!-- The configuration of the testing profile -->
+		<profile>
+			<id>test</id>
+			<properties>
+				<!-- Specifies the build.profile.id property that must be equal than
+					the name of the directory that contains the profile specific configuration
+					file. Because the name of the directory that contains the configuration file
+					of the testing profile is test, we must set the value of the build.profile.id
+					property to test. -->
+				<build.profile.id>test</build.profile.id>
+			</properties>
+		</profile>
+	</profiles>
+
+	<!-- Properties -->
+	<properties>
+		<!-- Package properties -->
+		<!-- <root.basedir>${maven.multiModuleProjectDirectory}</root.basedir> --> <!-- require maven 3.3.1 or greater  -->
+		<root.basedir>E:/Java.Working/16.projects.4.8.0/nlh4j</root.basedir>
+		<module.groupId>org.nlh4j</module.groupId>
+		<module.version>1.0</module.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<finalName>${project.artifactId}-${project.version}</finalName>
+		<java.version>1.8</java.version>
+
+		<!-- Profile properties file -->
+		<profile.configuration>${root.basedir}/profiles/${build.profile.id}/config.properties</profile.configuration>
+
+		<!-- License password -->
+		<license.alias>${module.groupId}</license.alias>
+		<license.storepass>01101981</license.storepass>
+		<license.keypass>01101981</license.keypass>
+
+		<!-- Maven Plugins -->
+		<maven.m2e.lifecycle.mapping.version>1.0.0</maven.m2e.lifecycle.mapping.version>
+		<maven.findbugs.version>3.0.6-SNAPSHOT</maven.findbugs.version>
+		<maven.groovy.version>2.1</maven.groovy.version>
+		<maven.enforcer.version>3.0.0-M1</maven.enforcer.version>
+		<maven.versions.version>2.5</maven.versions.version>
+		<maven.properties.version>1.0.0</maven.properties.version>
+		<maven.release.version>2.5.3</maven.release.version>
+		<maven.build.helper.version>3.0.0</maven.build.helper.version>
+		<maven.resources.version>3.0.2</maven.resources.version>
+		<maven.compiler.version>3.7.0</maven.compiler.version>
+		<maven.aspectj.version>1.11</maven.aspectj.version>
+		<maven.source.version>3.0.1</maven.source.version>
+		<maven.javadoc.version>2.10.4</maven.javadoc.version>
+		<maven.jar.version>3.0.2</maven.jar.version>
+		<maven.war.version>3.2.2</maven.war.version>
+		<maven.jarsigner.version>1.4</maven.jarsigner.version>
+		<maven.surefire.version>2.19.1</maven.surefire.version>
+		<maven.nexus.staging.version>1.6.7</maven.nexus.staging.version>
+		<maven.truelicense.version>2.6.4</maven.truelicense.version>
+		<maven.proguard.version>2.0.14</maven.proguard.version>
+
+		<!-- JAR Signer -->
+		<jarsigner.skip>false</jarsigner.skip>
+		<jarsigner.verbose>true</jarsigner.verbose>
+		<jarsigner.keystore>${root.basedir}/${module.groupId}.keystore.jks</jarsigner.keystore>
+		<jarsigner.alias>${license.alias}</jarsigner.alias>
+		<jarsigner.storepass>${license.storepass}</jarsigner.storepass>
+		<jarsigner.keypass>${license.keypass}</jarsigner.keypass>
+		<jarsigner.storetype>JKS</jarsigner.storetype>
+
+		<!-- Progurad configuration -->
+		<proguard.configuration>${root.basedir}/proguard.cnf</proguard.configuration>
+		<proguard.skip>false</proguard.skip>
+
+		<!-- Servlet -->
+		<javax.servlet-api.version>3.1.0</javax.servlet-api.version>
+		<javaee-web-api.version>7.0</javaee-web-api.version>
+		<jstl.version>1.2</jstl.version>
+
+		<!-- tag-libs -->
+		<taglibs.version>1.1.2</taglibs.version>
+
+		<!-- Response Compression -->
+		<com.github.ziplet.version>2.0.0</com.github.ziplet.version>
+
+		<!-- Springframework -->
+		<!-- <spring.framework.version>4.2.5.RELEASE</spring.framework.version> -->
+		<!-- <spring.framework.version>4.0.6.RELEASE</spring.framework.version> -->
+		<!-- FIXME New version to avoid SecurityException of Spring AOP and maven jar signer.
+			Could not generate CGLIB subclass... Common causes of this problem include
+			using a final class or a non-visible class; nested exception is java.lang.IllegalArgumentException:
+			Cannot subclass final class... -->
+		<spring.framework.version>5.0.4.RELEASE</spring.framework.version>
+		<spring.security.version>3.2.9.RELEASE</spring.security.version>
+		<!-- <spring.security.version>4.0.4.RELEASE</spring.security.version> -->
+		<spring.ldap.core.version>2.0.4.RELEASE</spring.ldap.core.version>
+		<org.aspectj.version>1.8.13</org.aspectj.version>
+
+		<!-- Nimbus - Spring Security JWT Authentication -->
+		<com.nimbusds.jose.jwt.version>3.8</com.nimbusds.jose.jwt.version>
+
+		<!-- Spring websocket depencencies -->
+		<javax.websocket.version>1.0</javax.websocket.version>
+		<org.projectreactor.version>1.1.6.RELEASE</org.projectreactor.version>
+		<!-- Tomcat 7.x -->
+		<!-- <org.apache.tomcat.version>7.0.52</org.apache.tomcat.version> -->
+		<!-- Tomcat 8.0.x -->
+		<org.apache.tomcat.version>8.0.41</org.apache.tomcat.version>
+		<!-- Tomcat 8.5.x -->
+		<!-- <org.apache.tomcat.version>8.5.11</org.apache.tomcat.version> -->
+		<!-- Tomcat 9.x -->
+		<!-- <org.apache.tomcat.version>9.0.0.M17</org.apache.tomcat.version> -->
+
+		<!-- Quartz -->
+		<quartz.c3p0.version>0.9.1.1</quartz.c3p0.version>
+		<quartz.version>2.2.1</quartz.version>
+
+		<!-- Jackson Json -->
+		<codehaus.jackson-core-asl.version>1.9.13</codehaus.jackson-core-asl.version>
+		<codehaus.jackson-jaxrs.version>1.9.13</codehaus.jackson-jaxrs.version>
+		<codehaus.jackson-mapper-asl.version>1.9.13</codehaus.jackson-mapper-asl.version>
+		<codehaus.jackson-xc.version>1.9.13</codehaus.jackson-xc.version>
+
+		<!-- Jackson XML -->
+		<!-- <com.fasterxml.jackson.version>2.0.5</com.fasterxml.jackson.version> -->
+		<!-- <com.fasterxml.jackson.version>2.8.3</com.fasterxml.jackson.version> -->
+		<com.fasterxml.jackson.version>2.9.4</com.fasterxml.jackson.version>
+		<com.fasterxml.woodstox.version>5.0.3</com.fasterxml.woodstox.version>
+		<org.codehaus.woodstox.version>4.0.0</org.codehaus.woodstox.version>
+
+		<!-- Jersey -->
+		<jersey.json.version>1.19.2</jersey.json.version>
+		<jersey.client.version>1.19.2</jersey.client.version>
+		<jersey.multipart.version>1.19.2</jersey.multipart.version>
+		<jersey.server.version>1.19.2</jersey.server.version>
+		<jersey.spring.version>1.19.2</jersey.spring.version>
+
+		<!-- Datasource -->
+		<com.mchange.c3p0.version>0.9.5.2</com.mchange.c3p0.version>
+		<!-- PostgreSQL -->
+		<postgre.version>9.3-1102-jdbc4</postgre.version>
+		<!-- SQL Server -->
+		<com.hynnet.sqljdbc4-chs.version>4.0.2206.100</com.hynnet.sqljdbc4-chs.version>
+		<!-- Doma -->
+		<doma.version>1.38.0</doma.version>
+		<javax.inject.version>1</javax.inject.version>
+
+		<!-- Hibernate -->
+		<!-- <org.hibernate.version>5.2.10.Final</org.hibernate.version>
+		<org.hibernate.javax.persistence.version>1.0.0.Final</org.hibernate.javax.persistence.version>
+		<org.hibernate.common-annotations.version>5.0.1.Final</org.hibernate.common-annotations.version> -->
+		<org.hibernate.validator.version>5.1.0.Final</org.hibernate.validator.version>
+
+		<!-- SLF4J -->
+		<org.slf4j.version>1.7.12</org.slf4j.version>
+		<logback.version>1.1.7</logback.version>
+
+		<!-- Mail -->
+		<javax.mail.version>1.4.7</javax.mail.version>
+
+		<!-- Freemarker -->
+		<freemarker.version>2.3.22</freemarker.version>
+
+		<!-- jasperreports -->
+		<net.sf.jasperreports.version>6.2.0</net.sf.jasperreports.version>
+		<net.sourceforge.jexcelapi.version>2.6.10</net.sourceforge.jexcelapi.version>
+
+		<!-- Joda Time -->
+		<joda.time.version>2.7</joda.time.version>
+
+		<!-- Apache POI -->
+		<org.apache.poi.version>3.15</org.apache.poi.version>
+		<org.apache.poi.ooxml.version>3.15</org.apache.poi.ooxml.version>
+		<org.apache.poi-schemas.version>3.15</org.apache.poi-schemas.version>
+		<org.apache.poi-scratchpad.version>3.15</org.apache.poi-scratchpad.version>
+
+		<!-- Apache Commons Upload -->
+		<commons.fileupload.version>1.3.1</commons.fileupload.version>
+
+		<!-- Apache HTTP Components -->
+		<http.core.version>4.4.5</http.core.version>
+		<http.client.version>4.5.2</http.client.version>
+
+		<!-- Apache Tiles -->
+		<tiles.version>3.0.5</tiles.version>
+
+		<!-- Apache Commons DHCP -->
+		<commons.dbcp2.version>2.0.1</commons.dbcp2.version>
+
+		<!-- Apache Commons Utilities -->
+		<commons.lang.version>2.6</commons.lang.version>
+		<commons.lang3.version>3.3.2</commons.lang3.version>
+		<commons.io.version>1.3.2</commons.io.version>
+		<commons.beanutils.version>1.9.2</commons.beanutils.version>
+		<commons.configuration.version>1.10</commons.configuration.version>
+		<commons.validator.version>1.5.1</commons.validator.version>
+
+		<!-- HTML -->
+		<net.sf.htmlcleaner.version>2.16</net.sf.htmlcleaner.version>
+		<org.jsoup.version>1.9.1</org.jsoup.version>
+
+		<!-- Browser -->
+		<eu.bitwalker.version>1.19</eu.bitwalker.version>
+
+		<!-- Bean Validation -->
+		<javax.validation.api.version>1.1.0.Final</javax.validation.api.version>
+
+		<!-- Lombok -->
+		<org.projectlombok.version>1.16.18</org.projectlombok.version>
+
+		<!-- Test JUNIT -->
+		<junit.version>4.11</junit.version>
+
+		<!-- Other -->
+		<hamcrest.version>1.3</hamcrest.version>
+		<!-- Beans -->
+		<!-- Use openbeans (not using java.beans) for all Java and Android -->
+		<com.google.openbeans.version>1.0</com.google.openbeans.version>
+
+		<!-- Barcode4j Dependency -->
+		<avalon-framework.version>4.2.0</avalon-framework.version>
+		<avalon-framework-api.version>4.2.0</avalon-framework-api.version>
+		<avalon-framework-impl.version>4.2.0</avalon-framework-impl.version>
+		<!-- Barcode4j -->
+		<net.sf.barcode4j.version>2.1</net.sf.barcode4j.version>
+
+		<!-- Viber -->
+		<com.viber.bot.version>1.0.9</com.viber.bot.version>
+
+		<!-- Thumbnailer Libraries -->
+		<com.artofsolving.jodconverter.version>2.2.1</com.artofsolving.jodconverter.version>
+		<org.jodconverter.version>4.2.0</org.jodconverter.version>
+
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ -->
+		<!-- ANDROID -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ -->
+		<!-- Spring Adnroid -->
+		<spring.android.core.version>2.0.0.M3</spring.android.core.version>
+		<spring.android.rest-template.version>2.0.0.M3</spring.android.rest-template.version>
+
+		<!-- Android -->
+		<com.google.android.version>4.1.1.4</com.google.android.version>
+		<com.google.android.annotations.version>4.1.1.4</com.google.android.annotations.version>
+		<com.google.android.multidex.version>1.0.1</com.google.android.multidex.version>
+	</properties>
+
+	<!-- Build settings -->
+	<build>
+		<finalName>${finalName}</finalName>
+		<filters>
+			<!-- Ensures that the config.properties file is always loaded from the
+				configuration directory of the active Maven profile. -->
+			<filter>${profile.configuration}</filter>
+		</filters>
+		<pluginManagement>
+			<plugins>
+				<!-- Find bugs -->
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>findbugs-maven-plugin</artifactId>
+					<version>${maven.findbugs.version}</version>
+				</plugin>
+				<!-- Groovy for supporting root directory -->
+				<plugin>
+					<groupId>org.codehaus.gmaven</groupId>
+					<artifactId>groovy-maven-plugin</artifactId>
+					<version>${maven.groovy.version}</version>
+					<executions>
+						<execution>
+							<id>find-basepath</id>
+							<phase>validate</phase>
+							<goals>
+								<goal>execute</goal>
+							</goals>
+							<configuration>
+								<source>
+									<![CDATA[
+										import java.io.File;
+										String p = "profiles";
+										File f = null;
+										if ( p != null ) {
+											def _max_child_poms = 0
+											while( _max_child_poms++ < 5 ) {
+												f = new File( p );
+												if( f.exists() && f.isDirectory() ) {
+													break;
+												}
+												p = "../" + p;
+											}
+										}
+										if( f != null ) {
+											String basePath = f.getCanonicalPath();
+											basePath = basePath.substring( 0, basePath.lastIndexOf( File.separator ) );
+											basePath = basePath.replace( '\\' , '/' );
+											if ( basePath == null || basePath.length() <= 0 ) {
+												log.error( 'Could not find root directory!' );
+												System.stop( 0 );
+											} else {
+												log.info( 'Root directory path {' + basePath + '}');
+												project.properties[ 'root.basedir' ] = basePath;
+											}
+										} else {
+											log.error( 'Could not find root directory!' );
+											System.stop( 0 );
+										}
+									]]>
+								</source>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<!-- Enforce JDK version -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-enforcer-plugin</artifactId>
+					<version>${maven.enforcer.version}</version>
+					<executions>
+						<execution>
+							<id>enforce-versions</id>
+							<goals>
+								<goal>enforce</goal>
+							</goals>
+							<configuration>
+								<fail>true</fail>
+								<failFast>true</failFast>
+								<ignoreCache>true</ignoreCache>
+								<rules>
+									<requireJavaVersion>
+										<version>${java.version}</version>
+									</requireJavaVersion>
+								</rules>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>properties-maven-plugin</artifactId>
+					<version>${maven.properties.version}</version>
+					<executions>
+						<execution>
+							<phase>initialize</phase>
+							<goals>
+								<goal>read-project-properties</goal>
+							</goals>
+							<configuration>
+								<files>
+									<file>${profile.configuration}</file>
+								</files>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<!-- Check new version of dependencies -->
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>versions-maven-plugin</artifactId>
+					<version>${maven.versions.version}</version>
+					<configuration>
+						<outputEncoding>${project.build.sourceEncoding}</outputEncoding>
+						<outputFile>${root.basedir}/dependency_versions.log</outputFile>
+						<verbose>true</verbose>
+					</configuration>
+					<executions>
+						<execution>
+							<id>display-dependency-updates</id>
+							<goals>
+								<goal>display-dependency-updates</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>display-plugin-updates</id>
+							<goals>
+								<goal>display-plugin-updates</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<!-- This plugin is used to release a project with Maven, saving a lot of repetitive, manual work.
+					Releasing a project is made in two steps: prepare and perform. -->
+				<!-- <plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>${maven.release.version}</version>
+				</plugin> -->
+				<!-- Attach more source folders -->
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>${maven.build.helper.version}</version>
+					<executions>
+						<execution>
+							<id>add-source</id>
+							<phase>generate-sources</phase>
+							<goals>
+								<goal>add-source</goal>
+							</goals>
+							<configuration>
+								<sources>
+									<source>${project.basedir}/.apt_generated</source>
+								</sources>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<!-- Copy resources -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>${maven.resources.version}</version>
+					<executions>
+						<execution>
+							<id>copy-resources</id>
+							<!-- here the phase you need -->
+							<phase>validate</phase>
+							<goals>
+								<goal>copy-resources</goal>
+							</goals>
+							<configuration>
+								<outputDirectory>${project.build.outputDirectory}</outputDirectory>
+								<encoding>${project.build.sourceEncoding}</encoding>
+								<overwrite>true</overwrite>
+								<supportMultiLineFiltering>true</supportMultiLineFiltering>
+								<nonFilteredFileExtensions>
+									<!-- excel template -->
+									<nonFilteredFileExtension>*.xls</nonFilteredFileExtension>
+									<nonFilteredFileExtension>*.xlsx</nonFilteredFileExtension>
+									<!-- fonts -->
+									<nonFilteredFileExtension>*.eot</nonFilteredFileExtension>
+									<nonFilteredFileExtension>*.svg</nonFilteredFileExtension>
+									<nonFilteredFileExtension>*.ttf</nonFilteredFileExtension>
+									<nonFilteredFileExtension>*.woff</nonFilteredFileExtension>
+									<nonFilteredFileExtension>*.woff2</nonFilteredFileExtension>
+									<nonFilteredFileExtension>*.otf</nonFilteredFileExtension>
+								</nonFilteredFileExtensions>
+								<resources>
+									<!-- Copy resource exclude JAVA, CLASSES to build target directory -->
+									<resource>
+										<filtering>true</filtering>
+										<directory>src/main/resources</directory>
+										<excludes>
+											<exclude>*.java</exclude>
+											<exclude>*.class</exclude>
+											<exclude>*.bat</exclude>
+											<exclude>*.jar</exclude>
+											<!-- excel template -->
+											<exclude>*.xls</exclude>
+											<exclude>**/*.xls</exclude>
+											<exclude>*.xlsx</exclude>
+											<exclude>**/*.xlsx</exclude>
+											<exclude>*.xlsm</exclude>
+											<exclude>**/*.xlsm</exclude>
+											<exclude>*.xlsb</exclude>
+											<exclude>**/*.xlsb</exclude>
+											<exclude>*.xltml</exclude>
+											<exclude>**/*.xltm</exclude>
+											<!-- fonts -->
+											<exclude>*.eot</exclude>
+											<exclude>**/*.eot</exclude>
+											<exclude>*.svg</exclude>
+											<exclude>**/*.svg</exclude>
+											<exclude>*.ttf</exclude>
+											<exclude>**/*.ttf</exclude>
+											<exclude>*.woff</exclude>
+											<exclude>**/*.woff</exclude>
+											<exclude>*.woff2</exclude>
+											<exclude>**/*.woff2</exclude>
+											<exclude>*.otf</exclude>
+											<exclude>**/*.otf</exclude>
+										</excludes>
+									</resource>
+									<resource>
+										<filtering>false</filtering>
+										<directory>src/main/resources</directory>
+										<includes>
+											<!-- excel template -->
+											<include>*.xls</include>
+											<include>**/*.xls</include>
+											<include>*.xlsx</include>
+											<include>**/*.xlsx</include>
+											<include>*.xlsm</include>
+											<include>**/*.xlsm</include>
+											<include>*.xlsb</include>
+											<include>**/*.xlsb</include>
+											<include>*.xltm</include>
+											<include>**/*.xltm</include>
+											<!-- fonts -->
+											<include>*.eot</include>
+											<include>**/*.eot</include>
+											<include>*.svg</include>
+											<include>**/*.svg</include>
+											<include>*.ttf</include>
+											<include>**/*.ttf</include>
+											<include>*.woff</include>
+											<include>**/*.woff</include>
+											<include>*.woff2</include>
+											<include>**/*.woff2</include>
+											<include>*.otf</include>
+											<include>**/*.otf</include>
+										</includes>
+										<excludes>
+											<exclude>*.java</exclude>
+											<exclude>*.class</exclude>
+											<exclude>*.bat</exclude>
+											<exclude>*.jar</exclude>
+										</excludes>
+									</resource>
+									<!-- Copy DOMA SQL file to build target directory -->
+									<resource>
+										<filtering>true</filtering>
+										<directory>src/main/java</directory>
+										<excludes>
+											<exclude>*.java</exclude>
+											<exclude>*.class</exclude>
+											<exclude>*.bat</exclude>
+											<exclude>*.jar</exclude>
+											<!-- excel template -->
+											<exclude>*.xls</exclude>
+											<exclude>**/*.xls</exclude>
+											<exclude>*.xlsx</exclude>
+											<exclude>**/*.xlsx</exclude>
+											<exclude>*.xlsm</exclude>
+											<exclude>**/*.xlsm</exclude>
+											<exclude>*.xlsb</exclude>
+											<exclude>**/*.xlsb</exclude>
+											<exclude>*.xltml</exclude>
+											<exclude>**/*.xltm</exclude>
+											<!-- fonts -->
+											<exclude>*.eot</exclude>
+											<exclude>**/*.eot</exclude>
+											<exclude>*.svg</exclude>
+											<exclude>**/*.svg</exclude>
+											<exclude>*.ttf</exclude>
+											<exclude>**/*.ttf</exclude>
+											<exclude>*.woff</exclude>
+											<exclude>**/*.woff</exclude>
+											<exclude>*.woff2</exclude>
+											<exclude>**/*.woff2</exclude>
+											<exclude>*.otf</exclude>
+											<exclude>**/*.otf</exclude>
+										</excludes>
+									</resource>
+									<resource>
+										<filtering>false</filtering>
+										<directory>src/main/java</directory>
+										<includes>
+											<!-- excel template -->
+											<include>*.xls</include>
+											<include>**/*.xls</include>
+											<include>*.xlsx</include>
+											<include>**/*.xlsx</include>
+											<include>*.xlsm</include>
+											<include>**/*.xlsm</include>
+											<include>*.xlsb</include>
+											<include>**/*.xlsb</include>
+											<include>*.xltm</include>
+											<include>**/*.xltm</include>
+											<!-- fonts -->
+											<include>*.eot</include>
+											<include>**/*.eot</include>
+											<include>*.svg</include>
+											<include>**/*.svg</include>
+											<include>*.ttf</include>
+											<include>**/*.ttf</include>
+											<include>*.woff</include>
+											<include>**/*.woff</include>
+											<include>*.woff2</include>
+											<include>**/*.woff2</include>
+											<include>*.otf</include>
+											<include>**/*.otf</include>
+										</includes>
+										<excludes>
+											<exclude>*.java</exclude>
+											<exclude>*.class</exclude>
+											<exclude>*.bat</exclude>
+											<exclude>*.jar</exclude>
+										</excludes>
+									</resource>
+								</resources>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<!-- Compiler -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven.compiler.version}</version>
+					<configuration>
+						<source>${java.version}</source>
+						<target>${java.version}</target>
+						<fork>true</fork>
+						<failOnError>true</failOnError>
+						<optimize>true</optimize>
+						<showWarnings>true</showWarnings>
+						<showDeprecation>true</showDeprecation>
+						<useIncrementalCompilation>true</useIncrementalCompilation>
+						<verbose>true</verbose>
+						<encoding>${project.build.sourceEncoding}</encoding>
+						<generatedSourcesDirectory>${project.basedir}/.apt_generated</generatedSourcesDirectory>
+						<compilerArgs>
+							<arg>-Xlint:all</arg>
+							<arg>-verbose</arg>
+							<arg>-Asql.validation=true</arg>
+						</compilerArgs>
+						<annotationProcessorPaths>
+							<path>
+								<groupId>org.projectlombok</groupId>
+								<artifactId>lombok</artifactId>
+								<version>${org.projectlombok.version}</version>
+							</path>
+							<path>
+								<groupId>org.seasar.doma</groupId>
+								<artifactId>doma</artifactId>
+								<version>${doma.version}</version>
+							</path>
+						</annotationProcessorPaths>
+					</configuration>
+				</plugin>
+				<!-- AspectJ (AOP) -->
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>aspectj-maven-plugin</artifactId>
+					<version>${maven.aspectj.version}</version>
+					<dependencies>
+						<dependency>
+							<groupId>org.aspectj</groupId>
+							<artifactId>aspectjrt</artifactId>
+							<version>${org.aspectj.version}</version>
+						</dependency>
+						<dependency>
+							<groupId>org.aspectj</groupId>
+							<artifactId>aspectjtools</artifactId>
+							<version>${org.aspectj.version}</version>
+						</dependency>
+					</dependencies>
+					<executions>
+						<execution>
+							<goals>
+								<goal>compile</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<outxml>true</outxml>
+						<showWeaveInfo/>
+	                    <!-- START: for working with Lombok -->
+	                    <forceAjcCompile>true</forceAjcCompile>
+	                    <complianceLevel>${java.version}</complianceLevel>
+	                    <sources/>
+	                    <weaveDirectories>
+	                        <weaveDirectory>${project.build.directory}/classes</weaveDirectory>
+	                    </weaveDirectories>
+	                    <!-- END: for working with Lombok -->
+						<source>${java.version}</source>
+						<target>${java.version}</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>${maven.source.version}</version>
+					<configuration>
+						<attach>true</attach>
+					</configuration>
+					<executions>
+						<execution>
+							<id>attach-sources</id>
+							<goals>
+								<goal>jar</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>${maven.javadoc.version}</version>
+					<configuration>
+						<show>public</show>
+						<attach>true</attach>
+						<maxmemory>1024m</maxmemory>
+						<failOnError>false</failOnError>
+					</configuration>
+					<executions>
+						<execution>
+							<goals>
+								<goal>jar</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>${maven.jar.version}</version>
+					<configuration>
+						<detail>true</detail>
+						<forceCreation>true</forceCreation>
+						<excludes>
+							<exclude>*.java</exclude>
+							<exclude>**/*.java</exclude>
+						</excludes>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>${maven.war.version}</version>
+					<configuration>
+						<warSourceExcludes>*.java,**/*.java</warSourceExcludes>
+						<packagingExcludes>*.java,**/*.java</packagingExcludes>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.sonatype.plugins</groupId>
+					<artifactId>nexus-staging-maven-plugin</artifactId>
+					<version>${maven.nexus.staging.version}</version>
+					<extensions>true</extensions>
+					<configuration>
+						<serverId>ossrh</serverId>
+						<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+						<autoReleaseAfterClose>true</autoReleaseAfterClose>
+					</configuration>
+				</plugin>
+				<!-- FIXME Present, surefire, truelicense, proguard and jarsigner
+					has VerifyError exception -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${maven.surefire.version}</version>
+					<configuration>
+						<skipTests>true</skipTests>
+					</configuration>
+				</plugin>
+				<!-- Obfuscation -->
+				<plugin>
+					<groupId>net.java.truelicense</groupId>
+					<artifactId>truelicense-maven-plugin</artifactId>
+					<version>${maven.truelicense.version}</version>
+					<configuration>
+						<!-- Avoid exceed maximum bytes while using aspectj -->
+						<maxBytes>99999</maxBytes>
+					</configuration>
+					<executions>
+						<execution>
+							<id>generate-main-sources</id>
+							<goals>
+								<!-- The default life cycle phase of this goal is generate-sources. -->
+								<goal>generate-main-sources</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>obfuscate-main-classes</id>
+							<goals>
+								<!-- The default life cycle phase of this goal is process-classes. -->
+								<goal>obfuscate-main-classes</goal>
+							</goals>
+						</execution>
+					</executions>
+	            </plugin>
+	            <plugin>
+					<groupId>com.github.wvengen</groupId>
+					<artifactId>proguard-maven-plugin</artifactId>
+					<version>${maven.proguard.version}</version>
+					<executions>
+						<execution>
+						    <phase>package</phase>
+						    <goals>
+						    	<goal>proguard</goal>
+					    	</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<!-- internal proguard -->
+						<proguardVersion>5.3.2</proguardVersion>
+						<obfuscate>true</obfuscate>
+						<injarNotExistsSkip>true</injarNotExistsSkip>
+						<skip>${proguard.skip}</skip>
+
+						<!-- Our application is so big that ProGuard had ran out of memory -->
+						<maxMemory>1024m</maxMemory>
+
+						<!-- File with proguard configuration -->
+						<proguardInclude>${proguard.configuration}</proguardInclude>
+
+						<!-- Now exclude all modules that are embedded in the jar, so that
+						ProGuard won't see a redefinition of each single class.
+						You don't have to write down your main module. -->
+						<!--
+						<exclusions>
+						    <exclusion>
+						        <groupId>com.yourcompany</groupId>
+						        <artifactId>data</artifactId>
+						    </exclusion>
+						</exclusions>
+						-->
+
+						<!--
+						List external jars your application depends on
+						(that not listed in maven dependencies).
+						You probably depend on Java runtime (rt.jar).
+						JCE stands for Java Cryptography Extension.
+						You probably don't need it, but my application does.
+						-->
+						<libs>
+							<lib>${java.home}/lib/rt.jar</lib>
+							<lib>${java.home}/lib/jce.jar</lib>
+							<lib>${java.home}/lib/ext/sunjce_provider.jar</lib>
+						</libs>
+					</configuration>
+				</plugin>
+				<!-- To sign packages (must after proguard plugin in POM build to avoid error: jarsigner verify SHA-256 digest error for class ...) -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jarsigner-plugin</artifactId>
+					<version>${maven.jarsigner.version}</version>
+					<executions>
+						<!-- Sign package -->
+						<execution>
+							<id>sign</id>
+							<goals>
+								<goal>sign</goal>
+							</goals>
+							<configuration>
+								<keystore>${jarsigner.keystore}</keystore>
+								<storepass>${jarsigner.storepass}</storepass>
+								<keypass>${jarsigner.keypass}</keypass>
+								<alias>${jarsigner.alias}</alias>
+								<storetype>${jarsigner.storetype}</storetype>
+								<removeExistingSignatures>true</removeExistingSignatures>
+								<maxMemory>1024m</maxMemory>
+							</configuration>
+						</execution>
+						<!-- Verify signature -->
+						<execution>
+							<id>verify</id>
+							<goals>
+								<goal>verify</goal>
+							</goals>
+							<configuration>
+								<skip>${jarsigner.skip}</skip>
+								<verbose>true</verbose>
+								<certs>true</certs>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<!-- This plugin's configuration is used to store Eclipse m2e settings only.
+					It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>${maven.m2e.lifecycle.mapping.version}</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>net.java.truelicense</groupId>
+										<artifactId>truelicense-maven-plugin</artifactId>
+										<versionRange>[2.+,)</versionRange>
+										<goals>
+											<goal>generate-main-sources</goal>
+											<goal>obfuscate-main-classes</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore>false</ignore>
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.codehaus.mojo</groupId>
+										<artifactId>aspectj-maven-plugin</artifactId>
+										<versionRange>[1.+,)</versionRange>
+										<goals>
+											<goal>compile</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore>false</ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<!-- Groovy for supporting root directory -->
+			<!-- <plugin>
+				<groupId>org.codehaus.gmaven</groupId>
+				<artifactId>groovy-maven-plugin</artifactId>
+			</plugin> -->
+			<!-- Find bugs -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+			</plugin>
+			<!-- Enforce JDK version -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+			</plugin>
+			<!-- Check new version of dependencies -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>versions-maven-plugin</artifactId>
+			</plugin>
+			<!-- This plugin is used to release a project with Maven, saving a lot of repetitive, manual work.
+				Releasing a project is made in two steps: prepare and perform. -->
+			<!-- <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>${maven.release.version}</version>
+			</plugin> -->
+			<!-- Attach more source folders -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+			</plugin>
+			<!-- Copy resources -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+			</plugin>
+			<!-- Compiler -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<!-- AspectJ (AOP) -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>aspectj-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+			</plugin>
+			<!-- FIXME Present, surefire, truelicense, proguard and jarsigner
+				has VerifyError exception -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+			<!-- Obfuscation -->
+			<plugin>
+				<groupId>net.java.truelicense</groupId>
+				<artifactId>truelicense-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.github.wvengen</groupId>
+				<artifactId>proguard-maven-plugin</artifactId>
+			</plugin>
+			<!-- To sign packages (must after proguard plugin in POM build to avoid error: jarsigner verify SHA-256 digest error for class ...) -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jarsigner-plugin</artifactId>
+			</plugin>
+			<!-- This plugin's configuration is used to store Eclipse m2e settings only.
+				It has no influence on the Maven build itself. -->
+			<plugin>
+				<groupId>org.eclipse.m2e</groupId>
+				<artifactId>lifecycle-mapping</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+	<!-- To use the report goals in your POM or parent POM -->
+	<reporting>
+		<plugins>
+			<!-- Groovy for supporting root directory -->
+			<!-- <plugin>
+				<groupId>org.codehaus.gmaven</groupId>
+				<artifactId>groovy-maven-plugin</artifactId>
+			</plugin> -->
+			<!-- Find bugs -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+			</plugin>
+			<!-- Enforce JDK version -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+			</plugin>
+			<!-- Check new version of dependencies -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>versions-maven-plugin</artifactId>
+			</plugin>
+			<!-- This plugin is used to release a project with Maven, saving a lot of repetitive, manual work.
+				Releasing a project is made in two steps: prepare and perform. -->
+			<!-- <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>${maven.release.version}</version>
+			</plugin> -->
+			<!-- Attach more source folders -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+			</plugin>
+			<!-- Copy resources -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+			</plugin>
+			<!-- Compiler -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<!-- AspectJ (AOP) -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>aspectj-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+			</plugin>
+			<!-- FIXME Present, surefire, truelicense, proguard and jarsigner
+				has VerifyError exception -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+			<!-- Obfuscation -->
+			<plugin>
+				<groupId>net.java.truelicense</groupId>
+				<artifactId>truelicense-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.github.wvengen</groupId>
+				<artifactId>proguard-maven-plugin</artifactId>
+			</plugin>
+			<!-- To sign packages (must after proguard plugin in POM build to avoid error: jarsigner verify SHA-256 digest error for class ...) -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jarsigner-plugin</artifactId>
+			</plugin>
+			<!-- This plugin's configuration is used to store Eclipse m2e settings only.
+				It has no influence on the Maven build itself. -->
+			<plugin>
+				<groupId>org.eclipse.m2e</groupId>
+				<artifactId>lifecycle-mapping</artifactId>
+			</plugin>
+		</plugins>
+	</reporting>
+
+	<!-- Repositories -->
+	<repositories>
+		<repository>
+			<id>maven.seasar.org</id>
+			<name>The Seasar Foundation Maven2 Repository</name>
+			<url>http://maven.seasar.org/maven2</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>repository.jboss.org-public-developer</id>
+			<name>JBoss Developer repository</name>
+			<url>https://repository.jboss.org/nexus/content/groups/developer/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>maven.nuiton.org</id>
+			<name>The Nuiton Maven Nexus Repository</name>
+			<url>http://maven.nuiton.org/nexus/content/repositories</url>
+		</repository>
+		<repository>
+			<id>projectlombok.org</id>
+			<url>http://projectlombok.org/mavenrepo</url>
+		</repository>
+		<repository>
+			<id>mvnrepository.com</id>
+			<url>https://mvnrepository.com/artifact</url>
+		</repository>
+		<repository>
+			<id>org.apache.httpcomponents</id>
+			<url>https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient</url>
+		</repository>
+		<repository>
+			<id>maven.atlassian.com</id>
+			<url>https://maven.atlassian.com/3rdparty</url>
+		</repository>
+		<repository>
+			<id>avalon-framework</id>
+			<url>https://mvnrepository.com/artifact/avalon-framework/avalon-framework</url>
+		</repository>
+		<repository>
+			<id>avalon-framework-api</id>
+			<url>https://mvnrepository.com/artifact/avalon-framework/avalon-framework-api</url>
+		</repository>
+		<repository>
+			<id>avalon-framework-impl</id>
+			<url>https://mvnrepository.com/artifact/avalon-framework/avalon-framework-impl</url>
+		</repository>
+		<repository>
+			<id>net.sf.barcode4j</id>
+			<url>https://mvnrepository.com/artifact/net.sf.barcode4j/barcode4j</url>
+		</repository>
+		<!-- <repository>
+			<id>org.codehaus.gmaven</id>
+			<url>https://mvnrepository.com/artifact/org.codehaus.gmaven/groovy-maven-plugin</url>
+		</repository> -->
+		<repository>
+			<!-- See https://mvnrepository.com/artifact/com.googlecode/openbeans -->
+			<id>maven.repository.redhat.com</id>
+			<url>https://maven.repository.redhat.com/ga</url>
+		</repository>
+		<repository>
+			<id>com.google.android</id>
+			<url>https://mvnrepository.com/artifact/com.google.android/android</url>
+		</repository>
+		<repository>
+			<id>com.google.android.support-v4</id>
+			<url>https://mvnrepository.com/artifact/com.google.android/support-v4</url>
+		</repository>
+	</repositories>
+
+	<!-- Dependencies -->
+	<dependencyManagement>
+		<dependencies>
+			<!-- Groovy for supporting root directory -->
+			<!-- <dependency>
+				<groupId>org.codehaus.gmaven</groupId>
+				<artifactId>groovy-maven-plugin</artifactId>
+				<version>${maven.groovy.version}</version>
+			</dependency> -->
+
+			<!-- Servlet -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>${javax.servlet-api.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>javax</groupId>
+				<artifactId>javaee-web-api</artifactId>
+				<version>${javaee-web-api.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>jstl</artifactId>
+				<version>${jstl.version}</version>
+			</dependency>
+
+			<!-- Ziplet response -->
+			<dependency>
+				<groupId>com.github.ziplet</groupId>
+				<artifactId>ziplet</artifactId>
+				<version>${com.github.ziplet.version}</version>
+				<!-- Exclude for conflicting with current version
+					of javax.servlet:javax.servlet-api:3.1.0 (for tomcat 8.x or greater) -->
+				<exclusions>
+					<exclusion>
+						<groupId>javax.servlet</groupId>
+						<artifactId>servlet-api</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<!-- Support JSP Other taglib -->
+			<dependency>
+				<groupId>taglibs</groupId>
+				<artifactId>standard</artifactId>
+				<version>${taglibs.version}</version>
+			</dependency>
+
+			<!-- Spring Dependencies -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aop</artifactId>
+				<version>${spring.framework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aspects</artifactId>
+				<version>${spring.framework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-beans</artifactId>
+				<version>${spring.framework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${spring.framework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${spring.framework.version}</version>
+				<exclusions>
+					<!-- Exclude Commons Logging in favor of SLF4j -->
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context-support</artifactId>
+				<version>${spring.framework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-orm</artifactId>
+				<version>${spring.framework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-expression</artifactId>
+				<version>${spring.framework.version}</version>
+			</dependency>
+
+			<!-- Spring MVC -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-webmvc</artifactId>
+				<version>${spring.framework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-web</artifactId>
+				<version>${spring.framework.version}</version>
+			</dependency>
+
+			<!-- Spring JDBC -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-jdbc</artifactId>
+				<version>${spring.framework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-tx</artifactId>
+				<version>${spring.framework.version}</version>
+			</dependency>
+
+			<!-- Spring websocket -->
+			<dependency> <!-- Websocket dependence -->
+				<groupId>javax.websocket</groupId>
+				<artifactId>javax.websocket-api</artifactId>
+				<version>${javax.websocket.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency> <!-- Websocket dependence -->
+				<groupId>org.projectreactor</groupId>
+				<artifactId>reactor-net</artifactId>
+				<version>${org.projectreactor.version}</version>
+			</dependency>
+			<dependency> <!-- Websocket dependence -->
+				<groupId>org.apache.tomcat.embed</groupId>
+				<artifactId>tomcat-embed-websocket</artifactId>
+				<version>${org.apache.tomcat.version}</version>
+				<!-- provided for not conflicting with tomcat libraries -->
+				<scope>provided</scope>
+			</dependency>
+			<dependency> <!-- Websocket dependence -->
+				<groupId>org.apache.tomcat</groupId>
+				<artifactId>tomcat-coyote</artifactId>
+				<version>${org.apache.tomcat.version}</version>
+				<!-- provided for not conflicting with tomcat libraries -->
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-websocket</artifactId>
+				<version>${spring.framework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-messaging</artifactId>
+				<version>${spring.framework.version}</version>
+			</dependency>
+
+			<!-- Spring Security Dependencies -->
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-core</artifactId>
+				<version>${spring.security.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-web</artifactId>
+				<version>${spring.security.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-config</artifactId>
+				<version>${spring.security.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-taglibs</artifactId>
+				<version>${spring.security.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-aop</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-test</artifactId>
+				<version>${spring.framework.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<!-- Spring LDAP -->
+			<dependency>
+				<groupId>org.springframework.ldap</groupId>
+				<artifactId>spring-ldap-core</artifactId>
+				<version>${spring.ldap.core.version}</version>
+			</dependency>
+
+			<!-- Spring AOP + AspectJ -->
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjrt</artifactId>
+				<version>${org.aspectj.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjweaver</artifactId>
+				<version>${org.aspectj.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjtools</artifactId>
+				<version>${org.aspectj.version}</version>
+			</dependency>
+
+			<!-- Quartz -->
+			<dependency> <!-- Quartz dependence -->
+				<groupId>c3p0</groupId>
+				<artifactId>c3p0</artifactId>
+				<version>${quartz.c3p0.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.quartz-scheduler</groupId>
+				<artifactId>quartz</artifactId>
+				<version>${quartz.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.quartz-scheduler</groupId>
+				<artifactId>quartz-jobs</artifactId>
+				<version>${quartz.version}</version>
+			</dependency>
+
+			<!-- JodaTime -->
+			<dependency>
+				<groupId>joda-time</groupId>
+				<artifactId>joda-time</artifactId>
+				<version>${joda.time.version}</version>
+			</dependency>
+
+			<!-- Jersey Server - Web service libs -->
+			<dependency>
+			    <groupId>com.sun.jersey</groupId>
+			    <artifactId>jersey-server</artifactId>
+			    <version>${jersey.server.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>com.sun.jersey</groupId>
+			    <artifactId>jersey-json</artifactId>
+			    <version>${jersey.json.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>com.sun.jersey.contribs</groupId>
+			    <artifactId>jersey-spring</artifactId>
+			    <version>${jersey.spring.version}</version>
+			    <!-- In “jersey-spring.jar” version, it will download all the Spring 2.5.6 dependencies.
+			    	To use Spring 3, you need to exclude those old Spring libraries manually -->
+			    <!-- Fix Error: java.lang.IncompatibleClassChangeError: class org.springframework.core.type.classreading.ClassMetadataReadingVisitor
+			    	has interface org.springframework.asm.ClassVisitor as super class.
+			    	Because of conflicting spring-aop, spring-asm -->
+			    <exclusions>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-aop</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-asm</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-core</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-web</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-beans</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-context</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<!-- Jersey client -->
+			<dependency>
+				<groupId>com.sun.jersey</groupId>
+				<artifactId>jersey-client</artifactId>
+				<version>${jersey.client.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.sun.jersey.contribs</groupId>
+				<artifactId>jersey-multipart</artifactId>
+				<version>${jersey.multipart.version}</version>
+			</dependency>
+
+			<!-- Nimbus - Spring Security JWT Authentication -->
+			<dependency>
+				<groupId>com.nimbusds</groupId>
+				<artifactId>nimbus-jose-jwt</artifactId>
+				<version>${com.nimbusds.jose.jwt.version}</version>
+			</dependency>
+
+			<!--  Jackson: Java to Json conversion -->
+			<dependency>
+				<groupId>org.codehaus.jackson</groupId>
+				<artifactId>jackson-core-asl</artifactId>
+				<version>${codehaus.jackson-core-asl.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.codehaus.jackson</groupId>
+				<artifactId>jackson-jaxrs</artifactId>
+				<version>${codehaus.jackson-jaxrs.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.codehaus.jackson</groupId>
+				<artifactId>jackson-mapper-asl</artifactId>
+				<version>${codehaus.jackson-mapper-asl.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.codehaus.jackson</groupId>
+				<artifactId>jackson-xc</artifactId>
+				<version>${codehaus.jackson-xc.version}</version>
+			</dependency>
+
+			<!--  Jackson: Java to Xml conversion -->
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-core</artifactId>
+				<version>${com.fasterxml.jackson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-annotations</artifactId>
+				<version>${com.fasterxml.jackson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${com.fasterxml.jackson.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>com.fasterxml.jackson.module</groupId>
+			    <artifactId>jackson-module-jaxb-annotations</artifactId>
+			    <version>${com.fasterxml.jackson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.dataformat</groupId>
+				<artifactId>jackson-dataformat-xml</artifactId>
+				<version>${com.fasterxml.jackson.version}</version>
+			</dependency>
+			<dependency> <!-- Required by jackson-dataformat-xml -->
+			    <groupId>com.fasterxml.woodstox</groupId>
+			    <artifactId>woodstox-core</artifactId>
+			    <version>${com.fasterxml.woodstox.version}</version>
+			</dependency>
+			<dependency> <!-- Required by jackson-dataformat-xml -->
+				<groupId>org.codehaus.woodstox</groupId>
+				<artifactId>stax2-api</artifactId>
+				<version>${org.codehaus.woodstox.version}</version>
+			</dependency>
+
+			<!-- Datasource -->
+			<dependency>
+				<groupId>com.mchange</groupId>
+				<artifactId>c3p0</artifactId>
+				<version>${com.mchange.c3p0.version}</version>
+			</dependency>
+			<dependency> <!-- PostgreSQL -->
+				<groupId>org.postgresql</groupId>
+				<artifactId>postgresql</artifactId>
+				<version>${postgre.version}</version>
+			</dependency>
+			<dependency> <!-- SQL Server -->
+				<groupId>com.hynnet</groupId>
+				<artifactId>sqljdbc4-chs</artifactId>
+				<version>${com.hynnet.sqljdbc4-chs.version}</version>
+			</dependency>
+
+			<!-- Jasperreport Libary -->
+			<dependency>
+				<groupId>net.sf.jasperreports</groupId>
+				<artifactId>jasperreports</artifactId>
+				<version>${net.sf.jasperreports.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.sourceforge.jexcelapi</groupId>
+				<artifactId>jxl</artifactId>
+				<version>${net.sourceforge.jexcelapi.version}</version>
+			</dependency>
+
+			<!-- Apache POI -->
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi</artifactId>
+				<version>${org.apache.poi.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi-ooxml</artifactId>
+				<version>${org.apache.poi.ooxml.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi-ooxml-schemas</artifactId>
+				<version>${org.apache.poi-schemas.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi-scratchpad</artifactId>
+				<version>${org.apache.poi-scratchpad.version}</version>
+			</dependency>
+
+			<!-- Apache Commons Upload -->
+			<dependency>
+				<groupId>commons-fileupload</groupId>
+				<artifactId>commons-fileupload</artifactId>
+				<version>${commons.fileupload.version}</version>
+			</dependency>
+
+			<!-- Apache HTTP Components -->
+			<dependency>
+			    <groupId>org.apache.httpcomponents</groupId>
+			    <artifactId>httpcore</artifactId>
+			    <version>${http.core.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.apache.httpcomponents</groupId>
+			    <artifactId>httpclient</artifactId>
+			    <version>${http.client.version}</version>
+			</dependency>
+
+			<!-- Apache Tiles -->
+			<dependency>
+				<groupId>org.apache.tiles</groupId>
+				<artifactId>tiles-jsp</artifactId>
+				<version>${tiles.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.tiles</groupId>
+				<artifactId>tiles-servlet</artifactId>
+				<version>${tiles.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.tiles</groupId>
+				<artifactId>tiles-template</artifactId>
+				<version>${tiles.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.tiles</groupId>
+				<artifactId>tiles-el</artifactId>
+				<version>${tiles.version}</version>
+			</dependency>
+
+			<!-- Apache Commons DHCP -->
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-dbcp2</artifactId>
+				<version>${commons.dbcp2.version}</version>
+				<exclusions>
+					<exclusion>
+						<artifactId>commons-logging</artifactId>
+						<groupId>commons-logging</groupId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<!-- Apache Commons Utilities -->
+			<dependency>
+				<groupId>commons-lang</groupId>
+				<artifactId>commons-lang</artifactId>
+				<version>${commons.lang.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>${commons.lang3.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>${commons.io.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-beanutils</groupId>
+				<artifactId>commons-beanutils</artifactId>
+				<version>${commons.beanutils.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-configuration</groupId>
+				<artifactId>commons-configuration</artifactId>
+				<version>${commons.configuration.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-validator</groupId>
+				<artifactId>commons-validator</artifactId>
+				<version>${commons.validator.version}</version>
+			</dependency>
+
+			<!-- HTML -->
+			<dependency>
+				<groupId>net.sourceforge.htmlcleaner</groupId>
+				<artifactId>htmlcleaner</artifactId>
+				<version>${net.sf.htmlcleaner.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jsoup</groupId>
+				<artifactId>jsoup</artifactId>
+				<version>${org.jsoup.version}</version>
+			</dependency>
+
+			<!-- Browser Utils -->
+	        <dependency>
+				<groupId>eu.bitwalker</groupId>
+				<artifactId>UserAgentUtils</artifactId>
+				<version>${eu.bitwalker.version}</version>
+			</dependency>
+
+			<!-- Doma -->
+			<dependency>
+				<groupId>javax.inject</groupId>
+				<artifactId>javax.inject</artifactId>
+				<version>${javax.inject.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.seasar.doma</groupId>
+				<artifactId>doma</artifactId>
+				<version>${doma.version}</version>
+			</dependency>
+
+			<!-- Hibernate -->
+			<!-- <dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-core</artifactId>
+				<version>${org.hibernate.version}</version>
+			</dependency>
+			<dependency> hibernate-entitymanager dependency
+				<groupId>org.hibernate.javax.persistence</groupId>
+				<artifactId>hibernate-jpa-2.1-api</artifactId>
+				<version>${org.hibernate.javax.persistence.version}</version>
+			</dependency>
+			<dependency> hibernate-entitymanager dependency
+				<groupId>org.hibernate.common</groupId>
+				<artifactId>hibernate-commons-annotations</artifactId>
+				<version>${org.hibernate.common-annotations.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-entitymanager</artifactId>
+				<version>${org.hibernate.version}</version>
+			</dependency>
+	        <dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-c3p0</artifactId>
+				<version>${org.hibernate.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-ehcache</artifactId>
+				<version>${org.hibernate.version}</version>
+			</dependency> -->
+	        <dependency>
+	            <groupId>org.hibernate</groupId>
+	            <artifactId>hibernate-validator</artifactId>
+	            <version>${org.hibernate.validator.version}</version>
+	        </dependency>
+
+			<!-- Lombok -->
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>${org.projectlombok.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<!-- Beans -->
+			<!-- Use openbeans (not using java.beans) for all Java and Android -->
+			<dependency>
+			    <groupId>com.googlecode</groupId>
+			    <artifactId>openbeans</artifactId>
+			    <version>${com.google.openbeans.version}</version>
+			</dependency>
+
+			<!-- Bean Validation -->
+			<dependency>
+	            <groupId>javax.validation</groupId>
+	            <artifactId>validation-api</artifactId>
+	            <version>${javax.validation.api.version}</version>
+	        </dependency>
+
+			<!-- Barcode4j Dependency -->
+			<dependency>
+				<groupId>avalon-framework</groupId>
+				<artifactId>avalon-framework</artifactId>
+				<version>${avalon-framework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>avalon-framework</groupId>
+				<artifactId>avalon-framework-api</artifactId>
+				<version>${avalon-framework-api.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>avalon-framework</groupId>
+				<artifactId>avalon-framework-impl</artifactId>
+				<version>${avalon-framework-impl.version}</version>
+			</dependency>
+
+			<!-- Barcode4j -->
+			<dependency>
+				<groupId>net.sf.barcode4j</groupId>
+				<artifactId>barcode4j</artifactId>
+				<version>${net.sf.barcode4j.version}</version>
+			</dependency>
+
+			<!-- Viber Bot -->
+	      	<dependency>
+				<groupId>com.viber</groupId>
+				<artifactId>viber-bot</artifactId>
+				<version>${com.viber.bot.version}</version>
+	      	</dependency>
+
+			<!-- Mail -->
+			<dependency>
+				<groupId>javax.mail</groupId>
+				<artifactId>mail</artifactId>
+				<version>${javax.mail.version}</version>
+			</dependency>
+
+			<!-- Freemarker -->
+			<dependency>
+				<groupId>org.freemarker</groupId>
+				<artifactId>freemarker</artifactId>
+				<version>${freemarker.version}</version>
+			</dependency>
+
+			<!-- slf4j -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${org.slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>jcl-over-slf4j</artifactId>
+				<version>${org.slf4j.version}</version>
+			</dependency>
+			<dependency> <!-- logback -->
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-classic</artifactId>
+				<version>${logback.version}</version>
+			</dependency>
+
+			<!-- Thumbnailer Libraries -->
+			<dependency>
+				<groupId>com.artofsolving</groupId>
+				<artifactId>jodconverter</artifactId>
+				<version>${com.artofsolving.jodconverter.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jodconverter</groupId>
+				<artifactId>jodconverter-core</artifactId>
+				<version>${org.jodconverter.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jodconverter</groupId>
+				<artifactId>jodconverter-spring</artifactId>
+				<version>${org.jodconverter.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jodconverter</groupId>
+				<artifactId>jodconverter-local</artifactId>
+				<version>${org.jodconverter.version}</version>
+			</dependency>
+
+			<!-- Test -->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+				<scope>test</scope>
+				<exclusions>
+					<exclusion>
+						<artifactId>hamcrest-core</artifactId>
+						<groupId>org.hamcrest</groupId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<!-- Others -->
+			<dependency>
+				<groupId>org.hamcrest</groupId>
+				<artifactId>hamcrest-all</artifactId>
+				<version>${hamcrest.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ -->
+			<!-- ANDROID -->
+			<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ -->
+			<!-- Spring Android -->
+			<dependency>
+			    <groupId>org.springframework.android</groupId>
+			    <artifactId>spring-android-core</artifactId>
+			    <version>${spring.android.core.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.springframework.android</groupId>
+			    <artifactId>spring-android-rest-template</artifactId>
+			    <version>${spring.android.rest-template.version}</version>
+			</dependency>
+
+			<!-- Android -->
+			<!-- Use scope "provided" to fix error: trouble processing "javax/xml/parsers/DocumentBuilder.class" -->
+			<dependency>
+			    <groupId>com.google.android</groupId>
+			    <artifactId>android</artifactId>
+			    <version>${com.google.android.version}</version>
+			    <scope>provided</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<!-- Dependencies -->
+	<dependencies>
+		<!-- Groovy for supporting root directory -->
+		<!-- <dependency>
+			<groupId>org.codehaus.gmaven</groupId>
+			<artifactId>groovy-maven-plugin</artifactId>
+		</dependency> -->
+
+		<!-- Spring AOP + AspectJ -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+		</dependency>
+	</dependencies>
+
+	<!-- Present package -->
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.nlh4j</groupId>
+	<artifactId>nlh4j</artifactId>
+	<version>1.0</version>
+	<packaging>pom</packaging>
+	<name>nlh4j</name>
+	<description>Base Package for Java Web/Mobile</description>
+
+	<!-- Modules -->
+	<modules>
+		<!-- Base -->
+		<module>modules/utilities</module>
+		<module>modules/core</module>
+		<module>modules/license</module>
+		<module>modules/sms</module>
+		<module>modules/thumbnailer</module>
+		<!-- Web -->
+		<module>modules/entities</module>
+		<module>modules/domain</module>
+		<module>modules/language</module>
+		<module>modules/web-config</module>
+		<module>modules/web-core</module>
+		<module>modules/web-client</module>
+		<module>modules/web-template</module>
+		<module>modules/web-base</module>
+		<!-- Android -->
+		<module>modules/android</module>
+	</modules>
+</project>

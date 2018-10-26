@@ -1,0 +1,19 @@
+SELECT
+		m.code
+FROM
+		fn_iv_modules_by_user( null, /* companyCode */'abc', /* userName */'abc' ) m
+WHERE
+		( m.insertable = true OR m.deletable = true )
+/*%if (moduleCds != null && moduleCds.size() > 0) */
+AND
+	   	m.code in (''
+	  		/*%for moduleCd: moduleCds */
+				/*# "," */
+				/* moduleCd */'abc'
+	  		/*%end */
+		)
+/*%end*/
+/*%if (moduleCds == null || moduleCds.size() <= 0) */
+AND
+		m.code = ''
+/*%end*/

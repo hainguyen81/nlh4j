@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://www.nlh4j.org.vn/core/context/conditionalbean"
+       xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+       xmlns:beans="http://www.springframework.org/schema/beans"
+       targetNamespace="http://www.nlh4j.org.vn/core/context/conditionalbean"
+       elementFormDefault="qualified"
+       attributeFormDefault="unqualified">
+
+	<xsd:element name="if">
+	   <xsd:complexType>
+	       <xsd:sequence>
+	           <xsd:any minOccurs="0"/>
+	       </xsd:sequence>
+	       <xsd:attribute name="test" type="xsd:string" use="required"/>
+	   </xsd:complexType>
+	</xsd:element>
+
+</xsd:schema>

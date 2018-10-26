@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc
+                        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+                        http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                        http://www.springframework.org/schema/tx
+                        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+                        http://www.springframework.org/schema/aop
+                        http://www.springframework.org/schema/aop/spring-aop-4.0.xsd"
+	profile=",default,simple,quartz,mail,template,socket,socket-chat,full">
+
+	<!-- トランザクション設定 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- アノテーションによるトランザクションをサポート -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<!-- データソース -->
+	<!-- <bean id="basicDataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="defaultAutoCommit" value="false" />
+	</bean> -->
+	<bean id="basicDataSource"
+	    class="com.mchange.v2.c3p0.ComboPooledDataSource"
+	    destroy-method="close">
+        <property name="driverClass" value="${jdbc.driverClassName}" />
+        <property name="jdbcUrl" value="${jdbc.url}" />
+        <property name="properties">
+            <props>
+                <prop key="jdbc.database">${jdbc.database}</prop>
+				<prop key="jdbc.server">${jdbc.server}</prop>
+				<prop key="jdbc.port">${jdbc.port}</prop>
+                <prop key="user">${jdbc.username}</prop>
+                <prop key="password">${jdbc.password}</prop>
+            </props>
+        </property>
+
+        <property name="initialPoolSize" value="${jdbc.initial.pool.size}"/>
+        <property name="minPoolSize" value="${jdbc.min.pool.size}"/>
+        <property name="maxPoolSize" value="${jdbc.max.pool.size}"/>
+        <property name="maxStatements" value="${jdbc.max.statements}"/>
+        <property name="maxIdleTime" value="${jdbc.max.idle.time}"/>
+        <property name="acquireIncrement" value="${jdbc.acquire.increment}"/>
+        <property name="acquireRetryAttempts" value="${jdbc.acquire.retry.attempts}"/>
+        <property name="acquireRetryDelay" value="${jdbc.acquire.retry.delay}"/>
+        <property name="unreturnedConnectionTimeout" value="${jdbc.unreturned.connection.timeout}"/>
+        <property name="maxConnectionAge" value="${jdbc.max.connection.age}"/>
+        <property name="idleConnectionTestPeriod" value="${jdbc.idle.test.period}"/>
+        <property name="testConnectionOnCheckout" value="${jdbc.test.connection.on.checkout}"/>
+	</bean>
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy">
+		<constructor-arg ref="basicDataSource" />
+	</bean>
+
+	<!-- SQL方言 -->
+	<bean id="dialect"
+	    class="org.nlh4j.core.dialects.PostgresDialect"
+	    scope="singleton" />
+	<bean id="repository"
+	    class="jp.doma.config.ResourceGreedyCacheSqlFileRepository"
+	    scope="singleton">
+		<property name="prefix" value="${doma.repository.prefix}" />
+	</bean>
+	<bean id="appConfig" class="jp.doma.config.AppConfig" scope="singleton">
+		<property name="dataSource" ref="dataSource" />
+		<property name="dialect" ref="dialect" />
+		<property name="sqlFileRepository" ref="repository" />
+	</bean>
+
+</beans>

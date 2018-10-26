@@ -1,0 +1,88 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'org.nlh4j'
+version = '1.0'
+
+description = """nlh4j-android"""
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
+configurations.all {
+}
+
+repositories {
+        
+     maven { url "http://maven.seasar.org/maven2" }
+     maven { url "https://repository.jboss.org/nexus/content/groups/developer/" }
+     maven { url "http://maven.nuiton.org/nexus/content/repositories" }
+     maven { url "http://projectlombok.org/mavenrepo" }
+     maven { url "https://mvnrepository.com/artifact" }
+     maven { url "https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient" }
+     maven { url "https://maven.atlassian.com/3rdparty" }
+     maven { url "https://mvnrepository.com/artifact/avalon-framework/avalon-framework" }
+     maven { url "https://mvnrepository.com/artifact/avalon-framework/avalon-framework-api" }
+     maven { url "https://mvnrepository.com/artifact/avalon-framework/avalon-framework-impl" }
+     maven { url "https://mvnrepository.com/artifact/net.sf.barcode4j/barcode4j" }
+     maven { url "https://maven.repository.redhat.com/ga" }
+     maven { url "https://mvnrepository.com/artifact/com.google.android/android" }
+     maven { url "https://mvnrepository.com/artifact/com.google.android/support-v4" }
+     maven { url "http://repo.maven.apache.org/maven2" }
+}
+dependencies {
+    compile(group: 'org.nlh4j', name: 'nlh4j-utilities', version:'1.0') {
+exclude(module: 'nlh4j-core')
+exclude(module: 'nlh4j-license')
+exclude(module: 'nlh4j-sms')
+exclude(module: 'nlh4j-entities')
+exclude(module: 'nlh4j-domain')
+exclude(module: 'nlh4j-lang')
+exclude(module: 'nlh4j-web-config')
+exclude(module: 'nlh4j-web-core')
+exclude(module: 'nlh4j-web-client')
+exclude(module: 'nlh4j-web-template')
+exclude(module: 'nlh4j-web-base')
+exclude(module: 'jaxb-api')
+exclude(module: 'stax-api')
+exclude(module: 'poi-ooxml-schemas')
+exclude(module: 'commons-logging')
+    }
+    compile group: 'javax.inject', name: 'javax.inject', version:'1'
+    compile group: 'org.seasar.doma', name: 'doma', version:'1.38.0'
+    compile(group: 'javax.servlet', name: 'javax.servlet-api', version:'3.1.0') {
+       /* This dependency was originally in the Maven provided scope, but the project was not of type war.
+       This behavior is not yet supported by Gradle, so this dependency has been converted to a compile dependency.
+       Please review and delete this closure when resolved. */
+    }
+    compile(group: 'javax', name: 'javaee-web-api', version:'7.0') {
+       /* This dependency was originally in the Maven provided scope, but the project was not of type war.
+       This behavior is not yet supported by Gradle, so this dependency has been converted to a compile dependency.
+       Please review and delete this closure when resolved. */
+    }
+    compile(group: 'org.aspectj', name: 'aspectjrt', version:'1.8.13') {
+       /* This dependency was originally in the Maven provided scope, but the project was not of type war.
+       This behavior is not yet supported by Gradle, so this dependency has been converted to a compile dependency.
+       Please review and delete this closure when resolved. */
+    }
+    compile(group: 'org.aspectj', name: 'aspectjweaver', version:'1.8.13') {
+       /* This dependency was originally in the Maven provided scope, but the project was not of type war.
+       This behavior is not yet supported by Gradle, so this dependency has been converted to a compile dependency.
+       Please review and delete this closure when resolved. */
+    }
+    compile(group: 'org.projectlombok', name: 'lombok', version:'1.16.18') {
+       /* This dependency was originally in the Maven provided scope, but the project was not of type war.
+       This behavior is not yet supported by Gradle, so this dependency has been converted to a compile dependency.
+       Please review and delete this closure when resolved. */
+    }
+    compile(group: 'com.google.android', name: 'android', version:'4.1.1.4') {
+       /* This dependency was originally in the Maven provided scope, but the project was not of type war.
+       This behavior is not yet supported by Gradle, so this dependency has been converted to a compile dependency.
+       Please review and delete this closure when resolved. */
+    }
+    system group: 'com.android.support', name: 'multidex', version:'1.0'
+    system group: 'com.android.support', name: 'support-v4', version:'1.0'
+}

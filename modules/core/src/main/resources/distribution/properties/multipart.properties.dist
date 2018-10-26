@@ -1,0 +1,6 @@
+#Multipart resolver
+multipart.resolveLazily=true
+multipart.maximum.size=100000000
+multipart.buffer.size=4096
+multipart.encoding=utf-8
+multipart.upload.temp=/tmp

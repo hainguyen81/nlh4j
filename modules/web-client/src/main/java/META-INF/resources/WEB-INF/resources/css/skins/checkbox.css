@@ -1,0 +1,80 @@
+input[type="checkbox"] {
+	width: 15px;
+	height: 15px;
+	max-height: 15px;
+	max-width: 15px;
+	min-height: 15px;
+	min-width: 15px;
+	-webkit-appearance:button;
+	-ms-appearance:button;
+	-o-appearance:button;
+	appearance:button;
+	background-color: #ffffff;
+    border: 1px solid #337ab7;
+    border-radius: 3px;
+	padding: 0;
+	margin: 0;
+	cursor: pointer;
+	line-height: 13px;
+	font-size: 11px;
+	outline: 0;
+}
+input[type="checkbox"][disabled] {
+	border: 1px solid #6f6f6f;
+}
+input[type="checkbox"]:after {
+	font-family: "FontAwesome";
+	display: inline-block;
+    line-height: 15px;
+    font-size: 11px;
+    padding-left: 1px;
+    color: #ffffff;
+    content: "";
+    white-space: nowrap;
+    width: 13px;
+	height: 14px;
+	max-height: 14px;
+	max-width: 14px;
+	min-height: 14px;
+	min-width: 13px;
+    position: relative;
+}
+td input[type="checkbox"] {
+	/* margin: 0 calc(50% - 6px) 0 calc(50% - 7px); */
+	/* margin: calc(50% - 6px) 0 0 calc(50% - 6px); */
+}
+td input[type="checkbox"][disabled]:checked:after {
+	width: 13px;
+	height: 13px;
+	max-height: 13px;
+	max-width: 13px;
+	min-height: 13px;
+	min-width: 13px;
+}
+input[type="checkbox"]:checked:after {
+	content: "\f00c";
+	background-color: #337ab7;
+}
+input[type="checkbox"][disabled]:checked:after {
+	background-color: #eeeeee;
+	color: #444;
+}
+input[type="checkbox"]:hover,
+input[type="checkbox"]:focus {
+    border: 1px solid #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
+    -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
+    -ms-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
+    -o-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(102,175,233,0.6);
+}
+input[type="checkbox"][disabled]:hover,
+input[type="checkbox"][disabled]:focus {
+    border: 1px solid #6f6f6f;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    -ms-box-shadow: none;
+    -o-box-shadow: none;
+    box-shadow: none;
+}

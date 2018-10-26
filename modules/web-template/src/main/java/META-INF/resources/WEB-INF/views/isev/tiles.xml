@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+    <!-- START: Master Page List - Full Layout -->
+    <definition name="master.definition"
+        template="/WEB-INF/tags/templates/master/MasterLayout.jsp">
+        <put-attribute name="module" value="" type="String" />
+        <put-attribute name="page" value="" type="String" />
+        <put-attribute name="controllerMapping" value="" type="String" />
+        <put-attribute name="headerExtActions" value="" type="String" />
+        <put-attribute name="headerActions" value="" type="String" />
+        <put-attribute name="searchForm" value="" type="String" />
+        <put-attribute name="searchFormActions" value="" type="String" />
+        <put-attribute name="listColumns" value="" type="String" />
+        <put-attribute name="listItems" value="" type="String" />
+        <put-attribute name="customListItems" value="" type="String" />
+        <put-attribute name="bodyExtra" value="" type="String" />
+        <put-attribute name="listFooter" value="" type="String" />
+        <put-attribute name="showBaseHeaderActions" value="true" type="Boolean" />
+        <put-attribute name="showBaseHeaderBackAction" value="true" type="Boolean" />
+        <put-attribute name="showBaseActions" value="false" type="Boolean" />
+        <put-attribute name="itemActions" value="" type="String" />
+        <put-attribute name="showPagination" value="false" type="Boolean" />
+        <put-attribute name="useBarcode" value="false" type="Boolean" />
+    </definition>
+    <!-- END: Master Page List - Full Layout -->
+
+	<!-- START: Master Page Detail - Full Layout -->
+    <definition name="master.action.definition"
+        template="/WEB-INF/tags/templates/master/MasterActionLayout.jsp">
+        <put-attribute name="formTitleKey" value="" type="String" />
+        <put-attribute name="module" value="" type="String" />
+        <put-attribute name="page" value="" type="String" />
+        <put-attribute name="controllerMapping" value="" type="String" />
+        <put-attribute name="showBaseHeaderActions" value="true" type="Boolean" />
+        <put-attribute name="showBaseHeaderBackAction" value="true" type="Boolean" />
+        <put-attribute name="useBarcode" value="false" type="Boolean" />
+        <put-attribute name="detailForm" value="" type="String" />
+        <put-attribute name="detailExtActions" value="" type="String" />
+        <put-attribute name="detailActions" value="" type="String" />
+    </definition>
+    <!-- END: Master Page Detail - Full Layout -->
+
+	<!-- START: Master Page List - Content Layout -->
+    <definition name="master.content.definition"
+        template="/WEB-INF/tags/templates/master/MasterContentLayout.jsp">
+        <put-attribute name="module" value="" type="String" />
+        <put-attribute name="page" value="" type="String" />
+        <put-attribute name="controllerMapping" value="" type="String" />
+        <put-attribute name="headerExtActions" value="" type="String" />
+        <put-attribute name="headerActions" value="" type="String" />
+        <put-attribute name="searchForm" value="" type="String" />
+        <put-attribute name="searchFormActions" value="" type="String" />
+        <put-attribute name="listColumns" value="" type="String" />
+        <put-attribute name="listItems" value="" type="String" />
+        <put-attribute name="customListItems" value="" type="String" />
+        <put-attribute name="bodyExtra" value="" type="String" />
+        <put-attribute name="listFooter" value="" type="String" />
+        <put-attribute name="showBaseHeaderActions" value="true" type="Boolean" />
+        <put-attribute name="showBaseHeaderBackAction" value="true" type="Boolean" />
+        <put-attribute name="showBaseActions" value="false" type="Boolean" />
+        <put-attribute name="itemActions" value="" type="String" />
+        <put-attribute name="showPagination" value="false" type="Boolean" />
+        <put-attribute name="useBarcode" value="false" type="Boolean" />
+    </definition>
+    <!-- END: Master Page List - Content Layout -->
+
+	<!-- START: Master Page Detail - Content Layout -->
+    <definition name="master.action.content.definition"
+        template="/WEB-INF/tags/templates/master/MasterActionContentLayout.jsp">
+        <put-attribute name="formTitleKey" value="" type="String" />
+        <put-attribute name="module" value="" type="String" />
+        <put-attribute name="page" value="" type="String" />
+        <put-attribute name="controllerMapping" value="" type="String" />
+        <put-attribute name="showBaseHeaderActions" value="true" type="Boolean" />
+        <put-attribute name="showBaseHeaderBackAction" value="true" type="Boolean" />
+        <put-attribute name="useBarcode" value="false" type="Boolean" />
+        <put-attribute name="detailForm" value="" type="String" />
+        <put-attribute name="detailExtActions" value="" type="String" />
+        <put-attribute name="detailActions" value="" type="String" />
+    </definition>
+</tiles-definitions>

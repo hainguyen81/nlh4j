@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc
+                        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+                        http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                        http://www.springframework.org/schema/tx
+                        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+                        http://www.springframework.org/schema/aop
+                        http://www.springframework.org/schema/aop/spring-aop-4.0.xsd"
+	profile="mail,full">
+
+	<!-- Use SPRING configuration -->
+    <context:spring-configured/>
+
+	<!-- Send mail configuration -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"
+          p:host="${smtp.host}"
+          p:username="${smtp.username}"
+          p:password="${smtp.password}" >
+
+   		<property name="port">
+	        <value>${smtp.port}</value>
+	    </property>
+	    <property name="protocol">
+	        <value>${smtp.protocol}</value>
+	    </property>
+
+        <property name="javaMailProperties">
+            <props>
+                <!--
+                <prop key="mail.smtp.from">${mail.smtp.from}</prop>
+                <prop key="mail.debug">${mail.smtp.debug}</prop>
+                <prop key="mail.customer">${mail.customer}</prop>
+                -->
+                <!--
+                NOTE: Comment out this configuration block and maybe properties: username & password
+                		If using Exchange server without authentication (for internal domain only)
+                -->
+                <prop key="mail.smtp.auth">${mail.smtp.auth}</prop>
+                <prop key="mail.smtp.starttls.enable">${mail.smtp.starttls.enable}</prop>
+                <prop key="mail.smtp.auth.ntlm.domain">${mail.smtp.auth.ntlm.domain}</prop>
+
+            </props>
+        </property>
+    </bean>
+
+	<!-- Mail service creation -->
+	<bean id="mailService"
+		class="org.nlh4j.core.service.mail.MailServiceImpl"
+		autowire="constructor" scope="singleton">
+	    <constructor-arg ref="mailSender" />
+	</bean>
+
+</beans>

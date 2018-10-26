@@ -1,0 +1,73 @@
+ul.dropdown-menu[datepicker-popup-wrap],
+ul.dropdown-menu[uib-datepicker-popup-wrap] {
+	padding: 5px;
+	color: #444;
+	border-color: #444;
+}
+ul.dropdown-menu[datepicker-popup-wrap] *,
+ul.dropdown-menu[datepicker-popup-wrap] li.focus,
+ul.dropdown-menu[datepicker-popup-wrap] li:focus,
+ul.dropdown-menu[datepicker-popup-wrap] li.active,
+ul.dropdown-menu[datepicker-popup-wrap] li:active,
+ul.dropdown-menu[datepicker-popup-wrap] li.active.focus,
+ul.dropdown-menu[datepicker-popup-wrap] li.active:focus,
+ul.dropdown-menu[uib-datepicker-popup-wrap] *,
+ul.dropdown-menu[uib-datepicker-popup-wrap] li.focus,
+ul.dropdown-menu[uib-datepicker-popup-wrap] li:focus,
+ul.dropdown-menu[uib-datepicker-popup-wrap] li.active,
+ul.dropdown-menu[uib-datepicker-popup-wrap] li:active,
+ul.dropdown-menu[uib-datepicker-popup-wrap] li.active.focus,
+ul.dropdown-menu[uib-datepicker-popup-wrap] li.active:focus {
+	outline: none !important;
+}
+ul.dropdown-menu[datepicker-popup-wrap] .btn,
+ul.dropdown-menu[uib-datepicker-popup-wrap] .btn {
+	margin-left: 0;
+	margin-right: 0;
+}
+ul.dropdown-menu[datepicker-popup-wrap] .pull-left .btn,
+ul.dropdown-menu[uib-datepicker-popup-wrap] .pull-left .btn {
+	margin-right: 3px;
+	border-radius: 3px !important;
+}
+.input-group .input-group-btn {
+	float: left;
+}
+.input-group .input-group-btn .btn {
+	margin-top: 1px;
+}
+.input-group input[data-datepicker-popup].form-control {
+	text-align: center;
+}
+.navbar-nav > li > .clock {
+	padding: 10px 15px 10px 15px;
+	line-height: 21px;
+}
+@media (min-width: 768px) {
+	.navbar-nav > li > .clock {
+		padding: 12px 15px 12px 15px;
+	}
+}
+.clock {
+	display: inline-block;
+	color: #ffffff;
+	height: 100%;
+}
+.clock .widget-clock .time {
+	font-size: 13px;
+	font-weight: 300;
+}
+input[data-datepicker-popup] {
+	width: calc(100% - 30px);
+}
+input[data-datepicker-popup]+.input-group-btn button.btn-calendar {
+	height: 25px !important;
+	margin-left: -1px !important;
+	width: 30px;
+	padding: 0;
+}
+input[data-datepicker-popup][disabled]+.input-group-btn button[disabled],
+input[datepicker-popup][disabled]+.input-group-btn button[disabled] {
+	display: none;
+}
+

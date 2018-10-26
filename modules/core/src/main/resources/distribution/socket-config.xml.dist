@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:int-websocket="http://www.springframework.org/schema/integration/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc
+                        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+                        http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                        http://www.springframework.org/schema/tx
+                        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+                        http://www.springframework.org/schema/aop
+                        http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+                        http://www.springframework.org/schema/websocket
+                        http://www.springframework.org/schema/websocket/spring-websocket-4.0.xsd
+                        http://www.springframework.org/schema/integration
+                        http://www.springframework.org/schema/integration/spring-integration.xsd
+                        http://www.springframework.org/schema/integration/websocket
+                        http://www.springframework.org/schema/integration/websocket/spring-integration-websocket-4.1.xsd
+                        http://www.springframework.org/schema/security
+                        http://www.springframework.org/schema/security/spring-security-3.2.xsd"
+	profile="socket,full">
+
+	<!--
+	<websocket:handlers>
+		<websocket:mapping handler="wsHandler" path="/ws" />
+		<websocket:handshake-handler ref="wsHandshake" />
+	</websocket:handlers>
+
+	<bean id="wsHandshake" class="org.springframework.web.socket.server.support.DefaultHandshakeHandler">
+        <constructor-arg ref="tomcatStrategy"/>
+    </bean>
+
+    <bean id="tomcatStrategy" class="org.springframework.web.socket.server.standard.TomcatRequestUpgradeStrategy" />
+    <bean id="wsHandler" class="org.nlh4j.web.chat.controller.WebsocketHandler" />
+    -->
+
+	<!-- // Choose one of simple-broker or stomp-broker-relay
+	<websocket:message-broker application-destination-prefix="/chat">
+        <websocket:stomp-endpoint path="/send">
+            <websocket:sockjs>
+            	<websocket:transport-handlers register-defaults="false">
+					<bean class="org.springframework.web.socket.sockjs.transport.handler.XhrPollingTransportHandler"/>
+                	<ref bean="xhrStreamingTransportHandler" />
+            	</websocket:transport-handlers>
+            </websocket:sockjs>
+        </websocket:stomp-endpoint>
+
+		<websocket:simple-broker prefix="/topic"/>
+		<websocket:stomp-broker-relay prefix="/topic,/queue,/chat,/send"
+           relay-host="localhost" relay-port="8097"
+           heartbeat-send-interval="30000"
+           heartbeat-receive-interval="30000"
+           auto-startup="true" />
+    </websocket:message-broker>
+
+	<bean id="xhrStreamingTransportHandler" class="org.springframework.web.socket.sockjs.transport.handler.XhrStreamingTransportHandler" />
+	-->
+
+	<bean id="wsHandler" class="${socket.handlerClass}" />
+	<bean id="wsHandshakeInterceptor" class="${socket.handshakeInterceptorClass}" />
+	<bean id="wsHandshake" class="${org.springframework.web.socket.server.support.DefaultHandshakeHandler}">
+        <constructor-arg ref="tomcatStrategy"/>
+    </bean>
+   	<bean id="tomcatStrategy" class="${socket.strategyClass}" />
+
+	<bean id="jacksonMessageCodec" class="${socket.messageCodecClass}" />
+	<bean id="xhrPollingTransportHandler" class="${socket.pollingHandlerClass}" />
+   	<bean id="xhrStreamingTransportHandler" class="${socket.streamingHandlerClass}" />
+   	<bean id="xhrReceivingTransportHandler" class="${socket.receivingHandlerClass}" />
+
+	<websocket:handlers>
+		<websocket:mapping handler="wsHandler" path="/ws" />
+		<websocket:handshake-handler ref="wsHandshake" />
+		<websocket:handshake-interceptors>
+	    	<ref bean="wsHandshakeInterceptor" />
+	    </websocket:handshake-interceptors>
+	</websocket:handlers>
+
+	<websocket:message-broker application-destination-prefix="/ws">
+		<!-- Chat -->
+		<websocket:stomp-endpoint path="/socket">
+            <websocket:sockjs>
+            	<websocket:transport-handlers register-defaults="false">
+					<ref bean="xhrPollingTransportHandler" />
+                	<ref bean="xhrStreamingTransportHandler" />
+                	<ref bean="xhrReceivingTransportHandler" />
+            	</websocket:transport-handlers>
+            </websocket:sockjs>
+        </websocket:stomp-endpoint>
+        <!-- Online users list -->
+        <!--
+        <websocket:stomp-endpoint path="/online">
+            <websocket:sockjs>
+            	<websocket:transport-handlers register-defaults="false">
+					<ref bean="xhrPollingTransportHandler" />
+                	<ref bean="xhrStreamingTransportHandler" />
+                	<ref bean="xhrReceivingTransportHandler" />
+            	</websocket:transport-handlers>
+            </websocket:sockjs>
+        </websocket:stomp-endpoint>
+        -->
+        <!-- System notification (push from server) -->
+        <!--
+        <websocket:stomp-endpoint path="/notification">
+            <websocket:sockjs>
+            	<websocket:transport-handlers register-defaults="false">
+					<ref bean="xhrPollingTransportHandler" />
+                	<ref bean="xhrStreamingTransportHandler" />
+                	<ref bean="xhrReceivingTransportHandler" />
+            	</websocket:transport-handlers>
+            </websocket:sockjs>
+        </websocket:stomp-endpoint>
+        -->
+
+		<websocket:simple-broker prefix="${socket.broker}" />
+    </websocket:message-broker>
+
+</beans>

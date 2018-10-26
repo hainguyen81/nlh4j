@@ -1,0 +1,1 @@
+SELECT fn_iv_delete_users( CAST( /* uid */123 AS TEXT ) )

@@ -1,0 +1,103 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'org.nlh4j'
+version = '1.0'
+
+description = """nlh4j-utilities"""
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
+configurations.all {
+}
+
+repositories {
+        
+     maven { url "http://maven.seasar.org/maven2" }
+     maven { url "https://repository.jboss.org/nexus/content/groups/developer/" }
+     maven { url "http://maven.nuiton.org/nexus/content/repositories" }
+     maven { url "http://projectlombok.org/mavenrepo" }
+     maven { url "https://mvnrepository.com/artifact" }
+     maven { url "https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient" }
+     maven { url "https://maven.atlassian.com/3rdparty" }
+     maven { url "https://mvnrepository.com/artifact/avalon-framework/avalon-framework" }
+     maven { url "https://mvnrepository.com/artifact/avalon-framework/avalon-framework-api" }
+     maven { url "https://mvnrepository.com/artifact/avalon-framework/avalon-framework-impl" }
+     maven { url "https://mvnrepository.com/artifact/net.sf.barcode4j/barcode4j" }
+     maven { url "https://maven.repository.redhat.com/ga" }
+     maven { url "https://mvnrepository.com/artifact/com.google.android/android" }
+     maven { url "https://mvnrepository.com/artifact/com.google.android/support-v4" }
+     maven { url "http://repo.maven.apache.org/maven2" }
+}
+dependencies {
+    compile group: 'org.springframework', name: 'spring-aop', version:'5.0.4.RELEASE'
+    compile group: 'org.springframework', name: 'spring-beans', version:'5.0.4.RELEASE'
+    compile group: 'org.springframework', name: 'spring-core', version:'5.0.4.RELEASE'
+    compile(group: 'org.springframework', name: 'spring-context', version:'5.0.4.RELEASE') {
+exclude(module: 'commons-logging')
+    }
+    compile group: 'org.springframework', name: 'spring-context-support', version:'5.0.4.RELEASE'
+    compile group: 'org.springframework', name: 'spring-orm', version:'5.0.4.RELEASE'
+    compile group: 'org.springframework', name: 'spring-expression', version:'5.0.4.RELEASE'
+    compile group: 'org.springframework', name: 'spring-webmvc', version:'5.0.4.RELEASE'
+    compile group: 'org.springframework', name: 'spring-web', version:'5.0.4.RELEASE'
+    compile group: 'joda-time', name: 'joda-time', version:'2.7'
+    compile group: 'com.sun.jersey', name: 'jersey-json', version:'1.19.2'
+    compile group: 'com.sun.jersey', name: 'jersey-client', version:'1.19.2'
+    compile group: 'com.sun.jersey.contribs', name: 'jersey-multipart', version:'1.19.2'
+    compile group: 'com.nimbusds', name: 'nimbus-jose-jwt', version:'3.8'
+    compile group: 'org.codehaus.jackson', name: 'jackson-core-asl', version:'1.9.13'
+    compile group: 'org.codehaus.jackson', name: 'jackson-jaxrs', version:'1.9.13'
+    compile group: 'org.codehaus.jackson', name: 'jackson-mapper-asl', version:'1.9.13'
+    compile group: 'org.codehaus.jackson', name: 'jackson-xc', version:'1.9.13'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version:'2.9.4'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version:'2.9.4'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version:'2.9.4'
+    compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-jaxb-annotations', version:'2.9.4'
+    compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version:'2.9.4'
+    compile group: 'com.fasterxml.woodstox', name: 'woodstox-core', version:'5.0.3'
+    compile group: 'org.codehaus.woodstox', name: 'stax2-api', version:'4.0.0'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version:'3.3.2'
+    compile group: 'org.apache.commons', name: 'commons-io', version:'1.3.2'
+    compile group: 'commons-beanutils', name: 'commons-beanutils', version:'1.9.2'
+    compile group: 'commons-configuration', name: 'commons-configuration', version:'1.10'
+    compile group: 'commons-lang', name: 'commons-lang', version:'2.6'
+    compile group: 'commons-validator', name: 'commons-validator', version:'1.5.1'
+    compile group: 'org.apache.poi', name: 'poi', version:'3.15'
+    compile group: 'org.apache.poi', name: 'poi-ooxml', version:'3.15'
+    compile group: 'org.apache.httpcomponents', name: 'httpcore', version:'4.4.5'
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version:'4.5.2'
+    compile group: 'avalon-framework', name: 'avalon-framework', version:'4.2.0'
+    compile group: 'avalon-framework', name: 'avalon-framework-api', version:'4.2.0'
+    compile group: 'avalon-framework', name: 'avalon-framework-impl', version:'4.2.0'
+    compile group: 'net.sf.barcode4j', name: 'barcode4j', version:'2.1'
+    compile group: 'net.sourceforge.htmlcleaner', name: 'htmlcleaner', version:'2.16'
+    compile group: 'org.jsoup', name: 'jsoup', version:'1.9.1'
+    compile group: 'eu.bitwalker', name: 'UserAgentUtils', version:'1.19'
+    compile group: 'com.googlecode', name: 'openbeans', version:'1.0'
+    compile group: 'org.aspectj', name: 'aspectjrt', version:'1.8.13'
+    compile group: 'org.aspectj', name: 'aspectjweaver', version:'1.8.13'
+    testCompile(group: 'junit', name: 'junit', version:'4.11') {
+exclude(module: 'hamcrest-core')
+    }
+    testCompile group: 'org.hamcrest', name: 'hamcrest-all', version:'1.3'
+    compile(group: 'javax.servlet', name: 'javax.servlet-api', version:'3.1.0') {
+       /* This dependency was originally in the Maven provided scope, but the project was not of type war.
+       This behavior is not yet supported by Gradle, so this dependency has been converted to a compile dependency.
+       Please review and delete this closure when resolved. */
+    }
+    compile(group: 'javax', name: 'javaee-web-api', version:'7.0') {
+       /* This dependency was originally in the Maven provided scope, but the project was not of type war.
+       This behavior is not yet supported by Gradle, so this dependency has been converted to a compile dependency.
+       Please review and delete this closure when resolved. */
+    }
+    compile(group: 'org.projectlombok', name: 'lombok', version:'1.16.18') {
+       /* This dependency was originally in the Maven provided scope, but the project was not of type war.
+       This behavior is not yet supported by Gradle, so this dependency has been converted to a compile dependency.
+       Please review and delete this closure when resolved. */
+    }
+}

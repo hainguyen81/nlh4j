@@ -1,0 +1,183 @@
+/** Datatable **/
+table.table {
+	color: #274f68;
+	margin-bottom: 0;
+}
+table.table caption {
+	background-color: #306FA9;
+	color: #fff;
+	font-size: 14px;
+	font-weight : bold;
+	padding: 7px 3px;
+	font-weight: bold;
+}
+table.table.table-bordered { border: none; }
+table.table.table-bordered thead,
+table.table.table-bordered tbody {
+	border: 1px solid #008cba;
+	margin-bottom: 0;
+}
+table.table.table-bordered tbody td {
+	border-top: 1px solid #008cba;
+	border-bottom: 1px solid #008cba;
+	border-left: none;
+	border-right: 1px solid #dad7d7;
+}
+table.table.table-bordered tbody tr td:first-child {
+	border-left: 1px solid #008cba;
+}
+table.table.table-bordered tbody tr td:last-child {
+	border-left: 1px solid #dad7d7;
+}
+table.table.table-bordered tbody tr td[type="action"]:last-child {
+	border-right: 1px solid #008cba;
+	border-left: none;
+}
+table.table.table-bordered.no-action tbody tr td:nth-last-child(2) {
+	border-right: 1px solid #dad7d7;
+}
+table.table.table-bordered tbody tr td:nth-last-child(2) {
+	border-right: none;
+}
+table.table.table-bordered tbody tr td.bordered {
+    border-right: 1px solid #dad7d7;
+}
+table.table.cell-no-border tbody td {
+	border: none;
+}
+table.table.table-bordered thead {
+	background-color: #175b71;
+}
+table.table thead th {
+	vertical-align: middle;
+}
+table.table.table-bordered thead th {
+	color: #ffffff;
+	border-top: 1px solid #008cba;
+	border-bottom: 1px solid #008cba;
+	border-left: none;
+	border-right: 1px solid #dad7d7;
+}
+table.table.table-bordered thead th:last-child {
+	border-left: 1px solid #dad7d7;
+}
+table.table.table-bordered thead th[type="action"]:last-child {
+	border-right: 1px solid #008cba;
+	border-left: none;
+}
+table.table.table-bordered.no-action thead th:nth-last-child(2) {
+	border-right: 1px solid #dad7d7;
+}
+table.table.table-bordered thead th:nth-last-child(2) {
+	border-right: none;
+}
+table.table.table-bordered thead th.bordered {
+	border-right: 1px solid #dad7d7;
+}
+table.table.cell-no-border thead th {
+	border: none;
+}
+table.table.table-bordered thead th[type="action"],
+table.table.table-bordered tbody td[type="action"] {
+	border-left: none;
+	border-right: none;
+	max-width: 110px;
+	min-width: 110px;
+	width: 110px;
+	text-align: right;
+	white-space: nowrap;
+}
+table.table.table-bordered tbody td .btn,
+table.table.table-bordered tbody td .btn-xs,
+table.table.table-bordered tbody td[type="action"] .btn,
+table.table.table-bordered tbody td[type="action"] .btn-xs {
+	margin: 0;
+	padding: 1px 5px;
+}
+table.table.table-bordered thead th {
+	line-height: normal;
+	padding: 3px;
+}
+table.table.table-bordered tbody td {
+	line-height: normal;
+	vertical-align: middle;
+	padding: 3px;
+	text-align: left;
+}
+table.table.table-bordered tfoot td[type="number"],
+table.table.table-bordered tbody td[type="number"],
+table.table.table-bordered thead th[type="number"] {
+	text-align: right;
+}
+table.table.table-bordered thead th[type="date"],
+table.table.table-bordered thead th[type="time"],
+table.table.table-bordered thead th[type="no"],
+table.table.table-bordered thead th[type="enum"],
+table.table.table-bordered tbody td[type="date"],
+table.table.table-bordered tbody td[type="time"],
+table.table.table-bordered tbody td[type="no"],
+table.table.table-bordered tbody td[type="enum"],
+table.table.table-bordered tfoot td[type="date"],
+table.table.table-bordered tfoot td[type="time"],
+table.table.table-bordered tfoot td[type="no"],
+table.table.table-bordered tfoot td[type="enum"] {
+	text-align: center;
+}
+table.table.table-bordered tbody tr {
+	cursor: pointer;
+	min-height: 30px;
+	height: 30px;
+}
+table.table.table-bordered > tbody > tr:nth-child(odd) {
+	background-color: #f9f9f9;
+}
+table.table.table-bordered > tbody > tr:nth-child(odd):hover,
+table.table.table-bordered > tbody > tr:hover {
+	background-color: #add2f1;
+}
+table.table.table-bordered > tbody > tr > td[type="action"] .btn {
+	display: none;
+	visibility: hidden;
+	float: right;
+	margin-left: 3px;
+}
+table.table.table-bordered > tbody > tr:hover > td[type="action"] .btn {
+	display: block;
+	visibility: visible;
+}
+table.table.table-bordered .border-top-gray {
+	border-top: 1px solid #dad7d7 !important;
+}
+table.table.table-bordered .border-bottom-gray {
+	border-bottom: 1px solid #dad7d7 !important;
+}
+table.table.table-bordered .border-left-gray {
+	border-left: 1px solid #dad7d7 !important;
+}
+table.table.table-bordered .border-right-gray {
+	border-right: 1px solid #dad7d7 !important;
+}
+table.table.table-bordered .border-top-light {
+	border-top: 1px solid #008cba !important;
+}
+table.table.table-bordered .border-bottom-light {
+	border-bottom: 1px solid #008cba !important;
+}
+table.table.table-bordered .border-left-light {
+	border-left: 1px solid #008cba !important;
+}
+table.table.table-bordered .border-right-light {
+	border-right: 1px solid #008cba !important;
+}
+table.table.table-bordered .border-top-none {
+	border-top: none;
+}
+table.table.table-bordered .border-bottom-none {
+	border-bottom: none;
+}
+table.table.table-bordered .border-left-none {
+	border-left: none;
+}
+table.table.table-bordered .border-right-none {
+	border-right: none;
+}

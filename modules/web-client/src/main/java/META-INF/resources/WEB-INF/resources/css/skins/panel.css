@@ -1,0 +1,77 @@
+/** panel **/
+.panel {
+	/*box-shadow: rgba(0, 0, 0, 0.472549) 3px 6px 12px;*/
+	margin-bottom: 0;
+}
+.panel.panel-primary {
+	border-radius: 5px;
+	margin-bottom: 0;
+}
+.panel.panel-primary-ct {
+	border-radius: 0px;
+}
+
+.panel.panel-primary .panel-heading {
+	color: #ffffff;
+    background-color: #008cba;
+    border-color: #008cba;
+	line-height: 25px;
+	display: table;
+	width: 100%;
+}
+
+.panel .panel-body {
+	padding: 10px;
+	color: #274f68;
+	font-size: 12px;
+}
+.panel .panel-body .row,
+.panel .panel-body .form-group {
+	margin: 0;
+}
+.panel .panel-footer {
+	display: table;
+	width: 100%;
+}
+.panel .panel-sub-footer {
+	/* padding-right: 60px; */
+}
+.panel .panel-footer .button-group {
+	margin-bottom: 0;
+	margin-top: 0;
+}
+.panel .table-responsive,
+.panel.panel-primary .table-responsive {
+	padding: 0;
+	margin: 0;
+	overflow: auto;
+	clear: both;
+}
+.panel.panel-primary .table-responsive table {
+	/*position: relative;*/
+}
+.panel-list .pagination {
+	float: right;
+}
+
+/** pagination **/
+.panel .panel-sub-footer {
+	border-top: 1px solid #ddd;
+	text-align: right;
+	display: inline-block;
+	position: relative;
+	height: auto;
+	width: 100%;
+	padding-bottom: 10px;
+}
+.panel .panel-sub-footer .pagination {
+	margin: 5px 5px 0 5px;
+}
+.panel .panel-sub-footer .pagination li {
+	display: inline-block;
+	text-align: center;
+	vertical-align: middle;
+}
+.panel .panel-sub-footer .pagination li a {
+	padding: 6px 10px;
+}

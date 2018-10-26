@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<!-- Parent -->
+	<parent>
+		<groupId>org.nlh4j</groupId>
+		<artifactId>nlh4j</artifactId>
+		<version>1.0</version>
+		<relativePath>../../pom.xml</relativePath>
+	</parent>
+
+	<!-- Present package -->
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>${project.parent.groupId}</groupId>
+	<artifactId>nlh4j-android</artifactId>
+	<version>${project.parent.version}</version>
+	<packaging>jar</packaging>
+	<name>nlh4j-android</name>
+	<description>Base Package for Android</description>
+
+	<!-- Properties -->
+	<properties>
+		<!-- Spring Adnroid -->
+		<spring.android.core.version>2.0.0.M3</spring.android.core.version>
+		<spring.android.rest-template.version>2.0.0.M3</spring.android.rest-template.version>
+
+		<!-- Android -->
+		<com.google.android.version>4.1.1.4</com.google.android.version>
+		<com.google.android.annotations.version>4.1.1.4</com.google.android.annotations.version>
+		<com.google.android.multidex.version>1.0.1</com.google.android.multidex.version>
+	</properties>
+
+	<!-- Build -->
+	<build>
+		<resources>
+			<!-- Placeholders that are found from the files located in the configured
+				resource directories are replaced with the property values found from the
+				profile specific configuration file. -->
+			<resource>
+				<filtering>true</filtering>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>*.*</include>
+					<include>**/*.*</include>
+					<include>META-INF/*.*</include>
+					<include>META-INF/**/*.*</include>
+				</includes>
+				<excludes>
+					<exclude>*.java</exclude>
+					<exclude>**/*.java</exclude>
+					<exclude>META-INF/*.java</exclude>
+					<exclude>META-INF/**/*.java</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<filtering>true</filtering>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>*.*</include>
+					<include>**/*.*</include>
+					<include>META-INF/*.*</include>
+					<include>META-INF/**/*.*</include>
+				</includes>
+				<excludes>
+					<exclude>*.java</exclude>
+					<exclude>**/*.java</exclude>
+					<exclude>META-INF/*.java</exclude>
+					<exclude>META-INF/**/*.java</exclude>
+				</excludes>
+			</resource>
+		</resources>
+		<plugins>
+			<!-- Copy resources -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<!-- Disable resources plugin from parent -->
+						<phase>none</phase>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<!-- Dependences -->
+	<dependencies>
+		<!-- Project Dependency -->
+		<dependency>
+	        <groupId>com.android.support</groupId>
+	        <artifactId>multidex</artifactId>
+	        <version>1.0</version>
+	        <scope>system</scope>
+	        <systemPath>${project.basedir}/libs/android-support-multidex.jar</systemPath>
+	    </dependency>
+		<dependency>
+	        <groupId>com.android.support</groupId>
+	        <artifactId>support-v4</artifactId>
+	        <version>1.0</version>
+	        <scope>system</scope>
+	        <systemPath>${project.basedir}/libs/android-support-v4.jar</systemPath>
+	    </dependency>
+		<dependency>
+			<groupId>${project.parent.groupId}</groupId>
+			<artifactId>nlh4j-utilities</artifactId>
+			<version>${project.parent.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>${project.parent.groupId}</groupId>
+					<artifactId>nlh4j-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>${project.parent.groupId}</groupId>
+					<artifactId>nlh4j-license</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>${project.parent.groupId}</groupId>
+					<artifactId>nlh4j-sms</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>${project.parent.groupId}</groupId>
+					<artifactId>nlh4j-entities</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>${project.parent.groupId}</groupId>
+					<artifactId>nlh4j-domain</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>${project.parent.groupId}</groupId>
+					<artifactId>nlh4j-lang</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>${project.parent.groupId}</groupId>
+					<artifactId>nlh4j-web-config</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>${project.parent.groupId}</groupId>
+					<artifactId>nlh4j-web-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>${project.parent.groupId}</groupId>
+					<artifactId>nlh4j-web-client</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>${project.parent.groupId}</groupId>
+					<artifactId>nlh4j-web-template</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>${project.parent.groupId}</groupId>
+					<artifactId>nlh4j-web-base</artifactId>
+				</exclusion>
+				<!-- "javax/xml/bind/Binder.class" -->
+				<exclusion>
+					<groupId>javax.xml.bind</groupId>
+					<artifactId>jaxb-api</artifactId>
+				</exclusion>
+				<!-- Fix Error: trouble processing "javax/xml/stream/EventFilter.class" -->
+				<exclusion>
+					<groupId>javax.xml.stream</groupId>
+					<artifactId>stax-api</artifactId>
+				</exclusion>
+				<!-- Fix Error: trouble writing output: Too many method references: 76374; max is 65536 -->
+				<exclusion>
+					<groupId>org.apache.poi</groupId>
+					<artifactId>poi-ooxml-schemas</artifactId>
+				</exclusion>
+				<!-- No need logging -->
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+				<!-- No need Spring JDBC -->
+				<!--
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-jdbc</artifactId>
+				</exclusion>
+				-->
+				<!-- No need Spring Transaction -->
+				<!--
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-tx</artifactId>
+				</exclusion>
+				-->
+			</exclusions>
+      	</dependency>
+
+		<!-- Servlet -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-web-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- AOP + AspectJ -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Seasar DOMA -->
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.seasar.doma</groupId>
+			<artifactId>doma</artifactId>
+		</dependency>
+
+		<!-- Android -->
+		<!-- Use scope "provided" to fix error: trouble processing "javax/xml/parsers/DocumentBuilder.class" -->
+		<dependency>
+		    <groupId>com.google.android</groupId>
+		    <artifactId>android</artifactId>
+		    <scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+</project>

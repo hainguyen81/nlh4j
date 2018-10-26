@@ -1,0 +1,233 @@
+package org.nlh4j.web.core.domain.entity;
+
+/** */
+@javax.annotation.Generated(value = { "Doma", "1.38.0" }, date = "2018-10-21T18:30:43.895+0700")
+public final class _Function extends org.seasar.doma.jdbc.entity.AbstractEntityType<org.nlh4j.web.core.domain.entity.Function> {
+
+    static {
+        org.seasar.doma.internal.Artifact.validateVersion("1.38.0");
+    }
+
+    private static final _Function __singleton = new _Function();
+
+    private final org.seasar.doma.jdbc.id.BuiltinIdentityIdGenerator __idGenerator = new org.seasar.doma.jdbc.id.BuiltinIdentityIdGenerator();
+
+    /** the id */
+    public final org.seasar.doma.jdbc.entity.GeneratedIdPropertyType<java.lang.Object, org.nlh4j.web.core.domain.entity.Function, java.lang.Long, java.lang.Object> $id = new org.seasar.doma.jdbc.entity.GeneratedIdPropertyType<java.lang.Object, org.nlh4j.web.core.domain.entity.Function, java.lang.Long, java.lang.Object>(org.nlh4j.web.core.domain.entity.Function.class, java.lang.Long.class, org.seasar.doma.wrapper.LongWrapper.class, null, null, "id", "id", __idGenerator);
+
+    /** the code */
+    public final org.seasar.doma.jdbc.entity.BasicPropertyType<java.lang.Object, org.nlh4j.web.core.domain.entity.Function, java.lang.String, java.lang.Object> $code = new org.seasar.doma.jdbc.entity.BasicPropertyType<java.lang.Object, org.nlh4j.web.core.domain.entity.Function, java.lang.String, java.lang.Object>(org.nlh4j.web.core.domain.entity.Function.class, java.lang.String.class, org.seasar.doma.wrapper.StringWrapper.class, null, null, "code", "code", true, true);
+
+    /** the name */
+    public final org.seasar.doma.jdbc.entity.BasicPropertyType<java.lang.Object, org.nlh4j.web.core.domain.entity.Function, java.lang.String, java.lang.Object> $name = new org.seasar.doma.jdbc.entity.BasicPropertyType<java.lang.Object, org.nlh4j.web.core.domain.entity.Function, java.lang.String, java.lang.Object>(org.nlh4j.web.core.domain.entity.Function.class, java.lang.String.class, org.seasar.doma.wrapper.StringWrapper.class, null, null, "name", "name", true, true);
+
+    /** the langKey */
+    public final org.seasar.doma.jdbc.entity.BasicPropertyType<java.lang.Object, org.nlh4j.web.core.domain.entity.Function, java.lang.String, java.lang.Object> $langKey = new org.seasar.doma.jdbc.entity.BasicPropertyType<java.lang.Object, org.nlh4j.web.core.domain.entity.Function, java.lang.String, java.lang.Object>(org.nlh4j.web.core.domain.entity.Function.class, java.lang.String.class, org.seasar.doma.wrapper.StringWrapper.class, null, null, "langKey", "lang_key", true, true);
+
+    /** the enabled */
+    public final org.seasar.doma.jdbc.entity.BasicPropertyType<java.lang.Object, org.nlh4j.web.core.domain.entity.Function, java.lang.Boolean, java.lang.Object> $enabled = new org.seasar.doma.jdbc.entity.BasicPropertyType<java.lang.Object, org.nlh4j.web.core.domain.entity.Function, java.lang.Boolean, java.lang.Object>(org.nlh4j.web.core.domain.entity.Function.class, java.lang.Boolean.class, org.seasar.doma.wrapper.BooleanWrapper.class, null, null, "enabled", "enabled", true, true);
+
+    /** the funcOrder */
+    public final org.seasar.doma.jdbc.entity.BasicPropertyType<java.lang.Object, org.nlh4j.web.core.domain.entity.Function, java.lang.Integer, java.lang.Object> $funcOrder = new org.seasar.doma.jdbc.entity.BasicPropertyType<java.lang.Object, org.nlh4j.web.core.domain.entity.Function, java.lang.Integer, java.lang.Object>(org.nlh4j.web.core.domain.entity.Function.class, java.lang.Integer.class, org.seasar.doma.wrapper.IntegerWrapper.class, null, null, "funcOrder", "func_order", true, true);
+
+    /** the createdAt */
+    public final org.seasar.doma.jdbc.entity.BasicPropertyType<java.lang.Object, org.nlh4j.web.core.domain.entity.Function, java.sql.Timestamp, java.lang.Object> $createdAt = new org.seasar.doma.jdbc.entity.BasicPropertyType<java.lang.Object, org.nlh4j.web.core.domain.entity.Function, java.sql.Timestamp, java.lang.Object>(org.nlh4j.web.core.domain.entity.Function.class, java.sql.Timestamp.class, org.seasar.doma.wrapper.TimestampWrapper.class, null, null, "createdAt", "created_at", true, true);
+
+    /** the updatedAt */
+    public final org.seasar.doma.jdbc.entity.BasicPropertyType<java.lang.Object, org.nlh4j.web.core.domain.entity.Function, java.sql.Timestamp, java.lang.Object> $updatedAt = new org.seasar.doma.jdbc.entity.BasicPropertyType<java.lang.Object, org.nlh4j.web.core.domain.entity.Function, java.sql.Timestamp, java.lang.Object>(org.nlh4j.web.core.domain.entity.Function.class, java.sql.Timestamp.class, org.seasar.doma.wrapper.TimestampWrapper.class, null, null, "updatedAt", "updated_at", true, true);
+
+    /** the createdUser */
+    public final org.seasar.doma.jdbc.entity.BasicPropertyType<java.lang.Object, org.nlh4j.web.core.domain.entity.Function, java.lang.Long, java.lang.Object> $createdUser = new org.seasar.doma.jdbc.entity.BasicPropertyType<java.lang.Object, org.nlh4j.web.core.domain.entity.Function, java.lang.Long, java.lang.Object>(org.nlh4j.web.core.domain.entity.Function.class, java.lang.Long.class, org.seasar.doma.wrapper.LongWrapper.class, null, null, "createdUser", "created_user", true, true);
+
+    /** the updatedUser */
+    public final org.seasar.doma.jdbc.entity.BasicPropertyType<java.lang.Object, org.nlh4j.web.core.domain.entity.Function, java.lang.Long, java.lang.Object> $updatedUser = new org.seasar.doma.jdbc.entity.BasicPropertyType<java.lang.Object, org.nlh4j.web.core.domain.entity.Function, java.lang.Long, java.lang.Object>(org.nlh4j.web.core.domain.entity.Function.class, java.lang.Long.class, org.seasar.doma.wrapper.LongWrapper.class, null, null, "updatedUser", "updated_user", true, true);
+
+    private final org.nlh4j.web.core.domain.entity.FunctionListener __listener;
+
+    private final org.seasar.doma.jdbc.entity.NamingType __namingType;
+
+    private final boolean __immutable;
+
+    private final String __catalogName;
+
+    private final String __schemaName;
+
+    private final String __tableName;
+
+    private final String __qualifiedTableName;
+
+    private final String __name;
+
+    private final java.util.List<org.seasar.doma.jdbc.entity.EntityPropertyType<org.nlh4j.web.core.domain.entity.Function, ?>> __idPropertyTypes;
+
+    private final java.util.List<org.seasar.doma.jdbc.entity.EntityPropertyType<org.nlh4j.web.core.domain.entity.Function, ?>> __entityPropertyTypes;
+
+    private final java.util.Map<String, org.seasar.doma.jdbc.entity.EntityPropertyType<org.nlh4j.web.core.domain.entity.Function, ?>> __entityPropertyTypeMap;
+
+    private _Function() {
+        __listener = new org.nlh4j.web.core.domain.entity.FunctionListener();
+        __namingType = org.seasar.doma.jdbc.entity.NamingType.NONE;
+        __immutable = false;
+        __name = "Function";
+        __catalogName = "";
+        __schemaName = "";
+        __tableName = "\"function\"";
+        __qualifiedTableName = "\"function\"";
+        java.util.List<org.seasar.doma.jdbc.entity.EntityPropertyType<org.nlh4j.web.core.domain.entity.Function, ?>> __idList = new java.util.ArrayList<org.seasar.doma.jdbc.entity.EntityPropertyType<org.nlh4j.web.core.domain.entity.Function, ?>>();
+        java.util.List<org.seasar.doma.jdbc.entity.EntityPropertyType<org.nlh4j.web.core.domain.entity.Function, ?>> __list = new java.util.ArrayList<org.seasar.doma.jdbc.entity.EntityPropertyType<org.nlh4j.web.core.domain.entity.Function, ?>>(10);
+        java.util.Map<String, org.seasar.doma.jdbc.entity.EntityPropertyType<org.nlh4j.web.core.domain.entity.Function, ?>> __map = new java.util.HashMap<String, org.seasar.doma.jdbc.entity.EntityPropertyType<org.nlh4j.web.core.domain.entity.Function, ?>>(10);
+        __idList.add($id);
+        __list.add($id);
+        __map.put("id", $id);
+        __list.add($code);
+        __map.put("code", $code);
+        __list.add($name);
+        __map.put("name", $name);
+        __list.add($langKey);
+        __map.put("langKey", $langKey);
+        __list.add($enabled);
+        __map.put("enabled", $enabled);
+        __list.add($funcOrder);
+        __map.put("funcOrder", $funcOrder);
+        __list.add($createdAt);
+        __map.put("createdAt", $createdAt);
+        __list.add($updatedAt);
+        __map.put("updatedAt", $updatedAt);
+        __list.add($createdUser);
+        __map.put("createdUser", $createdUser);
+        __list.add($updatedUser);
+        __map.put("updatedUser", $updatedUser);
+        __idPropertyTypes = java.util.Collections.unmodifiableList(__idList);
+        __entityPropertyTypes = java.util.Collections.unmodifiableList(__list);
+        __entityPropertyTypeMap = java.util.Collections.unmodifiableMap(__map);
+    }
+
+    @Override
+    public org.seasar.doma.jdbc.entity.NamingType getNamingType() {
+        return __namingType;
+    }
+
+    @Override
+    public boolean isImmutable() {
+        return __immutable;
+    }
+
+    @Override
+    public String getName() {
+        return __name;
+    }
+
+    @Override
+    public String getCatalogName() {
+        return __catalogName;
+    }
+
+    @Override
+    public String getSchemaName() {
+        return __schemaName;
+    }
+
+    @Override
+    public String getTableName() {
+        return __tableName;
+    }
+
+    @Override
+    public String getQualifiedTableName() {
+        return __qualifiedTableName;
+    }
+
+    @Override
+    public void preInsert(org.nlh4j.web.core.domain.entity.Function entity, org.seasar.doma.jdbc.entity.PreInsertContext<org.nlh4j.web.core.domain.entity.Function> context) {
+        __listener.preInsert(entity, context);
+    }
+
+    @Override
+    public void preUpdate(org.nlh4j.web.core.domain.entity.Function entity, org.seasar.doma.jdbc.entity.PreUpdateContext<org.nlh4j.web.core.domain.entity.Function> context) {
+        __listener.preUpdate(entity, context);
+    }
+
+    @Override
+    public void preDelete(org.nlh4j.web.core.domain.entity.Function entity, org.seasar.doma.jdbc.entity.PreDeleteContext<org.nlh4j.web.core.domain.entity.Function> context) {
+        __listener.preDelete(entity, context);
+    }
+
+    @Override
+    public void postInsert(org.nlh4j.web.core.domain.entity.Function entity, org.seasar.doma.jdbc.entity.PostInsertContext<org.nlh4j.web.core.domain.entity.Function> context) {
+        __listener.postInsert(entity, context);
+    }
+
+    @Override
+    public void postUpdate(org.nlh4j.web.core.domain.entity.Function entity, org.seasar.doma.jdbc.entity.PostUpdateContext<org.nlh4j.web.core.domain.entity.Function> context) {
+        __listener.postUpdate(entity, context);
+    }
+
+    @Override
+    public void postDelete(org.nlh4j.web.core.domain.entity.Function entity, org.seasar.doma.jdbc.entity.PostDeleteContext<org.nlh4j.web.core.domain.entity.Function> context) {
+        __listener.postDelete(entity, context);
+    }
+
+    @Override
+    public java.util.List<org.seasar.doma.jdbc.entity.EntityPropertyType<org.nlh4j.web.core.domain.entity.Function, ?>> getEntityPropertyTypes() {
+        return __entityPropertyTypes;
+    }
+
+    @Override
+    public org.seasar.doma.jdbc.entity.EntityPropertyType<org.nlh4j.web.core.domain.entity.Function, ?> getEntityPropertyType(String __name) {
+        return __entityPropertyTypeMap.get(__name);
+    }
+
+    @Override
+    public java.util.List<org.seasar.doma.jdbc.entity.EntityPropertyType<org.nlh4j.web.core.domain.entity.Function, ?>> getIdPropertyTypes() {
+        return __idPropertyTypes;
+    }
+
+    @Override
+    public org.seasar.doma.jdbc.entity.GeneratedIdPropertyType<java.lang.Object, org.nlh4j.web.core.domain.entity.Function, ?, ?> getGeneratedIdPropertyType() {
+        return $id;
+    }
+
+    @Override
+    public org.seasar.doma.jdbc.entity.VersionPropertyType<java.lang.Object, org.nlh4j.web.core.domain.entity.Function, ?, ?> getVersionPropertyType() {
+        return null;
+    }
+
+    @Override
+    public org.nlh4j.web.core.domain.entity.Function newEntity() {
+        return new org.nlh4j.web.core.domain.entity.Function();
+    }
+
+    @Override
+    public org.nlh4j.web.core.domain.entity.Function newEntity(java.util.Map<String, Object> __args) {
+        return new org.nlh4j.web.core.domain.entity.Function();
+    }
+
+    @Override
+    public Class<org.nlh4j.web.core.domain.entity.Function> getEntityClass() {
+        return org.nlh4j.web.core.domain.entity.Function.class;
+    }
+
+    @Override
+    public org.nlh4j.web.core.domain.entity.Function getOriginalStates(org.nlh4j.web.core.domain.entity.Function __entity) {
+        return null;
+    }
+
+    @Override
+    public void saveCurrentStates(org.nlh4j.web.core.domain.entity.Function __entity) {
+    }
+
+    /**
+     * @return the singleton
+     */
+    public static _Function getSingletonInternal() {
+        return __singleton;
+    }
+
+    /**
+     * @return the new instance
+     */
+    public static _Function newInstance() {
+        return new _Function();
+    }
+
+}

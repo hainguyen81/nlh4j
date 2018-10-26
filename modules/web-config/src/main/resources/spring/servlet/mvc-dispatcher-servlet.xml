@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc
+                           http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+                           http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context-4.0.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+
+	<!-- Use SPRING configuration -->
+    <context:spring-configured/>
+
+	<!-- Import common support configure -->
+    <import resource="classpath*:spring/helper-context.xml" />
+
+	<!-- **************************************************************** -->
+	<!-- SPRING ANNOTATION PROCESSING -->
+	<!-- **************************************************************** -->
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<!-- <mvc:annotation-driven /> -->
+	<!-- <context:annotation-config /> -->
+	<!-- AOP annotation setting -->
+	<!-- <aop:aspectj-autoproxy /> -->
+
+	<!-- **************************************************************** -->
+	<!-- RESOURCE FOLDERS CONFIGURATION -->
+	<!-- Dispatcher configuration for serving static resources -->
+	<!-- **************************************************************** -->
+	<mvc:resources
+	    mapping="/resources/**"
+	    order="0"
+	    location="/resources/,classpath*:**/resources/,classpath*:/resources/,classpath:**/resources/,classpath:/resources/,classpath*:**/META-INF/resources/WEB-INF/resources/,classpath*:/META-INF/resources/WEB-INF/resources/,classpath:**/META-INF/resources/WEB-INF/resources/,classpath:/META-INF/resources/WEB-INF/resources/" />
+	<mvc:resources
+	    mapping="/resources/${app.theme}/**"
+	    order="1"
+	    location="/resources/${app.theme}/,classpath*:**/resources/${app.theme}/,classpath*:/resources/${app.theme}/,classpath:**/resources/${app.theme}/,classpath:/resources/${app.theme}/,classpath*:**/META-INF/resources/WEB-INF/resources/${app.theme}/,classpath*:/META-INF/resources/WEB-INF/resources/${app.theme}/,classpath:**/META-INF/resources/WEB-INF/resources/${app.theme}/,classpath:/META-INF/resources/WEB-INF/resources/${app.theme}/" />
+	<mvc:resources
+	    order="2"
+	    mapping="/views/**"
+	    location="/views/,classpath*:**/views/,classpath*:/views/,classpath:**/views/,classpath:/views/,classpath*:**/META-INF/resources/WEB-INF/views/,classpath*:/META-INF/resources/WEB-INF/views/,classpath:**/META-INF/resources/WEB-INF/views/,classpath:/META-INF/resources/WEB-INF/views/" />
+	<mvc:resources
+	    order="3"
+	    mapping="/views/${app.theme}/**"
+	    location="/views/${app.theme}/,classpath*:**/views/${app.theme}/,classpath*:/views/${app.theme}/,classpath:**/views/${app.theme}/,classpath:/views/${app.theme}/,classpath*:**/META-INF/resources/WEB-INF/views/${app.theme}/,classpath*:/META-INF/resources/WEB-INF/views/${app.theme}/,classpath:**/META-INF/resources/WEB-INF/views/${app.theme}/,classpath:/META-INF/resources/WEB-INF/views/${app.theme}/" />
+	<mvc:resources
+	    order="4"
+	    mapping="/tags/**"
+	    location="/tags/,classpath*:**/tags/,classpath*:/tags/,classpath:**/tags/,classpath:/tags/,classpath*:**/META-INF/resources/WEB-INF/tags/,classpath*:/META-INF/resources/WEB-INF/tags/,classpath:**/META-INF/resources/WEB-INF/tags/,classpath:/META-INF/resources/WEB-INF/tags/" />
+	<mvc:resources
+	    order="5"
+	    mapping="/tags/${app.theme}/**"
+	    location="/tags/${app.theme}/,classpath*:**/tags/${app.theme}/,classpath*:/tags/${app.theme}/,classpath:**/tags/${app.theme}/,classpath:/tags/${app.theme}/,classpath*:**/META-INF/resources/WEB-INF/tags/${app.theme}/,classpath*:/META-INF/resources/WEB-INF/tags/${app.theme}/,classpath:**/META-INF/resources/WEB-INF/tags/${app.theme}/,classpath:/META-INF/resources/WEB-INF/tags/${app.theme}/" />
+	<mvc:resources
+	    order="6"
+	    mapping="/tld/**"
+	    location="/tld/,classpath*:**/tld/,classpath*:/tld/,classpath:**/tld/,classpath:/tld/,classpath*:**/META-INF/resources/WEB-INF/tld/,classpath*:/META-INF/resources/WEB-INF/tld/,classpath:**/META-INF/resources/WEB-INF/tld/,classpath:/META-INF/resources/WEB-INF/tld/" />
+	<mvc:resources
+	    order="7"
+	    mapping="/tld/${app.theme}/**"
+	    location="/tld/${app.theme}/,classpath*:**/tld/${app.theme}/,classpath*:/tld/${app.theme}/,classpath:**/tld/${app.theme}/,classpath:/tld/${app.theme}/,classpath*:**/META-INF/resources/WEB-INF/tld/${app.theme}/,classpath*:/META-INF/resources/WEB-INF/tld/${app.theme}/,classpath:**/META-INF/resources/WEB-INF/tld/${app.theme}/,classpath:/META-INF/resources/WEB-INF/tld/${app.theme}/" />
+	<mvc:resources
+	    order="8"
+	    mapping="/WEB-INF/templates/**"
+	    location="/templates/,classpath*:**/templates/,classpath*:/templates/,classpath:**/templates/,classpath:/templates/,classpath*:**/META-INF/resources/WEB-INF/templates/,classpath*:/META-INF/resources/WEB-INF/templates/,classpath:**/META-INF/resources/WEB-INF/templates/,classpath:/META-INF/resources/WEB-INF/templates/" />
+	<mvc:resources
+	    order="9"
+	    mapping="/WEB-INF/templates/${app.theme}/**"
+	    location="/templates/${app.theme}/,classpath*:**/templates/${app.theme}/,classpath*:/templates/${app.theme}/,classpath:**/templates/${app.theme}/,classpath:/templates/${app.theme}/,classpath*:**/META-INF/resources/WEB-INF/templates/${app.theme}/,classpath*:/META-INF/resources/WEB-INF/templates/${app.theme}/,classpath:**/META-INF/resources/WEB-INF/templates/${app.theme}/,classpath:/META-INF/resources/WEB-INF/templates/${app.theme}/" />
+
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="order" value="2" />
+		<property name="prefix" value="/WEB-INF/views/${app.theme}/" />
+		<property name="suffix" value=".jsp" />
+		<property name="viewClass" value="org.nlh4j.core.views.JstlView" />
+		<!-- Expose context bean to JSP -->
+		<property name="exposedContextBeanNames">
+		    <list><value>properties</value></list>
+		</property>
+	</bean>
+
+	<bean id="tilesConfigurer" class="org.nlh4j.core.views.TilesConfigurer">
+        <property name="definitions">
+            <list>
+                <value>classpath*:**/META-INF/resources/WEB-INF/views/${app.theme}/tiles.xml</value>
+                <value>classpath*:**/META-INF/resources/WEB-INF/views/${app.theme}/views.xml</value>
+                <value>classpath*:/META-INF/resources/WEB-INF/views/${app.theme}/tiles.xml</value>
+                <value>classpath*:/META-INF/resources/WEB-INF/views/${app.theme}/views.xml</value>
+                <value>classpath*:**/WEB-INF/views/${app.theme}/tiles.xml</value>
+                <value>classpath*:**/WEB-INF/views/${app.theme}/views.xml</value>
+                <value>classpath*:/WEB-INF/views/${app.theme}/tiles.xml</value>
+                <value>classpath*:/WEB-INF/views/${app.theme}/views.xml</value>
+                <value>classpath*:**/views/${app.theme}/tiles.xml</value>
+                <value>classpath*:**/views/${app.theme}/views.xml</value>
+                <value>classpath*:/views/${app.theme}/tiles.xml</value>
+                <value>classpath*:/views/${app.theme}/views.xml</value>
+                <value>classpath:**/META-INF/resources/WEB-INF/views/${app.theme}/tiles.xml</value>
+                <value>classpath:**/META-INF/resources/WEB-INF/views/${app.theme}/views.xml</value>
+                <value>classpath:/META-INF/resources/WEB-INF/views/${app.theme}/tiles.xml</value>
+                <value>classpath:/META-INF/resources/WEB-INF/views/${app.theme}/views.xml</value>
+                <value>classpath:**/WEB-INF/views/${app.theme}/tiles.xml</value>
+                <value>classpath:**/WEB-INF/views/${app.theme}/views.xml</value>
+                <value>classpath:/WEB-INF/views/${app.theme}/tiles.xml</value>
+                <value>classpath:/WEB-INF/views/${app.theme}/views.xml</value>
+                <value>classpath:**/views/${app.theme}/tiles.xml</value>
+                <value>classpath:**/views/${app.theme}/views.xml</value>
+                <value>classpath:/views/${app.theme}/tiles.xml</value>
+                <value>classpath:/views/${app.theme}/views.xml</value>
+                <value>/WEB-INF/views/${app.theme}/tiles.xml</value>
+                <value>/WEB-INF/views/${app.theme}/views.xml</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="tilesViewResolver" class="org.nlh4j.core.views.TilesExposingBeansViewResolver">
+        <property name="order" value="1" />
+        <!-- Expose context bean to JSP -->
+        <property name="exposedContextBeanNames">
+            <list><value>properties</value></list>
+        </property>
+        <property name="viewClass" value="org.nlh4j.core.views.TilesExposingBeansView" />
+    </bean>
+
+	<bean id="xmlViewResolver" class="org.nlh4j.core.views.XmlViewResolver">
+		<property name="locationClasspath" value="classpath*:spring/jasper-views-config.xml" />
+		<property name="order" value="0" />
+	</bean>
+</beans>

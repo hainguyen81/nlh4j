@@ -1,0 +1,36 @@
+SELECT COALESCE( (
+			SELECT
+					true
+
+			FROM
+					fn_iv_modules_by_user( null, /* companyCode */'abc', /* userName */'abc' ) m
+
+			WHERE	(
+						( /* insertable */true = true AND COALESCE( m.insertable, false ) = true )
+					OR	( /* updatable */true = true AND ( COALESCE( m.insertable, false ) = true OR COALESCE( m.updatable, false ) = true ) )
+					OR	( /* deletable */true = true AND ( COALESCE( m.insertable, false ) = true OR COALESCE( m.deletable, false ) = true ) )
+					OR	(	( /* insertable */true = false AND /* updatable */true = false AND /* deletable */true = false )
+						AND ( COALESCE( m.insertable, false ) = true
+							OR COALESCE( m.updatable, false ) = true
+							OR COALESCE( m.deletable, false ) = true
+							OR COALESCE( m.viewable, false ) = true ) )
+			)
+
+			/*%if (moduleCds != null && moduleCds.size() > 0) */
+			AND
+					m.code in (''
+						/*%for moduleCd: moduleCds */
+							/*# "," */
+							/* moduleCd */'abc'
+			  			/*%end */
+					)
+			/*%end*/
+			/*%if (moduleCds == null || moduleCds.size() <= 0) */
+			AND
+					m.code = ''
+			/*%end*/
+
+			OFFSET 0 LIMIT 1
+), false )
+
+

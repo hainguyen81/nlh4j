@@ -1,0 +1,80 @@
+div[data-listview] .table thead:first-child tr th:nth-child(1),
+div[data-listview] .table thead:first-child tr td:nth-child(1),
+.as-sortable-dragging tr th:nth-child(1),
+.as-sortable-dragging tr td:nth-child(1) {
+	width: 30%;
+}
+div[data-listview] .table thead:first-child tr th:nth-child(3),
+div[data-listview] .table thead:first-child tr td:nth-child(3),
+div[data-listview] .table thead:first-child tr th:nth-child(4),
+div[data-listview] .table thead:first-child tr td:nth-child(4),
+div[data-listview] .table thead:first-child tr th:nth-child(5),
+div[data-listview] .table thead:first-child tr td:nth-child(5),
+div[data-listview] .table thead:first-child tr th:nth-child(6),
+div[data-listview] .table thead:first-child tr td:nth-child(6),
+.as-sortable-dragging th:nth-child(3),
+.as-sortable-dragging td:nth-child(3),
+.as-sortable-dragging th:nth-child(4),
+.as-sortable-dragging td:nth-child(4),
+.as-sortable-dragging th:nth-child(5),
+.as-sortable-dragging td:nth-child(5),
+.as-sortable-dragging th:nth-child(6),
+.as-sortable-dragging td:nth-child(6) {
+	width: 7%;
+}
+.as-sortable-dragging th:nth-child(3),
+.as-sortable-dragging td:nth-child(3),
+.as-sortable-dragging th:nth-child(4),
+.as-sortable-dragging td:nth-child(4),
+.as-sortable-dragging th:nth-child(5),
+.as-sortable-dragging td:nth-child(5),
+.as-sortable-dragging th:nth-child(6),
+.as-sortable-dragging td:nth-child(6) {
+	float: right;
+}
+div[data-listview] .table tbody tr td {
+	line-height: 15px;
+}
+div[data-listview] .table tbody tr.selected {
+	background-color: #68B9D4;
+	color: #fffff;
+}
+div[data-listview] .table tbody tr.as-sortable-item,
+div[data-listview] .table tbody tr.as-sortable-placeholder,
+div[data-listview] .table tr.as-sortable-item,
+div[data-listview] .table tr.as-sortable-placeholder {
+	display: table-row;
+	border-radius: 0px;
+}
+div[data-listview] .table tbody tr.as-sortable-placeholder,
+div[data-listview] .table tr.as-sortable-placeholder {
+	font-size: 12px;
+	border-radius: 3px;
+	min-height: 30px;
+}
+div[data-listview] .table tbody tr.as-sortable-placeholder td,
+div[data-listview] .table tr.as-sortable-placeholder td {
+	background-color: transparent;
+}
+.as-sortable-dragging .as-sortable-item {
+	background-color: #fdfae2;
+	color: #000000;
+	padding: 5px;
+	font-size: 12px;
+}
+.as-sortable-dragging .as-sortable-placeholder {
+	border: 1px dashed darkgrey;
+    box-sizing: border-box;
+	background-color: #ecebeb;
+}
+.as-sortable-dragging tr th,
+.as-sortable-dragging tr td {
+	display: inline-block;
+}
+.move-actions {
+	margin-top: 100px;
+	text-align: center;
+	font-size: 3em;
+	color: #5fb384;
+}
+
