@@ -42,7 +42,7 @@ import org.nlh4j.util.StreamUtils;
  * 		(So if the thumbnail generation is not correct, it's OpenOffice's fault, not our's :-)
  *
  */
-public final class OpenOfficeThumbnailer extends AbstractThumbnailer {
+public class OpenOfficeThumbnailer extends AbstractThumbnailer {
 
     /** serialVersionUID */
     private static final long serialVersionUID = 1L;
