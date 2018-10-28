@@ -28,10 +28,36 @@
 			<version>${module.version}</version>
       	</dependency>
 
+		<!-- Apache POI -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml-schemas</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-scratchpad</artifactId>
+		</dependency>
+
 		<!-- JOD Converter -->
 		<dependency>
 			<groupId>com.artofsolving</groupId>
 			<artifactId>jodconverter</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.artofsolving.jodconverter</groupId>
+		    <artifactId>jodconverter-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.semanticdesktop</groupId>
+			<artifactId>aperture</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.jodconverter</groupId>
