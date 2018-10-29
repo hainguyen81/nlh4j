@@ -26,8 +26,8 @@ import java.io.IOException;
 import org.nlh4j.exceptions.ThumbnailerException;
 import org.springframework.util.Assert;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * This AbstractThumbnailer may be used in order to implement only essential methods.
@@ -38,8 +38,6 @@ import lombok.EqualsAndHashCode;
  *
  * @author Benjamin
  */
-@Data
-@EqualsAndHashCode(callSuper = false)
 public abstract class AbstractThumbnailer implements Thumbnailer {
 
     /** serialVersionUID */
@@ -48,7 +46,8 @@ public abstract class AbstractThumbnailer implements Thumbnailer {
 	/**
 	 * Height of thumbnail picture to create (in Pixel)
 	 */
-	protected int thumbHeight = 0;
+    @Getter
+	private int thumbHeight = THUMBNAIL_DEFAULT_HEIGHT;
 
 	/**
 	 * Set the thumbnail height
@@ -62,7 +61,8 @@ public abstract class AbstractThumbnailer implements Thumbnailer {
 	/**
 	 * Width of thumbnail picture to create (in Pixel)
 	 */
-	protected int thumbWidth = 0;
+	@Getter
+	private int thumbWidth = THUMBNAIL_DEFAULT_WIDTH;
 
 	/**
      * Set the thumbnail width
@@ -76,7 +76,9 @@ public abstract class AbstractThumbnailer implements Thumbnailer {
 	/**
 	 * Options for image resizer (currently unused)
 	 */
-	protected int imageResizeOptions = 0;
+    @Getter
+    @Setter
+	private int imageResizeOptions = 0;
 
 	/**
 	 * Initialize the thumbnail size from default constants.
@@ -86,9 +88,9 @@ public abstract class AbstractThumbnailer implements Thumbnailer {
 	/**
 	 * Set a new Thumbnail size. All following thumbnails will be generated in this size.
 	 *
-	 * @param width					Width in Pixel
-	 * @param height				Height in Pixel
-	 * @param imageResizeOptions	Options for ResizeImage (currently ignored)
+	 * @param thumbWidth Thumbnail width in pixel(s)
+	 * @param thumbHeight Thumbnail height in pixel(s)
+	 * @param imageResizeOptions Options for ResizeImage (currently ignored)
 	 */
 	@Override
 	public void setImageSize(int thumbWidth, int thumbHeight, int imageResizeOptions) {
@@ -115,8 +117,9 @@ public abstract class AbstractThumbnailer implements Thumbnailer {
 	protected final void finalize() throws Throwable {
 		try {
 		    this.close();
-			super.finalize();
-		} finally {}
+		} finally {
+		    super.finalize();
+		}
 	}
 
 	/**

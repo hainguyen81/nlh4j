@@ -14,6 +14,7 @@ import javax.imageio.stream.ImageInputStream;
 
 import org.nlh4j.exceptions.ThumbnailerException;
 import org.nlh4j.util.ImageUtils;
+import org.nlh4j.util.StreamUtils;
 
 /**
  * {@link BufferedImage} Thumbnailer
@@ -34,12 +35,11 @@ public final class NativeImageThumbnailer extends AbstractThumbnailer {
         // parse source image format
         ImageInputStream iis = ImageIO.createImageInputStream(input);
         String srcImgFmt = ImageUtils.getImageFormat(iis);
-        iis.close();
+        StreamUtils.closeQuitely(iis);
         // read image from source file
         BufferedImage srcImg = ImageIO.read(input);
         // resize source image
-        BufferedImage destImg = ImageUtils.resize(srcImg,
-                super.getCurrentImageWidth(), super.getCurrentImageHeight());
+        BufferedImage destImg = ImageUtils.resize(srcImg, getThumbWidth(), getThumbHeight());
         // save to output file
         ImageIO.write(destImg, srcImgFmt, output);
     }

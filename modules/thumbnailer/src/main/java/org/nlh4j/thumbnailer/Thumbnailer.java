@@ -93,7 +93,7 @@ public interface Thumbnailer extends Closeable, Serializable {
 	 *
 	 * @return	image width of created thumbnails.
 	 */
-	default int getCurrentImageWidth() {
+	default int getThumbWidth() {
 	    return THUMBNAIL_DEFAULT_WIDTH;
 	}
 
@@ -102,7 +102,7 @@ public interface Thumbnailer extends Closeable, Serializable {
 	 *
 	 * @return	image height of created thumbnails.
 	 */
-	default int getCurrentImageHeight() {
+	default int getThumbHeight() {
 	    return THUMBNAIL_DEFAULT_HEIGHT;
 	}
 
