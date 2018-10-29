@@ -290,6 +290,8 @@
 		<org.artofsolving.jodconverter-core.version>3.1-xwiki</org.artofsolving.jodconverter-core.version>
 		<org.semanticdesktop.aperture.version>1.1.0.Beta1</org.semanticdesktop.aperture.version>
 		<org.jodconverter.version>4.2.0</org.jodconverter.version>
+		<org.apache.pdfbox.version>2.0.12</org.apache.pdfbox.version>
+		<org.apache.pdfbox.fontbox.version>2.0.12</org.apache.pdfbox.fontbox.version>
 
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ -->
 		<!-- ANDROID -->
@@ -1930,6 +1932,16 @@
 				<groupId>org.jodconverter</groupId>
 				<artifactId>jodconverter-local</artifactId>
 				<version>${org.jodconverter.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.pdfbox</groupId>
+				<artifactId>pdfbox</artifactId>
+				<version>${org.apache.pdfbox.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.pdfbox</groupId>
+				<artifactId>fontbox</artifactId>
+				<version>${org.apache.pdfbox.fontbox.version}</version>
 			</dependency>
 
 			<!-- Test -->
