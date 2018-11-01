@@ -53,7 +53,7 @@ public final class RequestUtils implements Serializable {
 	public static final String AJAX_REQUEST_IDENTIFIER = "XMLHttpRequest";
 	public static final String AJAX_REQUEST_HEADER = "X-Requested-With";
 	/** The request header key for parsing client IP address */
-	private transient static String[] requestClientIpHeaders = null;
+	private static transient String[] requestClientIpHeaders = null;
 	/**
 	 * Get the request header key for parsing client IP address
 	 *
@@ -297,7 +297,7 @@ public final class RequestUtils implements Serializable {
      * @return HTTPリクエストのパラメータ値
      */
     public static final String[] getParameters(HttpServletRequest request, String paramName) {
-        if (request == null) return null;
+        if (request == null) return new String[] {};
         // require POST parameters
         String[] values = request.getParameterValues(paramName);
         // check GET parameters
@@ -354,7 +354,8 @@ public final class RequestUtils implements Serializable {
                 params.add(NumberUtils.toInt(paramVal, defVal));
             }
         }
-        return (params.size() > 0 ? params.toArray(new Integer[params.size()]) : new Integer[] {});
+        return (!CollectionUtils.isEmpty(params)
+                ? params.toArray(new Integer[params.size()]) : new Integer[] {});
     }
     /**
      * 現在HTTPリクエストのパラメータを取得
@@ -409,7 +410,8 @@ public final class RequestUtils implements Serializable {
                 params.add(NumberUtils.toLong(paramVal, defVal));
             }
         }
-        return (params.size() > 0 ? params.toArray(new Long[params.size()]) : new Long[] {});
+        return (!CollectionUtils.isEmpty(params)
+                ? params.toArray(new Long[params.size()]) : new Long[] {});
     }
     /**
      * 現在HTTPリクエストのパラメータを取得
@@ -838,7 +840,7 @@ public final class RequestUtils implements Serializable {
             }
         }
         catch(Exception e) {
-            e.printStackTrace();
+            LogUtils.logWarn(RequestUtils.class, e.getMessage());
             bt = Browser.UNKNOWN;
         }
         return bt;
@@ -868,7 +870,8 @@ public final class RequestUtils implements Serializable {
         String contentDisposition = MessageFormat.format("attachment; filename=\"{0}\"", encFileName);
         if (Browser.FIREFOX.equals(bt.getGroup())) {
             contentDisposition = MessageFormat.format(
-                    "attachment; filename*=" + EncryptUtils.ENCODING_UTF8 + "''\"{0}\"", encFileName);
+                    "attachment; filename*={0}''\"{1}\"",
+                    EncryptUtils.ENCODING_UTF8, encFileName);
         }
         return contentDisposition;
     }
