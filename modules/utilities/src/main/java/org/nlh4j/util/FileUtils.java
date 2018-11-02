@@ -528,7 +528,7 @@ public final class FileUtils implements Serializable {
         if (!f.exists() || !f.isDirectory()) return paths;
         DirectoryStream<Path> ds = null;
         try {
-            if (!recursively || !StringUtils.hasText(glob)) {
+            if (!StringUtils.hasText(glob)) {
                 ds = Files.newDirectoryStream(f.toPath());
             } else {
                 ds = Files.newDirectoryStream(f.toPath(), glob);
@@ -590,7 +590,7 @@ public final class FileUtils implements Serializable {
         if (!f.exists() || !f.isDirectory()) return paths;
         DirectoryStream<Path> ds = null;
         try {
-            if (!recursively || filter == null) {
+            if (filter == null) {
                 ds = Files.newDirectoryStream(f.toPath());
             } else {
                 ds = Files.newDirectoryStream(f.toPath(), filter);
