@@ -287,11 +287,14 @@
 
 		<!-- Thumbnailer Libraries -->
 		<com.artofsolving.jodconverter.version>2.2.1</com.artofsolving.jodconverter.version>
-		<org.artofsolving.jodconverter-core.version>3.1-xwiki</org.artofsolving.jodconverter-core.version>
-		<org.semanticdesktop.aperture.version>1.1.0.Beta1</org.semanticdesktop.aperture.version>
-		<org.jodconverter.version>4.2.0</org.jodconverter.version>
+		<com.artofsolving.jodconverter-core.version>3.0-alfresco-patched-20141024</com.artofsolving.jodconverter-core.version>
+		<com.drewnoakes.metadata-extractor.version>2.11.0</com.drewnoakes.metadata-extractor.version>
+		<org.semweb4j.rdf2go.api.version>5.0.1</org.semweb4j.rdf2go.api.version>
 		<org.apache.pdfbox.version>2.0.12</org.apache.pdfbox.version>
 		<org.apache.pdfbox.fontbox.version>2.0.12</org.apache.pdfbox.fontbox.version>
+		<!-- TODO Aperture Repo has been down.
+		So need another third party libraries for generating office file(s) thumbnail -->
+		<!-- <org.semanticdesktop.aperture.core.version>1.6.0</org.semanticdesktop.aperture.core.version> -->
 
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ -->
 		<!-- ANDROID -->
@@ -1237,6 +1240,10 @@
 			<id>maven.xwiki.org</id>
 			<url>http://maven.xwiki.org/externals/</url>
 		</repository>
+		<!-- <repository>
+			<id>aperture.sourceforge.net</id>
+			<url>http://aperture.sourceforge.net/maven</url>
+		</repository> -->
 	</repositories>
 
 	<!-- Dependencies -->
@@ -1909,29 +1916,14 @@
 				<version>${com.artofsolving.jodconverter.version}</version>
 			</dependency>
 			<dependency>
-			    <groupId>org.artofsolving.jodconverter</groupId>
-			    <artifactId>jodconverter-core</artifactId>
-			    <version>${org.artofsolving.jodconverter-core.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.semanticdesktop</groupId>
-				<artifactId>aperture</artifactId>
-				<version>${org.semanticdesktop.aperture.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jodconverter</groupId>
+				<groupId>com.artofsolving</groupId>
 				<artifactId>jodconverter-core</artifactId>
-				<version>${org.jodconverter.version}</version>
+				<version>${com.artofsolving.jodconverter-core.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.jodconverter</groupId>
-				<artifactId>jodconverter-spring</artifactId>
-				<version>${org.jodconverter.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jodconverter</groupId>
-				<artifactId>jodconverter-local</artifactId>
-				<version>${org.jodconverter.version}</version>
+				<groupId>org.semweb4j</groupId>
+				<artifactId>rdf2go.api</artifactId>
+				<version>${org.semweb4j.rdf2go.api.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.pdfbox</groupId>
@@ -1943,6 +1935,13 @@
 				<artifactId>fontbox</artifactId>
 				<version>${org.apache.pdfbox.fontbox.version}</version>
 			</dependency>
+			<!-- TODO Aperture Repo has been down.
+			So need another third party libraries for generating office file(s) thumbnail -->
+			<!-- <dependency>
+				<groupId>org.semanticdesktop.aperture</groupId>
+				<artifactId>aperture-core</artifactId>
+				<version>${org.semanticdesktop.aperture.core.version}</version>
+			</dependency> -->
 
 			<!-- Test -->
 			<dependency>

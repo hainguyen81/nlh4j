@@ -36,13 +36,9 @@ import org.nlh4j.thumbnailer.mime.Office2K7FileIdentifier;
 import org.nlh4j.thumbnailer.mime.PptFileIdentifier;
 import org.nlh4j.thumbnailer.mime.ScratchFileIdentifier;
 import org.nlh4j.thumbnailer.mime.XlsFileIdentifier;
-import org.nlh4j.util.BeanUtils;
 import org.nlh4j.util.CollectionUtils;
 import org.nlh4j.util.LogUtils;
 import org.nlh4j.util.StreamUtils;
-import org.ontoware.rdf2go.model.node.impl.URIImpl;
-import org.semanticdesktop.aperture.mime.identifier.magic.MagicMimeTypeIdentifier;
-import org.semanticdesktop.aperture.mime.identifier.magic.MagicMimeTypeIdentifierFactory;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
@@ -56,15 +52,19 @@ public class MimeTypeDetector implements Serializable {
 
     /** serialVersionUID */
     private static final long serialVersionUID = 1L;
-    /** {@link MagicMimeTypeIdentifier} */
-	private transient MagicMimeTypeIdentifier mimeTypeIdentifier;
-	protected final MagicMimeTypeIdentifier getMimeTypeIdentifier() {
-	    if (this.mimeTypeIdentifier == null) {
-	        MagicMimeTypeIdentifierFactory mimeTypeFactory = new MagicMimeTypeIdentifierFactory();
-	        this.mimeTypeIdentifier = BeanUtils.safeType(mimeTypeFactory.get(), MagicMimeTypeIdentifier.class);
-	    }
-	    return this.mimeTypeIdentifier;
-	}
+    // TODO org.semanticdesktop.aperture:aperture-core:jar 1.6.0 maven repository has been down.
+    // FIXME So need to implement this or find another third party for this type
+    //    /** {@link org.semanticdesktop.aperture.mime.identifier.magic.MagicMimeTypeIdentifier} */
+    //	private transient org.semanticdesktop.aperture.mime.identifier.magic.MagicMimeTypeIdentifier mimeTypeIdentifier;
+    //	protected final org.semanticdesktop.aperture.mime.identifier.magic.MagicMimeTypeIdentifier getMimeTypeIdentifier() {
+    //	    if (this.mimeTypeIdentifier == null) {
+    //	        org.semanticdesktop.aperture.mime.identifier.magic.MagicMimeTypeIdentifierFactory mimeTypeFactory =
+    //	                new org.semanticdesktop.aperture.mime.identifier.magic.MagicMimeTypeIdentifierFactory();
+    //	        this.mimeTypeIdentifier = BeanUtils.safeType(mimeTypeFactory.get(),
+    //	                org.semanticdesktop.aperture.mime.identifier.magic.MagicMimeTypeIdentifier.class);
+    //	    }
+    //	    return this.mimeTypeIdentifier;
+    //	}
 
 	/** extended identifier(s) */
 	private List<MimeTypeIdentifier> extraIdentifiers;
@@ -90,10 +90,13 @@ public class MimeTypeDetector implements Serializable {
         if (!CollectionUtils.isEmpty(extensions)) {
             return extensions;
         }
-        // parse extension(s) by default
-        extensions = CollectionUtils.toList(
-                this.getMimeTypeIdentifier().getExtensionsFor(mimeType),
-                String.class);
+        // TODO org.semanticdesktop.aperture:aperture-core:jar 1.6.0 maven repository has been down.
+        // FIXME So need to implement this or find another third party for this type
+        //    // parse extension(s) by default
+        //    extensions = CollectionUtils.toList(
+        //            this.getMimeTypeIdentifier().getExtensionsFor(mimeType),
+        //            String.class);
+        extensions = null;
         if (!CollectionUtils.isEmpty(extensions)) {
             this.getCachedExtensions().put(mimeType, extensions);
             return extensions;
@@ -141,7 +144,16 @@ public class MimeTypeDetector implements Serializable {
 	 * @return	String of MIME-Type, or null if no detection was possible (or unknown MIME Type)
 	 */
 	public String getMimeType(File file) {
-	    int bytesLength = this.getMimeTypeIdentifier().getMinArrayLength();
+	    // TODO org.semanticdesktop.aperture:aperture-core:jar 1.6.0 maven repository has been down.
+        // FIXME So need to implement this or find another third party for this type
+	    //    int bytesLength = this.getMimeTypeIdentifier().getMinArrayLength();
+	    int bytesLength = 0;
+	    if (bytesLength <= 0) {
+	        LogUtils.logWarn(MimeTypeDetector.class,
+	                "Not found the byte(s) length of MIME detector to detect MIME!");
+	        throw new UnsupportedOperationException(
+	                "Not found the byte(s) length of MIME detector to detect MIME!");
+	    }
 		byte[] bytes = new byte[bytesLength];
 		FileInputStream fis = null;
 		try {
@@ -156,9 +168,12 @@ public class MimeTypeDetector implements Serializable {
 
 		// detect MIME type
 		try {
-    		String fileUrl = file.toURI().toASCIIString();
-    		String mimeType = this.getMimeTypeIdentifier().identify(
-    		        bytes, file.getPath(), new URIImpl(fileUrl));
+    		// TODO org.semanticdesktop.aperture:aperture-core:jar 1.6.0 maven repository has been down.
+            // FIXME So need to implement this or find another third party for this type
+		    //    String fileUrl = file.toURI().toASCIIString();
+            //    String mimeType = this.getMimeTypeIdentifier().identify(
+            //	        bytes, file.getPath(), new URIImpl(fileUrl));
+    		String mimeType = null;
     		mimeType = (!StringUtils.hasText(mimeType) ? null : mimeType);
             // Identifiers may re-write MIME.
             for (MimeTypeIdentifier identifier : this.getExtraIdentifiers()) {

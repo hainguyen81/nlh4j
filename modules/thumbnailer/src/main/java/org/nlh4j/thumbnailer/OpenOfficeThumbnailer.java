@@ -78,7 +78,8 @@ public class OpenOfficeThumbnailer extends AbstractThumbnailer {
             bis = new BufferedInputStream(zipFile.getInputStream(entry));
             String imgFmt = ImageUtils.getImageFormat(bis);
             BufferedImage srcImg = ImageIO.read(bis);
-            BufferedImage dstImg = ImageUtils.resize(srcImg, this.getCurrentImageWidth(), this.getCurrentImageHeight());
+            BufferedImage dstImg = ImageUtils.resize(srcImg,
+                    this.getThumbWidth(), this.getThumbHeight());
             ImageIO.write(dstImg, imgFmt, output);
         } catch (Exception e) {
             throw new ThumbnailerException(e.getMessage(), e);

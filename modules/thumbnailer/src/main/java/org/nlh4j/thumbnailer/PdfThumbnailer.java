@@ -21,26 +21,27 @@
 package org.nlh4j.thumbnailer;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImagingOpException;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import org.apache.commons.io.FileUtils;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageTree;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.apache.pdfbox.rendering.PDFRenderer;
+import org.apache.pdfbox.rendering.PageDrawer;
+import org.apache.pdfbox.rendering.PageDrawerParameters;
 import org.nlh4j.exceptions.ThumbnailerException;
 import org.nlh4j.util.BeanUtils;
+import org.nlh4j.util.FileUtils;
 import org.nlh4j.util.ImageUtils;
 import org.nlh4j.util.LogUtils;
 import org.nlh4j.util.StreamUtils;
-import org.pdfbox.pdfviewer.PageDrawer;
-import org.pdfbox.pdmodel.PDDocument;
-import org.pdfbox.pdmodel.PDPage;
-import org.pdfbox.pdmodel.common.PDRectangle;
 import org.springframework.util.Assert;
 
 /**
@@ -67,14 +68,14 @@ public class PdfThumbnailer extends AbstractThumbnailer {
 	    Assert.isTrue(input != null && input.exists() && input.canRead(), "sourceFile");
 
 	    // delete output file
-        FileUtils.deleteQuietly(output);
+        FileUtils.safeDelete(output);
 
         PDDocument document = null;
         try {
             // load source file
             document = PDDocument.load(input);
             // generate thumbnail of first page
-            BufferedImage tmpImage = writeImageFirstPage(document, BufferedImage.TYPE_INT_RGB);
+            BufferedImage tmpImage = this.writeImageFirstPage(document, BufferedImage.TYPE_INT_RGB);
             if (tmpImage != null && tmpImage.getWidth() == getThumbWidth()) {
                 ImageIO.write(tmpImage, "PNG", output);
             } else if (tmpImage != null) {
@@ -87,19 +88,22 @@ public class PdfThumbnailer extends AbstractThumbnailer {
 
 	/**
 	 * Loosely based on the commandline-Tool PDFImageWriter
-	 * @param document
-	 * @param imageType
-	 * @return
-	 * @throws IOException
+	 * @param document to write image
+	 * @param imageType image type
+	 * @return {@link BufferedImage}
+	 * @throws IOException thrown if failed
 	 */
     private BufferedImage writeImageFirstPage(PDDocument document, int imageType) throws IOException {
-        List<?> pages = document.getDocumentCatalog().getAllPages();
-    	PDPage page = BeanUtils.safeType(pages.get(0), PDPage.class);
-    	return this.convertToImage(page, imageType, getThumbWidth(), getThumbHeight());
+        PDPageTree pages = (document == null || document.getDocumentCatalog() == null
+                ? null : document.getDocumentCatalog().getPages());
+    	PDPage page = (pages != null && pages.getCount() > 0 ? pages.get(0) : null);
+    	Assert.notNull(page, "Empty PDF document!");
+    	return this.convertToImage(document, page, imageType, getThumbWidth(), getThumbHeight());
     }
 
     /**
      * Convert the specified {@link PDPage} to {@link BufferedImage}
+     * @param document to write image
      * @param page to convert
      * @param imageType converted image type
      * @param thumbWidth image thumbnail width
@@ -108,10 +112,10 @@ public class PdfThumbnailer extends AbstractThumbnailer {
      * @throws IOException thrown if failed
      */
     private BufferedImage convertToImage(
-            PDPage page, int imageType, int thumbWidth, int thumbHeight) throws IOException {
-        PDRectangle mBox = page.findMediaBox();
+            PDDocument document, PDPage page, int imageType,
+            int thumbWidth, int thumbHeight) throws IOException {
+        PDRectangle mBox = page.getMediaBox();
         float widthPt = mBox.getWidth();
-        float heightPt = mBox.getHeight();
         // Math.round(widthPt * scaling)
         int widthPx = thumbWidth;
         // Math.round(heightPt * scaling)
@@ -119,16 +123,20 @@ public class PdfThumbnailer extends AbstractThumbnailer {
         // resolution / 72.0F
         float scaling = thumbWidth / widthPt;
 
-        Dimension pageDimension = new Dimension((int) widthPt, (int) heightPt);
+        // draw image to PDF
         BufferedImage retval = new BufferedImage(widthPx, heightPx, imageType);
-        Graphics2D graphics = (Graphics2D)retval.getGraphics();
+        Graphics2D graphics = BeanUtils.safeType(retval.getGraphics(), Graphics2D.class);
         graphics.setBackground(TRANSPARENT_WHITE);
         graphics.clearRect(0, 0, retval.getWidth(), retval.getHeight());
         graphics.scale(scaling, scaling);
-        PageDrawer drawer = new PageDrawer();
-        drawer.drawPage(graphics, page, pageDimension);
+        PDFRenderer renderer = new PDFRenderer(document);
+        PageDrawerParameters drawerParameters = BeanUtils.safeNewInstance(
+                PageDrawerParameters.class, new Object[] { renderer, page, true });
+        Assert.notNull(drawerParameters, "Could not create parameter(s) to draw!");
+        PageDrawer drawer = new PageDrawer(drawerParameters);
+        drawer.drawPage(graphics, mBox);
         try {
-            int rotation = page.findRotation();
+            int rotation = page.getRotation();
             if ((rotation == 90) || (rotation == 270)) {
                 int w = retval.getWidth();
                 int h = retval.getHeight();

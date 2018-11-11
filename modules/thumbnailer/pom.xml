@@ -52,24 +52,12 @@
 			<artifactId>jodconverter</artifactId>
 		</dependency>
 		<dependency>
-		    <groupId>org.artofsolving.jodconverter</groupId>
-		    <artifactId>jodconverter-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.semanticdesktop</groupId>
-			<artifactId>aperture</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.jodconverter</groupId>
+			<groupId>com.artofsolving</groupId>
 			<artifactId>jodconverter-core</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.jodconverter</groupId>
-			<artifactId>jodconverter-spring</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.jodconverter</groupId>
-			<artifactId>jodconverter-local</artifactId>
+			<groupId>org.semweb4j</groupId>
+			<artifactId>rdf2go.api</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.pdfbox</groupId>
@@ -79,6 +67,12 @@
 			<groupId>org.apache.pdfbox</groupId>
 			<artifactId>fontbox</artifactId>
 		</dependency>
+		<!-- TODO Aperture Repo has been down.
+			So need another third party libraries for generating office file(s) thumbnail -->
+		<!-- <dependency>
+			<groupId>org.semanticdesktop.aperture</groupId>
+			<artifactId>aperture-core</artifactId>
+		</dependency> -->
 
 		<!-- Lombok -->
 		<dependency>
