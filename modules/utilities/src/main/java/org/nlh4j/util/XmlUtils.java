@@ -12,6 +12,7 @@ import java.util.Map;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.MapperFeature;
@@ -35,7 +36,7 @@ public final class XmlUtils implements Serializable {
 	/**
 	 * The XML mapper for serializing/de-serializing
 	 */
-	private transient static XmlMapper xmlMapper = null;
+	private static transient XmlMapper xmlMapper = null;
 	/**
 	 * Gets the XML mapper for serializing/de-serializing
 	 *
@@ -106,16 +107,11 @@ public final class XmlUtils implements Serializable {
 	 * @param object the object for serializing
 	 *
 	 * @return the serialized XML data.
-     * @throws WebApplicationException thrown if fail
 	 */
-	public static <T> String serialize(T object)
-			throws WebApplicationException {
-		try {
-			String json = getMapper().writeValueAsString(object);
-			return json;
-		}
+	public static <T> String serialize(T object) {
+		try { return getMapper().writeValueAsString(object); }
 		catch (Exception e) {
-			e.printStackTrace();
+			LogUtils.logError(XmlUtils.class, e.getMessage(), e);
 			throw new WebApplicationException(e, Response.Status.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -126,10 +122,9 @@ public final class XmlUtils implements Serializable {
 	 * @param object the object for serializing
 	 *
 	 * @return the serialized XML data.
-	 * @throws WebApplicationException thrown if fail
 	 */
-    public static <T> String manualSerialize(T object)
-			throws WebApplicationException {
+    @SuppressWarnings("deprecation")
+    public static <T> String manualSerialize(T object) {
 		// configures
 		Map<ToXmlGenerator.Feature, Boolean> features1 = new LinkedHashMap<ToXmlGenerator.Feature, Boolean>();
 		features1.put(ToXmlGenerator.Feature.WRITE_XML_1_1, Boolean.TRUE);
@@ -138,7 +133,9 @@ public final class XmlUtils implements Serializable {
 		Map<SerializationFeature, Boolean> features2 = new LinkedHashMap<SerializationFeature, Boolean>();
 		features2.put(SerializationFeature.FAIL_ON_EMPTY_BEANS, Boolean.FALSE);
 		features2.put(SerializationFeature.WRAP_EXCEPTIONS, Boolean.FALSE);
+		// try to exclude none empty/NULL
 		features2.put(SerializationFeature.WRITE_NULL_MAP_VALUES, Boolean.FALSE);
+		getMapper().setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
 		configure2(features2);
 		// configures
 		Map<MapperFeature, Boolean> features3 = new LinkedHashMap<MapperFeature, Boolean>();
@@ -162,16 +159,11 @@ public final class XmlUtils implements Serializable {
 	 * @param valueType the type to de-serialize
 	 *
 	 * @return the de-serialized object by the specified type
-     * @throws WebApplicationException thrown if fail
 	 */
-    public static <T> T deserialize(String xml, Class<T> valueType)
-    		throws WebApplicationException {
-		try {
-			T object = getMapper().readValue(xml, valueType);
-			return object;
-		}
+    public static <T> T deserialize(String xml, Class<T> valueType) {
+		try { return getMapper().readValue(xml, valueType); }
 		catch (Exception e) {
-			e.printStackTrace();
+			LogUtils.logError(XmlUtils.class, e.getMessage(), e);
 			throw new WebApplicationException(e, Response.Status.INTERNAL_SERVER_ERROR);
 		}
     }
@@ -183,16 +175,11 @@ public final class XmlUtils implements Serializable {
 	 * @param valueTypeRef the type reference to de-serialize
 	 *
 	 * @return the de-serialized object by the specified type reference
-     * @throws WebApplicationException thrown if fail
 	 */
-    public static <T> T deserialize(String xml, TypeReference<T> valueTypeRef)
-    		throws WebApplicationException {
-		try {
-			T object = getMapper().readValue(xml, valueTypeRef);
-			return object;
-		}
+    public static <T> T deserialize(String xml, TypeReference<T> valueTypeRef) {
+		try { return getMapper().readValue(xml, valueTypeRef); }
 		catch (Exception e) {
-			e.printStackTrace();
+		    LogUtils.logError(XmlUtils.class, e.getMessage(), e);
 			throw new WebApplicationException(e, Response.Status.INTERNAL_SERVER_ERROR);
 		}
     }
@@ -204,16 +191,11 @@ public final class XmlUtils implements Serializable {
 	 * @param valueType the {@link JavaType} to de-serialize
 	 *
 	 * @return the de-serialized object by the specified {@link JavaType}
-     * @throws WebApplicationException thrown if fail
 	 */
-    public static <T> T deserialize(String xml, JavaType valueType)
-    		throws WebApplicationException {
-		try {
-			T object = getMapper().readValue(xml, valueType);
-			return object;
-		}
+    public static <T> T deserialize(String xml, JavaType valueType) {
+		try { return getMapper().readValue(xml, valueType); }
 		catch (Exception e) {
-			e.printStackTrace();
+		    LogUtils.logError(XmlUtils.class, e.getMessage(), e);
 			throw new WebApplicationException(e, Response.Status.INTERNAL_SERVER_ERROR);
 		}
     }

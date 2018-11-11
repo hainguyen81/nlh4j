@@ -2,7 +2,7 @@ package org.nlh4j.web.system.user.domain.dao;
 
 /** */
 @org.springframework.stereotype.Repository()
-@javax.annotation.Generated(value = { "Doma", "1.38.0" }, date = "2018-10-21T18:32:38.042+0700")
+@javax.annotation.Generated(value = { "Doma", "1.38.0" }, date = "2018-10-30T07:32:17.837+0700")
 public class SystemUserDaoImpl extends org.seasar.doma.internal.jdbc.dao.AbstractDao implements org.nlh4j.web.system.user.domain.dao.SystemUserDao {
 
     static {

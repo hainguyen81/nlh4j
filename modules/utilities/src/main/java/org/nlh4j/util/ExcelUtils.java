@@ -38,12 +38,13 @@ import org.nlh4j.handlers.TemporaryFileHandler;
 import org.springframework.util.Assert;
 
 /**
- * Excel utilities
+ * Excel utilities<br>
+ * <b><u><i>NOTE:</i></u></b> Re-check deprecation code if upgrading Apache POI to 4.0 or later
  *
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  * @version 1.0 Aug 18, 2016
  */
-//@SuppressWarnings("deprecation")
+@SuppressWarnings("deprecation")
 public final class ExcelUtils implements Serializable {
 
     /**
