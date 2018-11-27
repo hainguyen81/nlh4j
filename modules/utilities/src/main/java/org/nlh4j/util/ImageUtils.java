@@ -21,10 +21,13 @@ import java.awt.image.RescaleOp;
 import java.awt.image.WritableRaster;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Hashtable;
 import java.util.Iterator;
 
@@ -32,6 +35,8 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.ImageOutputStream;
+
+import org.springframework.util.StringUtils;
 
 /**
  * The image utilities
@@ -665,15 +670,11 @@ public final class ImageUtils implements Serializable {
      * @return The image's format or null
      */
     public static String getImageFormat(InputStream is) {
-    	if (is != null) {
-			try {
-		        return getImageFormat(ImageIO.createImageInputStream(is));
-			}
-			catch (IOException e) {
-				e.printStackTrace();
-			}
-    	}
-    	return null;
+        try { return (is == null ? null : getImageFormat(ImageIO.createImageInputStream(is))); }
+        catch (IOException e) {
+            LogUtils.logWarn(ImageUtils.class, e.getMessage(), e);
+            return null;
+        }
     }
     /**
      * Parse the image format
@@ -683,13 +684,11 @@ public final class ImageUtils implements Serializable {
      * @return The image's format or null
      */
     public static String getImageFormat(URL imageUrl) {
-    	try {
-    		return getImageFormat(imageUrl.openStream());
-		}
+    	try { return (imageUrl == null ? null : getImageFormat(imageUrl.openStream())); }
     	catch (IOException e) {
-    	    e.printStackTrace();
+    	    LogUtils.logWarn(ImageUtils.class, e.getMessage(), e);
+    	    return null;
     	}
-    	return null;
     }
     /**
      * Parse the image format
@@ -699,10 +698,8 @@ public final class ImageUtils implements Serializable {
      * @return The image's format or null
      */
     public static String getImageFormat(byte[] bytes) {
-    	if (!CollectionUtils.isEmpty(bytes)) {
-	    	return getImageFormat(new ByteArrayInputStream(bytes));
-    	}
-    	return null;
+    	return (!CollectionUtils.isEmpty(bytes)
+    	        ? getImageFormat(new ByteArrayInputStream(bytes)) : null);
     }
 
     /**
@@ -722,7 +719,7 @@ public final class ImageUtils implements Serializable {
 			return null;
 		}
 		catch (IOException e) {
-		    e.printStackTrace();
+		    LogUtils.logWarn(ImageUtils.class, e.getMessage());
 			throw new IllegalArgumentException(e.getMessage(), e);
 		}
 	}
@@ -746,7 +743,7 @@ public final class ImageUtils implements Serializable {
 				return b;
 			}
 			catch (IOException e) {
-			    e.printStackTrace();
+			    LogUtils.logWarn(ImageUtils.class, e.getMessage());
 				throw new IllegalStateException(e.getMessage(), e);
 			}
 			finally {
@@ -785,7 +782,7 @@ public final class ImageUtils implements Serializable {
             bis = new ByteArrayInputStream(base64);
             image = ImageIO.read(bis);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogUtils.logWarn(ImageUtils.class, e.getMessage(), e);
             image = null;
         } finally {
             StreamUtils.closeQuitely(bis);
@@ -803,12 +800,8 @@ public final class ImageUtils implements Serializable {
      * @return BASE64 string from {@link BufferedImage} or NULL if fail
      */
     public static String toBase64(BufferedImage image, String imageFormat, String charset) {
-        String base64 = null;
         byte[] data = toBase64(image, imageFormat);
-        if (data != null) {
-            base64 = EncryptUtils.base64encode(data, charset);
-        }
-        return base64;
+        return (data != null ? EncryptUtils.base64encode(data, charset) : null);
     }
     /**
      * Gets BASE64 bytes array from {@link BufferedImage}
@@ -828,11 +821,56 @@ public final class ImageUtils implements Serializable {
             bos.flush();
             data = EncryptUtils.base64encodeBytesArray(data);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogUtils.logWarn(ImageUtils.class, e.getMessage(), e);
             data = null;
         } finally {
             StreamUtils.closeQuitely(bos);
         }
         return data;
+    }
+
+    /**
+     * Gets {@link BufferedImage} from the specified file path
+     *
+     * @param filePath image file path
+     *
+     * @return {@link BufferedImage} from file path or NULL if fail
+     */
+    public static BufferedImage fromFile(String filePath) {
+        File imageFile = (!StringUtils.hasText(filePath) ? null : new File(filePath));
+        return fromFile(imageFile);
+    }
+    /**
+     * Gets {@link BufferedImage} from the specified file path
+     *
+     * @param imagePath image file path
+     *
+     * @return {@link BufferedImage} from file path or NULL if fail
+     */
+    public static BufferedImage fromFile(Path imagePath) {
+        BufferedImage image = null;
+        if (imagePath != null
+                && Files.exists(imagePath)
+                && !Files.isDirectory(imagePath)
+                && Files.isReadable(imagePath)) {
+            try {
+                image = ImageIO.read(imagePath.toFile());
+            } catch (Exception e) {
+                LogUtils.logWarn(ImageUtils.class, e.getMessage(), e);
+                image = null;
+            }
+        }
+        return image;
+    }
+    /**
+     * Gets {@link BufferedImage} from the specified file path
+     *
+     * @param imageFile image file path
+     *
+     * @return {@link BufferedImage} from file path or NULL if fail
+     */
+    public static BufferedImage fromFile(File imageFile) {
+        Path imagePath = (imageFile == null ? null : imageFile.toPath());
+        return fromFile(imagePath);
     }
 }
