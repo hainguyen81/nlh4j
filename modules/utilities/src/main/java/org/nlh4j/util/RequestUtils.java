@@ -784,51 +784,49 @@ public final class RequestUtils implements Serializable {
     }
 
     /**
-     * リクエスト属性を保存
+     * Set request attribute value
      *
-     * @param request HTTPリクエスト
-     * @param attrName 属性名
-     * @param attrValue 値のリクエスト属性
+     * @param request {@link HttpServletRequest}
+     * @param attrName attribute name
+     * @param attrValue attribute value
      */
     public static void setRequestAttribute(HttpServletRequest request, String attrName, Object attrValue) {
         if (request == null || !StringUtils.hasText(attrName) || attrValue == null) return;
         request.setAttribute(attrName, attrValue);
     }
     /**
-     * リクエスト属性を保存
+     * Set request attribute value
      *
-     * @param attrName 属性名
-     * @param attrValue 値のリクエスト属性
+     * @param attrName attribute name
+     * @param attrValue attribute value
      */
     public static void setRequestAttribute(String attrName, Object attrValue) {
         setRequestAttribute(getHttpRequest(), attrName, attrValue);
     }
 
     /**
-     * リクエスト属性を削除
+     * Remove request attribute by name
      *
-     * @param request HTTPリクエスト
-     * @param attrName 属性名
+     * @param request {@link HttpServletRequest}
+     * @param attrName attribute name
      */
     public static void removeRequestAttribute(HttpServletRequest request, String attrName) {
         if (request == null || !StringUtils.hasText(attrName)) return;
         request.removeAttribute(attrName);
     }
     /**
-     * リクエスト属性を削除
-     *
-     * @param attrName 属性名
+     * Remove request attribute by name
      */
     public static void removeRequestAttribute(String attrName) {
         removeRequestAttribute(getHttpRequest(), attrName);
     }
 
     /**
-     * クライアントブラウザの種類を検出
+     * Get the browser type of current request
      *
-     * @param request HTTPリクエスト
+     * @param request {@link HttpServletRequest}
      *
-     * @return クライアントブラウザの種類
+     * @return the browser type of current request
      */
     public static Browser getBrowser(HttpServletRequest request) {
         Browser bt = Browser.UNKNOWN;
@@ -846,21 +844,21 @@ public final class RequestUtils implements Serializable {
         return bt;
     }
     /**
-     * クライアントブラウザの種類を検出
+     * Get the browser type of current request
      *
-     * @return クライアントブラウザの種類
+     * @return the browser type of current request
      */
     public static Browser getBrowser() {
         return getBrowser(getHttpRequest());
     }
 
     /**
-     * 応答内容の配置を取得
+     * Create content-disposition vaue to apply for downloaded request
      *
-     * @param request HTTPリクエスト
-     * @param fileName ファイル名
+     * @param request {@link HttpServletRequest}
+     * @param fileName file name
      *
-     * @return 応答内容の配置
+     * @return content-disposition value
      */
     public static String getContentDisposition(HttpServletRequest request, String fileName) {
         Browser bt = getBrowser(request);
@@ -876,11 +874,11 @@ public final class RequestUtils implements Serializable {
         return contentDisposition;
     }
     /**
-     * 応答内容の配置を取得
+     * Create content-disposition vaue to apply for downloaded request
      *
-     * @param fileName ファイル名
+     * @param fileName file name
      *
-     * @return 応答内容の配置
+     * @return content-disposition value
      */
     public static String getContentDisposition(String fileName) {
         return getContentDisposition(getHttpRequest(), fileName);
