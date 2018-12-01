@@ -32,6 +32,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.support.RequestContext;
 
 import eu.bitwalker.useragentutils.Browser;
+import eu.bitwalker.useragentutils.DeviceType;
+import eu.bitwalker.useragentutils.OperatingSystem;
 import eu.bitwalker.useragentutils.UserAgent;
 
 /**
@@ -822,11 +824,11 @@ public final class RequestUtils implements Serializable {
     }
 
     /**
-     * Get the browser type of current request
+     * Get the browser type of specified request
      *
      * @param request {@link HttpServletRequest}
      *
-     * @return the browser type of current request
+     * @return the browser type of specified request
      */
     public static Browser getBrowser(HttpServletRequest request) {
         Browser bt = Browser.UNKNOWN;
@@ -850,6 +852,57 @@ public final class RequestUtils implements Serializable {
      */
     public static Browser getBrowser() {
         return getBrowser(getHttpRequest());
+    }
+
+    /**
+     * Get the client OS of the specified request
+     *
+     * @param request {@link HttpServletRequest}
+     *
+     * @return the client OS of specified request
+     */
+    public static OperatingSystem getClientOS(HttpServletRequest request) {
+        OperatingSystem ost = OperatingSystem.UNKNOWN;
+        try {
+            if (request != null) {
+                String userAgent = request.getHeader(REQUEST_UA_HEADER_KEY);
+                UserAgent ua = UserAgent.parseUserAgentString(userAgent);
+                ost = ua.getOperatingSystem();
+            }
+        }
+        catch(Exception e) {
+            LogUtils.logWarn(RequestUtils.class, e.getMessage());
+            ost = OperatingSystem.UNKNOWN;
+        }
+        return ost;
+    }
+    /**
+     * Get the client OS of the current request
+     *
+     * @return the client OS of the current request
+     */
+    public static OperatingSystem getClientOS() {
+        return getClientOS(getHttpRequest());
+    }
+
+    /**
+     * Get the client device type of specified request
+     *
+     * @param request {@link HttpServletRequest}
+     *
+     * @return the client device type of specified request
+     */
+    public static DeviceType getClientDeviceType(HttpServletRequest request) {
+        OperatingSystem ost = getClientOS(request);
+        return ost.getDeviceType();
+    }
+    /**
+     * Get the client device type of current request
+     *
+     * @return the client device type of current request
+     */
+    public static DeviceType getClientDeviceType() {
+        return getClientDeviceType(getHttpRequest());
     }
 
     /**
