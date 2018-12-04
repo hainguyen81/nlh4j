@@ -7,6 +7,7 @@ package org.nlh4j.util;
 import java.io.BufferedReader;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
+import java.net.InetAddress;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -54,6 +55,9 @@ public final class RequestUtils implements Serializable {
 	private static final String REQUEST_UA_HEADER_KEY = "user-agent";
 	public static final String AJAX_REQUEST_IDENTIFIER = "XMLHttpRequest";
 	public static final String AJAX_REQUEST_HEADER = "X-Requested-With";
+    public static final String LOOP_BACK_IPV4_ADDRESS = "127.0.0.1";
+    public static final String LOOP_BACK_IPV6_ADDRESS = "0:0:0:0:0:0:0:1";
+    public static final String LOOP_BACK_LOCALHOST_ADDRESS = "localhost";
 	/** The request header key for parsing client IP address */
 	private static transient String[] requestClientIpHeaders = null;
 	/**
@@ -221,34 +225,36 @@ public final class RequestUtils implements Serializable {
     }
 
     /**
-     * HTTPリクエストのパラメータをチェック
+     * Get a boolean value indicating the specified parameter
+     * whether existed in the specified request
      *
-     * @param request HTTPリクエスト
-     * @param paramName パラメータ名
+     * @param request {@link HttpServletRequest}
+     * @param paramName parameter name
      *
-     * @return true - 存在するパラメータ
+     * @return true for existed; else false
      */
     public static final boolean hasParameter(HttpServletRequest request, String paramName) {
         return StringUtils.hasText(getParameter(request, paramName));
     }
     /**
-     * 現在HTTPリクエストのパラメータをチェック
+     * Get a boolean value indicating the specified parameter
+     * whether existed in the current request
      *
-     * @param paramName パラメータ名
+     * @param paramName parameter name
      *
-     * @return true - 存在するパラメータ
+     * @return true for existed; else false
      */
     public static final boolean hasParameter(String paramName) {
         return hasParameter(getHttpRequest(), paramName);
     }
 
     /**
-     * HTTPリクエストのパラメータを取得
+     * Get parameter value from the specified request by name
      *
-     * @param request HTTPリクエスト
-     * @param paramName パラメータ名
+     * @param request {@link HttpServletRequest}
+     * @param paramName parameter name
      *
-     * @return HTTPリクエストのパラメータ値
+     * @return parameter value
      */
     public static final String getParameter(HttpServletRequest request, String paramName) {
         if (request == null) return null;
@@ -280,23 +286,23 @@ public final class RequestUtils implements Serializable {
         return value;
     }
     /**
-     * 現在HTTPリクエストのパラメータを取得
+     * Get parameter value from the current request by name
      *
-     * @param paramName パラメータ名
+     * @param paramName parameter name
      *
-     * @return HTTPリクエストのパラメータ値
+     * @return parameter value
      */
     public static final String getParameter(String paramName) {
         return getParameter(getHttpRequest(), paramName);
     }
 
     /**
-     * HTTPリクエストのパラメータを取得
+     * Get parameter value(s) array from the specified request by name
      *
-     * @param request HTTPリクエスト
-     * @param paramName パラメータ名
+     * @param request {@link HttpServletRequest}
+     * @param paramName parameter name
      *
-     * @return HTTPリクエストのパラメータ値
+     * @return parameter value(s) array
      */
     public static final String[] getParameters(HttpServletRequest request, String paramName) {
         if (request == null) return new String[] {};
@@ -317,7 +323,8 @@ public final class RequestUtils implements Serializable {
                             String key = it.next();
                             if (StringUtils.hasText(key) && key.equalsIgnoreCase(paramName)) {
                                 List<String> paramVals = queryParams.get(key);
-                                values = (CollectionUtils.isEmpty(paramVals) ? null
+                                values = (CollectionUtils.isEmpty(paramVals)
+                                        ? new String[] {}
                                         : paramVals.toArray(new String[paramVals.size()]));
                                 break;
                             }
@@ -329,24 +336,24 @@ public final class RequestUtils implements Serializable {
         return values;
     }
     /**
-     * 現在HTTPリクエストのパラメータを取得
+     * Get parameter value(s) array from the current request by name
      *
-     * @param paramName パラメータ名
+     * @param paramName parameter name
      *
-     * @return HTTPリクエストのパラメータ値
+     * @return parameter value(s) array
      */
     public static final String[] getParameters(String paramName) {
         return getParameters(getHttpRequest(), paramName);
     }
 
     /**
-     * HTTPリクエストのパラメータを取得
+     * Get parameter integer value(s) array from the specified request by name
      *
-     * @param request HTTPリクエスト
-     * @param paramName パラメータ名
-     * @param defVal デフォルト値
+     * @param request {@link HttpServletRequest}
+     * @param paramName parameter name
+     * @param defVal default value of every invalid integer value
      *
-     * @return HTTPリクエストのパラメータ値
+     * @return parameter integer value(s) array
      */
     public static final Integer[] getIntParameters(HttpServletRequest request, String paramName, int defVal) {
         List<Integer> params = new LinkedList<Integer>();
@@ -360,49 +367,49 @@ public final class RequestUtils implements Serializable {
                 ? params.toArray(new Integer[params.size()]) : new Integer[] {});
     }
     /**
-     * 現在HTTPリクエストのパラメータを取得
+     * Get parameter integer value(s) array from the current request by name
      *
-     * @param paramName パラメータ名
-     * @param defVal デフォルト値
+     * @param paramName parameter name
+     * @param defVal default value of every invalid integer value
      *
-     * @return HTTPリクエストのパラメータ値
+     * @return parameter integer value(s) array
      */
     public static final Integer[] getIntParameters(String paramName, int defVal) {
         return getIntParameters(getHttpRequest(), paramName, defVal);
     }
 
     /**
-     * HTTPリクエストのパラメータを取得
+     * Get parameter integer value from the specified request by name
      *
-     * @param request HTTPリクエスト
-     * @param paramName パラメータ名
-     * @param defVal デフォルト値
+     * @param request {@link HttpServletRequest}
+     * @param paramName parameter name
+     * @param defVal default value of invalid integer value
      *
-     * @return HTTPリクエストのパラメータ値
+     * @return parameter integer value
      */
     public static final int getIntParameter(HttpServletRequest request, String paramName, int defVal) {
         return NumberUtils.toInt(getParameter(request, paramName), defVal);
     }
     /**
-     * 現在HTTPリクエストのパラメータを取得
+     * Get parameter integer value from the current request by name
      *
-     * @param paramName パラメータ名
-     * @param defVal デフォルト値
+     * @param paramName parameter name
+     * @param defVal default value of invalid integer value
      *
-     * @return HTTPリクエストのパラメータ値
+     * @return parameter integer value
      */
     public static final int getIntParameter(String paramName, int defVal) {
         return getIntParameter(getHttpRequest(), paramName, defVal);
     }
 
     /**
-     * HTTPリクエストのパラメータを取得
+     * Get parameter {@link Long} value(s) array from the specified request by name
      *
-     * @param request HTTPリクエスト
-     * @param paramName パラメータ名
-     * @param defVal デフォルト値
+     * @param request {@link HttpServletRequest}
+     * @param paramName parameter name
+     * @param defVal default value of every invalid {@link Long} value
      *
-     * @return HTTPリクエストのパラメータ値
+     * @return parameter {@link Long} value(s) array
      */
     public static final Long[] getLongParameters(HttpServletRequest request, String paramName, long defVal) {
         List<Long> params = new LinkedList<Long>();
@@ -416,49 +423,49 @@ public final class RequestUtils implements Serializable {
                 ? params.toArray(new Long[params.size()]) : new Long[] {});
     }
     /**
-     * 現在HTTPリクエストのパラメータを取得
+     * Get parameter {@link Long} value(s) array from the current request by name
      *
-     * @param paramName パラメータ名
-     * @param defVal デフォルト値
+     * @param paramName parameter name
+     * @param defVal default value of every invalid {@link Long} value
      *
-     * @return HTTPリクエストのパラメータ値
+     * @return parameter {@link Long} value(s) array
      */
     public static final Long[] getLongParameters(String paramName, long defVal) {
         return getLongParameters(getHttpRequest(), paramName, defVal);
     }
 
     /**
-     * HTTPリクエストのパラメータを取得
+     * Get parameter {@link Long} value from the specified request by name
      *
-     * @param request HTTPリクエスト
-     * @param paramName パラメータ名
-     * @param defVal デフォルト値
+     * @param request {@link HttpServletRequest}
+     * @param paramName parameter name
+     * @param defVal default value of invalid {@link Long} value
      *
-     * @return HTTPリクエストのパラメータ値
+     * @return parameter {@link Long} value
      */
     public static final long getLongParameter(HttpServletRequest request, String paramName, long defVal) {
         return NumberUtils.toLong(getParameter(request, paramName), defVal);
     }
     /**
-     * 現在HTTPリクエストのパラメータを取得
+     * Get parameter {@link Long} value from the current request by name
      *
-     * @param paramName パラメータ名
-     * @param defVal デフォルト値
+     * @param paramName parameter name
+     * @param defVal default value of invalid {@link Long} value
      *
-     * @return HTTPリクエストのパラメータ値
+     * @return parameter {@link Long} value
      */
     public static final long getLongParameter(String paramName, long defVal) {
         return getLongParameter(getHttpRequest(), paramName, defVal);
     }
 
     /**
-     * HTTPリクエストのパラメータを取得
+     * Get parameter {@link Boolean} value from the specified request by name
      *
-     * @param request HTTPリクエスト
-     * @param paramName パラメータ名
-     * @param trueVal TRUE値
+     * @param request {@link HttpServletRequest}
+     * @param paramName parameter name
+     * @param trueVal integer value to check true/false
      *
-     * @return HTTPリクエストのパラメータ値
+     * @return parameter {@link Boolean} value
      */
     public static final boolean getBooleanParameter(HttpServletRequest request, String paramName, int trueVal) {
         try {
@@ -473,43 +480,44 @@ public final class RequestUtils implements Serializable {
         }
     }
     /**
-     * 現在HTTPリクエストのパラメータを取得
+     * Get parameter {@link Boolean} value from the current request by name
      *
-     * @param paramName パラメータ名
-     * @param trueVal TRUE値
+     * @param paramName parameter name
+     * @param trueVal integer value to check true/false
      *
-     * @return HTTPリクエストのパラメータ値
+     * @return parameter {@link Boolean} value
      */
     public static final boolean getBooleanParameter(String paramName, int trueVal) {
         return getBooleanParameter(getHttpRequest(), paramName, trueVal);
     }
 
     /**
-     * HTTPリクエストのパラメータを取得
+     * Get parameter {@link Boolean} value from the specified request by name
      *
-     * @param request HTTPリクエスト
-     * @param paramName パラメータ名
+     * @param request {@link HttpServletRequest}
+     * @param paramName parameter name
      *
-     * @return HTTPリクエストのパラメータ値
+     * @return parameter {@link Boolean} value
      */
     public static final boolean getBooleanParameter(HttpServletRequest request, String paramName) {
         return getBooleanParameter(request, paramName, 1);
     }
     /**
-     * 現在HTTPリクエストのパラメータを取得
+     * Get parameter {@link Boolean} value from the current request by name
      *
-     * @param paramName パラメータ名
+     * @param request {@link HttpServletRequest}
+     * @param paramName parameter name
      *
-     * @return HTTPリクエストのパラメータ値
+     * @return parameter {@link Boolean} value
      */
     public static final boolean getBooleanParameter(String paramName) {
         return getBooleanParameter(getHttpRequest(), paramName);
     }
 
     /**
-     * HTTPリクエストのヘッダパラメータを取得
-     * @param request HTTPリクエスト
-     * @return HTTPリクエストのヘッダパラメータを取得
+     * Get HTTP headers from the specified request
+     * @param request {@link HttpServletRequest}
+     * @return HTTP headers
      */
     public static final Map<String, String> getHeaders(HttpServletRequest request) {
         Map<String, String> headers = new LinkedHashMap<String, String>();
@@ -531,8 +539,8 @@ public final class RequestUtils implements Serializable {
         return headers;
     }
     /**
-     * 現在HTTPリクエストのヘッダパラメータを取得
-     * @return 現在HTTPリクエストのヘッダパラメータを取得
+     * Get HTTP headers from the current request
+     * @return HTTP headers
      */
     public static final Map<String, String> getHeaders() {
         return getHeaders(getHttpRequest());
@@ -957,6 +965,20 @@ public final class RequestUtils implements Serializable {
             if (!StringUtils.hasText(ip) || "unknown".equalsIgnoreCase(ip)) {
                 ip = request.getRemoteAddr();
             }
+            // check for loopback
+            if (!LOOP_BACK_IPV4_ADDRESS.equalsIgnoreCase(ip)
+                    && LOOP_BACK_IPV6_ADDRESS.equalsIgnoreCase(ip)
+                    && LOOP_BACK_LOCALHOST_ADDRESS.equalsIgnoreCase(ip)) {
+                InetAddress address = null;
+                try {
+                    address = InetAddress.getByName(ip);
+                    ip = (address.isAnyLocalAddress() ? LOOP_BACK_LOCALHOST_ADDRESS : ip);
+                } catch (Exception e) {
+                    LogUtils.logWarn(RequestUtils.class, e.getMessage());
+                }
+            } else {
+                ip = LOOP_BACK_LOCALHOST_ADDRESS;
+            }
         }
         return ip;
     }
@@ -967,6 +989,25 @@ public final class RequestUtils implements Serializable {
      */
     public static String getClientIpAddress() {
         return getClientIpAddress(getHttpRequest());
+    }
+
+    /**
+     * Get a boolean value indicating that remote address came from localhost/loopback
+     *
+     * @param request {@link HttpServletRequest}
+     *
+     * @return true for loopback; else false
+     */
+    public static boolean isClientLoopback(HttpServletRequest request) {
+        return LOOP_BACK_LOCALHOST_ADDRESS.equalsIgnoreCase(getClientIpAddress(request));
+    }
+    /**
+     * Get a boolean value indicating that remote address came from localhost/loopback
+     *
+     * @return true for loopback; else false
+     */
+    public static boolean isClientLoopback() {
+        return isClientLoopback(getHttpRequest());
     }
 
     /**
