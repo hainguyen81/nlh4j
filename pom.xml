@@ -202,6 +202,10 @@
 		<!-- Doma -->
 		<doma.version>1.38.0</doma.version>
 		<javax.inject.version>1</javax.inject.version>
+		<!-- Mongo -->
+		<!-- <mongo.java.driver.version>3.3.0</mongo.java.driver.version> -->
+		<!-- <mongo.java.driver.version>3.6.1</mongo.java.driver.version> -->
+		<mongo.java.driver.version>3.8.0</mongo.java.driver.version>
 
 		<!-- Hibernate -->
 		<!-- <org.hibernate.version>5.2.10.Final</org.hibernate.version>
@@ -262,6 +266,9 @@
 
 		<!-- Bean Validation -->
 		<javax.validation.api.version>1.1.0.Final</javax.validation.api.version>
+
+		<!-- Firebase -->
+		<com.google.firebase.version>6.3.0</com.google.firebase.version>
 
 		<!-- Lombok -->
 		<org.projectlombok.version>1.16.18</org.projectlombok.version>
@@ -1635,6 +1642,11 @@
 				<artifactId>sqljdbc4-chs</artifactId>
 				<version>${com.hynnet.sqljdbc4-chs.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.mongodb</groupId>
+				<artifactId>mongo-java-driver</artifactId>
+				<version>${mongo.java.driver.version}</version>
+			</dependency>
 
 			<!-- Jasperreport Libary -->
 			<dependency>
@@ -1878,6 +1890,13 @@
 				<version>${com.viber.bot.version}</version>
 	      	</dependency>
 
+			<!-- Firebase -->
+			<dependency>
+				<groupId>com.google.firebase</groupId>
+				<artifactId>firebase-admin</artifactId>
+				<version>${com.google.firebase.version}</version>
+			</dependency>
+
 			<!-- Mail -->
 			<dependency>
 				<groupId>javax.mail</groupId>
@@ -2024,9 +2043,16 @@
 		<!-- Base -->
 		<module>modules/utilities</module>
 		<module>modules/core</module>
+		<!-- License -->
 		<module>modules/license</module>
+		<!-- SMS -->
 		<module>modules/sms</module>
+		<!-- Thumbnail -->
 		<module>modules/thumbnailer</module>
+		<!-- Mongo -->
+		<module>modules/mongo</module>
+		<!-- FCM (Belong to Mongo for observation) -->
+		<module>modules/fcm</module>
 		<!-- Web -->
 		<module>modules/entities</module>
 		<module>modules/domain</module>

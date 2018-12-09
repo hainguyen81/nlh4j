@@ -1211,27 +1211,92 @@ public final class BeanUtils implements Serializable {
     /**
      * Get fields list of the specified bean class
      *
-     * @param beanClassName to parse
+     * @param beanClass to parse
+     * @param recursively specify searching recursive to parent class
+     * @param readable specify searching readable fields. NULL for not filtering
+     * @param writable specify searching writable fields. NULL for not filtering
      *
      * @return fields list or empty if failed
      */
-    public static List<Field> getFields(String beanClassName) {
-    	return getFields(safeClass(beanClassName));
+    public static List<Field> getFields(
+            Class<?> beanClass, Boolean recursively,
+            Boolean readable, Boolean writable) {
+        List<Field> fields = new LinkedList<Field>();
+        if (beanClass != null) {
+            Map<String, Field> fieldsMap = getRecursiveFields(
+                    beanClass, recursively, null, readable, writable);
+            if (!CollectionUtils.isEmpty(fieldsMap)) {
+                fields = new LinkedList<Field>(fieldsMap.values());
+            }
+        }
+        return fields;
     }
     /**
-     * Get fields list of the specified bean class
+     * Get field names list of the specified bean class
+     *
+     * @param beanClass to parse
+     * @param recursively specify searching recursive to parent class
+     * @param readable specify searching readable fields. NULL for not filtering
+     * @param writable specify searching writable fields. NULL for not filtering
+     *
+     * @return field names list or empty if failed
+     */
+    public static List<String> getFieldNames(
+            Class<?> beanClass, Boolean recursively,
+            Boolean readable, Boolean writable) {
+        List<String> fields = new LinkedList<String>();
+        if (beanClass != null) {
+            Map<String, Field> fieldsMap = getRecursiveFields(
+                    beanClass, recursively, null, readable, writable);
+            if (!CollectionUtils.isEmpty(fieldsMap)) {
+                fields = new LinkedList<String>(fieldsMap.keySet());
+            }
+        }
+        return fields;
+    }
+    /**
+     * Get fields list of the specified bean class (including all fields)
+     *
+     * @param beanClass to parse
+     * @param recursively specify searching recursive to parent class
+     *
+     * @return fields list or empty if failed
+     */
+    public static List<Field> getFields(
+            Class<?> beanClass, Boolean recursively) {
+        return getFields(beanClass, Boolean.TRUE, null, null);
+    }
+    /**
+     * Get field names list of the specified bean class (including all fields)
+     *
+     * @param beanClass to parse
+     * @param recursively specify searching recursive to parent class
+     *
+     * @return field names list or empty if failed
+     */
+    public static List<String> getFieldNames(
+            Class<?> beanClass, Boolean recursively) {
+        return getFieldNames(beanClass, Boolean.TRUE, null, null);
+    }
+    /**
+     * Get fields list of the specified bean class (not recursive)
      *
      * @param beanClass to parse
      *
      * @return fields list or empty if failed
      */
     public static List<Field> getFields(Class<?> beanClass) {
-        List<Field> fields = new LinkedList<Field>();
-        if (beanClass != null) {
-            fields.addAll(Arrays.asList(beanClass.getDeclaredFields()));
-            fields.addAll(Arrays.asList(beanClass.getFields()));
-        }
-        return fields;
+        return getFields(beanClass, Boolean.TRUE);
+    }
+    /**
+     * Get field names list of the specified bean class (not recursive)
+     *
+     * @param beanClass to parse
+     *
+     * @return field names list or empty if failed
+     */
+    public static List<String> getFieldNames(Class<?> beanClass) {
+        return getFieldNames(beanClass, Boolean.TRUE);
     }
     /**
      * Get fields list of the specified target
@@ -1243,6 +1308,117 @@ public final class BeanUtils implements Serializable {
     public static List<Field> getFields(Object target) {
         return getFields(target == null ? null : target.getClass());
     }
+    /**
+     * Get field names list of the specified target
+     *
+     * @param target to parse
+     *
+     * @return field names list or empty if failed
+     */
+    public static List<String> getFieldNames(Object target) {
+        return getFieldNames(target == null ? null : target.getClass());
+    }
+    /**
+     * Get fields list of the specified bean class
+     *
+     * @param beanClassName to parse
+     *
+     * @return fields list or empty if failed
+     */
+    public static List<Field> getFields(String beanClassName) {
+        return getFields(safeClass(beanClassName));
+    }
+    /**
+     * Get field names list of the specified bean class
+     *
+     * @param beanClassName to parse
+     *
+     * @return field names list or empty if failed
+     */
+    public static List<String> getFieldNames(String beanClassName) {
+        return getFieldNames(safeClass(beanClassName));
+    }
+    /**
+     * Get fields list of the specified bean class
+     *
+     * @param beanClass to parse
+     * @param recursive specify searching recursively
+     * @param fieldsMap returned fields list for recursive
+     * @param readable specify searching readable fields. NULL for not filtering
+     * @param writable specify searching writable fields. NULL for not filtering
+     *
+     * @return fields list or empty if failed
+     */
+    private static Map<String, Field> getRecursiveFields(
+            Class<?> beanClass, Boolean recursive, Map<String, Field> fieldsMap,
+            Boolean readable, Boolean writable) {
+        fieldsMap = (fieldsMap == null ? new LinkedHashMap<String, Field>() : fieldsMap);
+        if (beanClass != null) {
+            // declare fields
+            Field[] arrDeclFields = beanClass.getDeclaredFields();
+            Field[] arrFields = beanClass.getFields();
+            List<Field> fields = new LinkedList<Field>();
+            fields.addAll(Arrays.asList(arrDeclFields));
+            fields.addAll(Arrays.asList(arrFields));
+            if (!CollectionUtils.isEmpty(fields)) {
+                for(Field field : fields) {
+                    // if not require checking
+                    if (!fieldsMap.containsKey(field.getName())
+                            && readable == null && writable == null) {
+                        fieldsMap.put(field.getName(), field);
+                    }
+                    // field is public
+                    else if (!fieldsMap.containsKey(field.getName())
+                            && (Boolean.TRUE.equals(readable) || Boolean.TRUE.equals(writable))
+                            && Modifier.isPublic(field.getModifiers())) {
+                        fieldsMap.put(field.getName(), field);
+
+                        // field is not public, checking getter/setter
+                    } else if (!fieldsMap.containsKey(field.getName())
+                            && (readable != null || writable != null)) {
+                        PropertyDescriptor pd = null;
+                        try {
+                            pd = new PropertyDescriptor(field.getName(), beanClass);
+                            // readable
+                            if (!fieldsMap.containsKey(field.getName())
+                                    && Boolean.TRUE.equals(readable)
+                                    && pd.getReadMethod() != null
+                                    && Modifier.isPublic(pd.getReadMethod().getModifiers())) {
+                                fieldsMap.put(field.getName(), field);
+                            }
+                            // writable
+                            if (!fieldsMap.containsKey(field.getName())
+                                    && Boolean.TRUE.equals(writable)
+                                    && pd.getWriteMethod() != null
+                                    && Modifier.isPublic(pd.getWriteMethod().getModifiers())) {
+                                fieldsMap.put(field.getName(), field);
+                            }
+                            // readable && writable
+                            if (!fieldsMap.containsKey(field.getName())
+                                    && Boolean.TRUE.equals(readable)
+                                    && Boolean.TRUE.equals(writable)
+                                    && pd.getReadMethod() != null
+                                    && Modifier.isPublic(pd.getReadMethod().getModifiers())
+                                    && pd.getWriteMethod() != null
+                                    && Modifier.isPublic(pd.getWriteMethod().getModifiers())) {
+                                fieldsMap.put(field.getName(), field);
+                            }
+                        } catch (Exception e) {
+                            LogUtils.logWarn(BeanUtils.class, e.getMessage());
+                        }
+                    }
+                }
+            }
+            // recusive
+            if (Boolean.TRUE.equals(recursive) && !Object.class.equals(beanClass)) {
+                fieldsMap = getRecursiveFields(
+                        beanClass.getSuperclass(), recursive, fieldsMap,
+                        readable, writable);
+            }
+        }
+        return fieldsMap;
+    }
+
     /**
      * Get the field by the specified entity class and field name
      *
@@ -2292,7 +2468,7 @@ public final class BeanUtils implements Serializable {
     }
 
     /**
-     * Map the specified data list to a simple list such as matrix
+     * Map the specified data list to a simple list such as matrix (non recursive fields/properties)
      *
      * @param <T> data class type
      * @param dataClass data class
@@ -2302,6 +2478,21 @@ public final class BeanUtils implements Serializable {
      * @return property values list such as matrix or empty/null if failed
      */
     public static <T> List<List<Object>> mapPropertyValuesList(Class<T> dataClass, List<T> dataLst, String...properties) {
+        return mapPropertyValuesList(dataClass, Boolean.FALSE, dataLst, properties);
+    }
+    /**
+     * Map the specified data list to a simple list such as matrix
+     *
+     * @param <T> data class type
+     * @param dataClass data class
+     * @param inherited specify searching recursive fields/properties
+     * @param dataLst data list to map
+     * @param properties property names array to export values. NULL for exporting all
+     *
+     * @return property values list such as matrix or empty/null if failed
+     */
+    public static <T> List<List<Object>> mapPropertyValuesList(
+            Class<T> dataClass, Boolean inherited, List<T> dataLst, String...properties) {
         List<List<Object>> propValues = new LinkedList<List<Object>>();
         if (dataClass != null && !CollectionUtils.isEmpty(dataLst)) {
             // parse field/property names list
@@ -2309,7 +2500,7 @@ public final class BeanUtils implements Serializable {
             if (!CollectionUtils.isEmpty(properties)) {
                 propsLst.addAll(CollectionUtils.toList(properties));
             } else {
-                List<Field> fields = getFields(dataClass);
+                List<Field> fields = getFields(dataClass, inherited);
                 if (!CollectionUtils.isEmpty(fields)) {
                     for(Field field : fields) {
                         propsLst.add(field.getName());
@@ -2332,7 +2523,7 @@ public final class BeanUtils implements Serializable {
     }
 
     /**
-     * Map the specified data list to a simple list such as matrix
+     * Map the specified data list to a simple list such as matrix (non recursive fields/properties)
      *
      * @param <T> data class type
      * @param dataClass data class
@@ -2341,7 +2532,23 @@ public final class BeanUtils implements Serializable {
      *
      * @return property values list such as matrix or empty/null if failed
      */
-    public static <T> List<Map<String, Object>> mapPropertyValuesMap(Class<T> dataClass, List<T> dataLst, String...properties) {
+    public static <T> List<Map<String, Object>> mapPropertyValuesMap(
+            Class<T> dataClass, List<T> dataLst, String...properties) {
+        return mapPropertyValuesMap(dataClass, Boolean.FALSE, dataLst, properties);
+    }
+    /**
+     * Map the specified data list to a simple list such as matrix
+     *
+     * @param <T> data class type
+     * @param dataClass data class
+     * @param inherited specify searching recursive fields/properties
+     * @param dataLst data list to map
+     * @param properties property names array to export values. NULL for exporting all
+     *
+     * @return property values list such as matrix or empty/null if failed
+     */
+    public static <T> List<Map<String, Object>> mapPropertyValuesMap(
+            Class<T> dataClass, Boolean inherited, List<T> dataLst, String...properties) {
         List<Map<String, Object>> propValues = new LinkedList<Map<String, Object>>();
         if (dataClass != null && !CollectionUtils.isEmpty(dataLst)) {
             // parse field/property names list
@@ -2349,7 +2556,7 @@ public final class BeanUtils implements Serializable {
             if (!CollectionUtils.isEmpty(properties)) {
                 propsLst.addAll(CollectionUtils.toList(properties));
             } else {
-                List<Field> fields = getFields(dataClass);
+                List<Field> fields = getFields(dataClass, inherited);
                 if (!CollectionUtils.isEmpty(fields)) {
                     for(Field field : fields) {
                         propsLst.add(field.getName());

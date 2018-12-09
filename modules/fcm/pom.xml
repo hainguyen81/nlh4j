@@ -13,11 +13,11 @@
 	<!-- Present package -->
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>${project.parent.groupId}</groupId>
-	<artifactId>nlh4j-sms</artifactId>
+	<artifactId>nlh4j-fcm</artifactId>
 	<version>${project.parent.version}</version>
 	<packaging>jar</packaging>
-	<name>nlh4j-sms</name>
-	<description>Base SMS for Java Web/Mobile</description>
+	<name>nlh4j-fcm</name>
+	<description>Base FCM Package for Java Web/Mobile Cloud Notification</description>
 
 	<!-- Dependencies -->
 	<dependencies>
@@ -32,12 +32,31 @@
 			<artifactId>nlh4j-core</artifactId>
 			<version>${module.version}</version>
       	</dependency>
-
-		<!-- Viber Bot -->
       	<dependency>
-			<groupId>com.viber</groupId>
-			<artifactId>viber-bot</artifactId>
+			<groupId>${project.parent.groupId}</groupId>
+			<artifactId>nlh4j-mongo</artifactId>
+			<version>${module.version}</version>
       	</dependency>
+
+		<!-- slf4j -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+		</dependency>
+		<dependency> <!-- logback -->
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+		</dependency>
+
+		<!-- Firebase -->
+		<dependency>
+			<groupId>com.google.firebase</groupId>
+			<artifactId>firebase-admin</artifactId>
+		</dependency>
 
 		<!-- Lombok -->
 		<dependency>
