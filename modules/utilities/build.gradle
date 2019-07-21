@@ -16,23 +16,27 @@ configurations.all {
 }
 
 repositories {
-     maven { url "http://maven.seasar.org/maven2" }
-     maven { url "https://repository.jboss.org/nexus/content/groups/developer/" }
-     maven { url "http://maven.nuiton.org/nexus/content/repositories" }
-     maven { url "http://projectlombok.org/mavenrepo" }
-     maven { url "https://mvnrepository.com/artifact" }
-     maven { url "https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient" }
-     maven { url "https://maven.atlassian.com/3rdparty" }
-     //maven { url "https://mvnrepository.com/artifact/avalon-framework/avalon-framework" }
-     //maven { url "https://mvnrepository.com/artifact/avalon-framework/avalon-framework-api" }
-     //maven { url "https://mvnrepository.com/artifact/avalon-framework/avalon-framework-impl" }
-     maven { url "https://mvnrepository.com/artifact/org.apache.avalon.framework/avalon-framework-api" }
-     maven { url "https://mvnrepository.com/artifact/org.apache.avalon.framework/avalon-framework-impl" }
-     maven { url "https://mvnrepository.com/artifact/net.sf.barcode4j/barcode4j" }
-     maven { url "https://maven.repository.redhat.com/ga" }
-     maven { url "https://mvnrepository.com/artifact/com.google.android/android" }
-     maven { url "https://mvnrepository.com/artifact/com.google.android/support-v4" }
-     maven { url "http://repo.maven.apache.org/maven2" }
+	mavenLocal()
+	mavenCentral()
+	maven { url "file://E:/Java.Working/1.tools/maven/.m2/repository" }
+	maven { url "http://maven.seasar.org/maven2" }
+	maven { url "https://repository.jboss.org/nexus/content/groups/developer/" }
+	maven { url "http://maven.nuiton.org/nexus/content/repositories" }
+	maven { url "http://projectlombok.org/mavenrepo" }
+	maven { url "https://mvnrepository.com/artifact" }
+	maven { url "https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient" }
+	maven { url "https://maven.atlassian.com/3rdparty" }
+	maven { url "https://mvnrepository.com/artifact/avalon-framework/avalon-framework" }
+	maven { url "https://mvnrepository.com/artifact/avalon-framework/avalon-framework-api" }
+	maven { url "https://mvnrepository.com/artifact/avalon-framework/avalon-framework-impl" }
+	//maven { url "https://mvnrepository.com/artifact/org.apache.avalon.framework" }
+	//maven { url "https://mvnrepository.com/artifact/org.apache.avalon.framework/avalon-framework-api" }
+	//maven { url "https://mvnrepository.com/artifact/org.apache.avalon.framework/avalon-framework-impl" }
+	maven { url "https://mvnrepository.com/artifact/net.sf.barcode4j/barcode4j" }
+	maven { url "https://maven.repository.redhat.com/ga" }
+	maven { url "https://mvnrepository.com/artifact/com.google.android/android" }
+	maven { url "https://mvnrepository.com/artifact/com.google.android/support-v4" }
+	maven { url "http://repo.maven.apache.org/maven2" }
 }
 dependencies {
     compile group: 'org.springframework', name: 'spring-aop', version:'5.0.4.RELEASE'
@@ -70,11 +74,11 @@ dependencies {
     compile group: 'org.apache.poi', name: 'poi-ooxml', version:'3.15'
     compile group: 'org.apache.httpcomponents', name: 'httpcore', version:'4.4.5'
     compile group: 'org.apache.httpcomponents', name: 'httpclient', version:'4.5.2'
-    //compile group: 'avalon-framework', name: 'avalon-framework', version:'4.2.0'
-    //compile group: 'avalon-framework', name: 'avalon-framework-api', version:'4.2.0'
-    //compile group: 'avalon-framework', name: 'avalon-framework-impl', version:'4.2.0'
-    compile group: 'avalon-framework', name: 'avalon-framework-api', version:'4.3.1'
-    compile group: 'avalon-framework', name: 'avalon-framework-impl', version:'4.3.1'
+    compile group: 'avalon-framework', name: 'avalon-framework', version:'4.2.0'
+    compile group: 'avalon-framework', name: 'avalon-framework-api', version:'4.2.0'
+    compile group: 'avalon-framework', name: 'avalon-framework-impl', version:'4.2.0'
+    //compile group: 'org.apache.avalon.framework', name: 'avalon-framework-api', version:'4.3.1'
+    //compile group: 'org.apache.avalon.framework', name: 'avalon-framework-impl', version:'4.3.1'
     compile group: 'net.sf.barcode4j', name: 'barcode4j', version:'2.1'
     compile group: 'net.sourceforge.htmlcleaner', name: 'htmlcleaner', version:'2.16'
     compile group: 'org.jsoup', name: 'jsoup', version:'1.9.1'
@@ -99,4 +103,6 @@ dependencies {
        This behavior is not yet supported by Gradle, so this dependency has been converted to a compile dependency.
        Please review and delete this closure when resolved. */
     }
+    compileOnly 'org.projectlombok:lombok:1.16.18'
+	annotationProcessor 'org.projectlombok:lombok:1.16.18'
 }
