@@ -1,7 +1,7 @@
 package org.nlh4j.web.core.domain.entity;
 
 /** */
-@javax.annotation.Generated(value = { "Doma", "1.38.0" }, date = "2018-10-21T18:30:43.752+0700")
+@javax.annotation.Generated(value = { "Doma", "1.38.0" }, date = "2019-07-21T20:06:59.562+0700")
 public final class _UserEx extends org.seasar.doma.jdbc.entity.AbstractEntityType<org.nlh4j.web.core.domain.entity.UserEx> {
 
     static {

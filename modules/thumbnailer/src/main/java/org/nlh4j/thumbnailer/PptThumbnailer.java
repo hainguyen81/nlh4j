@@ -22,7 +22,7 @@ package org.nlh4j.thumbnailer;
 
 /**
  * Dummy class for converting Presentation documents into Openoffice-Textfiles.
- * @see JODConverterThumbnailer
+ * @see {@link JODConverterThumbnailer}
  */
 public class PptThumbnailer extends JodThumbnailer {
 
@@ -56,7 +56,7 @@ public class PptThumbnailer extends JodThumbnailer {
      * (ppt, pptx, pps, ppsx)
      *
      * @return MIME-Types
-     * @see http://www.artofsolving.com/opensource/jodconverter/guide/supportedformats
+     * @see <a href="http://www.artofsolving.com/opensource/jodconverter/guide/supportedformats">supportedformats</a>
      */
 	public String[] getAcceptedMIMETypes() {
 		return new String[] {

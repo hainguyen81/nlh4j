@@ -43,17 +43,20 @@ public @interface Table {
 
     /**
      * (Optional) The name of the table.
-     * <p> Defaults to the entity name.
+     * <p> Defaults to the entity name.</p>
+     * @return name
      */
     String name() default "";
 
     /** (Optional) The catalog of the table.
-     * <p> Defaults to the default catalog.
+     * <p> Defaults to the default catalog.</p>
+     * @return catalog
      */
     String catalog() default "";
 
     /** (Optional) The schema of the table.
-     * <p> Defaults to the default schema for user.
+     * <p> Defaults to the default schema for user.</p>
+     * @return schema
      */
     String schema() default "";
 
@@ -63,7 +66,8 @@ public @interface Table {
      * effect. These constraints apply in addition to any constraints
      * specified by the <code>Column</code> and <code>JoinColumn</code>
      * annotations and constraints entailed by primary key mappings.
-     * <p> Defaults to no additional constraints.
+     * <p> Defaults to no additional constraints.</p>
+     * @return unique constraint
      */
     UniqueConstraint[] uniqueConstraints() default {};
 
@@ -72,6 +76,8 @@ public @interface Table {
      * table generation is in effect.  Note that it is not necessary
      * to specify an index for a primary key, as the primary key
      * index will be created automatically.
+     *
+     * @return indexes
      *
      * @since Java Persistence 2.1
      */

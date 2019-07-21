@@ -2,7 +2,7 @@ package org.nlh4j.web.core.domain.dao;
 
 /** */
 @org.springframework.stereotype.Repository()
-@javax.annotation.Generated(value = { "Doma", "1.38.0" }, date = "2018-10-30T07:30:42.223+0700")
+@javax.annotation.Generated(value = { "Doma", "1.38.0" }, date = "2019-07-21T20:07:47.737+0700")
 public class FunctionDaoImpl extends org.seasar.doma.internal.jdbc.dao.AbstractDao implements org.nlh4j.web.core.domain.dao.FunctionDao {
 
     static {

@@ -51,7 +51,7 @@ import org.springframework.util.Assert;
  * (TODO : Try to override PDPage.convertToImage - this is where the heavy lifting takes place)
  *
  * Depends on:
- * <li>PDFBox (>= 1.5.0)
+ * <li>PDFBox (>= 1.5.0)</li>
  */
 public class PdfThumbnailer extends AbstractThumbnailer {
 

@@ -39,7 +39,7 @@ import org.nlh4j.util.StreamUtils;
  *
  * Depends:
  * <li> <i>NOT</i> on OpenOffice, as the Thumbnail is already inside the file. (184x256px regardless of page orientation)
- * 		(So if the thumbnail generation is not correct, it's OpenOffice's fault, not our's :-)
+ * 		(So if the thumbnail generation is not correct, it's OpenOffice's fault, not our's :-)</li>
  *
  */
 public class OpenOfficeThumbnailer extends AbstractThumbnailer {

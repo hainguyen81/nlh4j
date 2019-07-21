@@ -57,7 +57,7 @@ public abstract class AbstractAsyncTask<Params, Progress, Result>
     }
     /**
      * Set the posting execution task listener
-     * @param listener the posting execution task listener
+     * @param asynclistener the posting execution task listener
      */
     public void setListener(AsyncTaskListener<Params, Progress, Result> asynclistener) {
         this.listener = null;

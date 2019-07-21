@@ -80,7 +80,8 @@
 	<properties>
 		<!-- Package properties -->
 		<!-- <root.basedir>${maven.multiModuleProjectDirectory}</root.basedir> --> <!-- require maven 3.3.1 or greater  -->
-		<root.basedir>E:/Java.Working/16.projects.4.8.0/nlh4j</root.basedir>
+		<!-- <root.basedir>E:/Java.Working/16-1.projects.4.8.0/nlh4j</root.basedir> -->
+		<root.basedir>${maven.multiModuleProjectDirectory}</root.basedir>
 		<module.groupId>org.nlh4j</module.groupId>
 		<module.version>1.0</module.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -283,9 +284,11 @@
 		<com.google.openbeans.version>1.0</com.google.openbeans.version>
 
 		<!-- Barcode4j Dependency -->
-		<avalon-framework.version>4.2.0</avalon-framework.version>
+		<!-- <avalon-framework.version>4.2.0</avalon-framework.version>
 		<avalon-framework-api.version>4.2.0</avalon-framework-api.version>
-		<avalon-framework-impl.version>4.2.0</avalon-framework-impl.version>
+		<avalon-framework-impl.version>4.2.0</avalon-framework-impl.version> -->
+		<avalon-framework-api.version>4.3.1</avalon-framework-api.version>
+		<avalon-framework-impl.version>4.3.1</avalon-framework-impl.version>
 		<!-- Barcode4j -->
 		<net.sf.barcode4j.version>2.1</net.sf.barcode4j.version>
 
@@ -1206,7 +1209,7 @@
 			<id>maven.atlassian.com</id>
 			<url>https://maven.atlassian.com/3rdparty</url>
 		</repository>
-		<repository>
+		<!-- <repository>
 			<id>avalon-framework</id>
 			<url>https://mvnrepository.com/artifact/avalon-framework/avalon-framework</url>
 		</repository>
@@ -1217,6 +1220,14 @@
 		<repository>
 			<id>avalon-framework-impl</id>
 			<url>https://mvnrepository.com/artifact/avalon-framework/avalon-framework-impl</url>
+		</repository> -->
+		<repository>
+			<id>avalon-framework-api</id>
+			<url>https://mvnrepository.com/artifact/org.apache.avalon.framework/avalon-framework-api</url>
+		</repository>
+		<repository>
+			<id>avalon-framework-impl</id>
+			<url>https://mvnrepository.com/artifact/org.apache.avalon.framework/avalon-framework-impl</url>
 		</repository>
 		<repository>
 			<id>net.sf.barcode4j</id>
@@ -1860,11 +1871,11 @@
 	        </dependency>
 
 			<!-- Barcode4j Dependency -->
-			<dependency>
+			<!-- <dependency>
 				<groupId>avalon-framework</groupId>
 				<artifactId>avalon-framework</artifactId>
 				<version>${avalon-framework.version}</version>
-			</dependency>
+			</dependency> -->
 			<dependency>
 				<groupId>avalon-framework</groupId>
 				<artifactId>avalon-framework-api</artifactId>

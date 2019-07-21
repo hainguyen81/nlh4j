@@ -44,8 +44,8 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  *   public Long getId() { return id; }
  * </pre>
  *
- * @see Column
- * @see GeneratedValue
+ * @see {@link Column}
+ * @see {@link GeneratedValue}
  *
  * @since Java Persistence 1.0
  */

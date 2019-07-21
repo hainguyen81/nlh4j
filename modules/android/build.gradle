@@ -16,7 +16,7 @@ configurations.all {
 }
 
 repositories {
-        
+
      maven { url "http://maven.seasar.org/maven2" }
      maven { url "https://repository.jboss.org/nexus/content/groups/developer/" }
      maven { url "http://maven.nuiton.org/nexus/content/repositories" }
@@ -35,21 +35,21 @@ repositories {
 }
 dependencies {
     compile(group: 'org.nlh4j', name: 'nlh4j-utilities', version:'1.0') {
-exclude(module: 'nlh4j-core')
-exclude(module: 'nlh4j-license')
-exclude(module: 'nlh4j-sms')
-exclude(module: 'nlh4j-entities')
-exclude(module: 'nlh4j-domain')
-exclude(module: 'nlh4j-lang')
-exclude(module: 'nlh4j-web-config')
-exclude(module: 'nlh4j-web-core')
-exclude(module: 'nlh4j-web-client')
-exclude(module: 'nlh4j-web-template')
-exclude(module: 'nlh4j-web-base')
-exclude(module: 'jaxb-api')
-exclude(module: 'stax-api')
-exclude(module: 'poi-ooxml-schemas')
-exclude(module: 'commons-logging')
+		exclude(module: 'nlh4j-core')
+		exclude(module: 'nlh4j-license')
+		exclude(module: 'nlh4j-sms')
+		exclude(module: 'nlh4j-entities')
+		exclude(module: 'nlh4j-domain')
+		exclude(module: 'nlh4j-lang')
+		exclude(module: 'nlh4j-web-config')
+		exclude(module: 'nlh4j-web-core')
+		exclude(module: 'nlh4j-web-client')
+		exclude(module: 'nlh4j-web-template')
+		exclude(module: 'nlh4j-web-base')
+		exclude(module: 'jaxb-api')
+		exclude(module: 'stax-api')
+		exclude(module: 'poi-ooxml-schemas')
+		exclude(module: 'commons-logging')
     }
     compile group: 'javax.inject', name: 'javax.inject', version:'1'
     compile group: 'org.seasar.doma', name: 'doma', version:'1.38.0'

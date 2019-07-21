@@ -46,7 +46,7 @@ import org.springframework.util.StringUtils;
  * Wrapper class for MIME Identification of Files.
  *
  * Depends:
- * <li>Aperture (for MIME-Detection)
+ * <li>Aperture (for MIME-Detection)</li>
  */
 public class MimeTypeDetector implements Serializable {
 

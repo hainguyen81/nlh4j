@@ -298,7 +298,7 @@ public abstract class LocationService extends AbstractService implements Locatio
 
     /**
      * Get a boolean value indicating that service whether has permissions to access {@link Location}
-     * @return
+     * @return true for having access permissions; else false
      */
     public final boolean hasAccessPermissions() {
         int selfFinePerm = ActivityCompat.checkSelfPermission(

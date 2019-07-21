@@ -45,7 +45,7 @@ public interface MimeTypeIdentifier extends Serializable {
 
 	/**
 	 * Get File Extensions for a known MIME Type.
-	 * @param 	mimeType
+	 * @param 	mimeType Currently detected mimeType
 	 * @return	List of file extensions (main extension first).
 	 */
 	List<String> getExtensionsFor(String mimeType);

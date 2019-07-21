@@ -37,7 +37,7 @@ import java.lang.annotation.Target;
  * <p> If <code>ASC</code> or <code>DESC</code> is not specified,
  * <code>ASC</code> (ascending order) is assumed.
  *
- * @see Table
+ * @see {@link Table}
  *
  * @since Java Persistence 2.1
  *
@@ -48,17 +48,20 @@ public @interface Index {
 
     /**
      * (Optional) The name of the index; defaults to a provider-generated name.
+     * @return name
      */
     String name() default "";
 
     /**
      * (Required) The names of the columns to be included in the index,
      * in order.
+     * @return columns list
      */
     String columnList();
 
     /**
      * (Optional) Whether the index is unique.
+     * @return true for unique; else false
      */
     boolean unique() default false;
 

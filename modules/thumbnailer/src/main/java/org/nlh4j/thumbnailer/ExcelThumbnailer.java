@@ -22,7 +22,7 @@ package org.nlh4j.thumbnailer;
 
 /**
  * Dummy class for converting Spreadsheet documents into Openoffice-Textfiles.
- * @see JODConverterThumbnailer
+ * @see {@link JODConverterThumbnailer}
  */
 public class ExcelThumbnailer extends JodThumbnailer {
 
@@ -55,7 +55,7 @@ public class ExcelThumbnailer extends JodThumbnailer {
      * All Spreadsheet Office Formats that OpenOffice understands are accepted.
      *
      * @return MIME-Types
-     * @see http://www.artofsolving.com/opensource/jodconverter/guide/supportedformats
+     * @see <a href="http://www.artofsolving.com/opensource/jodconverter/guide/supportedformats">supportedformats</a>
      */
 	public String[] getAcceptedMIMETypes() {
 		return new String[] {

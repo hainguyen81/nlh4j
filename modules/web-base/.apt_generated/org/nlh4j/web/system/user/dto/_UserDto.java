@@ -1,7 +1,7 @@
 package org.nlh4j.web.system.user.dto;
 
 /** */
-@javax.annotation.Generated(value = { "Doma", "1.38.0" }, date = "2018-10-21T18:32:37.796+0700")
+@javax.annotation.Generated(value = { "Doma", "1.38.0" }, date = "2019-07-21T20:09:08.294+0700")
 public final class _UserDto extends org.seasar.doma.jdbc.entity.AbstractEntityType<org.nlh4j.web.system.user.dto.UserDto> {
 
     static {

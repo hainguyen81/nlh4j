@@ -51,7 +51,7 @@ import lombok.Setter;
  * <li>Aperture Core (MIME Type detection)
  * <li>OpenOfficeThumbnailer
  *
- * @TODO Be stricter about which kind of files to process. Currently it converts just like everything. (See tests/ThumbnailersFailingTest)
+ * TODO Be stricter about which kind of files to process. Currently it converts just like everything. (See tests/ThumbnailersFailingTest)
  *
  * @author Benjamin
  */
@@ -125,6 +125,9 @@ public abstract class JodThumbnailer extends AbstractThumbnailer {
     }
     /**
      * Connect OpenOffice
+     *
+     * @return true for connecting successfully; else false
+     *
      * @exception ThumbnailerException thrown if failed
      */
     public boolean connect() throws ThumbnailerException {
@@ -133,6 +136,7 @@ public abstract class JodThumbnailer extends AbstractThumbnailer {
 	/**
 	 * Connect OpenOffice
 	 * @param forced specify forcing connection OpenOffice
+	 * @return true for connecting successfully; else false
 	 * @exception ThumbnailerException thrown if failed
 	 */
 	public boolean connect(boolean forced) throws ThumbnailerException {

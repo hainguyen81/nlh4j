@@ -63,7 +63,7 @@ public final class BeanUtils implements Serializable {
      * This method will be failed on android (not support) or referencing from another class.<br>
      * So, solution is creating a static method for initializing this variable and synchronizing it.
      */
-    private transient static Class<?>[][] primitiveTypes = null;
+    private static transient Class<?>[][] primitiveTypes = null;
     static {
         try {
             if (primitiveTypes == null) {

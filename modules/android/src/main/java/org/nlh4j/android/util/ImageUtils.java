@@ -139,7 +139,7 @@ public final class ImageUtils implements Serializable {
      * Scale and keep the specified {@link Bitmap} aspect ratio
      *
      * @param image to scale
-     * @param width scale to width
+     * @param height scale to height
      *
      * @return the scaled {@link Bitmap}
      */
