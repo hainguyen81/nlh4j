@@ -1,7 +1,7 @@
 package org.nlh4j.web.core.dto;
 
 /** */
-@javax.annotation.Generated(value = { "Doma", "1.38.0" }, date = "2019-07-21T20:06:59.549+0700")
+@javax.annotation.Generated(value = { "Doma", "1.38.0" }, date = "2019-07-21T22:30:18.635+0700")
 public final class _FunctionDto extends org.seasar.doma.jdbc.entity.AbstractEntityType<org.nlh4j.web.core.dto.FunctionDto> {
 
     static {

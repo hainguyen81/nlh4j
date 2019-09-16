@@ -2,7 +2,7 @@ package org.nlh4j.web.core.domain.dao;
 
 /** */
 @org.springframework.stereotype.Repository()
-@javax.annotation.Generated(value = { "Doma", "1.38.0" }, date = "2019-07-21T20:07:47.847+0700")
+@javax.annotation.Generated(value = { "Doma", "1.38.0" }, date = "2019-07-21T22:31:03.512+0700")
 public class RoleDaoImpl extends org.seasar.doma.internal.jdbc.dao.AbstractDao implements org.nlh4j.web.core.domain.dao.RoleDao {
 
     static {

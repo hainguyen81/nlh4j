@@ -70,7 +70,7 @@ public class TemporaryFileHandler implements AutoCloseable, DisposableBean, Seri
      */
     public final InputStream getAsInputStream() throws IOException {
         if (this.getFile() == null) return null;
-     // create new file if not exist
+        // create new file if not exist
         if (!this.getFile().exists() && !this.getFile().createNewFile()) return null;
         if (this.fis == null) this.fis = new FileInputStream(this.getFile());
         return this.fis;

@@ -80,8 +80,8 @@
 	<properties>
 		<!-- Package properties -->
 		<!-- <root.basedir>${maven.multiModuleProjectDirectory}</root.basedir> --> <!-- require maven 3.3.1 or greater  -->
-		<root.basedir>E:/Java.Working/16-1.projects.4.8.0/nlh4j</root.basedir>
-		<!-- <root.basedir>${maven.multiModuleProjectDirectory}</root.basedir> -->
+		<!-- <root.basedir>E:/Java.Working/16-1.projects.4.8.0/nlh4j</root.basedir> -->
+		<root.basedir>${maven.multiModuleProjectDirectory}</root.basedir>
 		<module.groupId>org.nlh4j</module.groupId>
 		<module.version>1.0</module.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -150,6 +150,10 @@
 			using a final class or a non-visible class; nested exception is java.lang.IllegalArgumentException:
 			Cannot subclass final class... -->
 		<spring.framework.version>5.0.4.RELEASE</spring.framework.version>
+		<spring.springframework.data.version>2.1.10.RELEASE</spring.springframework.data.version>
+		<spring.springframework.data.mongo.version>2.1.10.RELEASE</spring.springframework.data.mongo.version>
+		<spring.springframework.data.redis.version>2.1.10.RELEASE</spring.springframework.data.redis.version>
+		<spring.springframework.data.elasticsearch.version>3.1.10.RELEASE</spring.springframework.data.elasticsearch.version>
 		<spring.security.version>3.2.9.RELEASE</spring.security.version>
 		<!-- <spring.security.version>4.0.4.RELEASE</spring.security.version> -->
 		<spring.ldap.core.version>2.0.4.RELEASE</spring.ldap.core.version>
@@ -1485,6 +1489,51 @@
 				<groupId>org.aspectj</groupId>
 				<artifactId>aspectjtools</artifactId>
 				<version>${org.aspectj.version}</version>
+			</dependency>
+
+			<!-- Spring Mongo -->
+			<dependency>
+				<groupId>org.springframework.data</groupId>
+				<artifactId>spring-data-commons</artifactId>
+				<version>${spring.springframework.data.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.data</groupId>
+				<artifactId>spring-data-mongodb</artifactId>
+				<version>${spring.springframework.data.mongo.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-asm</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-data-commons</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-expression</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-tx</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.data</groupId>
+				<artifactId>spring-data-redis</artifactId>
+				<version>${spring.springframework.data.redis.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.data</groupId>
+    			<artifactId>spring-data-elasticsearch</artifactId>
+				<version>${spring.springframework.data.elasticsearch.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mongodb</groupId>
+				<artifactId>mongo-java-driver</artifactId>
+				<version>${mongo.java.driver.version}</version>
 			</dependency>
 
 			<!-- Quartz -->
