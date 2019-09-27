@@ -5,6 +5,8 @@
 package org.nlh4j.util;
 
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.KeyPair;
 
 import org.junit.Test;
@@ -64,19 +66,23 @@ public final class TestLicenseUtils implements Serializable {
     	String keyStoreType = "JKS";
     	String keyStorePass = "systemexe";
     	String alias = "org.nlh4j";
-    	KeyPair keyPair = EncryptUtils.getKeyPairFrom(keyStore, keyStoreType, keyStorePass, keyStorePass, alias);
-    	PRIVATE_KEY = EncryptUtils.base64encode(keyPair.getPrivate().getEncoded());
-    	PUBLIC_KEY = EncryptUtils.base64encode(keyPair.getPublic().getEncoded());
-        System.out.println("privateKey: " + PRIVATE_KEY);
-        System.out.println("publicKey: " + PUBLIC_KEY);
-        // create license
-        if (LicenseUtils.createRsaLicense(PRIVATE_KEY, serialKey, licenseIn, null, licenseOut, null)) {
+    	if (Files.exists(Paths.get(keyStore))) {
+        	KeyPair keyPair = EncryptUtils.getKeyPairFrom(keyStore, keyStoreType, keyStorePass, keyStorePass, alias);
+        	PRIVATE_KEY = EncryptUtils.base64encode(keyPair.getPrivate().getEncoded());
+        	PUBLIC_KEY = EncryptUtils.base64encode(keyPair.getPublic().getEncoded());
+            System.out.println("privateKey: " + PRIVATE_KEY);
+            System.out.println("publicKey: " + PUBLIC_KEY);
+            // create license
+            if (LicenseUtils.createRsaLicense(PRIVATE_KEY, serialKey, licenseIn, null, licenseOut, null)) {
 
-        	// re-check if ok
-	        if (!LicenseUtils.validateRsaLicense(PUBLIC_KEY, licenseOut, serialKey, null)) {
-	        	System.err.println("Could not validate lincense or invalid license!");
-	        } else System.out.println("License is valid!");
+            	// re-check if ok
+    	        if (!LicenseUtils.validateRsaLicense(PUBLIC_KEY, licenseOut, serialKey, null)) {
+    	        	System.err.println("Could not validate lincense or invalid license!");
+    	        } else System.out.println("License is valid!");
 
-        } else System.err.println("Could not create lincense!");
+            } else System.err.println("Could not create lincense!");
+    	} else {
+    	    System.err.println(keyStore + " is not found!");
+    	}
     }
 }

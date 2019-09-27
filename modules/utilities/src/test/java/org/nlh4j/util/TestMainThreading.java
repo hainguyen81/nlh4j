@@ -163,7 +163,6 @@ public final class TestMainThreading implements Serializable {
      * Test Main
      * @param args arguments
      */
-    @Test
     public static void main(String[] args) {
         TestMainThreading test = new TestMainThreading();
         test.testMultiThread();

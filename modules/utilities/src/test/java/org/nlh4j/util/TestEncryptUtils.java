@@ -35,7 +35,7 @@ public final class TestEncryptUtils implements Serializable {
     	String algorithm = "DSA";
     	String key = EncryptUtils.toHex("publicKey");
         PublicKey publicKey = EncryptUtils.buildPublicKey(key, algorithm);
-        System.out.println(new String(publicKey.getEncoded()));
+        System.out.println(publicKey == null ? "NULL" : new String(publicKey.getEncoded()));
     }
 
     /**
@@ -47,7 +47,7 @@ public final class TestEncryptUtils implements Serializable {
     	String algorithm = "DSA";
     	String key = EncryptUtils.toHex("privateKey");
         PrivateKey privateKey = EncryptUtils.buildPrivateKey(EncryptUtils.hexToByte(key), algorithm);
-        System.out.println(new String(privateKey.getEncoded()));
+        System.out.println(privateKey == null ? "NULL" : new String(privateKey.getEncoded()));
     }
 
     /**
