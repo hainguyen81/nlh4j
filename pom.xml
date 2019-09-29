@@ -80,8 +80,9 @@
 	<properties>
 		<!-- Package properties -->
 		<!-- <root.basedir>${maven.multiModuleProjectDirectory}</root.basedir> --> <!-- require maven 3.3.1 or greater  -->
-		<!-- <root.basedir>E:/Java.Working/16-1.projects.4.8.0/nlh4j</root.basedir> -->
-		<root.basedir>${maven.multiModuleProjectDirectory}</root.basedir>
+		<root.basedir>E:/Java.Working/16-1.projects.4.8.0/nlh4j</root.basedir>
+		<maven.multiModuleProjectDirectory>${root.basedir}</maven.multiModuleProjectDirectory>
+		<!-- <root.basedir>${maven.multiModuleProjectDirectory}</root.basedir> -->
 		<module.groupId>org.nlh4j</module.groupId>
 		<module.version>1.0</module.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -1520,16 +1521,16 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
-			<dependency>
+			<!-- <dependency>
 				<groupId>org.springframework.data</groupId>
 				<artifactId>spring-data-redis</artifactId>
 				<version>${spring.springframework.data.redis.version}</version>
-			</dependency>
-			<dependency>
+			</dependency> -->
+			<!-- <dependency>
 				<groupId>org.springframework.data</groupId>
     			<artifactId>spring-data-elasticsearch</artifactId>
 				<version>${spring.springframework.data.elasticsearch.version}</version>
-			</dependency>
+			</dependency> -->
 			<dependency>
 				<groupId>org.mongodb</groupId>
 				<artifactId>mongo-java-driver</artifactId>
