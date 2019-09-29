@@ -9,15 +9,14 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import org.nlh4j.core.service.MessageService;
 import org.nlh4j.core.servlet.ApplicationContextProvider;
 import org.nlh4j.core.servlet.SpringContextHelper;
 import org.nlh4j.util.RequestUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Base DTO
@@ -36,7 +35,7 @@ public abstract class AbstractDto implements Serializable {
     /**
 	 * slf4j
 	 */
-	protected transient final Logger logger = LoggerFactory.getLogger(this.getClass());
+	protected final transient Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	/**
      * {@link SpringContextHelper}<br>

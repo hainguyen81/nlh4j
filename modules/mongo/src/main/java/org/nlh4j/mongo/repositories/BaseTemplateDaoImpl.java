@@ -4,6 +4,7 @@
  */
 package org.nlh4j.mongo.repositories;
 
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
@@ -159,7 +160,7 @@ public abstract class BaseTemplateDaoImpl implements BaseTemplateDao, Applicatio
 	protected final void ensureMongoTemplates() {
 		synchronized (templates) {
 			if (CollectionUtils.isEmpty(templates)) {
-				SpringContextHelper ctxHelper = getContexthelper();
+				SpringContextHelper ctxHelper = getContextHelper();
 				List<MongoTemplateInfo> parsedTemplates = this.parseMongoTemplates(ctxHelper.getContext());
 				if (!CollectionUtils.isEmpty(parsedTemplates)) {
 					templates.addAll(parsedTemplates);
@@ -215,7 +216,7 @@ public abstract class BaseTemplateDaoImpl implements BaseTemplateDao, Applicatio
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		// apply context
-		SpringContextHelper ctxHelper = getContexthelper();
+		SpringContextHelper ctxHelper = getContextHelper();
 		ctxHelper.setApplicationContext(event == null ? null : event.getApplicationContext());
 		// detect to try parsing mongo templates
 		ensureMongoTemplates();
@@ -224,11 +225,75 @@ public abstract class BaseTemplateDaoImpl implements BaseTemplateDao, Applicatio
 	/**
 	 * @return the contexthelper
 	 */
-	protected final SpringContextHelper getContexthelper() {
+	protected final SpringContextHelper getContextHelper() {
 		if (contextHelper == null) {
 			contextHelper = new SpringContextHelper();
 		}
 		return contextHelper;
+	}
+
+	/**
+	 * Gets {@link MongoTemplate} by host/port/database name
+	 *
+	 * @param host database host
+	 * @param port database port
+	 * @param dbName database name
+	 * @param trySamePackage specify trying to detect {@link MongoTemplate} in XML configuration of present DAO instance package
+	 *
+	 * @return {@link MongoTemplate}
+	 */
+	protected MongoTemplate getMongoTemplate(String host, int port, String dbName, Boolean trySamePackage) {
+		MongoTemplate mongoTemplateInst = null;
+		List<MongoTemplateInfo> templatesList = this.getTemplates();
+		if (CollectionUtils.isEmpty(templatesList) || !StringUtils.hasText(dbName)) {
+			logger.error("Not found any MongoTemplate or database name parameter is invalid!");
+			return mongoTemplateInst;
+		}
+		port = Math.max(port, 0);
+		// found by host/port/database name
+		for (MongoTemplateInfo template : templatesList) {
+			if ((!StringUtils.hasText(host) || host.equalsIgnoreCase(template.getDbHost()))
+					&& (port <= 0 || port == template.getDbPort())
+					&& dbName.equalsIgnoreCase(template.getDbName())) {
+				mongoTemplateInst = template.getTemplate();
+				break;
+			}
+		}
+		// if not found; and trying to detect same package
+		if (Boolean.TRUE.equals(trySamePackage) && mongoTemplateInst == null) {
+			URL packLib = null;
+			try {
+				// create resource resolver for resolving XML configuration
+				packLib = this.getClass().getProtectionDomain().getCodeSource().getLocation();
+				String packLibPath = packLib.getProtocol() + ":" + packLib.getPath();
+				for (MongoTemplateInfo template : templatesList) {
+					if (StringUtils.hasText(template.getBeanResource())
+							&& template.getBeanResource().contains(packLibPath)
+							&& template.getBeanResource().contains(".xml")) {
+						mongoTemplateInst = template.getTemplate();
+						break;
+					}
+				}
+			} catch (Exception e) {
+				logger.info(e.getMessage());
+			} finally {
+				if (mongoTemplateInst == null) {
+					logger.error("Could not found MongoTemplate configuration from current package"
+							+ (packLib == null ? "" : " {" + packLib.getPath() + "}"));
+				}
+			}
+		}
+		return mongoTemplateInst;
+	}
+	/**
+	 * Gets {@link MongoTemplate} by database name
+	 *
+	 * @param dbName database name
+	 *
+	 * @return {@link MongoTemplate}
+	 */
+	protected MongoTemplate getMongoTemplate(String dbName) {
+		return this.getMongoTemplate(null, 0, dbName, Boolean.FALSE);
 	}
 
 	/**
