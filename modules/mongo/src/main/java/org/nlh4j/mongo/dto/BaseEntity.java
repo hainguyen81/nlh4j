@@ -12,6 +12,7 @@ import org.codehaus.jackson.map.annotate.JsonCachable;
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.nlh4j.core.dto.AbstractDto;
+import org.nlh4j.mongo.annotation.Database;
 import org.nlh4j.mongo.dto.bindeditor.json.codehaus.ObjectIdDeserializer;
 import org.nlh4j.mongo.dto.bindeditor.json.codehaus.ObjectIdSerializer;
 import org.springframework.data.annotation.Id;
@@ -41,6 +42,7 @@ import lombok.EqualsAndHashCode;
 @ReadingConverter
 @WritingConverter
 @Document
+@Database
 public abstract class BaseEntity extends AbstractDto {
 
 	/** */
