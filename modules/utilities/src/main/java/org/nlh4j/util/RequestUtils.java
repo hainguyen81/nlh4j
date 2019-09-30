@@ -505,7 +505,6 @@ public final class RequestUtils implements Serializable {
     /**
      * Get parameter {@link Boolean} value from the current request by name
      *
-     * @param request {@link HttpServletRequest}
      * @param paramName parameter name
      *
      * @return parameter {@link Boolean} value
@@ -826,6 +825,7 @@ public final class RequestUtils implements Serializable {
     }
     /**
      * Remove request attribute by name
+     * @param attrName to remove
      */
     public static void removeRequestAttribute(String attrName) {
         removeRequestAttribute(getHttpRequest(), attrName);

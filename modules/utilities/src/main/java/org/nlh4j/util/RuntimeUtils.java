@@ -441,7 +441,7 @@ public final class RuntimeUtils implements Serializable {
      * <p>This is a convenience method.  An invocation of the form
      * <tt>exec(command)</tt>
      * behaves in exactly the same way as the invocation
-     * <tt>{@link RuntimeUtils#exec(String, String[], File, StringBuffer, StringBuffer)}</tt>.
+     * <tt>{@link #exec(String, String[], File, StringBuilder, StringBuilder)}</tt>.
      *
      * @param   command   a specified system command.
      *
@@ -460,7 +460,7 @@ public final class RuntimeUtils implements Serializable {
      * <p>This is a convenience method.  An invocation of the form
      * <tt>exec(command, envp)</tt>
      * behaves in exactly the same way as the invocation
-     * <tt>{@link RuntimeUtils#exec(String, String[], File, StringBuffer, StringBuffer)}</tt>.
+     * <tt>{@link #exec(String, String[], File, StringBuffer, StringBuffer)}</tt>.
      *
      * @param   command   a specified system command.
      *
@@ -487,7 +487,7 @@ public final class RuntimeUtils implements Serializable {
      * <p>This is a convenience method.  An invocation of the form
      * <tt>exec(command, envp, dir)</tt>
      * behaves in exactly the same way as the invocation
-     * <tt>{@link RuntimeUtils#exec(String[], String[], File, StringBuffer, StringBuffer)}</tt>,
+     * <tt>{@link #exec(String[], String[], File, StringBuffer, StringBuffer)}</tt>,
      * where <code>cmdarray</code> is an array of all the tokens in
      * <code>command</code>.
      *
@@ -531,7 +531,7 @@ public final class RuntimeUtils implements Serializable {
      * <p>This is a convenience method.  An invocation of the form
      * <tt>exec(cmdarray)</tt>
      * behaves in exactly the same way as the invocation
-     * <tt>{@link RuntimeUtils#exec(String[], String[], File, StringBuilder, StringBuilder)}</tt>.
+     * <tt>{@link #exec(String[], String[], File, StringBuilder, StringBuilder)}</tt>.
      *
      * @param   cmdarray  array containing the command to call and
      *                    its arguments.
@@ -551,7 +551,7 @@ public final class RuntimeUtils implements Serializable {
      * <p>This is a convenience method.  An invocation of the form
      * <tt>exec(cmdarray, envp)</tt>
      * behaves in exactly the same way as the invocation
-     * <tt>{@link RuntimeUtils#exec(String[], String[], File, StringBuilder, StringBuilder)}</tt>.
+     * <tt>{@link #exec(String[], String[], File, StringBuilder, StringBuilder)}</tt>.
      *
      * @param   cmdarray  array containing the command to call and
      *                    its arguments.

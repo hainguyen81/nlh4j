@@ -125,6 +125,7 @@ public abstract class MultiThreading extends Thread implements Serializable {
      * Set shared data between tasks
      * @param task child accessed {@link Thread} task
      * @param data shared synchronized data
+     * @return true for successfully; else false
      */
     public final boolean setSharedData(Thread task, Object data) {
         Assert.notNull(task, "invalid child task!");
@@ -134,8 +135,9 @@ public abstract class MultiThreading extends Thread implements Serializable {
     }
     /**
      * Set shared data between tasks
-     * @param task child accessed {@link Thread} task
+     * @param taskName child accessed {@link Thread} task name
      * @param data shared synchronized data
+     * @return true for successfully; else false
      */
     public final boolean setSharedData(String taskName, Object data) {
         Assert.hasText(taskName, "taskName");
@@ -167,9 +169,8 @@ public abstract class MultiThreading extends Thread implements Serializable {
      * Add a new child {@link Thread} task
      * @param task to add
      * @param started specify whether start the specified {@link Thread} task
-     * @exception {@link IllegalArgumentException} thrown if task is NULL or has been interrupted
      */
-    public final void addTask(Thread task, Boolean started) throws IllegalArgumentException {
+    public final void addTask(Thread task, Boolean started) {
         Assert.notNull(task, "task");
         this.getTasks().add(task);
         if (Boolean.TRUE.equals(started)) {
@@ -182,9 +183,8 @@ public abstract class MultiThreading extends Thread implements Serializable {
     /**
      * Add a new child {@link Thread} task
      * @param task to add
-     * @exception {@link IllegalArgumentException} thrown if task is NULL or has been interrupted
      */
-    public final void addTask(Thread task) throws IllegalArgumentException {
+    public final void addTask(Thread task) {
         this.addTask(task, Boolean.FALSE);
     }
 
@@ -192,9 +192,8 @@ public abstract class MultiThreading extends Thread implements Serializable {
      * Remove the child {@link Thread} task, also removing shared data for this task
      * @param task to remove
      * @return the removed {@link Thre}
-     * @exception {@link IllegalArgumentException} thrown if task is NULL
      */
-    public final int removeTask(Thread task) throws IllegalArgumentException {
+    public final int removeTask(Thread task) {
         return this.removeTask(task, Boolean.TRUE);
     }
     /**
@@ -202,9 +201,8 @@ public abstract class MultiThreading extends Thread implements Serializable {
      * @param task to remove
      * @param interrupted specify interrupting this task if necessary
      * @return the removed {@link Thre}
-     * @exception {@link IllegalArgumentException} thrown if task is NULL
      */
-    public final int removeTask(Thread task, Boolean interrupted) throws IllegalArgumentException {
+    public final int removeTask(Thread task, Boolean interrupted) {
         Assert.notNull(task, "task");
         String taskName = (StringUtils.hasText(task.getName())
                 ? task.getName() : String.valueOf(task.getId()));
@@ -233,9 +231,8 @@ public abstract class MultiThreading extends Thread implements Serializable {
      * @param taskName to remove
      * @param interrupted specify interrupting this task if necessary
      * @return the removed {@link Thread}
-     * @exception {@link IllegalArgumentException} thrown if task is NULL
      */
-    public final Thread removeTask(String taskName) throws IllegalArgumentException {
+    public final Thread removeTask(String taskName) {
         return this.removeTask(taskName, Boolean.TRUE);
     }
     /**
@@ -243,9 +240,8 @@ public abstract class MultiThreading extends Thread implements Serializable {
      * @param taskName to remove
      * @param interrupted specify interrupting this task if necessary
      * @return the removed {@link Thread}
-     * @exception {@link IllegalArgumentException} thrown if task is NULL
      */
-    public final Thread removeTask(String taskName, Boolean interrupted) throws IllegalArgumentException {
+    public final Thread removeTask(String taskName, Boolean interrupted) {
         Assert.hasText(taskName, "taskName");
         final List<Thread> tasksList = this.getTasks();
         int size = tasksList.size();
