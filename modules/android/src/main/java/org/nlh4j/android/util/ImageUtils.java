@@ -6,7 +6,6 @@ package org.nlh4j.android.util;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
@@ -199,7 +198,6 @@ public final class ImageUtils implements Serializable {
      * @param filename image name with extension e.g.image.png
      *
      * @return {@link Bitmap} or null if failed
-     * @throws IOException throw exception if the image not found or error while reading
      */
     public static Bitmap fromAssets(Context context, String folder, String filename) {
         Assert.hasText(filename, "filename");
@@ -434,8 +432,6 @@ public final class ImageUtils implements Serializable {
      * Compress the specified {@link Bitmap} with default {@link Config#ARGB_8888}, {@link CompressFormat#PNG}
      *
      * @param image to compress
-     * @param format image compression format type
-     * @param quality compression quality
      * @param factor powers of 2 are often faster/easier for the decoder to honor
      *
      * @return compressed {@link Bitmap} or NULL if failed
