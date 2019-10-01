@@ -19,8 +19,8 @@ repositories {
 	mavenLocal()
 	mavenCentral()
 	// for gradle tooling API
-	maven { url 'http://repo.gradle.org/gradle/libs-releases-local' }
-	maven { url 'https://mvnrepository.com/artifact/org.gradle/gradle-tooling-api' }
+	maven { url "http://repo.gradle.org/gradle/libs-releases-local" }
+	maven { url "https://mvnrepository.com/artifact/org.gradle/gradle-tooling-api" }
 	maven { url "file://E:/Java.Working/1.tools/maven/.m2/repository" }
 	maven { url "http://maven.seasar.org/maven2" }
 	maven { url "https://repository.jboss.org/nexus/content/groups/developer/" }

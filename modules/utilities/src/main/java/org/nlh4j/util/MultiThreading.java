@@ -191,7 +191,7 @@ public abstract class MultiThreading extends Thread implements Serializable {
     /**
      * Remove the child {@link Thread} task, also removing shared data for this task
      * @param task to remove
-     * @return the removed {@link Thre}
+     * @return the removed {@link Thread}
      */
     public final int removeTask(Thread task) {
         return this.removeTask(task, Boolean.TRUE);
@@ -200,7 +200,7 @@ public abstract class MultiThreading extends Thread implements Serializable {
      * Remove the child {@link Thread} task, also removing shared data for this task
      * @param task to remove
      * @param interrupted specify interrupting this task if necessary
-     * @return the removed {@link Thre}
+     * @return the removed {@link Thread}
      */
     public final int removeTask(Thread task, Boolean interrupted) {
         Assert.notNull(task, "task");
@@ -229,7 +229,6 @@ public abstract class MultiThreading extends Thread implements Serializable {
     /**
      * Remove the child {@link Thread} task, also removing shared data for this task
      * @param taskName to remove
-     * @param interrupted specify interrupting this task if necessary
      * @return the removed {@link Thread}
      */
     public final Thread removeTask(String taskName) {

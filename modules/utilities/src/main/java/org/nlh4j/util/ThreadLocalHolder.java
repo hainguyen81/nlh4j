@@ -46,6 +46,7 @@ public final class ThreadLocalHolder implements Serializable {
 
 	/**
 	 * Store value into holder
+	 * @param <T> value type
 	 * @param value to store
 	 * @param requiredNotNull specify whether checking value is not NULL
 	 */

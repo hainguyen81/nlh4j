@@ -32,9 +32,11 @@ import lombok.Setter;
 /**
  * This AbstractThumbnailer may be used in order to implement only essential methods.
  * It
+ * <ul>
  * <li>stores the current thumbnail height/width</li>
  * <li>implements an empty close method</li>
  * <li>specifies an wildcard MIME Type as appropriate Filetype</li>
+ * </ul>
  *
  * @author Benjamin
  */

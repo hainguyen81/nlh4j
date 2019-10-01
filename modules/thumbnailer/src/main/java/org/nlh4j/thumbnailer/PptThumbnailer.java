@@ -22,7 +22,7 @@ package org.nlh4j.thumbnailer;
 
 /**
  * Dummy class for converting Presentation documents into Openoffice-Textfiles.
- * @see {@link JODConverterThumbnailer}
+ * @see JodThumbnailer
  */
 public class PptThumbnailer extends JodThumbnailer {
 
