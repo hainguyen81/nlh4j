@@ -18,6 +18,9 @@ configurations.all {
 repositories {
 	mavenLocal()
 	mavenCentral()
+	// for gradle tooling API
+	maven { url 'http://repo.gradle.org/gradle/libs-releases-local' }
+	maven { url 'https://mvnrepository.com/artifact/org.gradle/gradle-tooling-api' }
 	maven { url "file://E:/Java.Working/1.tools/maven/.m2/repository" }
 	maven { url "http://maven.seasar.org/maven2" }
 	maven { url "https://repository.jboss.org/nexus/content/groups/developer/" }
@@ -39,6 +42,8 @@ repositories {
 	maven { url "http://repo.maven.apache.org/maven2" }
 }
 dependencies {
+	// for gradle tooling API
+	compile group: 'org.gradle', name: 'gradle-tooling-api', version: '5.5.1'
     compile group: 'org.springframework', name: 'spring-aop', version:'5.0.4.RELEASE'
     compile group: 'org.springframework', name: 'spring-beans', version:'5.0.4.RELEASE'
     compile group: 'org.springframework', name: 'spring-core', version:'5.0.4.RELEASE'
