@@ -174,9 +174,7 @@ public interface BaseDao<E extends BaseEntity> extends BaseTemplateDao {
 	}
 	/**
 	 * Aggregate the entities list by the specified conditions and operations
-	 * @param <E> entity type
 	 * @param <O> {@link AggregationOperation}
-	 * @param entityClass entity class result
 	 * @param operations aggregation operations
 	 * @return {@link AggregationResults}
 	 */

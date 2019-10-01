@@ -223,9 +223,7 @@ public abstract class SimpleObserve implements Serializable {
     }
 
     /**
-     * Start observe
-     *
-     * @param observeActions actions to observe such as: insert/update/replace/delete/invalidate
+     * Start observe with all actions
      */
     public final void observe() {
         this.observe(FULL_OBSERVE_ACTIONS, Boolean.TRUE);
@@ -285,9 +283,7 @@ public abstract class SimpleObserve implements Serializable {
     }
 
     /**
-     * Start observe resume token
-     *
-     * @param observeActions actions to observe such as: insert/update/replace/delete/invalidate
+     * Start observe resume token with all actions
      */
     public final void observeResume() {
         this.observeResume(FULL_OBSERVE_ACTIONS, Boolean.TRUE);

@@ -54,6 +54,7 @@ public class FirebaseMessagingService extends FirebaseService implements Seriali
 
     /**
      * Send entity notification by {@link Message}
+     * @param <T> entity type
      * @param entity to send
      * @param messageBuilder to build {@link Message}
      * @param dryRun notification data will be appended "validate_only" attribute
@@ -72,6 +73,7 @@ public class FirebaseMessagingService extends FirebaseService implements Seriali
     }
 	/**
      * Send entity notification by {@link Message}
+     * @param <T> entity type
      * @param entity to send
      * @param messageBuilder to build {@link Message}
      * @return Firebase Response
@@ -81,6 +83,7 @@ public class FirebaseMessagingService extends FirebaseService implements Seriali
     }
     /**
      * Send entity notification by {@link Message}
+     * @param <T> entity type
      * @param entity to send
      * @param messageBuilder to build {@link Message}
      * @param dryRun notification data will be appended "validate_only" attribute
@@ -92,6 +95,7 @@ public class FirebaseMessagingService extends FirebaseService implements Seriali
     }
     /**
      * Send entity notification by {@link Message}
+     * @param <T> entity type
      * @param entity to send
      * @param messageBuilder to build {@link Message}
      * @return {@link CompletableFuture}
@@ -103,6 +107,7 @@ public class FirebaseMessagingService extends FirebaseService implements Seriali
 
     /**
      * Send entity notification by {@link Message}
+     * @param <T> entity type
      * @param entity to send
      * @param messageBuilder to build {@link Message}
      * @param dryRun notification data will be appended "validate_only" attribute
@@ -121,6 +126,7 @@ public class FirebaseMessagingService extends FirebaseService implements Seriali
     }
 	/**
      * Send entity notification by {@link Message}
+     * @param <T> entity type
      * @param entity to send
      * @param messageBuilder to build {@link Message}
      * @return {@link ApiFuture}
@@ -130,6 +136,7 @@ public class FirebaseMessagingService extends FirebaseService implements Seriali
     }
     /**
      * Send entity notification by {@link Message}
+     * @param <T> entity type
      * @param entity to send
      * @param messageBuilder to build {@link Message}
      * @param dryRun notification data will be appended "validate_only" attribute
@@ -144,6 +151,7 @@ public class FirebaseMessagingService extends FirebaseService implements Seriali
     }
     /**
      * Send entity notification by {@link Message}
+     * @param <T> entity type
      * @param entity to send
      * @param messageBuilder to build {@link Message}
      * @return {@link CompletableFuture}
@@ -454,7 +462,6 @@ public class FirebaseMessagingService extends FirebaseService implements Seriali
 
 	/**
 	 * Send notification data to devices group by the specified notification key name
-	 * @param tokens device token to resgiter into group
 	 * @param notificationKeyName to add
 	 * @param data notification data
 	 * @return HTTP Json response such as: { success: 2, failure: 0 }
@@ -483,7 +490,6 @@ public class FirebaseMessagingService extends FirebaseService implements Seriali
 	}
 	/**
 	 * Send notification data to devices group by the specified notification key name
-	 * @param tokens device token to resgiter into group
 	 * @param notificationKeyName to add
 	 * @param data notification data
 	 * @return HTTP Json response such as: { success: 2, failure: 0 }

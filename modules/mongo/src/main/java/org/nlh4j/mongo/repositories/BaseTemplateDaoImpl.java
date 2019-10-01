@@ -63,8 +63,6 @@ import lombok.EqualsAndHashCode;
 /**
  * The basic template implementation of {@link BaseDao}
  * @author Hai Nguyen
- *
- * @param <E> entity type
  */
 @SuppressWarnings("unchecked")
 @Repository

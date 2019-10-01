@@ -198,12 +198,7 @@ public class BaseDaoImpl<E extends BaseEntity> extends BaseTemplateDaoImpl imple
 
 	/**
 	 * Gets {@link MongoTemplate} instance by database name
-	 *
-	 * @param host database connection host
-	 * @param port database connection port
-	 * @param dbName database name
-	 *
-	 * @return MongoTemplate
+	 * @return {@link MongoTemplate} instance
 	 */
 	@Override
 	public MongoTemplate getMongoTemplate() {
