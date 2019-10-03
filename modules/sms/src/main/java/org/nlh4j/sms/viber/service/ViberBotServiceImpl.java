@@ -7,6 +7,7 @@ package org.nlh4j.sms.viber.service;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.nlh4j.core.service.AbstractService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -18,7 +19,6 @@ import com.viber.bot.profile.UserProfile;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.nlh4j.core.service.AbstractService;
 
 /**
  * The implement of {@link ViberBotService} interface
@@ -56,7 +56,7 @@ public class ViberBotServiceImpl extends AbstractService implements ViberBotServ
 	/**
 	 * {@link ViberSignatureValidator}
 	 */
-	private ViberSignatureValidator signatureValidator;
+	private transient ViberSignatureValidator signatureValidator;
 	/**
 	 * Get {@link ViberSignatureValidator}
 	 *
@@ -80,7 +80,7 @@ public class ViberBotServiceImpl extends AbstractService implements ViberBotServ
 	/**
 	 * {@link ViberBot}
 	 */
-	private ViberBot viberBot;
+	private transient ViberBot viberBot;
 	/**
 	 * Get {@link ViberBot}
 	 *
@@ -136,6 +136,6 @@ public class ViberBotServiceImpl extends AbstractService implements ViberBotServ
 	public void sendMessage(UserProfile profile, String messageKey, Object... args) {
 		Assert.notNull(profile, "Viber Profile");
 		Assert.hasText(messageKey, "message");
-		this.sendMessage(profile, new String[] { super.messageService.getMessage(messageKey, args) });
+		this.sendMessage(profile, super.messageService.getMessage(messageKey, args));
 	}
 }
