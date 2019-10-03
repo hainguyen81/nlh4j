@@ -91,15 +91,16 @@ public class BaseDaoImpl<E extends BaseEntity> extends BaseTemplateDaoImpl imple
 	 */
 	@Override
 	public final String getCollectionName() {
-		if (!StringUtils.hasText(this.collection) && Objects.nonNull(getEntityClass())) {
+		Class<E> entClass = getEntityClass();
+		if (!StringUtils.hasText(this.collection) && entClass != null) {
 			// detect document annotation of current repository
 			org.springframework.data.mongodb.core.mapping.Document docAnn =
 					BeanUtils.getClassAnnotation(this.getClass(),
 							org.springframework.data.mongodb.core.mapping.Document.class);
 			if (Objects.isNull(docAnn)) {
 				// detect document annotation of current repository entity class
-				docAnn = BeanUtils.getClassAnnotation(
-						this.getEntityClass(), org.springframework.data.mongodb.core.mapping.Document.class);
+				docAnn = BeanUtils.getClassAnnotation(entClass,
+						org.springframework.data.mongodb.core.mapping.Document.class);
 			}
 			if (Objects.nonNull(docAnn) && StringUtils.hasText(docAnn.collection())) {
 				this.collection = docAnn.collection();
@@ -111,22 +112,23 @@ public class BaseDaoImpl<E extends BaseEntity> extends BaseTemplateDaoImpl imple
 				Database dbAnn = BeanUtils.getClassAnnotation(this.getClass(), Database.class);
 				if (dbAnn == null) {
 					// detect database annotation of current repository entity class
-					dbAnn = BeanUtils.getClassAnnotation(this.getEntityClass(), Database.class);
+					dbAnn = BeanUtils.getClassAnnotation(entClass, Database.class);
 				}
 				if (Objects.nonNull(dbAnn) && StringUtils.hasText(dbAnn.collection())) {
 					this.collection = dbAnn.collection();
 				}
 			}
-		}
 
-		// by mongo template
-		if (!StringUtils.hasText(this.collection) && Objects.nonNull(getMongoTemplate()) && Objects.nonNull(getEntityClass())) {
-			this.collection = getMongoTemplate().getCollectionName(getEntityClass());
-		}
+			// by mongo template
+			MongoTemplate template = getMongoTemplate();
+			if (!StringUtils.hasText(this.collection) && template != null) {
+				this.collection = template.getCollectionName(entClass);
+			}
 
-		// by entity class
-		if (!StringUtils.hasText(this.collection) && Objects.nonNull(getEntityClass())) {
-			this.collection = getEntityClass().getSimpleName().toLowerCase();
+			// by entity class
+			if (!StringUtils.hasText(this.collection)) {
+				this.collection = entClass.getSimpleName().toLowerCase();
+			}
 		}
 		return this.collection;
 	}
@@ -137,12 +139,13 @@ public class BaseDaoImpl<E extends BaseEntity> extends BaseTemplateDaoImpl imple
 	 */
 	@Override
 	public final String getDatabaseName() {
-		if (!StringUtils.hasText(this.dbName)) {
+		Class<E> entClass = getEntityClass();
+		if (!StringUtils.hasText(this.dbName) && entClass != null) {
 			// detect database annotation of current repository
 			Database dbAnn = BeanUtils.getClassAnnotation(this.getClass(), Database.class);
 			if (dbAnn == null) {
 				// detect database annotation of current repository entity class
-				dbAnn = BeanUtils.getClassAnnotation(this.getEntityClass(), Database.class);
+				dbAnn = BeanUtils.getClassAnnotation(entClass, Database.class);
 			}
 			if (dbAnn != null) {
 				if (StringUtils.hasText(dbAnn.value())) {
