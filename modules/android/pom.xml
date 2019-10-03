@@ -84,13 +84,6 @@
 		</plugins>
 	</build>
 
-	<repositories>
-		<repository>
-			<id>Project Repository</id>
-			<url>file://${basedir}/libs</url>
-		</repository>
-	</repositories>
-
 	<!-- Dependences -->
 	<dependencies>
 		<!-- Project Dependency -->
@@ -98,11 +91,15 @@
 	        <groupId>com.android.support</groupId>
 	        <artifactId>multidex</artifactId>
 	        <version>1.0</version>
+	        <scope>system</scope>
+			<systemPath>${pom.basedir}/libs/android-support-multidex.jar</systemPath>
 	    </dependency>
 		<dependency>
 	        <groupId>com.android.support</groupId>
 	        <artifactId>support-v4</artifactId>
 	        <version>1.0</version>
+	        <scope>system</scope>
+			<systemPath>${pom.basedir}/libs/android-support-v4.jar</systemPath>
 	    </dependency>
 		<dependency>
 			<groupId>${project.parent.groupId}</groupId>
