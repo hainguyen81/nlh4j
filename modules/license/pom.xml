@@ -12,9 +12,7 @@
 
 	<!-- Present package -->
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>${project.parent.groupId}</groupId>
 	<artifactId>nlh4j-license</artifactId>
-	<version>${project.parent.version}</version>
 	<packaging>jar</packaging>
 	<name>nlh4j-license</name>
 	<description>Base License Generation for Java Web/Mobile</description>

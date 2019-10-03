@@ -12,9 +12,7 @@
 
 	<!-- Present package -->
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>${project.parent.groupId}</groupId>
 	<artifactId>nlh4j-core</artifactId>
-	<version>${project.parent.version}</version>
 	<packaging>jar</packaging>
 	<name>nlh4j-core</name>
 	<description>Base Core Package for Java Web/Mobile</description>

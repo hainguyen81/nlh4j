@@ -1531,11 +1531,6 @@
     			<artifactId>spring-data-elasticsearch</artifactId>
 				<version>${spring.springframework.data.elasticsearch.version}</version>
 			</dependency> -->
-			<dependency>
-				<groupId>org.mongodb</groupId>
-				<artifactId>mongo-java-driver</artifactId>
-				<version>${mongo.java.driver.version}</version>
-			</dependency>
 
 			<!-- Quartz -->
 			<dependency> <!-- Quartz dependence -->
