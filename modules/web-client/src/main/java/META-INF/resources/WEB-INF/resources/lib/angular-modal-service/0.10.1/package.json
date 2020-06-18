@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/dwmkerr/angular-modal-service",
   "devDependencies": {
-    "angular": "1.5.x",
+    "angular": "1.8.x",
     "angular-mocks": "1.5.x",
     "babel-core": "^6.9.1",
     "babel-loader": "^6.2.4",
