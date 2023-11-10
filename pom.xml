@@ -80,14 +80,15 @@
 	<properties>
 		<!-- Package properties -->
 		<!-- <root.basedir>${maven.multiModuleProjectDirectory}</root.basedir> --> <!-- require maven 3.3.1 or greater  -->
-		<root.basedir>E:/Java.Working/16-1.projects.4.8.0/nlh4j</root.basedir>
+		<root.basedir>C:/SynQSDK_2022.0.0/workspace/nlh4j/nlh4j</root.basedir>
 		<maven.multiModuleProjectDirectory>${root.basedir}</maven.multiModuleProjectDirectory>
 		<!-- <root.basedir>${maven.multiModuleProjectDirectory}</root.basedir> -->
+		<root.artifactId>nlh4j</root.artifactId>
 		<module.groupId>org.nlh4j</module.groupId>
 		<module.version>1.0</module.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<finalName>${project.artifactId}-${project.version}</finalName>
-		<java.version>1.8</java.version>
+		<java.version>11</java.version>
 
 		<!-- Profile properties file -->
 		<profile.configuration>${root.basedir}/profiles/${build.profile.id}/config.properties</profile.configuration>
@@ -100,24 +101,26 @@
 		<!-- Maven Plugins -->
 		<maven.m2e.lifecycle.mapping.version>1.0.0</maven.m2e.lifecycle.mapping.version>
 		<maven.findbugs.version>3.0.6-SNAPSHOT</maven.findbugs.version>
-		<maven.groovy.version>2.1</maven.groovy.version>
-		<maven.enforcer.version>3.0.0-M1</maven.enforcer.version>
-		<maven.versions.version>2.5</maven.versions.version>
-		<maven.properties.version>1.0.0</maven.properties.version>
-		<maven.release.version>2.5.3</maven.release.version>
-		<maven.build.helper.version>3.0.0</maven.build.helper.version>
-		<maven.resources.version>3.0.2</maven.resources.version>
-		<maven.compiler.version>3.7.0</maven.compiler.version>
-		<maven.aspectj.version>1.11</maven.aspectj.version>
-		<maven.source.version>3.0.1</maven.source.version>
-		<maven.javadoc.version>2.10.4</maven.javadoc.version>
-		<maven.jar.version>3.0.2</maven.jar.version>
-		<maven.war.version>3.2.2</maven.war.version>
-		<maven.jarsigner.version>1.4</maven.jarsigner.version>
-		<maven.surefire.version>2.19.1</maven.surefire.version>
-		<maven.nexus.staging.version>1.6.7</maven.nexus.staging.version>
+		<maven.groovy.version>2.1.1</maven.groovy.version>
+		<maven.enforcer.version>3.4.1</maven.enforcer.version>
+		<maven.versions.version>2.16.1</maven.versions.version>
+		<maven.properties.version>1.2.1</maven.properties.version>
+		<maven.release.version>3.0.1</maven.release.version>
+		<maven.build.helper.version>3.4.0</maven.build.helper.version>
+		<maven.resources.version>3.3.1</maven.resources.version>
+		<maven.compiler.version>3.11.0</maven.compiler.version>
+		<maven.aspectj.version>1.14.0</maven.aspectj.version>
+		<maven.source.version>3.3.0</maven.source.version>
+		<maven.javadoc.version>3.6.2</maven.javadoc.version>
+		<maven.jar.version>3.3.0</maven.jar.version>
+		<maven.war.version>3.4.1-SNAPSHOT</maven.war.version>
+		<maven.jarsigner.version>3.0.0</maven.jarsigner.version>
+		<maven.surefire.version>3.2.2</maven.surefire.version>
+		<maven.nexus.staging.version>1.6.13</maven.nexus.staging.version>
 		<maven.truelicense.version>2.6.4</maven.truelicense.version>
 		<maven.proguard.version>2.0.14</maven.proguard.version>
+		<maven.directory.version>1.0</maven.directory.version>
+		<maven.antrun.version>3.1.0</maven.antrun.version>
 
 		<!-- JAR Signer -->
 		<jarsigner.skip>false</jarsigner.skip>
@@ -331,6 +334,7 @@
 			<!-- Ensures that the config.properties file is always loaded from the
 				configuration directory of the active Maven profile. -->
 			<filter>${profile.configuration}</filter>
+			<!-- <filter>${root.basedir}/profiles/${build.profile.id}/config.properties</filter> -->
 		</filters>
 		<pluginManagement>
 			<plugins>
@@ -339,6 +343,52 @@
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>findbugs-maven-plugin</artifactId>
 					<version>${maven.findbugs.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-antrun-plugin</artifactId>
+					<version>${maven.antrun.version}</version>
+					<configuration>
+					    <exportAntProperties>false</exportAntProperties>
+					</configuration>
+					<executions>
+						<!-- Initialization -->
+						<execution>
+							<id>ensure-generated-folders</id>
+							<phase>initialize</phase>
+							<goals>
+							    <goal>run</goal>
+							</goals>
+							<configuration>
+							    <target>
+							        <mkdir dir="${project.basedir}/src/main/java" />
+							        <mkdir dir="${project.basedir}/src/test/java" />
+							    </target>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<!-- Plugin for supporting root directory -->
+				<plugin>
+				    <groupId>org.commonjava.maven.plugins</groupId>
+				    <artifactId>directory-maven-plugin</artifactId>
+				    <version>${maven.directory.version}</version>
+				    <executions>
+				        <execution>
+				            <id>directories</id>
+				            <goals>
+				                <goal>directory-of</goal>
+				            </goals>
+				            <phase>initialize</phase>
+				            <configuration>
+				                <property>root.basedir</property>
+				                <project>
+				                    <groupId>${module.groupId}</groupId>
+				                    <artifactId>${root.artifactId}</artifactId>
+				                </project>
+				            </configuration>
+				        </execution>
+				    </executions>
 				</plugin>
 				<!-- Groovy for supporting root directory -->
 				<plugin>
@@ -378,6 +428,7 @@
 											} else {
 												log.info( 'Root directory path {' + basePath + '}');
 												project.properties[ 'root.basedir' ] = basePath;
+												project.properties[ 'maven.multiModuleProjectDirectory' ] = basePath;
 											}
 										} else {
 											log.error( 'Could not find root directory!' );
@@ -426,6 +477,7 @@
 							<configuration>
 								<files>
 									<file>${profile.configuration}</file>
+									<!-- <file>${root.basedir}/profiles/${build.profile.id}/config.properties</file> -->
 								</files>
 							</configuration>
 						</execution>
@@ -863,6 +915,7 @@
 
 						<!-- File with proguard configuration -->
 						<proguardInclude>${proguard.configuration}</proguardInclude>
+						<!-- <proguardInclude>${root.basedir}/proguard.cnf</proguardInclude> -->
 
 						<!-- Now exclude all modules that are embedded in the jar, so that
 						ProGuard won't see a redefinition of each single class.
@@ -904,6 +957,7 @@
 							</goals>
 							<configuration>
 								<keystore>${jarsigner.keystore}</keystore>
+								<!-- <keystore>${root.basedir}/${module.groupId}.keystore.jks</keystore> -->
 								<storepass>${jarsigner.storepass}</storepass>
 								<keypass>${jarsigner.keypass}</keypass>
 								<alias>${jarsigner.alias}</alias>
@@ -969,11 +1023,21 @@
 			</plugins>
 		</pluginManagement>
 		<plugins>
+			<!-- Make some directories ensure existing -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+			</plugin>
+			<!-- Plugin for supporting root directory -->
+			<plugin>
+			    <groupId>org.commonjava.maven.plugins</groupId>
+			    <artifactId>directory-maven-plugin</artifactId>
+			</plugin>
 			<!-- Groovy for supporting root directory -->
-			<!-- <plugin>
+			<plugin>
 				<groupId>org.codehaus.gmaven</groupId>
 				<artifactId>groovy-maven-plugin</artifactId>
-			</plugin> -->
+			</plugin>
 			<!-- Find bugs -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
