@@ -15,6 +15,7 @@
 	<artifactId>nlh4j-mongo</artifactId>
 	<packaging>jar</packaging>
 	<name>nlh4j-mongo</name>
+	<version>${revision}</version>
 	<description>Base MongoDb Package for Java Web/Mobile</description>
 
 	<!-- Dependencies -->
@@ -23,12 +24,12 @@
       	<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-utilities</artifactId>
-			<version>${module.version}</version>
+			<version>${revision}</version>
       	</dependency>
       	<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-core</artifactId>
-			<version>${module.version}</version>
+			<version>${revision}</version>
       	</dependency>
 
 		<!-- Mongo -->

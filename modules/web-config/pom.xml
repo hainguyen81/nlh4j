@@ -21,6 +21,7 @@
 	<artifactId>nlh4j-web-config</artifactId>
 	<packaging>jar</packaging>
 	<name>nlh4j-web-config</name>
+	<version>${revision}</version>
 	<description>Base Web Configuration for Java Web/Mobile</description>
 
 	<!-- Dependencies -->

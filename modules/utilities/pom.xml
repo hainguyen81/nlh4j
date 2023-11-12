@@ -15,6 +15,7 @@
 	<artifactId>nlh4j-utilities</artifactId>
 	<packaging>jar</packaging>
 	<name>nlh4j-utilities</name>
+	<version>${revision}</version>
 	<description>Base Utiities Package for Java Web/Mobile</description>
 
 	<!-- Dependencies -->

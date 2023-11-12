@@ -3,6 +3,15 @@
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
+	<!-- Present package -->
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.nlh4j</groupId>
+	<artifactId>nlh4j</artifactId>
+	<version>1.0</version>
+	<packaging>pom</packaging>
+	<name>nlh4j</name>
+	<description>Base Package for Java Web/Mobile</description>
+
 	<!-- License -->
 	<licenses>
 		<license>
@@ -38,6 +47,9 @@
 		<profile>
 			<id>jdk8</id>
 			<properties>
+				<!-- General -->
+				<revision>1.0-jre8</revision>
+
 				<!-- JDK -->
 				<java.version>1.8</java.version>
 				<jdk.toolchain>${root.basedir}/toolchains.xml</jdk.toolchain>
@@ -58,12 +70,18 @@
 
 				<!-- Lombok -->
 				<org.projectlombok.version>1.16.18</org.projectlombok.version>
+				
+				<!-- AspectJ -->
+				<org.aspectj.version>1.8.13</org.aspectj.version>
 			</properties>
 		</profile>
 		<!-- JDK 11 -->
 		<profile>
 			<id>jdk11</id>
 			<properties>
+				<!-- General -->
+				<revision>1.0-jre11</revision>
+
 				<!-- JDK -->
 				<java.version>11</java.version>
 				<jdk.toolchain>${root.basedir}/toolchains.xml</jdk.toolchain>
@@ -84,6 +102,9 @@
 
 				<!-- Lombok (Many improvements for lombok's JDK10/11 suppor) -->
 				<org.projectlombok.version>1.18.4</org.projectlombok.version>
+				
+				<!-- AspectJ -->
+				<org.aspectj.version>1.9.20.1</org.aspectj.version>
 			</properties>
 		</profile>
 		<!-- The configuration of the development profile -->
@@ -136,7 +157,6 @@
 		<maven.multiModuleProjectDirectory>${root.basedir}</maven.multiModuleProjectDirectory> -->
 		<root.artifactId>nlh4j</root.artifactId>
 		<module.groupId>org.nlh4j</module.groupId>
-		<module.version>1.0</module.version>
 
 		<!-- Project settings -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -202,7 +222,6 @@
 		<spring.security.version>3.2.9.RELEASE</spring.security.version>
 		<!-- <spring.security.version>4.0.4.RELEASE</spring.security.version> -->
 		<spring.ldap.core.version>2.0.4.RELEASE</spring.ldap.core.version>
-		<org.aspectj.version>1.9.20.1</org.aspectj.version>
 
 		<!-- Nimbus - Spring Security JWT Authentication -->
 		<com.nimbusds.jose.jwt.version>3.8</com.nimbusds.jose.jwt.version>
@@ -2209,15 +2228,6 @@
 			<artifactId>aspectjweaver</artifactId>
 		</dependency>
 	</dependencies>
-
-	<!-- Present package -->
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.nlh4j</groupId>
-	<artifactId>nlh4j</artifactId>
-	<version>1.0</version>
-	<packaging>pom</packaging>
-	<name>nlh4j</name>
-	<description>Base Package for Java Web/Mobile</description>
 
 	<!-- Modules -->
 	<modules>

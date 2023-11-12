@@ -21,6 +21,7 @@
 	<artifactId>nlh4j-web-client</artifactId>
 	<packaging>jar</packaging>
 	<name>nlh4j-web-client</name>
+	<version>${revision}</version>
 	<description>Base Web Javascript Client for Java Web/Mobile</description>
 
 	<!-- Dependencies -->

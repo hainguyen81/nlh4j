@@ -15,6 +15,7 @@
 	<artifactId>nlh4j-web-base</artifactId>
 	<packaging>jar</packaging>
 	<name>nlh4j-web-base</name>
+	<version>${revision}</version>
 	<description>Base Web Main Fragment for Java Web/Mobile</description>
 
 	<!-- Dependencies -->
@@ -23,47 +24,47 @@
       	<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-utilities</artifactId>
-			<version>${module.version}</version>
+			<version>${revision}</version>
       	</dependency>
       	<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-core</artifactId>
-			<version>${module.version}</version>
+			<version>${revision}</version>
       	</dependency>
       	<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-entities</artifactId>
-			<version>${module.version}</version>
+			<version>${revision}</version>
       	</dependency>
       	<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-domain</artifactId>
-			<version>${module.version}</version>
+			<version>${revision}</version>
       	</dependency>
       	<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-lang</artifactId>
-			<version>${module.version}</version>
+			<version>${revision}</version>
       	</dependency>
       	<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-web-config</artifactId>
-			<version>${module.version}</version>
+			<version>${revision}</version>
       	</dependency>
       	<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-web-core</artifactId>
-			<version>${module.version}</version>
+			<version>${revision}</version>
       	</dependency>
       	<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-web-client</artifactId>
-			<version>${module.version}</version>
+			<version>${revision}</version>
       	</dependency>
       	<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-web-template</artifactId>
-			<version>${module.version}</version>
+			<version>${revision}</version>
       	</dependency>
 
 		<!-- Servlet -->

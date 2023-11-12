@@ -15,6 +15,7 @@
 	<artifactId>nlh4j-android</artifactId>
 	<packaging>jar</packaging>
 	<name>nlh4j-android</name>
+	<version>${revision}</version>
 	<description>Base Package for Android</description>
 
 	<!-- Properties -->
@@ -104,7 +105,7 @@
 		<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-utilities</artifactId>
-			<version>${project.parent.version}</version>
+			<version>${revision}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>${project.parent.groupId}</groupId>

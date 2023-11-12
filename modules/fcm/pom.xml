@@ -15,6 +15,7 @@
 	<artifactId>nlh4j-fcm</artifactId>
 	<packaging>jar</packaging>
 	<name>nlh4j-fcm</name>
+	<version>${revision}</version>
 	<description>Base FCM Package for Java Web/Mobile Cloud Notification</description>
 
 	<!-- Dependencies -->
@@ -23,17 +24,17 @@
       	<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-utilities</artifactId>
-			<version>${module.version}</version>
+			<version>${revision}</version>
       	</dependency>
       	<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-core</artifactId>
-			<version>${module.version}</version>
+			<version>${revision}</version>
       	</dependency>
       	<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-mongo</artifactId>
-			<version>${module.version}</version>
+			<version>${revision}</version>
       	</dependency>
 
 		<!-- slf4j -->

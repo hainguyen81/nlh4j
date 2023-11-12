@@ -21,6 +21,7 @@
 	<artifactId>nlh4j-lang</artifactId>
 	<packaging>jar</packaging>
 	<name>nlh4j-lang</name>
+	<version>${revision}</version>
 	<description>Base Web Language (i18n) for Java Web/Mobile</description>
 
 	<!-- Dependencies -->
