@@ -49,6 +49,9 @@
 			<properties>
 				<!-- General -->
 				<revision>1.0-jre8</revision>
+				
+				<!-- Maven Plugins -->
+				<maven.truelicense.version>2.6.4</maven.truelicense.version>
 
 				<!-- JDK -->
 				<java.version>1.8</java.version>
@@ -81,6 +84,9 @@
 			<properties>
 				<!-- General -->
 				<revision>1.0-jre11</revision>
+				
+				<!-- Maven Plugins -->
+				<maven.truelicense.version>2.6.6</maven.truelicense.version>
 
 				<!-- JDK -->
 				<java.version>11</java.version>
@@ -187,7 +193,6 @@
 		<maven.jarsigner.version>3.0.0</maven.jarsigner.version>
 		<maven.surefire.version>3.2.2</maven.surefire.version>
 		<maven.nexus.staging.version>1.6.13</maven.nexus.staging.version>
-		<maven.truelicense.version>2.6.4</maven.truelicense.version>
 		<maven.proguard.version>2.0.14</maven.proguard.version>
 		<maven.directory.version>0.1</maven.directory.version>
 		<maven.antrun.version>3.1.0</maven.antrun.version>
