@@ -24,17 +24,17 @@
       	<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-utilities</artifactId>
-			<version>${revision}</version>
+			<version>${project.version}</version>
       	</dependency>
       	<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-core</artifactId>
-			<version>${revision}</version>
+			<version>${project.version}</version>
       	</dependency>
 		<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-entities</artifactId>
-			<version>${revision}</version>
+			<version>${project.version}</version>
       	</dependency>
 
 		<!-- Servlet -->
