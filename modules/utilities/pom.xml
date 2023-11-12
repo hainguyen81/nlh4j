@@ -192,7 +192,7 @@
 		</dependency>
 
 		<!-- Barcode4j Dependency -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>avalon-framework</groupId>
 			<artifactId>avalon-framework</artifactId>
 		</dependency>
@@ -203,15 +203,15 @@
 		<dependency>
 			<groupId>avalon-framework</groupId>
 			<artifactId>avalon-framework-impl</artifactId>
-		</dependency>
-		<!-- dependency>
+		</dependency> -->
+		<dependency>
 			<groupId>org.apache.avalon.framework</groupId>
 			<artifactId>avalon-framework-api</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.avalon.framework</groupId>
 			<artifactId>avalon-framework-impl</artifactId>
-		</dependency -->
+		</dependency>
 
 		<!-- Barcode4j -->
 		<dependency>
