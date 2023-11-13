@@ -9,11 +9,12 @@
     <listAttribute key="M2_PROPERTIES"/>
     <stringAttribute key="M2_RUNTIME" value="apache-maven-3.8.4"/>
     <booleanAttribute key="M2_SKIP_TESTS" value="false"/>
-    <intAttribute key="M2_THREADS" value="3"/>
+    <intAttribute key="M2_THREADS" value="5"/>
     <booleanAttribute key="M2_UPDATE_SNAPSHOTS" value="true"/>
     <stringAttribute key="M2_USER_SETTINGS" value=""/>
     <booleanAttribute key="M2_WORKSPACE_RESOLUTION" value="true"/>
     <booleanAttribute key="org.eclipse.debug.core.ATTR_FORCE_SYSTEM_CONSOLE_ENCODING" value="false"/>
+    <stringAttribute key="org.eclipse.debug.ui.ATTR_CAPTURE_IN_FILE" value="${workspace_loc:/nlh4j}/jdk11.org.nlh4j.log"/>
     <listAttribute key="org.eclipse.debug.ui.favoriteGroups">
         <listEntry value="org.eclipse.debug.ui.launchGroup.debug"/>
     </listAttribute>
