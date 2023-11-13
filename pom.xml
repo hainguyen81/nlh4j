@@ -51,6 +51,8 @@
 				<revision>1.0-jre8</revision>
 				
 				<!-- Maven Plugins -->
+				<maven.truelicense.groupId>net.java.truelicense</maven.truelicense.groupId>
+				<maven.truelicense.artifactId>truelicense-maven-plugin</maven.truelicense.artifactId>
 				<maven.truelicense.version>2.6.4</maven.truelicense.version>
 
 				<!-- JDK -->
@@ -76,7 +78,69 @@
 				
 				<!-- AspectJ -->
 				<org.aspectj.version>1.8.13</org.aspectj.version>
+				
+				<!-- Spring websocket depencencies -->
+				<!-- Tomcat 7.x (JDK7 - must compatibility with aspectj) -->
+				<!-- <org.apache.tomcat.version>7.0.109</org.apache.tomcat.version> -->
+				<!-- Tomcat 8.0.x (JDK7/8 - must compatibility with aspectj) -->
+				<org.apache.tomcat.version>8.0.53</org.apache.tomcat.version>
+				<!-- Tomcat 8.5.x (JDK7/8 - must compatibility with aspectj) -->
+				<!-- <org.apache.tomcat.version>8.5.95</org.apache.tomcat.version> -->
+				<!-- Tomcat 9.x (JDK7/8 - must compatibility with aspectj) -->
+				<!-- <org.apache.tomcat.version>9.0.82</org.apache.tomcat.version> -->
+				<!-- Tomcat 10.0.x (JDK7/8 - must compatibility with aspectj) -->
+				<!-- <org.apache.tomcat.version>10.0.27</org.apache.tomcat.version> -->
 			</properties>
+			<build>
+				<pluginManagement>
+					<plugins>
+			            <plugin>
+							<groupId>com.github.wvengen</groupId>
+							<artifactId>proguard-maven-plugin</artifactId>
+							<version>${maven.proguard.version}</version>
+							<configuration>
+								<!-- internal proguard -->
+								<proguardVersion>5.3.2</proguardVersion>
+								<obfuscate>true</obfuscate>
+								<injarNotExistsSkip>true</injarNotExistsSkip>
+								<skip>${proguard.skip}</skip>
+		
+								<!-- Our application is so big that ProGuard had ran out of memory -->
+								<maxMemory>1024m</maxMemory>
+		
+								<!-- File with proguard configuration -->
+								<proguardInclude>${proguard.configuration}</proguardInclude>
+								<!-- <proguardInclude>${root.basedir}/proguard.cnf</proguardInclude> -->
+		
+								<!-- Now exclude all modules that are embedded in the jar, so that
+								ProGuard won't see a redefinition of each single class.
+								You don't have to write down your main module. -->
+								<!--
+								<exclusions>
+								    <exclusion>
+								        <groupId>com.yourcompany</groupId>
+								        <artifactId>data</artifactId>
+								    </exclusion>
+								</exclusions>
+								-->
+	
+								<!--
+								List external jars your application depends on
+								(that not listed in maven dependencies).
+								You probably depend on Java runtime (rt.jar).
+								JCE stands for Java Cryptography Extension.
+								You probably don't need it, but my application does.
+								-->
+								<libs> <!-- JDK8 -->
+									<lib>${java.home}/lib/rt.jar</lib>
+									<lib>${java.home}/lib/jce.jar</lib>
+									<lib>${java.home}/lib/ext/sunjce_provider.jar</lib>
+								</libs>
+							</configuration>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+			</build>
 		</profile>
 		<!-- JDK 11 -->
 		<profile>
@@ -86,11 +150,16 @@
 				<revision>1.0-jre11</revision>
 				
 				<!-- Maven Plugins -->
-				<maven.truelicense.version>2.6.6</maven.truelicense.version>
+				<maven.truelicense.groupId>global.namespace.truelicense</maven.truelicense.groupId>
+				<maven.truelicense.artifactId>truelicense-maven-plugin</maven.truelicense.artifactId>
+				<maven.truelicense.version>4.0.3</maven.truelicense.version>
 
 				<!-- JDK -->
 				<java.version>11</java.version>
 				<jdk.toolchain>${root.basedir}/toolchains.xml</jdk.toolchain>
+
+				<!-- Missing module for JDK11+ -->
+				<javax.annotation.version>1.3.2</javax.annotation.version>
 
 				<!-- License password -->
 				<license.alias>${module.groupId}</license.alias>
@@ -111,7 +180,107 @@
 				
 				<!-- AspectJ -->
 				<org.aspectj.version>1.9.20.1</org.aspectj.version>
+				
+				<!-- Spring websocket depencencies -->
+				<!-- Tomcat 10.1.x (JDK11+ - must compatibility with aspectj) -->
+				<org.apache.tomcat.version>10.1.15</org.apache.tomcat.version>
+				<!-- Tomcat 11.0.x (JDK11+ - must compatibility with aspectj) -->
+				<!-- <org.apache.tomcat.version>11.0.0-M13</org.apache.tomcat.version> -->
 			</properties>
+			<build>
+				<pluginManagement>
+					<plugins>
+						<!-- Compiler -->
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-compiler-plugin</artifactId>
+							<version>${maven.compiler.version}</version>
+							<configuration>
+								<annotationProcessorPaths>
+									<path>
+										<groupId>org.projectlombok</groupId>
+										<artifactId>lombok</artifactId>
+										<version>${org.projectlombok.version}</version>
+									</path>
+									<path>
+										<groupId>org.seasar.doma</groupId>
+										<artifactId>doma</artifactId>
+										<version>${doma.version}</version>
+									</path>
+									<!-- for JDK11+ -->
+									<path>
+										<groupId>javax.annotation</groupId>
+									    <artifactId>javax.annotation-api</artifactId>
+									    <version>${javax.annotation.version}</version>
+									</path>
+								</annotationProcessorPaths>
+								<!-- for JDK11+ -->
+								<jdkToolchain>
+									<version>${java.version}</version>
+								</jdkToolchain>
+							</configuration>
+						</plugin>
+						<!-- Proguard -->
+			            <plugin>
+							<groupId>com.github.wvengen</groupId>
+							<artifactId>proguard-maven-plugin</artifactId>
+							<version>${maven.proguard.version}</version>
+							<configuration>
+								<!-- internal proguard -->
+								<proguardVersion>5.3.2</proguardVersion>
+								<obfuscate>true</obfuscate>
+								<injarNotExistsSkip>true</injarNotExistsSkip>
+								<skip>${proguard.skip}</skip>
+		
+								<!-- Our application is so big that ProGuard had ran out of memory -->
+								<maxMemory>1024m</maxMemory>
+		
+								<!-- File with proguard configuration -->
+								<proguardInclude>${proguard.configuration}</proguardInclude>
+								<!-- <proguardInclude>${root.basedir}/proguard.cnf</proguardInclude> -->
+		
+								<!-- Now exclude all modules that are embedded in the jar, so that
+								ProGuard won't see a redefinition of each single class.
+								You don't have to write down your main module. -->
+								<!--
+								<exclusions>
+								    <exclusion>
+								        <groupId>com.yourcompany</groupId>
+								        <artifactId>data</artifactId>
+								    </exclusion>
+								</exclusions>
+								-->
+	
+								<!--
+								List external jars your application depends on
+								(that not listed in maven dependencies).
+								You probably depend on Java runtime (rt.jar).
+								JCE stands for Java Cryptography Extension.
+								You probably don't need it, but my application does.
+								-->
+								<libs> <!-- JDK11+ -->
+									<lib>${java.home}/jmods</lib>
+								</libs>
+							</configuration>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+			</build>
+			<dependencyManagement>
+				<dependencies>
+					<dependency>
+					    <groupId>javax.annotation</groupId>
+					    <artifactId>javax.annotation-api</artifactId>
+					    <version>${javax.annotation.version}</version>
+					</dependency>
+				</dependencies>
+			</dependencyManagement>
+			<dependencies>
+				<dependency>
+				    <groupId>javax.annotation</groupId>
+				    <artifactId>javax.annotation-api</artifactId>
+				</dependency>
+			</dependencies>
 		</profile>
 		<!-- The configuration of the development profile -->
 		<profile>
@@ -234,14 +403,20 @@
 		<!-- Spring websocket depencencies -->
 		<javax.websocket.version>1.0</javax.websocket.version>
 		<org.projectreactor.version>1.1.6.RELEASE</org.projectreactor.version>
-		<!-- Tomcat 7.x -->
-		<!-- <org.apache.tomcat.version>7.0.52</org.apache.tomcat.version> -->
-		<!-- Tomcat 8.0.x -->
-		<org.apache.tomcat.version>8.0.41</org.apache.tomcat.version>
-		<!-- Tomcat 8.5.x -->
-		<!-- <org.apache.tomcat.version>8.5.11</org.apache.tomcat.version> -->
-		<!-- Tomcat 9.x -->
-		<!-- <org.apache.tomcat.version>9.0.0.M17</org.apache.tomcat.version> -->
+		<!-- Tomcat 7.x (JDK7 - must compatibility with aspectj) -->
+		<!-- <org.apache.tomcat.version>7.0.109</org.apache.tomcat.version> -->
+		<!-- Tomcat 8.0.x (JDK7/8 - must compatibility with aspectj) -->
+		<!-- <org.apache.tomcat.version>8.0.53</org.apache.tomcat.version> -->
+		<!-- Tomcat 8.5.x (JDK7/8 - must compatibility with aspectj) -->
+		<!-- <org.apache.tomcat.version>8.5.95</org.apache.tomcat.version> -->
+		<!-- Tomcat 9.x (JDK7/8 - must compatibility with aspectj) -->
+		<!-- <org.apache.tomcat.version>9.0.82</org.apache.tomcat.version> -->
+		<!-- Tomcat 10.0.x (JDK7/8 - must compatibility with aspectj) -->
+		<!-- <org.apache.tomcat.version>10.0.27</org.apache.tomcat.version> -->
+		<!-- Tomcat 10.1.x (JDK11+ - must compatibility with aspectj) -->
+		<!-- <org.apache.tomcat.version>10.1.15</org.apache.tomcat.version> -->
+		<!-- Tomcat 11.0.x (JDK11+ - must compatibility with aspectj) -->
+		<!-- <org.apache.tomcat.version>11.0.0-M13</org.apache.tomcat.version> -->
 
 		<!-- Quartz -->
 		<quartz.c3p0.version>0.9.1.1</quartz.c3p0.version>
@@ -815,10 +990,6 @@
 								<version>${doma.version}</version>
 							</path>
 						</annotationProcessorPaths>
-						<!-- for JDK11+ -->
-						<jdkToolchain>
-							<version>${java.version}</version>
-						</jdkToolchain>
 					</configuration>
 				</plugin>
 				<!-- AspectJ (AOP) -->
@@ -939,8 +1110,8 @@
 				</plugin>
 				<!-- Obfuscation -->
 				<plugin>
-					<groupId>net.java.truelicense</groupId>
-					<artifactId>truelicense-maven-plugin</artifactId>
+					<groupId>${maven.truelicense.groupId}</groupId>
+					<artifactId>${maven.truelicense.artifactId}</artifactId>
 					<version>${maven.truelicense.version}</version>
 					<configuration>
 						<!-- Avoid exceed maximum bytes while using aspectj -->
@@ -963,58 +1134,6 @@
 						</execution>
 					</executions>
 	            </plugin>
-	            <plugin>
-					<groupId>com.github.wvengen</groupId>
-					<artifactId>proguard-maven-plugin</artifactId>
-					<version>${maven.proguard.version}</version>
-					<executions>
-						<execution>
-						    <phase>package</phase>
-						    <goals>
-						    	<goal>proguard</goal>
-					    	</goals>
-						</execution>
-					</executions>
-					<configuration>
-						<!-- internal proguard -->
-						<proguardVersion>5.3.2</proguardVersion>
-						<obfuscate>true</obfuscate>
-						<injarNotExistsSkip>true</injarNotExistsSkip>
-						<skip>${proguard.skip}</skip>
-
-						<!-- Our application is so big that ProGuard had ran out of memory -->
-						<maxMemory>1024m</maxMemory>
-
-						<!-- File with proguard configuration -->
-						<proguardInclude>${proguard.configuration}</proguardInclude>
-						<!-- <proguardInclude>${root.basedir}/proguard.cnf</proguardInclude> -->
-
-						<!-- Now exclude all modules that are embedded in the jar, so that
-						ProGuard won't see a redefinition of each single class.
-						You don't have to write down your main module. -->
-						<!--
-						<exclusions>
-						    <exclusion>
-						        <groupId>com.yourcompany</groupId>
-						        <artifactId>data</artifactId>
-						    </exclusion>
-						</exclusions>
-						-->
-
-						<!--
-						List external jars your application depends on
-						(that not listed in maven dependencies).
-						You probably depend on Java runtime (rt.jar).
-						JCE stands for Java Cryptography Extension.
-						You probably don't need it, but my application does.
-						-->
-						<libs>
-							<lib>${java.home}/lib/rt.jar</lib>
-							<lib>${java.home}/lib/jce.jar</lib>
-							<lib>${java.home}/lib/ext/sunjce_provider.jar</lib>
-						</libs>
-					</configuration>
-				</plugin>
 				<!-- To sign packages (must after proguard plugin in POM build to avoid error: jarsigner verify SHA-256 digest error for class ...) -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -1183,9 +1302,10 @@
 			</plugin>
 			<!-- Obfuscation -->
 			<plugin>
-				<groupId>net.java.truelicense</groupId>
-				<artifactId>truelicense-maven-plugin</artifactId>
+				<groupId>${maven.truelicense.groupId}</groupId>
+				<artifactId>${maven.truelicense.artifactId}</artifactId>
 			</plugin>
+			<!-- Proguard -->
 			<plugin>
 				<groupId>com.github.wvengen</groupId>
 				<artifactId>proguard-maven-plugin</artifactId>
