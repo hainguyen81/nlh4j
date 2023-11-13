@@ -54,6 +54,7 @@
 				<maven.truelicense.groupId>net.java.truelicense</maven.truelicense.groupId>
 				<maven.truelicense.artifactId>truelicense-maven-plugin</maven.truelicense.artifactId>
 				<maven.truelicense.version>2.6.4</maven.truelicense.version>
+				<maven.aspectj.version>1.11</maven.aspectj.version>
 
 				<!-- JDK -->
 				<java.version>1.8</java.version>
@@ -80,15 +81,15 @@
 				<org.aspectj.version>1.8.13</org.aspectj.version>
 				
 				<!-- Spring websocket depencencies -->
-				<!-- Tomcat 7.x (JDK7 - must compatibility with aspectj) -->
+				<!-- Tomcat 7.x (JDK7) -->
 				<!-- <org.apache.tomcat.version>7.0.109</org.apache.tomcat.version> -->
-				<!-- Tomcat 8.0.x (JDK7/8 - must compatibility with aspectj) -->
+				<!-- Tomcat 8.0.x (JDK7/8) -->
 				<org.apache.tomcat.version>8.0.53</org.apache.tomcat.version>
-				<!-- Tomcat 8.5.x (JDK7/8 - must compatibility with aspectj) -->
+				<!-- Tomcat 8.5.x (JDK7/8) -->
 				<!-- <org.apache.tomcat.version>8.5.95</org.apache.tomcat.version> -->
-				<!-- Tomcat 9.x (JDK7/8 - must compatibility with aspectj) -->
+				<!-- Tomcat 9.x (JDK7/8) -->
 				<!-- <org.apache.tomcat.version>9.0.82</org.apache.tomcat.version> -->
-				<!-- Tomcat 10.0.x (JDK7/8 - must compatibility with aspectj) -->
+				<!-- Tomcat 10.0.x (JDK7/8) -->
 				<!-- <org.apache.tomcat.version>10.0.27</org.apache.tomcat.version> -->
 			</properties>
 			<build>
@@ -153,6 +154,7 @@
 				<maven.truelicense.groupId>global.namespace.truelicense</maven.truelicense.groupId>
 				<maven.truelicense.artifactId>truelicense-maven-plugin</maven.truelicense.artifactId>
 				<maven.truelicense.version>4.0.3</maven.truelicense.version>
+				<maven.aspectj.version>1.14.0</maven.aspectj.version>
 
 				<!-- JDK -->
 				<java.version>11</java.version>
@@ -179,12 +181,12 @@
 				<org.projectlombok.version>1.18.4</org.projectlombok.version>
 				
 				<!-- AspectJ -->
-				<org.aspectj.version>1.9.20.1</org.aspectj.version>
+				<org.aspectj.version>1.9.7</org.aspectj.version>
 				
 				<!-- Spring websocket depencencies -->
-				<!-- Tomcat 10.1.x (JDK11+ - must compatibility with aspectj) -->
+				<!-- Tomcat 10.1.x (JDK11+) -->
 				<org.apache.tomcat.version>10.1.15</org.apache.tomcat.version>
-				<!-- Tomcat 11.0.x (JDK11+ - must compatibility with aspectj) -->
+				<!-- Tomcat 11.0.x (JDK11+) -->
 				<!-- <org.apache.tomcat.version>11.0.0-M13</org.apache.tomcat.version> -->
 			</properties>
 			<build>
@@ -354,7 +356,6 @@
 		<maven.build.helper.version>3.4.0</maven.build.helper.version>
 		<maven.resources.version>3.3.1</maven.resources.version>
 		<maven.compiler.version>3.11.0</maven.compiler.version>
-		<maven.aspectj.version>1.14.0</maven.aspectj.version>
 		<maven.source.version>3.3.0</maven.source.version>
 		<maven.javadoc.version>3.6.2</maven.javadoc.version>
 		<maven.jar.version>3.3.0</maven.jar.version>
@@ -403,19 +404,19 @@
 		<!-- Spring websocket depencencies -->
 		<javax.websocket.version>1.0</javax.websocket.version>
 		<org.projectreactor.version>1.1.6.RELEASE</org.projectreactor.version>
-		<!-- Tomcat 7.x (JDK7 - must compatibility with aspectj) -->
+		<!-- Tomcat 7.x (JDK7) -->
 		<!-- <org.apache.tomcat.version>7.0.109</org.apache.tomcat.version> -->
-		<!-- Tomcat 8.0.x (JDK7/8 - must compatibility with aspectj) -->
+		<!-- Tomcat 8.0.x (JDK7/8) -->
 		<!-- <org.apache.tomcat.version>8.0.53</org.apache.tomcat.version> -->
-		<!-- Tomcat 8.5.x (JDK7/8 - must compatibility with aspectj) -->
+		<!-- Tomcat 8.5.x (JDK7/8) -->
 		<!-- <org.apache.tomcat.version>8.5.95</org.apache.tomcat.version> -->
-		<!-- Tomcat 9.x (JDK7/8 - must compatibility with aspectj) -->
+		<!-- Tomcat 9.x (JDK7/8) -->
 		<!-- <org.apache.tomcat.version>9.0.82</org.apache.tomcat.version> -->
-		<!-- Tomcat 10.0.x (JDK7/8 - must compatibility with aspectj) -->
+		<!-- Tomcat 10.0.x (JDK7/8) -->
 		<!-- <org.apache.tomcat.version>10.0.27</org.apache.tomcat.version> -->
-		<!-- Tomcat 10.1.x (JDK11+ - must compatibility with aspectj) -->
+		<!-- Tomcat 10.1.x (JDK11+) -->
 		<!-- <org.apache.tomcat.version>10.1.15</org.apache.tomcat.version> -->
-		<!-- Tomcat 11.0.x (JDK11+ - must compatibility with aspectj) -->
+		<!-- Tomcat 11.0.x (JDK11+) -->
 		<!-- <org.apache.tomcat.version>11.0.0-M13</org.apache.tomcat.version> -->
 
 		<!-- Quartz -->
@@ -1018,7 +1019,9 @@
 					</executions>
 					<configuration>
 						<outxml>true</outxml>
-						<showWeaveInfo/>
+						<showWeaveInfo>true</showWeaveInfo>
+						<proceedOnError>false</proceedOnError>
+						<verbose>true</verbose>
 	                    <!-- START: for working with Lombok -->
 	                    <forceAjcCompile>true</forceAjcCompile>
 	                    <complianceLevel>${java.version}</complianceLevel>
@@ -1179,6 +1182,20 @@
 					<configuration>
 						<lifecycleMappingMetadata>
 							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>global.namespace.truelicense</groupId>
+										<artifactId>truelicense-maven-plugin</artifactId>
+										<versionRange>[2.+,)</versionRange>
+										<goals>
+											<goal>generate-main-sources</goal>
+											<goal>obfuscate-main-classes</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore>false</ignore>
+									</action>
+								</pluginExecution>
 								<pluginExecution>
 									<pluginExecutionFilter>
 										<groupId>net.java.truelicense</groupId>
