@@ -102,11 +102,51 @@ under the License.
   <toolchain>
     <type>jdk</type>
     <provides>
+      <version>1.6</version>
+      <vendor>sun</vendor>
+    </provides>
+    <configuration>
+      <jdkHome>E:/Java.Working/1.tools/jdk/1.6.0.45.x64</jdkHome>
+    </configuration>
+  </toolchain>
+  <toolchain>
+    <type>jdk</type>
+    <provides>
+      <version>1.7</version>
+      <vendor>sun</vendor>
+    </provides>
+    <configuration>
+      <jdkHome>E:/Java.Working/1.tools/jdk/1.7.0.79.x64</jdkHome>
+    </configuration>
+  </toolchain>
+  <toolchain>
+    <type>jdk</type>
+    <provides>
+      <version>1.8</version>
+      <vendor>sun</vendor>
+    </provides>
+    <configuration>
+      <jdkHome>E:/Java.Working/1.tools/jdk/1.8.0.73.x64</jdkHome>
+    </configuration>
+  </toolchain>
+  <toolchain>
+    <type>jdk</type>
+    <provides>
       <version>11</version>
       <vendor>sun</vendor>
     </provides>
     <configuration>
       <jdkHome>E:/Java.Working/1.tools/jdk/11.0.20.x64</jdkHome>
+    </configuration>
+  </toolchain>
+  <toolchain>
+    <type>jdk</type>
+    <provides>
+      <version>17</version>
+      <vendor>sun</vendor>
+    </provides>
+    <configuration>
+      <jdkHome>E:/Java.Working/1.tools/jdk/17.0.9.x64</jdkHome>
     </configuration>
   </toolchain>
 

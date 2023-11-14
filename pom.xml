@@ -43,7 +43,9 @@
 
 	<!-- Profile configuration -->
 	<profiles>
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!-- JDK 1.8 -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<profile>
 			<id>jdk8</id>
 			<properties>
@@ -54,8 +56,18 @@
 				<maven.truelicense.groupId>net.java.truelicense</maven.truelicense.groupId>
 				<maven.truelicense.artifactId>truelicense-maven-plugin</maven.truelicense.artifactId>
 				<maven.truelicense.version>2.6.4</maven.truelicense.version>
+				<maven.truelicense.skip>false</maven.truelicense.skip>
+				<maven.proguard.groupId>com.github.wvengen</maven.proguard.groupId>
+				<maven.proguard.artifactId>proguard-maven-plugin</maven.proguard.artifactId>
 				<maven.proguard.version>2.0.14</maven.proguard.version>
 				<maven.proguard-base.version>5.3.2</maven.proguard-base.version>
+				<maven.aspectj.groupId>org.codehaus.mojo</maven.aspectj.groupId>
+				<maven.aspectj.artifactId>aspectj-maven-plugin</maven.aspectj.artifactId>
+				<maven.aspectj.version>1.14.0</maven.aspectj.version>
+
+				<!-- Progurad configuration -->
+				<proguard.configuration>${root.basedir}/certificate/proguard.cnf</proguard.configuration>
+				<proguard.skip>false</proguard.skip>
 
 				<!-- JDK -->
 				<java.version>1.8</java.version>
@@ -80,14 +92,35 @@
 				
 				<!-- AspectJ -->
 				<org.aspectj.version>1.8.13</org.aspectj.version>
+				<org.aspectj.skip>false</org.aspectj.skip>
+				
+				<!-- Spring websocket depencencies -->
+				<!-- Tomcat 7.x (JDK7) -->
+				<!-- <org.apache.tomcat.version>7.0.52</org.apache.tomcat.version> -->
+				<!-- <org.apache.tomcat.version>7.0.109</org.apache.tomcat.version> -->
+				<!-- Tomcat 8.0.x (JDK7/8) -->
+				<org.apache.tomcat.version>8.0.41</org.apache.tomcat.version>
+				<!-- <org.apache.tomcat.version>8.0.53</org.apache.tomcat.version> -->
+				<!-- Tomcat 8.5.x (JDK7/8) -->
+				<!-- <org.apache.tomcat.version>8.5.11</org.apache.tomcat.version> -->
+				<!-- <org.apache.tomcat.version>8.5.95</org.apache.tomcat.version> -->
+				<!-- Tomcat 9.x (JDK7/8) -->
+				<!-- <org.apache.tomcat.version>9.0.0.M17</org.apache.tomcat.version> -->
+				<!-- <org.apache.tomcat.version>9.0.82</org.apache.tomcat.version> -->
+				<!-- Tomcat 10.0.x (JDK7/8) -->
+				<!-- <org.apache.tomcat.version>10.0.27</org.apache.tomcat.version> -->
+				<!-- Tomcat 10.1.x (JDK11+) -->
+				<!-- <org.apache.tomcat.version>10.1.15</org.apache.tomcat.version> -->
+				<!-- Tomcat 11.0.x (JDK11+) -->
+				<!-- <org.apache.tomcat.version>11.0.0-M13</org.apache.tomcat.version> -->
 			</properties>
 			<build>
 				<pluginManagement>
 					<plugins>
 			            <!-- Proguard -->
 			            <plugin>
-							<groupId>com.github.wvengen</groupId>
-							<artifactId>proguard-maven-plugin</artifactId>
+							<groupId>${maven.proguard.groupId}</groupId>
+							<artifactId>${maven.proguard.artifactId}</artifactId>
 							<version>${maven.proguard.version}</version>
 							<configuration>
 								<!-- internal proguard -->
@@ -106,12 +139,22 @@
 									<lib>${java.home}/lib/ext/sunjce_provider.jar</lib>
 								</libs>
 							</configuration>
+							<dependencies>
+								<dependency>
+									<groupId>net.sf.proguard</groupId>
+									<artifactId>proguard-base</artifactId>
+									<version>${maven.proguard-base.version}</version>
+								</dependency>
+							</dependencies>
 						</plugin>
 					</plugins>
 				</pluginManagement>
 			</build>
 		</profile>
+
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!-- JDK 11 -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<profile>
 			<id>jdk11</id>
 			<properties>
@@ -122,8 +165,42 @@
 				<maven.truelicense.groupId>global.namespace.truelicense</maven.truelicense.groupId>
 				<maven.truelicense.artifactId>truelicense-maven-plugin</maven.truelicense.artifactId>
 				<maven.truelicense.version>4.0.3</maven.truelicense.version>
+				<maven.truelicense.skip>false</maven.truelicense.skip>
+				<!--
+				For:
+				<groupId>com.github.wvengen</groupId>
+				<artifactId>proguard-maven-plugin</artifactId>
+				<name>proguard-maven-plugin</name>
+				<version>2.6.0</version>
+				-->
+				<maven.proguard.groupId>com.github.wvengen</maven.proguard.groupId>
+				<maven.proguard.artifactId>proguard-maven-plugin</maven.proguard.artifactId>
 				<maven.proguard.version>2.6.0</maven.proguard.version>
 				<maven.proguard-base.version>7.4.0</maven.proguard-base.version>
+				<maven.proguard-core.version>9.1.0</maven.proguard-core.version>
+				<!--
+				For:
+				<groupId>com.github.dingxin</groupId>
+				<artifactId>proguard-maven-plugin</artifactId>
+				<name>Maven Plugin for ProGuard</name>
+				<version>1.0.3</version>
+				-->
+				<!--<maven.proguard.groupId>com.github.dingxin</maven.proguard.groupId>
+				<maven.proguard.artifactId>proguard-maven-plugin</maven.proguard.artifactId>
+				<maven.proguard.version>1.0.3</maven.proguard.version>
+				<maven.proguard-base.version>6.0.2</maven.proguard-base.version>-->
+				
+				<!-- Maven AspectJ ok with these 2 plugins -->
+				<maven.aspectj.groupId>org.codehaus.mojo</maven.aspectj.groupId>
+				<maven.aspectj.artifactId>aspectj-maven-plugin</maven.aspectj.artifactId>
+				<maven.aspectj.version>1.14.0</maven.aspectj.version>
+				<!--<maven.aspectj.groupId>com.nickwongdev</maven.aspectj.groupId>
+				<maven.aspectj.artifactId>aspectj-maven-plugin</maven.aspectj.artifactId>
+				<maven.aspectj.version>1.12.1</maven.aspectj.version>-->
+
+				<!-- Progurad configuration -->
+				<proguard.configuration>${root.basedir}/certificate/proguard.cnf</proguard.configuration>
+				<proguard.skip>true</proguard.skip>
 
 				<!-- JDK -->
 				<java.version>11</java.version>
@@ -146,11 +223,32 @@
 				<jarsigner.keypass>${license.keypass}</jarsigner.keypass>
 				<jarsigner.storetype>JKS</jarsigner.storetype>
 
-				<!-- Lombok (Many improvements for lombok's JDK10/11 suppor) -->
+				<!-- Lombok (Many improvements for lombok's JDK10/11 support) -->
 				<org.projectlombok.version>1.18.4</org.projectlombok.version>
 				
 				<!-- AspectJ -->
-				<org.aspectj.version>1.9.20.1</org.aspectj.version>
+				<org.aspectj.version>1.9.7</org.aspectj.version>
+				<org.aspectj.skip>false</org.aspectj.skip>
+				
+				<!-- Spring websocket depencencies -->
+				<!-- Tomcat 7.x (JDK7) -->
+				<!-- <org.apache.tomcat.version>7.0.52</org.apache.tomcat.version> -->
+				<!-- <org.apache.tomcat.version>7.0.109</org.apache.tomcat.version> -->
+				<!-- Tomcat 8.0.x (JDK7/8) -->
+				<org.apache.tomcat.version>8.0.41</org.apache.tomcat.version>
+				<!-- <org.apache.tomcat.version>8.0.53</org.apache.tomcat.version> -->
+				<!-- Tomcat 8.5.x (JDK7/8) -->
+				<!-- <org.apache.tomcat.version>8.5.11</org.apache.tomcat.version> -->
+				<!-- <org.apache.tomcat.version>8.5.95</org.apache.tomcat.version> -->
+				<!-- Tomcat 9.x (JDK7/8) -->
+				<!-- <org.apache.tomcat.version>9.0.0.M17</org.apache.tomcat.version> -->
+				<!-- <org.apache.tomcat.version>9.0.82</org.apache.tomcat.version> -->
+				<!-- Tomcat 10.0.x (JDK7/8) -->
+				<!-- <org.apache.tomcat.version>10.0.27</org.apache.tomcat.version> -->
+				<!-- Tomcat 10.1.x (JDK11+) -->
+				<!-- <org.apache.tomcat.version>10.1.15</org.apache.tomcat.version> -->
+				<!-- Tomcat 11.0.x (JDK11+) -->
+				<!-- <org.apache.tomcat.version>11.0.0-M13</org.apache.tomcat.version> -->
 			</properties>
 			<build>
 				<pluginManagement>
@@ -187,10 +285,13 @@
 						</plugin>
 			            <!-- Proguard -->
 			            <plugin>
-							<groupId>com.github.wvengen</groupId>
-							<artifactId>proguard-maven-plugin</artifactId>
+							<groupId>${maven.proguard.groupId}</groupId>
+							<artifactId>${maven.proguard.artifactId}</artifactId>
 							<version>${maven.proguard.version}</version>
 							<configuration>
+								<!-- internal proguard -->
+								<proguardVersion>${maven.proguard-base.version}</proguardVersion>
+
 								<!--
 								List external jars your application depends on
 								(that not listed in maven dependencies).
@@ -199,15 +300,116 @@
 								You probably don't need it, but my application does.
 								-->
 								<libs> <!-- JDK11+ -->
-									<!-- <lib>${java.home}/jmods</lib> -->
-									<lib>${java.home}/jmods/java.base.jmod</lib>
-									<lib>${java.home}/jmods/java.datatransfer.jmod</lib>
-									<lib>${java.home}/jmods/java.prefs.jmod</lib>
-									<lib>${java.home}/jmods/java.xml.jmod</lib>
-									<lib>${java.home}/jmods/java.desktop.jmod</lib>
-									<lib>${java.home}/jmods</lib>
+									<lib>${java.home}/lib/jrt-fs.jar</lib>
+				                    <lib>${java.home}/jmods/java.base.jmod(!**.jar;!module-info.class)</lib>
+				                    <lib>${java.home}/jmods/java.compiler.jmod</lib>
+				                    <lib>${java.home}/jmods/java.corba.jmod</lib>
+				                    <lib>${java.home}/jmods/java.datatransfer.jmod</lib>
+				                    <lib>${java.home}/jmods/java.desktop.jmod</lib>
+				                    <lib>${java.home}/jmods/java.instrument.jmod</lib>
+				                    <lib>${java.home}/jmods/java.logging.jmod</lib>
+				                    <lib>${java.home}/jmods/java.management.jmod</lib>
+				                    <lib>${java.home}/jmods/java.management.rmi.jmod</lib>
+				                    <lib>${java.home}/jmods/java.naming.jmod</lib>
+				                    <lib>${java.home}/jmods/java.prefs.jmod</lib>
+				                    <lib>${java.home}/jmods/java.rmi.jmod</lib>
+				                    <lib>${java.home}/jmods/java.scripting.jmod</lib>
+				                    <lib>${java.home}/jmods/java.se.ee.jmod</lib>
+				                    <lib>${java.home}/jmods/java.se.jmod</lib>
+				                    <lib>${java.home}/jmods/java.security.jgss.jmod</lib>
+				                    <lib>${java.home}/jmods/java.security.sasl.jmod</lib>
+				                    <lib>${java.home}/jmods/java.smartcardio.jmod</lib>
+				                    <lib>${java.home}/jmods/java.sql.jmod</lib>
+				                    <lib>${java.home}/jmods/java.sql.rowset.jmod</lib>
+				                    <lib>${java.home}/jmods/java.transaction.jmod</lib>
+				                    <lib>${java.home}/jmods/java.xml.bind.jmod</lib>
+				                    <lib>${java.home}/jmods/java.xml.crypto.jmod</lib>
+				                    <lib>${java.home}/jmods/java.xml.jmod</lib>
+				                    <lib>${java.home}/jmods/java.xml.ws.annotation.jmod</lib>
+				                    <lib>${java.home}/jmods/java.xml.ws.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.accessibility.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.aot.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.attach.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.charsets.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.compiler.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.crypto.cryptoki.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.crypto.ec.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.crypto.mscapi.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.dynalink.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.editpad.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.hotspot.agent.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.httpserver.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.incubator.httpclient.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.internal.ed.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.internal.jvmstat.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.internal.le.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.internal.opt.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.internal.vm.ci.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.internal.vm.compiler.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.internal.vm.compiler.management.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jartool.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.javadoc.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jcmd.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jconsole.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jdeps.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jdi.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jdwp.agent.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jlink.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jshell.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jsobject.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jstatd.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.localedata.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.management.agent.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.management.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.naming.dns.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.naming.rmi.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.net.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.pack.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.rmic.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.scripting.nashorn.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.scripting.nashorn.shell.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.sctp.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.security.auth.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.security.jgss.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.unsupported.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.xml.bind.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.xml.dom.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.xml.ws.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.zipfs.jmod</lib>
 								</libs>
 							</configuration>
+							<dependencies>
+								<!--
+								For:
+								<groupId>com.github.wvengen</groupId>
+								<artifactId>proguard-maven-plugin</artifactId>
+								<name>proguard-maven-plugin</name>
+								<version>2.6.0</version>
+								-->
+								<dependency>
+									<groupId>com.guardsquare</groupId>
+									<artifactId>proguard-base</artifactId>
+									<version>${maven.proguard-base.version}</version>
+								</dependency>
+								<dependency>
+									<groupId>com.guardsquare</groupId>
+									<artifactId>proguard-core</artifactId>
+									<version>${maven.proguard-core.version}</version>
+								</dependency>
+
+								<!--
+								For:
+								<groupId>com.github.dingxin</groupId>
+								<artifactId>proguard-maven-plugin</artifactId>
+								<name>Maven Plugin for ProGuard</name>
+								<version>1.0.3</version>
+								-->
+								<!--<dependency>
+									<groupId>net.sf.proguard</groupId>
+									<artifactId>proguard-base</artifactId>
+									<version>${maven.proguard-base.version}</version>
+								</dependency>-->
+							</dependencies>
 						</plugin>
 					</plugins>
 				</pluginManagement>
@@ -219,10 +421,314 @@
 					    <artifactId>javax.annotation-api</artifactId>
 					    <version>${javax.annotation.version}</version>
 					</dependency>
+				</dependencies>
+			</dependencyManagement>
+			<dependencies>
+				<dependency>
+				    <groupId>javax.annotation</groupId>
+				    <artifactId>javax.annotation-api</artifactId>
+				</dependency>
+			</dependencies>
+		</profile>
+
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- JDK 17 -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<profile>
+			<id>jdk17</id>
+			<properties>
+				<!-- General -->
+				<revision>1.0-jre17</revision>
+				
+				<!-- Maven Plugins -->
+				<maven.truelicense.groupId>net.java.truelicense</maven.truelicense.groupId>
+				<maven.truelicense.artifactId>truelicense-maven-plugin</maven.truelicense.artifactId>
+				<maven.truelicense.version>2.6.6</maven.truelicense.version>
+				<maven.truelicense.skip>true</maven.truelicense.skip>
+				<!--
+				For:
+				<groupId>com.github.wvengen</groupId>
+				<artifactId>proguard-maven-plugin</artifactId>
+				<name>proguard-maven-plugin</name>
+				<version>2.6.0</version>
+				-->
+				<maven.proguard.groupId>com.github.wvengen</maven.proguard.groupId>
+				<maven.proguard.artifactId>proguard-maven-plugin</maven.proguard.artifactId>
+				<maven.proguard.version>2.6.0</maven.proguard.version>
+				<maven.proguard-base.version>7.4.0</maven.proguard-base.version>
+				<maven.proguard-core.version>9.1.0</maven.proguard-core.version>
+				<!--
+				For:
+				<groupId>com.github.dingxin</groupId>
+				<artifactId>proguard-maven-plugin</artifactId>
+				<name>Maven Plugin for ProGuard</name>
+				<version>1.0.3</version>
+				-->
+				<!--<maven.proguard.groupId>com.github.dingxin</maven.proguard.groupId>
+				<maven.proguard.artifactId>proguard-maven-plugin</maven.proguard.artifactId>
+				<maven.proguard.version>1.0.3</maven.proguard.version>
+				<maven.proguard-base.version>6.0.2</maven.proguard-base.version>-->
+				
+				<!-- Maven AspectJ ok with these 2 plugins -->
+				<maven.aspectj.groupId>org.codehaus.mojo</maven.aspectj.groupId>
+				<maven.aspectj.artifactId>aspectj-maven-plugin</maven.aspectj.artifactId>
+				<maven.aspectj.version>1.14.0</maven.aspectj.version>
+				<!--<maven.aspectj.groupId>com.nickwongdev</maven.aspectj.groupId>
+				<maven.aspectj.artifactId>aspectj-maven-plugin</maven.aspectj.artifactId>
+				<maven.aspectj.version>1.12.1</maven.aspectj.version>-->
+
+				<!-- Progurad configuration -->
+				<proguard.configuration>${root.basedir}/certificate/proguard.cnf</proguard.configuration>
+				<proguard.skip>true</proguard.skip>
+
+				<!-- JDK -->
+				<java.version>17</java.version>
+				<jdk.toolchain>${root.basedir}/toolchains.xml</jdk.toolchain>
+
+				<!-- Missing module for JDK11+ -->
+				<javax.annotation.version>1.3.2</javax.annotation.version>
+
+				<!-- License password -->
+				<license.alias>${module.groupId}</license.alias>
+				<license.storepass>01101981</license.storepass>
+				<license.keypass>01101981</license.keypass>
+
+				<!-- JAR Signer -->
+				<jarsigner.skip>false</jarsigner.skip>
+				<jarsigner.verbose>true</jarsigner.verbose>
+				<jarsigner.keystore>${certificate.basedir}/jdk17/jdk17.${module.groupId}.keystore.jks</jarsigner.keystore>
+				<jarsigner.alias>${license.alias}</jarsigner.alias>
+				<jarsigner.storepass>${license.storepass}</jarsigner.storepass>
+				<jarsigner.keypass>${license.keypass}</jarsigner.keypass>
+				<jarsigner.storetype>JKS</jarsigner.storetype>
+
+				<!-- Lombok (Many improvements for lombok's JDK10/11 support) -->
+				<org.projectlombok.version>1.18.20</org.projectlombok.version>
+				
+				<!-- AspectJ -->
+				<org.aspectj.version>1.9.20.1</org.aspectj.version>
+				<org.aspectj.skip>false</org.aspectj.skip>
+				
+				<!-- Spring websocket depencencies -->
+				<!-- Tomcat 7.x (JDK7) -->
+				<!-- <org.apache.tomcat.version>7.0.52</org.apache.tomcat.version> -->
+				<!-- <org.apache.tomcat.version>7.0.109</org.apache.tomcat.version> -->
+				<!-- Tomcat 8.0.x (JDK7/8) -->
+				<org.apache.tomcat.version>8.0.41</org.apache.tomcat.version>
+				<!-- <org.apache.tomcat.version>8.0.53</org.apache.tomcat.version> -->
+				<!-- Tomcat 8.5.x (JDK7/8) -->
+				<!-- <org.apache.tomcat.version>8.5.11</org.apache.tomcat.version> -->
+				<!-- <org.apache.tomcat.version>8.5.95</org.apache.tomcat.version> -->
+				<!-- Tomcat 9.x (JDK7/8) -->
+				<!-- <org.apache.tomcat.version>9.0.0.M17</org.apache.tomcat.version> -->
+				<!-- <org.apache.tomcat.version>9.0.82</org.apache.tomcat.version> -->
+				<!-- Tomcat 10.0.x (JDK7/8) -->
+				<!-- <org.apache.tomcat.version>10.0.27</org.apache.tomcat.version> -->
+				<!-- Tomcat 10.1.x (JDK11+) -->
+				<!-- <org.apache.tomcat.version>10.1.15</org.apache.tomcat.version> -->
+				<!-- Tomcat 11.0.x (JDK11+) -->
+				<!-- <org.apache.tomcat.version>11.0.0-M13</org.apache.tomcat.version> -->
+			</properties>
+			<build>
+				<pluginManagement>
+					<plugins>
+						<!-- Compiler -->
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-compiler-plugin</artifactId>
+							<version>${maven.compiler.version}</version>
+							<configuration>
+								<compilerArgs>
+						            <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED</arg>
+						            <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED</arg>
+						            <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED</arg>
+						            <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED</arg>
+						            <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED</arg>
+						            <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED</arg>
+						            <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED</arg>
+						            <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</arg>
+						            <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</arg>
+						            <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.jvm=ALL-UNNAMED</arg>
+						        </compilerArgs>
+								<annotationProcessorPaths>
+									<path>
+										<groupId>org.projectlombok</groupId>
+										<artifactId>lombok</artifactId>
+										<version>${org.projectlombok.version}</version>
+									</path>
+									<path>
+										<groupId>org.seasar.doma</groupId>
+										<artifactId>doma</artifactId>
+										<version>${doma.version}</version>
+									</path>
+									<!-- for JDK11+ -->
+									<path>
+										<groupId>javax.annotation</groupId>
+									    <artifactId>javax.annotation-api</artifactId>
+									    <version>${javax.annotation.version}</version>
+									</path>
+								</annotationProcessorPaths>
+								<!-- for JDK11+ -->
+								<jdkToolchain>
+									<version>${java.version}</version>
+								</jdkToolchain>
+							</configuration>
+						</plugin>
+						<!-- Obfuscation -->
+						<plugin>
+							<groupId>${maven.truelicense.groupId}</groupId>
+							<artifactId>${maven.truelicense.artifactId}</artifactId>
+							<version>${maven.truelicense.version}</version>
+							<dependencies>
+								<dependency>
+								    <groupId>org.codehaus.plexus</groupId>
+								    <artifactId>plexus-utils</artifactId>
+								    <version>4.0.0</version>
+								</dependency>
+								<dependency>
+								    <groupId>org.ow2.asm</groupId>
+								    <artifactId>asm-tree</artifactId>
+								    <version>9.6</version>
+								</dependency>
+							</dependencies>
+						</plugin>
+			            <!-- Proguard -->
+			            <plugin>
+							<groupId>${maven.proguard.groupId}</groupId>
+							<artifactId>${maven.proguard.artifactId}</artifactId>
+							<version>${maven.proguard.version}</version>
+							<configuration>
+								<!-- internal proguard -->
+								<proguardVersion>${maven.proguard-base.version}</proguardVersion>
+
+								<!--
+								List external jars your application depends on
+								(that not listed in maven dependencies).
+								You probably depend on Java runtime (rt.jar).
+								JCE stands for Java Cryptography Extension.
+								You probably don't need it, but my application does.
+								-->
+								<libs> <!-- JDK11+ -->
+									<lib>${java.home}/lib/jrt-fs.jar</lib>
+				                    <lib>${java.home}/jmods/java.base.jmod(!**.jar;!module-info.class)</lib>
+				                    <lib>${java.home}/jmods/java.compiler.jmod</lib>
+				                    <lib>${java.home}/jmods/java.corba.jmod</lib>
+				                    <lib>${java.home}/jmods/java.datatransfer.jmod</lib>
+				                    <lib>${java.home}/jmods/java.desktop.jmod</lib>
+				                    <lib>${java.home}/jmods/java.instrument.jmod</lib>
+				                    <lib>${java.home}/jmods/java.logging.jmod</lib>
+				                    <lib>${java.home}/jmods/java.management.jmod</lib>
+				                    <lib>${java.home}/jmods/java.management.rmi.jmod</lib>
+				                    <lib>${java.home}/jmods/java.naming.jmod</lib>
+				                    <lib>${java.home}/jmods/java.prefs.jmod</lib>
+				                    <lib>${java.home}/jmods/java.rmi.jmod</lib>
+				                    <lib>${java.home}/jmods/java.scripting.jmod</lib>
+				                    <lib>${java.home}/jmods/java.se.ee.jmod</lib>
+				                    <lib>${java.home}/jmods/java.se.jmod</lib>
+				                    <lib>${java.home}/jmods/java.security.jgss.jmod</lib>
+				                    <lib>${java.home}/jmods/java.security.sasl.jmod</lib>
+				                    <lib>${java.home}/jmods/java.smartcardio.jmod</lib>
+				                    <lib>${java.home}/jmods/java.sql.jmod</lib>
+				                    <lib>${java.home}/jmods/java.sql.rowset.jmod</lib>
+				                    <lib>${java.home}/jmods/java.transaction.jmod</lib>
+				                    <lib>${java.home}/jmods/java.xml.bind.jmod</lib>
+				                    <lib>${java.home}/jmods/java.xml.crypto.jmod</lib>
+				                    <lib>${java.home}/jmods/java.xml.jmod</lib>
+				                    <lib>${java.home}/jmods/java.xml.ws.annotation.jmod</lib>
+				                    <lib>${java.home}/jmods/java.xml.ws.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.accessibility.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.aot.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.attach.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.charsets.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.compiler.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.crypto.cryptoki.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.crypto.ec.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.crypto.mscapi.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.dynalink.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.editpad.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.hotspot.agent.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.httpserver.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.incubator.httpclient.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.internal.ed.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.internal.jvmstat.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.internal.le.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.internal.opt.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.internal.vm.ci.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.internal.vm.compiler.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.internal.vm.compiler.management.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jartool.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.javadoc.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jcmd.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jconsole.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jdeps.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jdi.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jdwp.agent.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jlink.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jshell.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jsobject.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jstatd.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.localedata.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.management.agent.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.management.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.naming.dns.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.naming.rmi.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.net.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.pack.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.rmic.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.scripting.nashorn.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.scripting.nashorn.shell.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.sctp.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.security.auth.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.security.jgss.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.unsupported.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.xml.bind.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.xml.dom.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.xml.ws.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.zipfs.jmod</lib>
+								</libs>
+							</configuration>
+							<dependencies>
+								<!--
+								For:
+								<groupId>com.github.wvengen</groupId>
+								<artifactId>proguard-maven-plugin</artifactId>
+								<name>proguard-maven-plugin</name>
+								<version>2.6.0</version>
+								-->
+								<dependency>
+									<groupId>com.guardsquare</groupId>
+									<artifactId>proguard-base</artifactId>
+									<version>${maven.proguard-base.version}</version>
+								</dependency>
+								<dependency>
+									<groupId>com.guardsquare</groupId>
+									<artifactId>proguard-core</artifactId>
+									<version>${maven.proguard-core.version}</version>
+								</dependency>
+
+								<!--
+								For:
+								<groupId>com.github.dingxin</groupId>
+								<artifactId>proguard-maven-plugin</artifactId>
+								<name>Maven Plugin for ProGuard</name>
+								<version>1.0.3</version>
+								-->
+								<!--<dependency>
+									<groupId>net.sf.proguard</groupId>
+									<artifactId>proguard-base</artifactId>
+									<version>${maven.proguard-base.version}</version>
+								</dependency>-->
+							</dependencies>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+			</build>
+			<dependencyManagement>
+				<dependencies>
 					<dependency>
-						<groupId>com.guardsquare</groupId>
-						<artifactId>proguard-base</artifactId>
-						<version>${maven.proguard-base.version}</version>
+					    <groupId>javax.annotation</groupId>
+					    <artifactId>javax.annotation-api</artifactId>
+					    <version>${javax.annotation.version}</version>
 					</dependency>
 				</dependencies>
 			</dependencyManagement>
@@ -305,7 +811,8 @@
 		<maven.build.helper.version>3.4.0</maven.build.helper.version>
 		<maven.resources.version>3.3.1</maven.resources.version>
 		<maven.compiler.version>3.11.0</maven.compiler.version>
-		<maven.aspectj.version>1.14.0</maven.aspectj.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+    	<maven.compiler.target>${java.version}</maven.compiler.target>
 		<maven.source.version>3.3.0</maven.source.version>
 		<maven.javadoc.version>3.6.2</maven.javadoc.version>
 		<maven.jar.version>3.3.0</maven.jar.version>
@@ -315,10 +822,7 @@
 		<maven.nexus.staging.version>1.6.13</maven.nexus.staging.version>
 		<maven.directory.version>0.1</maven.directory.version>
 		<maven.antrun.version>3.1.0</maven.antrun.version>
-
-		<!-- Progurad configuration -->
-		<proguard.configuration>${root.basedir}/proguard.cnf</proguard.configuration>
-		<proguard.skip>false</proguard.skip>
+		<maven.eclipse.version>2.10</maven.eclipse.version>
 
 		<!-- Servlet -->
 		<javax.servlet-api.version>3.1.0</javax.servlet-api.version>
@@ -353,14 +857,24 @@
 		<!-- Spring websocket depencencies -->
 		<javax.websocket.version>1.0</javax.websocket.version>
 		<org.projectreactor.version>1.1.6.RELEASE</org.projectreactor.version>
-		<!-- Tomcat 7.x -->
+		<!-- Tomcat 7.x (JDK7) -->
 		<!-- <org.apache.tomcat.version>7.0.52</org.apache.tomcat.version> -->
-		<!-- Tomcat 8.0.x -->
-		<org.apache.tomcat.version>8.0.41</org.apache.tomcat.version>
-		<!-- Tomcat 8.5.x -->
+		<!-- <org.apache.tomcat.version>7.0.109</org.apache.tomcat.version> -->
+		<!-- Tomcat 8.0.x (JDK7/8) -->
+		<!-- <org.apache.tomcat.version>8.0.41</org.apache.tomcat.version> -->
+		<!-- <org.apache.tomcat.version>8.0.53</org.apache.tomcat.version> -->
+		<!-- Tomcat 8.5.x (JDK7/8) -->
 		<!-- <org.apache.tomcat.version>8.5.11</org.apache.tomcat.version> -->
-		<!-- Tomcat 9.x -->
+		<!-- <org.apache.tomcat.version>8.5.95</org.apache.tomcat.version> -->
+		<!-- Tomcat 9.x (JDK7/8) -->
 		<!-- <org.apache.tomcat.version>9.0.0.M17</org.apache.tomcat.version> -->
+		<!-- <org.apache.tomcat.version>9.0.82</org.apache.tomcat.version> -->
+		<!-- Tomcat 10.0.x (JDK7/8) -->
+		<!-- <org.apache.tomcat.version>10.0.27</org.apache.tomcat.version> -->
+		<!-- Tomcat 10.1.x (JDK11+) -->
+		<!-- <org.apache.tomcat.version>10.1.15</org.apache.tomcat.version> -->
+		<!-- Tomcat 11.0.x (JDK11+) -->
+		<!-- <org.apache.tomcat.version>11.0.0-M13</org.apache.tomcat.version> -->
 
 		<!-- Quartz -->
 		<quartz.c3p0.version>0.9.1.1</quartz.c3p0.version>
@@ -525,30 +1039,6 @@
 					<artifactId>findbugs-maven-plugin</artifactId>
 					<version>${maven.findbugs.version}</version>
 				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-antrun-plugin</artifactId>
-					<version>${maven.antrun.version}</version>
-					<configuration>
-					    <exportAntProperties>false</exportAntProperties>
-					</configuration>
-					<executions>
-						<!-- Initialization -->
-						<execution>
-							<id>ensure-generated-folders</id>
-							<phase>initialize</phase>
-							<goals>
-							    <goal>run</goal>
-							</goals>
-							<configuration>
-							    <target>
-							        <mkdir dir="${project.basedir}/src/main/java" />
-							        <mkdir dir="${project.basedir}/src/test/java" />
-							    </target>
-							</configuration>
-						</execution>
-					</executions>
-				</plugin>
 				<!-- Plugin for supporting root directory -->
 				<plugin>
 				    <groupId>org.commonjava.maven.plugins</groupId>
@@ -613,6 +1103,36 @@
 										}
 									]]>
 								</source>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<!-- Initialization -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-antrun-plugin</artifactId>
+					<version>${maven.antrun.version}</version>
+					<configuration>
+					    <exportAntProperties>false</exportAntProperties>
+					</configuration>
+					<executions>
+						<!-- Initialization -->
+						<execution>
+							<id>ensure-generated-folders</id>
+							<phase>initialize</phase>
+							<goals>
+							    <goal>run</goal>
+							</goals>
+							<configuration>
+							    <target>
+							        <mkdir dir="${project.basedir}/src/main/java" />
+							        <mkdir dir="${project.basedir}/src/test/java" />
+							        <!--<delete includeEmptyDirs="true"
+							        verbose="true" quiet="true"
+							        failonerror="false" performGCOnFailedDelete="true">
+										<fileset dir="${project.basedir}" includes="**/target/"/>
+									</delete>-->
+							    </target>
 							</configuration>
 						</execution>
 					</executions>
@@ -900,6 +1420,28 @@
 						</execution>
 					</executions>
 				</plugin>
+				<!-- Eclipse -->
+	            <plugin>
+	                <groupId>org.apache.maven.plugins</groupId>
+	                <artifactId>maven-eclipse-plugin</artifactId>
+	                <version>${maven.eclipse.version}</version>
+	                <configuration>
+	                    <downloadSources>true</downloadSources>
+	                    <downloadJavadocs>true</downloadJavadocs>
+	                    <additionalProjectFacets>
+							<jst.java>${java.version}</jst.java>
+						</additionalProjectFacets>
+						<additionalConfig>
+							<file>
+								<name>.settings/org.eclipse.m2e.core.prefs</name>
+								<content><![CDATA[activeProfiles=
+eclipse.perferences.version=1
+resolveWorkspaceProjects=false
+version=1]]>></content>
+							</file>
+						</additionalConfig>
+	                </configuration>
+	            </plugin>
 				<!-- Compiler -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -938,8 +1480,8 @@
 				</plugin>
 				<!-- AspectJ (AOP) -->
 				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>aspectj-maven-plugin</artifactId>
+					<groupId>${maven.aspectj.groupId}</groupId>
+					<artifactId>${maven.aspectj.artifactId}</artifactId>
 					<version>${maven.aspectj.version}</version>
 					<dependencies>
 						<dependency>
@@ -961,7 +1503,10 @@
 						</execution>
 					</executions>
 					<configuration>
+						<skip>${org.aspectj.skip}</skip>
 						<outxml>true</outxml>
+						<XnoInline>true</XnoInline> <!-- Fix for JDK11+ - ClassCastException: ConstantUtf8 -->
+						<XserializableAspects>true</XserializableAspects>
 						<showWeaveInfo/>
 	                    <!-- START: for working with Lombok -->
 	                    <forceAjcCompile>true</forceAjcCompile>
@@ -981,6 +1526,7 @@
 					<version>${maven.source.version}</version>
 					<configuration>
 						<attach>true</attach>
+						<forceCreation>true</forceCreation>
 					</configuration>
 					<executions>
 						<execution>
@@ -1060,6 +1606,7 @@
 					<configuration>
 						<!-- Avoid exceed maximum bytes while using aspectj -->
 						<maxBytes>99999</maxBytes>
+						<skip>${maven.truelicense.skip}</skip>
 					</configuration>
 					<executions>
 						<execution>
@@ -1080,8 +1627,8 @@
 	            </plugin>
 	            <!-- Proguard -->
 	            <plugin>
-					<groupId>com.github.wvengen</groupId>
-					<artifactId>proguard-maven-plugin</artifactId>
+					<groupId>${maven.proguard.groupId}</groupId>
+					<artifactId>${maven.proguard.artifactId}</artifactId>
 					<version>${maven.proguard.version}</version>
 					<executions>
 						<execution>
@@ -1092,10 +1639,16 @@
 						</execution>
 					</executions>
 					<configuration>
-						<includeDependency>false</includeDependency>
 						<obfuscate>true</obfuscate>
+						<addManifest>true</addManifest>
+						<addMavenDescriptor>true</addMavenDescriptor>
+						<silent>false</silent>
 						<injarNotExistsSkip>true</injarNotExistsSkip>
 						<skip>${proguard.skip}</skip>
+						
+						<inFilter>!module-info.class,!META-INF/maven/**</inFilter>
+						<outFilter>!META-INF/maven/**</outFilter>
+						<dependencyFilter>!module-info.class,!META-INF/**</dependencyFilter>
 
 						<!-- Our application is so big that ProGuard had ran out of memory -->
 						<maxMemory>1024m</maxMemory>
@@ -1192,8 +1745,8 @@
 								</pluginExecution>
 								<pluginExecution>
 									<pluginExecutionFilter>
-										<groupId>org.codehaus.mojo</groupId>
-										<artifactId>aspectj-maven-plugin</artifactId>
+										<groupId>${maven.aspectj.groupId}</groupId>
+										<artifactId>${maven.aspectj.artifactId}</artifactId>
 										<versionRange>[1.+,)</versionRange>
 										<goals>
 											<goal>compile</goal>
@@ -1210,11 +1763,6 @@
 			</plugins>
 		</pluginManagement>
 		<plugins>
-			<!-- Make some directories ensure existing -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-antrun-plugin</artifactId>
-			</plugin>
 			<!-- Plugin for supporting root directory -->
 			<plugin>
 			    <groupId>org.commonjava.maven.plugins</groupId>
@@ -1230,104 +1778,10 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>findbugs-maven-plugin</artifactId>
 			</plugin>
-			<!-- Enforce JDK version -->
+			<!-- Make some directories ensure existing -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-enforcer-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>properties-maven-plugin</artifactId>
-			</plugin>
-			<!-- Check new version of dependencies -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>versions-maven-plugin</artifactId>
-			</plugin>
-			<!-- This plugin is used to release a project with Maven, saving a lot of repetitive, manual work.
-				Releasing a project is made in two steps: prepare and perform. -->
-			<!-- <plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
-				<version>${maven.release.version}</version>
-			</plugin> -->
-			<!-- Attach more source folders -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
-			</plugin>
-			<!-- Copy resources -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-			</plugin>
-			<!-- Compiler -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-			</plugin>
-			<!-- AspectJ (AOP) -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>aspectj-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.sonatype.plugins</groupId>
-				<artifactId>nexus-staging-maven-plugin</artifactId>
-			</plugin>
-			<!-- FIXME Present, surefire, truelicense, proguard and jarsigner
-				has VerifyError exception -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-			</plugin>
-			<!-- Proguard -->
-			<plugin>
-				<groupId>com.github.wvengen</groupId>
-				<artifactId>proguard-maven-plugin</artifactId>
-			</plugin>
-			<!-- To sign packages (must after proguard plugin in POM build to avoid error: jarsigner verify SHA-256 digest error for class ...) -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jarsigner-plugin</artifactId>
-			</plugin>
-			<!-- This plugin's configuration is used to store Eclipse m2e settings only.
-				It has no influence on the Maven build itself. -->
-			<plugin>
-				<groupId>org.eclipse.m2e</groupId>
-				<artifactId>lifecycle-mapping</artifactId>
-			</plugin>
-		</plugins>
-	</build>
-
-	<!-- To use the report goals in your POM or parent POM -->
-	<reporting>
-		<plugins>
-			<!-- Groovy for supporting root directory -->
-			<!-- <plugin>
-				<groupId>org.codehaus.gmaven</groupId>
-				<artifactId>groovy-maven-plugin</artifactId>
-			</plugin> -->
-			<!-- Find bugs -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>findbugs-maven-plugin</artifactId>
+				<artifactId>maven-antrun-plugin</artifactId>
 			</plugin>
 			<!-- Enforce JDK version -->
 			<plugin>
@@ -1360,6 +1814,11 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
 			</plugin>
+			<!-- Eclipse -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-eclipse-plugin</artifactId>
+            </plugin>
 			<!-- Compiler -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -1367,8 +1826,8 @@
 			</plugin>
 			<!-- AspectJ (AOP) -->
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>aspectj-maven-plugin</artifactId>
+				<groupId>${maven.aspectj.groupId}</groupId>
+				<artifactId>${maven.aspectj.artifactId}</artifactId>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -1403,8 +1862,122 @@
 			</plugin>
 			<!-- Proguard -->
 			<plugin>
-				<groupId>com.github.wvengen</groupId>
-				<artifactId>proguard-maven-plugin</artifactId>
+				<groupId>${maven.proguard.groupId}</groupId>
+				<artifactId>${maven.proguard.artifactId}</artifactId>
+			</plugin>
+			<!-- To sign packages (must after proguard plugin in POM build to avoid error: jarsigner verify SHA-256 digest error for class ...) -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jarsigner-plugin</artifactId>
+			</plugin>
+			<!-- This plugin's configuration is used to store Eclipse m2e settings only.
+				It has no influence on the Maven build itself. -->
+			<plugin>
+				<groupId>org.eclipse.m2e</groupId>
+				<artifactId>lifecycle-mapping</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+	<!-- To use the report goals in your POM or parent POM -->
+	<reporting>
+		<plugins>
+			<!-- Groovy for supporting root directory -->
+			<!-- <plugin>
+				<groupId>org.codehaus.gmaven</groupId>
+				<artifactId>groovy-maven-plugin</artifactId>
+			</plugin> -->
+			<!-- Find bugs -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+			</plugin>
+			<!-- Make some directories ensure existing -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+			</plugin>
+			<!-- Enforce JDK version -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+			</plugin>
+			<!-- Check new version of dependencies -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>versions-maven-plugin</artifactId>
+			</plugin>
+			<!-- This plugin is used to release a project with Maven, saving a lot of repetitive, manual work.
+				Releasing a project is made in two steps: prepare and perform. -->
+			<!-- <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>${maven.release.version}</version>
+			</plugin> -->
+			<!-- Attach more source folders -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+			</plugin>
+			<!-- Copy resources -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+			</plugin>
+			<!-- Eclipse -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-eclipse-plugin</artifactId>
+            </plugin>
+			<!-- Compiler -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<!-- AspectJ (AOP) -->
+			<plugin>
+				<groupId>${maven.aspectj.groupId}</groupId>
+				<artifactId>${maven.aspectj.artifactId}</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+			</plugin>
+			<!-- FIXME Present, surefire, truelicense, proguard and jarsigner
+				has VerifyError exception -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+			<!-- Obfuscation -->
+			<plugin>
+				<groupId>${maven.truelicense.groupId}</groupId>
+				<artifactId>${maven.truelicense.artifactId}</artifactId>
+			</plugin>
+			<!-- Proguard -->
+			<plugin>
+				<groupId>${maven.proguard.groupId}</groupId>
+				<artifactId>${maven.proguard.artifactId}</artifactId>
 			</plugin>
 			<!-- To sign packages (must after proguard plugin in POM build to avoid error: jarsigner verify SHA-256 digest error for class ...) -->
 			<plugin>
