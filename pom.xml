@@ -739,6 +739,83 @@
 				</dependency>
 			</dependencies>
 		</profile>
+
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Quality Check -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+        <profile>
+            <id>qualityCheck</id>
+            <build>
+                <plugins>
+                	<!-- Check javadocs -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>test-javadocs</id>
+                                <goals>
+                                    <goal>test-jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                	<!-- Check cycleclic -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <dependencies>
+                            <dependency>
+                                <groupId>de.andrena.tools.nopackagecycles</groupId>
+                                <artifactId>no-package-cycles-enforcer-rule</artifactId>
+                                <version>1.0.9</version>
+                            </dependency>
+                        </dependencies>
+                        <executions>
+                            <execution>
+                                <id>enforce-maven</id>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                                <configuration>
+                                    <rules>
+                                        <requireMavenVersion>
+                                            <version>3.1</version>
+                                        </requireMavenVersion>
+                                    </rules>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>enforce-no-package-cycles</id>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                                <phase>test</phase>
+                                <configuration>
+                                    <rules>
+                                        <NoPackageCyclesRule implementation="de.andrena.tools.nopackagecycles.NoPackageCyclesRule">
+                                            <includeTests>false</includeTests>
+                                            <excludedPackages>
+                                                <excludedPackage>org.dom4j</excludedPackage>
+                                                <excludedPackage>${project.groupId}</excludedPackage>
+                                            </excludedPackages>
+                                        </NoPackageCyclesRule>
+                                    </rules>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
 		<!-- The configuration of the development profile -->
 		<profile>
 			<id>dev</id>
