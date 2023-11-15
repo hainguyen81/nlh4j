@@ -30,16 +30,46 @@
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-core</artifactId>
 			<version>${project.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>${project.parent.groupId}</groupId>
+					<artifactId>nlh4j-utilities</artifactId>
+				</exclusion>
+			</exclusions>
       	</dependency>
       	<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-entities</artifactId>
 			<version>${project.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>${project.parent.groupId}</groupId>
+					<artifactId>nlh4j-utilities</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>${project.parent.groupId}</groupId>
+					<artifactId>nlh4j-core</artifactId>
+				</exclusion>
+			</exclusions>
       	</dependency>
       	<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-domain</artifactId>
 			<version>${project.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>${project.parent.groupId}</groupId>
+					<artifactId>nlh4j-utilities</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>${project.parent.groupId}</groupId>
+					<artifactId>nlh4j-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>${project.parent.groupId}</groupId>
+					<artifactId>nlh4j-entities</artifactId>
+				</exclusion>
+			</exclusions>
       	</dependency>
 
 		<!-- Servlet -->

@@ -1251,7 +1251,7 @@
 					</configuration>
 					<executions>
 						<!-- Pre-Clean -->
-						<!--<execution>
+						<execution>
 							<id>clean-folders</id>
 							<phase>pre-clean</phase>
 							<goals>
@@ -1267,11 +1267,11 @@
 							        <delete includeEmptyDirs="true"
 							        verbose="true" quiet="true"
 							        failonerror="false" performGCOnFailedDelete="true">
-										<fileset dir="${root.basedir}" includes="**/target/"/>
+										<fileset dir="${project.basedir}" includes="**/.apt_generated/"/>
 									</delete>
 							    </target>
 							</configuration>
-						</execution>-->
+						</execution>
 						<!-- Initialization -->
 						<execution>
 							<id>ensure-generated-folders</id>
