@@ -918,10 +918,11 @@
 
 		<!-- Profile properties file -->
 		<profile.configuration>${root.basedir}/profiles/${build.profile.id}/config.properties</profile.configuration>
+		<eclipse.maven.project.activated.profiles>dev,jdk11</eclipse.maven.project.activated.profiles>
 
 		<!-- Maven Plugins -->
 		<maven.m2e.lifecycle.mapping.version>1.0.0</maven.m2e.lifecycle.mapping.version>
-		<maven.findbugs.version>3.0.6-SNAPSHOT</maven.findbugs.version>
+		<maven.findbugs.version>3.0.5</maven.findbugs.version>
 		<maven.groovy.version>2.1.1</maven.groovy.version>
 		<maven.enforcer.version>3.4.1</maven.enforcer.version>
 		<maven.versions.version>2.16.1</maven.versions.version>
@@ -1249,6 +1250,28 @@
 					    <exportAntProperties>false</exportAntProperties>
 					</configuration>
 					<executions>
+						<!-- Pre-Clean -->
+						<execution>
+							<id>clean-folders</id>
+							<phase>pre-clean</phase>
+							<goals>
+							    <goal>run</goal>
+							</goals>
+							<configuration>
+							    <target>
+							        <delete includeEmptyDirs="true"
+							        verbose="true" quiet="true"
+							        failonerror="false" performGCOnFailedDelete="true">
+										<fileset dir="${project.basedir}" includes="**/target/"/>
+									</delete>
+							        <delete includeEmptyDirs="true"
+							        verbose="true" quiet="true"
+							        failonerror="false" performGCOnFailedDelete="true">
+										<fileset dir="${root.basedir}" includes="**/target/"/>
+									</delete>
+							    </target>
+							</configuration>
+						</execution>
 						<!-- Initialization -->
 						<execution>
 							<id>ensure-generated-folders</id>
@@ -1259,12 +1282,9 @@
 							<configuration>
 							    <target>
 							        <mkdir dir="${project.basedir}/src/main/java" />
+							        <mkdir dir="${project.basedir}/src/main/resources" />
 							        <mkdir dir="${project.basedir}/src/test/java" />
-							        <!--<delete includeEmptyDirs="true"
-							        verbose="true" quiet="true"
-							        failonerror="false" performGCOnFailedDelete="true">
-										<fileset dir="${project.basedir}" includes="**/target/"/>
-									</delete>-->
+							        <mkdir dir="${project.basedir}/src/test/resources" />
 							    </target>
 							</configuration>
 						</execution>
@@ -1567,9 +1587,9 @@
 						<additionalConfig>
 							<file>
 								<name>.settings/org.eclipse.m2e.core.prefs</name>
-								<content><![CDATA[activeProfiles=
+								<content><![CDATA[activeProfiles=${eclipse.maven.project.activated.profiles}
 eclipse.perferences.version=1
-resolveWorkspaceProjects=false
+resolveWorkspaceProjects=true
 version=1]]>></content>
 							</file>
 						</additionalConfig>
