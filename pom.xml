@@ -1251,7 +1251,7 @@
 					</configuration>
 					<executions>
 						<!-- Pre-Clean -->
-						<execution>
+						<!--<execution>
 							<id>clean-folders</id>
 							<phase>pre-clean</phase>
 							<goals>
@@ -1271,7 +1271,7 @@
 									</delete>
 							    </target>
 							</configuration>
-						</execution>
+						</execution>-->
 						<!-- Initialization -->
 						<execution>
 							<id>ensure-generated-folders</id>
