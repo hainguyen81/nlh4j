@@ -65,6 +65,12 @@
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-web-template</artifactId>
 			<version>${project.version}</version>
+			<exclusions>
+		      	<exclusion>
+					<groupId>${project.parent.groupId}</groupId>
+					<artifactId>nlh4j-web-config</artifactId>
+				</exclusion>
+			</exclusions>
       	</dependency>
 
 		<!-- Servlet -->
