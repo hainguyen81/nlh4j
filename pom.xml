@@ -945,10 +945,29 @@
 		<maven.eclipse.version>2.10</maven.eclipse.version>
 
 		<!-- Servlet -->
-		<javax.servlet-api.version>3.1.0</javax.servlet-api.version>
-		<javaee-web-api.version>7.0</javaee-web-api.version>
-		<jstl.version>1.2</jstl.version>
+		<!--<servlet-api.groupId>javax.servlet</servlet-api.groupId>
+		<servlet-api.artifactId>javax.servlet-api</servlet-api.artifactId>
+		<servlet-api.version>3.1.0</servlet-api.version>-->
+		<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
+		<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
+		<servlet-api.version>6.0.0</servlet-api.version>
 
+		<!-- Web API -->
+		<!--<javaee-web-api.version>6.0</javaee-web-api.version>
+		<javaee-web-api.version>7.0</javaee-web-api.version>
+		<javaee-web-api.version>8.0</javaee-web-api.version>-->
+		<javaee-web-api.version>8.0.1</javaee-web-api.version>
+
+		<!-- JSTL -->
+		<!--<jstl.groupId>javax.servlet</jstl.groupId>
+		<jstl.artifactId>jstl</jstl.artifactId>
+		<jstl.version>1.2</jstl.version>-->
+		<jstl.groupId>jakarta.servlet.jsp.jstl</jstl.groupId>
+		<jstl.artifactId>jakarta.servlet.jsp.jstl-api</jstl.artifactId>
+		<!--<jstl.version>1.2.7</jstl.version>
+		<jstl.version>2.0.0</jstl.version>-->
+		<jstl.version>3.0.0</jstl.version>
+		
 		<!-- tag-libs -->
 		<taglibs.version>1.1.2</taglibs.version>
 
@@ -2259,9 +2278,9 @@ version=1]]>></content>
 
 			<!-- Servlet -->
 			<dependency>
-				<groupId>javax.servlet</groupId>
-				<artifactId>javax.servlet-api</artifactId>
-				<version>${javax.servlet-api.version}</version>
+				<groupId>${servlet-api.groupId}</groupId>
+				<artifactId>${servlet-api.artifactId}</artifactId>
+				<version>${servlet-api.version}</version>
 				<scope>provided</scope>
 			</dependency>
 			<dependency>
@@ -2271,8 +2290,8 @@ version=1]]>></content>
 				<scope>provided</scope>
 			</dependency>
 			<dependency>
-				<groupId>javax.servlet</groupId>
-				<artifactId>jstl</artifactId>
+				<groupId>${jstl.groupId}</groupId>
+				<artifactId>${jstl.artifactId}</artifactId>
 				<version>${jstl.version}</version>
 			</dependency>
 

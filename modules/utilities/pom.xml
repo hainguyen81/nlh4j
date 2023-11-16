@@ -22,8 +22,8 @@
 	<dependencies>
 		<!-- Servlet -->
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
+			<groupId>${servlet-api.groupId}</groupId>
+			<artifactId>${servlet-api.artifactId}</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
