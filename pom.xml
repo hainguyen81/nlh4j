@@ -95,6 +95,18 @@
 				<org.aspectj.skip>false</org.aspectj.skip>
 
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Servlet -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- JDK8 -->
+				<servlet-api.groupId>javax.servlet</servlet-api.groupId>
+				<servlet-api.artifactId>javax.servlet-api</servlet-api.artifactId>
+				<servlet-api.version>3.1.0</servlet-api.version>
+				<!-- JDK11+ -->
+				<!--<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
+				<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
+				<servlet-api.version>6.0.0</servlet-api.version>-->
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Springframework -->
 				<!--
 					 https://github.com/spring-projects/spring-framework/wiki/Spring-Framework-Versions
@@ -357,6 +369,18 @@
 				<!-- AspectJ -->
 				<org.aspectj.version>1.9.7</org.aspectj.version>
 				<org.aspectj.skip>false</org.aspectj.skip>
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Servlet -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- JDK8 -->
+				<!--<servlet-api.groupId>javax.servlet</servlet-api.groupId>
+				<servlet-api.artifactId>javax.servlet-api</servlet-api.artifactId>
+				<servlet-api.version>3.1.0</servlet-api.version>-->
+				<!-- JDK11+ -->
+				<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
+				<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
+				<servlet-api.version>6.0.0</servlet-api.version>
 
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Springframework -->
@@ -783,6 +807,18 @@
 				<!-- AspectJ -->
 				<org.aspectj.version>1.9.20.1</org.aspectj.version>
 				<org.aspectj.skip>false</org.aspectj.skip>
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Servlet -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- JDK8 -->
+				<!--<servlet-api.groupId>javax.servlet</servlet-api.groupId>
+				<servlet-api.artifactId>javax.servlet-api</servlet-api.artifactId>
+				<servlet-api.version>3.1.0</servlet-api.version>-->
+				<!-- JDK11+ -->
+				<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
+				<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
+				<servlet-api.version>6.0.0</servlet-api.version>
 
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Springframework -->
@@ -1327,13 +1363,17 @@
 		<maven.antrun.version>3.1.0</maven.antrun.version>
 		<maven.eclipse.version>2.10</maven.eclipse.version>
 
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!-- Servlet -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- JDK8 -->
 		<!--<servlet-api.groupId>javax.servlet</servlet-api.groupId>
 		<servlet-api.artifactId>javax.servlet-api</servlet-api.artifactId>
 		<servlet-api.version>3.1.0</servlet-api.version>-->
-		<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
+		<!-- JDK11+ -->
+		<!--<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
 		<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
-		<servlet-api.version>6.0.0</servlet-api.version>
+		<servlet-api.version>6.0.0</servlet-api.version>-->
 
 		<!-- Web API -->
 		<!--<javaee-web-api.version>6.0</javaee-web-api.version>
