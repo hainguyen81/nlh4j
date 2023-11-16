@@ -3,9 +3,9 @@
 	<display-name>Web Application Name</display-name>
 	<absolute-ordering>
 	    <name>nlh4jWebClient</name>
-	    <!-- <name>nlh4jWebClientHkFilm</name> -->
+	    <!-- <name>nlh4jWebClientHrm</name> -->
 	    <name>nlh4jWebTemplate</name>
-	    <!-- <name>nlh4jWebTemplateHkFilm</name> -->
+	    <!-- <name>nlh4jWebTemplateHrm</name> -->
 		<name>nlh4jWebBase</name>
 		<others/>
 	</absolute-ordering>
@@ -15,22 +15,22 @@
 
 	<error-page>
 		<error-code>403</error-code>
-		<location>/WEB-INF/views/hkfilm/error/403.jsp</location>
+		<location>/WEB-INF/views/hrm/error/403.jsp</location>
 	</error-page>
 	<error-page>
 		<error-code>404</error-code>
-		<location>/WEB-INF/views/hkfilm/error/404.jsp</location>
+		<location>/WEB-INF/views/hrm/error/404.jsp</location>
 	</error-page>
 	<error-page>
 		<error-code>405</error-code>
-		<location>/WEB-INF/views/hkfilm/error/404.jsp</location>
+		<location>/WEB-INF/views/hrm/error/404.jsp</location>
 	</error-page>
 	<error-page>
 		<error-code>415</error-code>
-		<location>/WEB-INF/views/hkfilm/error/500.jsp</location>
+		<location>/WEB-INF/views/hrm/error/500.jsp</location>
 	</error-page>
 	<error-page>
 		<error-code>500</error-code>
-		<location>/WEB-INF/views/hkfilm/error/500.jsp</location>
+		<location>/WEB-INF/views/hrm/error/500.jsp</location>
 	</error-page>
 </web-app>

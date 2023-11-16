@@ -15,6 +15,7 @@
 	<artifactId>nlh4j-domain</artifactId>
 	<packaging>jar</packaging>
 	<name>nlh4j-domain</name>
+	<version>${revision}</version>
 	<description>Base Database Domain for Java Web/Mobile</description>
 
 	<!-- Dependencies -->
@@ -23,17 +24,33 @@
       	<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-utilities</artifactId>
-			<version>${module.version}</version>
+			<version>${project.version}</version>
       	</dependency>
       	<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-core</artifactId>
-			<version>${module.version}</version>
+			<version>${project.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>${project.parent.groupId}</groupId>
+					<artifactId>nlh4j-utilities</artifactId>
+				</exclusion>
+			</exclusions>
       	</dependency>
 		<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-entities</artifactId>
-			<version>${module.version}</version>
+			<version>${project.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>${project.parent.groupId}</groupId>
+					<artifactId>nlh4j-utilities</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>${project.parent.groupId}</groupId>
+					<artifactId>nlh4j-core</artifactId>
+				</exclusion>
+			</exclusions>
       	</dependency>
 
 		<!-- Servlet -->

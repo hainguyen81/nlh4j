@@ -9,19 +9,20 @@
 		<version>1.0</version>
 		<relativePath>${root.basedir}/pom.xml</relativePath>
 	</parent>
-	
-	<!-- Properties -->
-	<properties>
-		<!-- Progurad configuration -->
-		<proguard.skip>true</proguard.skip>
-	</properties>
 
 	<!-- Present package -->
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>nlh4j-lang</artifactId>
 	<packaging>jar</packaging>
 	<name>nlh4j-lang</name>
+	<version>${revision}</version>
 	<description>Base Web Language (i18n) for Java Web/Mobile</description>
+	
+	<!-- Properties -->
+	<properties>
+		<!-- Progurad configuration -->
+		<proguard.skip>true</proguard.skip>
+	</properties>
 
 	<!-- Dependencies -->
 	<dependencies>

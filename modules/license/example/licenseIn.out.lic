@@ -1,6 +1,6 @@
 Date.Format.Pattern = dd/MM/yyyy
-Customer.Name = Hoan Khue Film Corp.
-Purchase.Order.No = 01/12/HD-BTT/BTC/HKFilm
+Customer.Name = Human Resources Management System
+Purchase.Order.No = 01/12/HD-BTT/BTC/HRM
 Purchase.Order.Date = 01/12/2016
 Service.Start.Date = 27/02/2017
 Service.Expires.Date = Unlimited

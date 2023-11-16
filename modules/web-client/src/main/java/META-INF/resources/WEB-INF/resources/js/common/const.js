@@ -1,7 +1,7 @@
 /**
  * Angular application packages
  */
-var APP_CUSTOMER = "HKFilm";
+var APP_CUSTOMER = "HRM";
 var APP_NAME = 'ngApp';
 var APP_CTRL = 'commonCtrl';
 var APP_SESSION_STORAGE = 'sessionStorage';

@@ -15,6 +15,7 @@
 	<artifactId>nlh4j-entities</artifactId>
 	<packaging>jar</packaging>
 	<name>nlh4j-entities</name>
+	<version>${revision}</version>
 	<description>Base Database Entities for Java Web/Mobile</description>
 
 	<!-- Dependencies -->
@@ -23,12 +24,18 @@
       	<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-utilities</artifactId>
-			<version>${module.version}</version>
+			<version>${project.version}</version>
       	</dependency>
       	<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-core</artifactId>
-			<version>${module.version}</version>
+			<version>${project.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>${project.parent.groupId}</groupId>
+					<artifactId>nlh4j-utilities</artifactId>
+				</exclusion>
+			</exclusions>
       	</dependency>
 
 		<!-- Servlet -->

@@ -207,7 +207,7 @@
 		p:defaultFailureUrl="${sec.auth.entry.login.url}" />
 
 	<!-- We just actually need to set the default target url here -->
-	<!-- FIXME For HKFilm -->
+	<!-- FIXME For HRM -->
 	<beans:bean id="customAuthenticationSuccessHandler"
 		class="${sec.auth.success.handler}"
    	    scope="singleton"

@@ -10,18 +10,19 @@
 		<relativePath>${root.basedir}/pom.xml</relativePath>
 	</parent>
 
-	<!-- Properties -->
-	<properties>
-		<!-- Progurad configuration -->
-		<proguard.skip>true</proguard.skip>
-	</properties>
-
 	<!-- Present package -->
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>nlh4j-web-template</artifactId>
 	<packaging>jar</packaging>
 	<name>nlh4j-web-template</name>
+	<version>${revision}</version>
 	<description>Base Web JSP Template for Java Web/Mobile</description>
+
+	<!-- Properties -->
+	<properties>
+		<!-- Progurad configuration -->
+		<proguard.skip>true</proguard.skip>
+	</properties>
 
 	<!-- Dependencies -->
 	<dependencies>
@@ -29,17 +30,23 @@
       	<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-utilities</artifactId>
-			<version>${module.version}</version>
+			<version>${project.version}</version>
       	</dependency>
       	<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-core</artifactId>
-			<version>${module.version}</version>
+			<version>${project.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>${project.parent.groupId}</groupId>
+					<artifactId>nlh4j-utilities</artifactId>
+				</exclusion>
+			</exclusions>
       	</dependency>
       	<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-web-config</artifactId>
-			<version>${module.version}</version>
+			<version>${project.version}</version>
       	</dependency>
 
 		<!-- Servlet -->

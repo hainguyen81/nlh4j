@@ -15,6 +15,7 @@
 	<artifactId>nlh4j-license</artifactId>
 	<packaging>jar</packaging>
 	<name>nlh4j-license</name>
+	<version>${revision}</version>
 	<description>Base License Generation for Java Web/Mobile</description>
 
 	<!-- Dependencies -->
@@ -23,7 +24,7 @@
       	<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-utilities</artifactId>
-			<version>${module.version}</version>
+			<version>${project.version}</version>
       	</dependency>
 
 		<!-- Lombok -->

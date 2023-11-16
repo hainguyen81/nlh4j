@@ -15,6 +15,7 @@
 	<artifactId>nlh4j-thumbnailer</artifactId>
 	<packaging>jar</packaging>
 	<name>nlh4j-thumbnailer</name>
+	<version>${revision}</version>
 	<description>Thumbnail Generator Package for Java Web/Mobile</description>
 
 	<!-- Dependencies -->
@@ -23,7 +24,7 @@
       	<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-utilities</artifactId>
-			<version>${module.version}</version>
+			<version>${project.version}</version>
       	</dependency>
 
 		<!-- Apache POI -->

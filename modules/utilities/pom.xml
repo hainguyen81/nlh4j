@@ -15,6 +15,7 @@
 	<artifactId>nlh4j-utilities</artifactId>
 	<packaging>jar</packaging>
 	<name>nlh4j-utilities</name>
+	<version>${revision}</version>
 	<description>Base Utiities Package for Java Web/Mobile</description>
 
 	<!-- Dependencies -->
@@ -192,7 +193,7 @@
 		</dependency>
 
 		<!-- Barcode4j Dependency -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>avalon-framework</groupId>
 			<artifactId>avalon-framework</artifactId>
 		</dependency>
@@ -203,15 +204,15 @@
 		<dependency>
 			<groupId>avalon-framework</groupId>
 			<artifactId>avalon-framework-impl</artifactId>
-		</dependency>
-		<!-- dependency>
+		</dependency> -->
+		<dependency>
 			<groupId>org.apache.avalon.framework</groupId>
 			<artifactId>avalon-framework-api</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.avalon.framework</groupId>
 			<artifactId>avalon-framework-impl</artifactId>
-		</dependency -->
+		</dependency>
 
 		<!-- Barcode4j -->
 		<dependency>
