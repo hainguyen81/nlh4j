@@ -93,6 +93,120 @@
 				<!-- AspectJ -->
 				<org.aspectj.version>1.8.13</org.aspectj.version>
 				<org.aspectj.skip>false</org.aspectj.skip>
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Springframework -->
+				<!--
+					 https://github.com/spring-projects/spring-framework/wiki/Spring-Framework-Versions
+					 + Supported Versions
+						6.2.x		is the next planned feature branch (November 2024).
+						6.1.x		is the upcoming feature branch (November 2023).
+						6.0.x		is the main production line as of November 2022. This new generation of the framework comes with a JDK 17 and Jakarta EE 9 baseline.
+						5.3.x		is the final feature branch of the 5th generation, with long-term support provided on JDK 8, JDK 11, JDK 17 and the Java EE 8 level.
+						4.3.x		reached its official EOL (end-of-life) on December 31st, 2020. No further maintenance and security patches are planned in that line.
+						3.2.x		reached its official EOL (end-of-life) on December 31st, 2016. No further maintenance and security patches are planned in that line.
+					 + JDK Version Range:
+						Spring Framework 6.2.x:		JDK 17-25 (expected)
+						Spring Framework 6.1.x:		JDK 17-23
+						Spring Framework 6.0.x:		JDK 17-21
+						Spring Framework 5.3.x:		JDK 8-21 (as of 5.3.26)
+					 + Java/Jakarta EE Versions
+						Spring Framework 6.2.x:		Jakarta EE 9-11 (jakarta namespace)
+						Spring Framework 6.1.x:		Jakarta EE 9-10 (jakarta namespace)
+						Spring Framework 6.0.x:		Jakarta EE 9-10 (jakarta namespace)
+						Spring Framework 5.3.x:		Java EE 7-8 (javax namespace)
+				-->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- <spring.framework.version>4.2.5.RELEASE</spring.framework.version> -->
+				<!-- <spring.framework.version>4.0.6.RELEASE</spring.framework.version> -->
+				<!-- FIXME New version to avoid SecurityException of Spring AOP and maven jar signer.
+					Could not generate CGLIB subclass... Common causes of this problem include
+					using a final class or a non-visible class; nested exception is java.lang.IllegalArgumentException:
+					Cannot subclass final class... -->
+				<!-- Spring 5.0.x -->
+				<!--<spring.framework.version>5.0.4.RELEASE</spring.framework.version>-->
+				<!--<spring.framework.version>5.0.20.RELEASE</spring.framework.version>-->
+				<!-- Spring 5.1.x -->
+				<!--<spring.framework.version>5.1.20.RELEASE</spring.framework.version>-->
+				<!-- Spring 5.2.x -->
+				<!--<spring.framework.version>5.2.25.RELEASE</spring.framework.version>-->
+				<!-- Spring 5.3.x -->
+				<spring.framework.version>5.3.30</spring.framework.version>
+				<!-- Spring 6.0.x -->
+				<!--<spring.framework.version>6.0.13</spring.framework.version>-->
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring LDAP -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring LDAP 2.0.x -->
+				<!--<spring.ldap.core.version>2.0.4.RELEASE</spring.ldap.core.version>-->
+				<!-- Spring LDAP 2.1.x -->
+				<!--<spring.ldap.core.version>2.1.0.RELEASE</spring.ldap.core.version>-->
+				<!-- Spring LDAP 2.2.x -->
+				<!--<spring.ldap.core.version>2.2.1.RELEASE</spring.ldap.core.version>-->
+				<!-- Spring LDAP 2.3.x -->
+				<!--<spring.ldap.core.version>2.3.8.RELEASE</spring.ldap.core.version>-->
+				<!-- Spring LDAP 2.4.x -->
+				<spring.ldap.core.version>2.4.1</spring.ldap.core.version>
+				<!-- Spring LDAP 3.0.x -->
+				<!--<spring.ldap.core.version>3.0.6</spring.ldap.core.version>-->
+				<!-- Spring LDAP 3.1.x -->
+				<!--<spring.ldap.core.version>3.1.2</spring.ldap.core.version>-->
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Security -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Security 3.2.x -->
+				<!--<spring.security.version>3.2.9.RELEASE</spring.security.version>-->
+				<!-- Spring Security 5.5.x -->
+				<!--<spring.security.version>5.5.8</spring.security.version>-->
+				<!-- Spring Security 5.6.x -->
+				<!--<spring.security.version>5.6.12</spring.security.version>-->
+				<!-- Spring Security 5.7.x -->
+				<!--<spring.security.version>5.7.11</spring.security.version>-->
+				<!-- Spring Security 5.8.x -->
+				<spring.security.version>5.8.8</spring.security.version>
+				<!-- Spring Security 6.0.x -->
+				<!--<spring.security.version>6.0.8</spring.security.version>-->
+				<!-- Spring Security 6.1.x -->
+				<!--<spring.security.version>6.1.5</spring.security.version>-->
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Data -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Data 2.1.x -->
+				<!--<spring.springframework.data.version>2.1.10.RELEASE</spring.springframework.data.version>-->
+				<!--<spring.springframework.data.version>2.1.21.RELEASE</spring.springframework.data.version>-->
+				<!-- Spring Data 2.2.x -->
+				<!--<spring.springframework.data.version>2.2.13.RELEASE</spring.springframework.data.version>-->
+				<!-- Spring Data 2.3.x -->
+				<!--<spring.springframework.data.version>2.3.9.RELEASE</spring.springframework.data.version>-->
+				<!-- Spring Data 2.4.x -->
+				<!--<spring.springframework.data.version>2.4.15</spring.springframework.data.version>-->
+				<!-- Spring Data 2.5.x -->
+				<!--<spring.springframework.data.version>2.5.12</spring.springframework.data.version>-->
+				<!-- Spring Data 2.6.x -->
+				<!--<spring.springframework.data.version>2.6.10</spring.springframework.data.version>-->
+				<!-- Spring Data 2.7.x -->
+				<spring.springframework.data.version>2.7.17</spring.springframework.data.version>
+				<!-- Spring Data 3.0.x -->
+				<!--<spring.springframework.data.version>3.0.11</spring.springframework.data.version>-->
+				<!-- Spring Data 3.1.x -->
+				<!--<spring.springframework.data.version>3.1.5</spring.springframework.data.version>-->
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Data Mongo -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Data Mongo 2.1.x -->
+				<!--<spring.springframework.data.mongo.version>2.1.10.RELEASE</spring.springframework.data.mongo.version>-->
+				<!-- Spring Data Mongo 3.3.x -->
+				<!--<spring.springframework.data.mongo.version>3.3.10</spring.springframework.data.mongo.version>-->
+				<!-- Spring Data Mongo 3.4.x -->
+				<spring.springframework.data.mongo.version>3.4.17</spring.springframework.data.mongo.version>
+				<!-- Spring Data Mongo 4.0.x -->
+				<!--<spring.springframework.data.mongo.version>4.0.11</spring.springframework.data.mongo.version>-->
+				<!-- Spring Data Mongo 4.1.x -->
+				<!--<spring.springframework.data.mongo.version>4.1.5</spring.springframework.data.mongo.version>-->
 				
 				<!--
 				Servlet Spec	JSP Spec	EL Spec		WebSocket Spec		Authentication (JASPIC) Spec	Apache Tomcat Version	Latest Released Version		Supported Java Versions
@@ -243,6 +357,120 @@
 				<!-- AspectJ -->
 				<org.aspectj.version>1.9.7</org.aspectj.version>
 				<org.aspectj.skip>false</org.aspectj.skip>
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Springframework -->
+				<!--
+					 https://github.com/spring-projects/spring-framework/wiki/Spring-Framework-Versions
+					 + Supported Versions
+						6.2.x		is the next planned feature branch (November 2024).
+						6.1.x		is the upcoming feature branch (November 2023).
+						6.0.x		is the main production line as of November 2022. This new generation of the framework comes with a JDK 17 and Jakarta EE 9 baseline.
+						5.3.x		is the final feature branch of the 5th generation, with long-term support provided on JDK 8, JDK 11, JDK 17 and the Java EE 8 level.
+						4.3.x		reached its official EOL (end-of-life) on December 31st, 2020. No further maintenance and security patches are planned in that line.
+						3.2.x		reached its official EOL (end-of-life) on December 31st, 2016. No further maintenance and security patches are planned in that line.
+					 + JDK Version Range:
+						Spring Framework 6.2.x:		JDK 17-25 (expected)
+						Spring Framework 6.1.x:		JDK 17-23
+						Spring Framework 6.0.x:		JDK 17-21
+						Spring Framework 5.3.x:		JDK 8-21 (as of 5.3.26)
+					 + Java/Jakarta EE Versions
+						Spring Framework 6.2.x:		Jakarta EE 9-11 (jakarta namespace)
+						Spring Framework 6.1.x:		Jakarta EE 9-10 (jakarta namespace)
+						Spring Framework 6.0.x:		Jakarta EE 9-10 (jakarta namespace)
+						Spring Framework 5.3.x:		Java EE 7-8 (javax namespace)
+				-->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- <spring.framework.version>4.2.5.RELEASE</spring.framework.version> -->
+				<!-- <spring.framework.version>4.0.6.RELEASE</spring.framework.version> -->
+				<!-- FIXME New version to avoid SecurityException of Spring AOP and maven jar signer.
+					Could not generate CGLIB subclass... Common causes of this problem include
+					using a final class or a non-visible class; nested exception is java.lang.IllegalArgumentException:
+					Cannot subclass final class... -->
+				<!-- Spring 5.0.x -->
+				<!--<spring.framework.version>5.0.4.RELEASE</spring.framework.version>-->
+				<!--<spring.framework.version>5.0.20.RELEASE</spring.framework.version>-->
+				<!-- Spring 5.1.x -->
+				<!--<spring.framework.version>5.1.20.RELEASE</spring.framework.version>-->
+				<!-- Spring 5.2.x -->
+				<!--<spring.framework.version>5.2.25.RELEASE</spring.framework.version>-->
+				<!-- Spring 5.3.x -->
+				<spring.framework.version>5.3.30</spring.framework.version>
+				<!-- Spring 6.0.x -->
+				<!--<spring.framework.version>6.0.13</spring.framework.version>-->
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring LDAP -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring LDAP 2.0.x -->
+				<!--<spring.ldap.core.version>2.0.4.RELEASE</spring.ldap.core.version>-->
+				<!-- Spring LDAP 2.1.x -->
+				<!--<spring.ldap.core.version>2.1.0.RELEASE</spring.ldap.core.version>-->
+				<!-- Spring LDAP 2.2.x -->
+				<!--<spring.ldap.core.version>2.2.1.RELEASE</spring.ldap.core.version>-->
+				<!-- Spring LDAP 2.3.x -->
+				<!--<spring.ldap.core.version>2.3.8.RELEASE</spring.ldap.core.version>-->
+				<!-- Spring LDAP 2.4.x -->
+				<spring.ldap.core.version>2.4.1</spring.ldap.core.version>
+				<!-- Spring LDAP 3.0.x -->
+				<!--<spring.ldap.core.version>3.0.6</spring.ldap.core.version>-->
+				<!-- Spring LDAP 3.1.x -->
+				<!--<spring.ldap.core.version>3.1.2</spring.ldap.core.version>-->
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Security -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Security 3.2.x -->
+				<!--<spring.security.version>3.2.9.RELEASE</spring.security.version>-->
+				<!-- Spring Security 5.5.x -->
+				<!--<spring.security.version>5.5.8</spring.security.version>-->
+				<!-- Spring Security 5.6.x -->
+				<!--<spring.security.version>5.6.12</spring.security.version>-->
+				<!-- Spring Security 5.7.x -->
+				<!--<spring.security.version>5.7.11</spring.security.version>-->
+				<!-- Spring Security 5.8.x -->
+				<spring.security.version>5.8.8</spring.security.version>
+				<!-- Spring Security 6.0.x -->
+				<!--<spring.security.version>6.0.8</spring.security.version>-->
+				<!-- Spring Security 6.1.x -->
+				<!--<spring.security.version>6.1.5</spring.security.version>-->
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Data -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Data 2.1.x -->
+				<!--<spring.springframework.data.version>2.1.10.RELEASE</spring.springframework.data.version>-->
+				<!--<spring.springframework.data.version>2.1.21.RELEASE</spring.springframework.data.version>-->
+				<!-- Spring Data 2.2.x -->
+				<!--<spring.springframework.data.version>2.2.13.RELEASE</spring.springframework.data.version>-->
+				<!-- Spring Data 2.3.x -->
+				<!--<spring.springframework.data.version>2.3.9.RELEASE</spring.springframework.data.version>-->
+				<!-- Spring Data 2.4.x -->
+				<!--<spring.springframework.data.version>2.4.15</spring.springframework.data.version>-->
+				<!-- Spring Data 2.5.x -->
+				<!--<spring.springframework.data.version>2.5.12</spring.springframework.data.version>-->
+				<!-- Spring Data 2.6.x -->
+				<!--<spring.springframework.data.version>2.6.10</spring.springframework.data.version>-->
+				<!-- Spring Data 2.7.x -->
+				<spring.springframework.data.version>2.7.17</spring.springframework.data.version>
+				<!-- Spring Data 3.0.x -->
+				<!--<spring.springframework.data.version>3.0.11</spring.springframework.data.version>-->
+				<!-- Spring Data 3.1.x -->
+				<!--<spring.springframework.data.version>3.1.5</spring.springframework.data.version>-->
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Data Mongo -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Data Mongo 2.1.x -->
+				<!--<spring.springframework.data.mongo.version>2.1.10.RELEASE</spring.springframework.data.mongo.version>-->
+				<!-- Spring Data Mongo 3.3.x -->
+				<!--<spring.springframework.data.mongo.version>3.3.10</spring.springframework.data.mongo.version>-->
+				<!-- Spring Data Mongo 3.4.x -->
+				<spring.springframework.data.mongo.version>3.4.17</spring.springframework.data.mongo.version>
+				<!-- Spring Data Mongo 4.0.x -->
+				<!--<spring.springframework.data.mongo.version>4.0.11</spring.springframework.data.mongo.version>-->
+				<!-- Spring Data Mongo 4.1.x -->
+				<!--<spring.springframework.data.mongo.version>4.1.5</spring.springframework.data.mongo.version>-->
 				
 				<!--
 				Servlet Spec	JSP Spec	EL Spec		WebSocket Spec		Authentication (JASPIC) Spec	Apache Tomcat Version	Latest Released Version		Supported Java Versions
@@ -281,6 +509,25 @@
 			<build>
 				<pluginManagement>
 					<plugins>
+						<!-- Eclipse -->
+			            <plugin>
+			                <groupId>org.apache.maven.plugins</groupId>
+			                <artifactId>maven-eclipse-plugin</artifactId>
+			                <version>${maven.eclipse.version}</version>
+			                <configuration>
+								<additionalConfig>
+									<file>
+										<name>.factorypath</name>
+										<content><![CDATA[<factorypath>
+	<factorypathentry kind="PLUGIN" id="org.eclipse.jst.ws.annotations.core" enabled="true" runInBatchMode="false"/>
+	<factorypathentry kind="VARJAR" id="M2_REPO/org/projectlombok/lombok/${org.projectlombok.version}/lombok-${org.projectlombok.version}.jar" enabled="true" runInBatchMode="false"/>
+	<factorypathentry kind="VARJAR" id="M2_REPO/org/seasar/doma/doma/${doma.version}/doma-${doma.version}.jar" enabled="true" runInBatchMode="false"/>
+	<factorypathentry kind="VARJAR" id="M2_REPO/javax/annotation/javax.annotation-api/${javax.annotation.version}/javax.annotation-api-${javax.annotation.version}.jar" enabled="true" runInBatchMode="false"/>
+</factorypath>]]></content>
+									</file>
+								</additionalConfig>
+			                </configuration>
+			            </plugin>
 						<!-- Compiler -->
 						<plugin>
 							<groupId>org.apache.maven.plugins</groupId>
@@ -536,6 +783,120 @@
 				<!-- AspectJ -->
 				<org.aspectj.version>1.9.20.1</org.aspectj.version>
 				<org.aspectj.skip>false</org.aspectj.skip>
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Springframework -->
+				<!--
+					 https://github.com/spring-projects/spring-framework/wiki/Spring-Framework-Versions
+					 + Supported Versions
+						6.2.x		is the next planned feature branch (November 2024).
+						6.1.x		is the upcoming feature branch (November 2023).
+						6.0.x		is the main production line as of November 2022. This new generation of the framework comes with a JDK 17 and Jakarta EE 9 baseline.
+						5.3.x		is the final feature branch of the 5th generation, with long-term support provided on JDK 8, JDK 11, JDK 17 and the Java EE 8 level.
+						4.3.x		reached its official EOL (end-of-life) on December 31st, 2020. No further maintenance and security patches are planned in that line.
+						3.2.x		reached its official EOL (end-of-life) on December 31st, 2016. No further maintenance and security patches are planned in that line.
+					 + JDK Version Range:
+						Spring Framework 6.2.x:		JDK 17-25 (expected)
+						Spring Framework 6.1.x:		JDK 17-23
+						Spring Framework 6.0.x:		JDK 17-21
+						Spring Framework 5.3.x:		JDK 8-21 (as of 5.3.26)
+					 + Java/Jakarta EE Versions
+						Spring Framework 6.2.x:		Jakarta EE 9-11 (jakarta namespace)
+						Spring Framework 6.1.x:		Jakarta EE 9-10 (jakarta namespace)
+						Spring Framework 6.0.x:		Jakarta EE 9-10 (jakarta namespace)
+						Spring Framework 5.3.x:		Java EE 7-8 (javax namespace)
+				-->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- <spring.framework.version>4.2.5.RELEASE</spring.framework.version> -->
+				<!-- <spring.framework.version>4.0.6.RELEASE</spring.framework.version> -->
+				<!-- FIXME New version to avoid SecurityException of Spring AOP and maven jar signer.
+					Could not generate CGLIB subclass... Common causes of this problem include
+					using a final class or a non-visible class; nested exception is java.lang.IllegalArgumentException:
+					Cannot subclass final class... -->
+				<!-- Spring 5.0.x -->
+				<!--<spring.framework.version>5.0.4.RELEASE</spring.framework.version>-->
+				<!--<spring.framework.version>5.0.20.RELEASE</spring.framework.version>-->
+				<!-- Spring 5.1.x -->
+				<!--<spring.framework.version>5.1.20.RELEASE</spring.framework.version>-->
+				<!-- Spring 5.2.x -->
+				<!--<spring.framework.version>5.2.25.RELEASE</spring.framework.version>-->
+				<!-- Spring 5.3.x -->
+				<!--<spring.framework.version>5.3.30</spring.framework.version>-->
+				<!-- Spring 6.0.x -->
+				<spring.framework.version>6.0.13</spring.framework.version>
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring LDAP -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring LDAP 2.0.x -->
+				<!--<spring.ldap.core.version>2.0.4.RELEASE</spring.ldap.core.version>-->
+				<!-- Spring LDAP 2.1.x -->
+				<!--<spring.ldap.core.version>2.1.0.RELEASE</spring.ldap.core.version>-->
+				<!-- Spring LDAP 2.2.x -->
+				<!--<spring.ldap.core.version>2.2.1.RELEASE</spring.ldap.core.version>-->
+				<!-- Spring LDAP 2.3.x -->
+				<!--<spring.ldap.core.version>2.3.8.RELEASE</spring.ldap.core.version>-->
+				<!-- Spring LDAP 2.4.x -->
+				<!--<spring.ldap.core.version>2.4.1</spring.ldap.core.version>-->
+				<!-- Spring LDAP 3.0.x -->
+				<!--<spring.ldap.core.version>3.0.6</spring.ldap.core.version>-->
+				<!-- Spring LDAP 3.1.x -->
+				<spring.ldap.core.version>3.1.2</spring.ldap.core.version>
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Security -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Security 3.2.x -->
+				<!--<spring.security.version>3.2.9.RELEASE</spring.security.version>-->
+				<!-- Spring Security 5.5.x -->
+				<!--<spring.security.version>5.5.8</spring.security.version>-->
+				<!-- Spring Security 5.6.x -->
+				<!--<spring.security.version>5.6.12</spring.security.version>-->
+				<!-- Spring Security 5.7.x -->
+				<!--<spring.security.version>5.7.11</spring.security.version>-->
+				<!-- Spring Security 5.8.x -->
+				<!--<spring.security.version>5.8.8</spring.security.version>-->
+				<!-- Spring Security 6.0.x -->
+				<!--<spring.security.version>6.0.8</spring.security.version>-->
+				<!-- Spring Security 6.1.x -->
+				<spring.security.version>6.1.5</spring.security.version>
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Data -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Data 2.1.x -->
+				<!--<spring.springframework.data.version>2.1.10.RELEASE</spring.springframework.data.version>-->
+				<!--<spring.springframework.data.version>2.1.21.RELEASE</spring.springframework.data.version>-->
+				<!-- Spring Data 2.2.x -->
+				<!--<spring.springframework.data.version>2.2.13.RELEASE</spring.springframework.data.version>-->
+				<!-- Spring Data 2.3.x -->
+				<!--<spring.springframework.data.version>2.3.9.RELEASE</spring.springframework.data.version>-->
+				<!-- Spring Data 2.4.x -->
+				<!--<spring.springframework.data.version>2.4.15</spring.springframework.data.version>-->
+				<!-- Spring Data 2.5.x -->
+				<!--<spring.springframework.data.version>2.5.12</spring.springframework.data.version>-->
+				<!-- Spring Data 2.6.x -->
+				<!--<spring.springframework.data.version>2.6.10</spring.springframework.data.version>-->
+				<!-- Spring Data 2.7.x -->
+				<!--<spring.springframework.data.version>2.7.17</spring.springframework.data.version>-->
+				<!-- Spring Data 3.0.x -->
+				<!--<spring.springframework.data.version>3.0.11</spring.springframework.data.version>-->
+				<!-- Spring Data 3.1.x -->
+				<spring.springframework.data.version>3.1.5</spring.springframework.data.version>
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Data Mongo -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Data Mongo 2.1.x -->
+				<!--<spring.springframework.data.mongo.version>2.1.10.RELEASE</spring.springframework.data.mongo.version>-->
+				<!-- Spring Data Mongo 3.3.x -->
+				<!--<spring.springframework.data.mongo.version>3.3.10</spring.springframework.data.mongo.version>-->
+				<!-- Spring Data Mongo 3.4.x -->
+				<!--<spring.springframework.data.mongo.version>3.4.17</spring.springframework.data.mongo.version>-->
+				<!-- Spring Data Mongo 4.0.x -->
+				<!--<spring.springframework.data.mongo.version>4.0.11</spring.springframework.data.mongo.version>-->
+				<!-- Spring Data Mongo 4.1.x -->
+				<spring.springframework.data.mongo.version>4.1.5</spring.springframework.data.mongo.version>
 				
 				<!--
 				Servlet Spec	JSP Spec	EL Spec		WebSocket Spec		Authentication (JASPIC) Spec	Apache Tomcat Version	Latest Released Version		Supported Java Versions
@@ -574,6 +935,25 @@
 			<build>
 				<pluginManagement>
 					<plugins>
+						<!-- Eclipse -->
+			            <plugin>
+			                <groupId>org.apache.maven.plugins</groupId>
+			                <artifactId>maven-eclipse-plugin</artifactId>
+			                <version>${maven.eclipse.version}</version>
+			                <configuration>
+								<additionalConfig>
+									<file>
+										<name>.factorypath</name>
+										<content><![CDATA[<factorypath>
+	<factorypathentry kind="PLUGIN" id="org.eclipse.jst.ws.annotations.core" enabled="true" runInBatchMode="false"/>
+	<factorypathentry kind="VARJAR" id="M2_REPO/org/projectlombok/lombok/${org.projectlombok.version}/lombok-${org.projectlombok.version}.jar" enabled="true" runInBatchMode="false"/>
+	<factorypathentry kind="VARJAR" id="M2_REPO/org/seasar/doma/doma/${doma.version}/doma-${doma.version}.jar" enabled="true" runInBatchMode="false"/>
+	<factorypathentry kind="VARJAR" id="M2_REPO/javax/annotation/javax.annotation-api/${javax.annotation.version}/javax.annotation-api-${javax.annotation.version}.jar" enabled="true" runInBatchMode="false"/>
+</factorypath>]]></content>
+									</file>
+								</additionalConfig>
+			                </configuration>
+			            </plugin>
 						<!-- Compiler -->
 						<plugin>
 							<groupId>org.apache.maven.plugins</groupId>
@@ -920,6 +1300,9 @@
 		<profile.configuration>${root.basedir}/profiles/${build.profile.id}/config.properties</profile.configuration>
 		<eclipse.maven.project.activated.profiles>dev,jdk11</eclipse.maven.project.activated.profiles>
 
+		<!-- automatically run annotation processors within the incremental compilation -->
+		<m2e.apt.activation>jdt_apt</m2e.apt.activation>
+
 		<!-- Maven Plugins -->
 		<maven.m2e.lifecycle.mapping.version>1.0.0</maven.m2e.lifecycle.mapping.version>
 		<maven.findbugs.version>3.0.5</maven.findbugs.version>
@@ -980,21 +1363,165 @@
 		<!--<com.github.ziplet.version>2.0.0</com.github.ziplet.version>-->
 		<com.github.ziplet.version>2.4.1</com.github.ziplet.version>
 
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!-- Springframework -->
+		<!--
+			 https://github.com/spring-projects/spring-framework/wiki/Spring-Framework-Versions
+			 + Supported Versions
+				6.2.x		is the next planned feature branch (November 2024).
+				6.1.x		is the upcoming feature branch (November 2023).
+				6.0.x		is the main production line as of November 2022. This new generation of the framework comes with a JDK 17 and Jakarta EE 9 baseline.
+				5.3.x		is the final feature branch of the 5th generation, with long-term support provided on JDK 8, JDK 11, JDK 17 and the Java EE 8 level.
+				4.3.x		reached its official EOL (end-of-life) on December 31st, 2020. No further maintenance and security patches are planned in that line.
+				3.2.x		reached its official EOL (end-of-life) on December 31st, 2016. No further maintenance and security patches are planned in that line.
+			 + JDK Version Range:
+				Spring Framework 6.2.x:		JDK 17-25 (expected)
+				Spring Framework 6.1.x:		JDK 17-23
+				Spring Framework 6.0.x:		JDK 17-21
+				Spring Framework 5.3.x:		JDK 8-21 (as of 5.3.26)
+			 + Java/Jakarta EE Versions
+				Spring Framework 6.2.x:		Jakarta EE 9-11 (jakarta namespace)
+				Spring Framework 6.1.x:		Jakarta EE 9-10 (jakarta namespace)
+				Spring Framework 6.0.x:		Jakarta EE 9-10 (jakarta namespace)
+				Spring Framework 5.3.x:		Java EE 7-8 (javax namespace)
+		-->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!-- <spring.framework.version>4.2.5.RELEASE</spring.framework.version> -->
 		<!-- <spring.framework.version>4.0.6.RELEASE</spring.framework.version> -->
 		<!-- FIXME New version to avoid SecurityException of Spring AOP and maven jar signer.
 			Could not generate CGLIB subclass... Common causes of this problem include
 			using a final class or a non-visible class; nested exception is java.lang.IllegalArgumentException:
 			Cannot subclass final class... -->
-		<spring.framework.version>5.0.4.RELEASE</spring.framework.version>
-		<spring.springframework.data.version>2.1.10.RELEASE</spring.springframework.data.version>
-		<spring.springframework.data.mongo.version>2.1.10.RELEASE</spring.springframework.data.mongo.version>
-		<spring.springframework.data.redis.version>2.1.10.RELEASE</spring.springframework.data.redis.version>
-		<spring.springframework.data.elasticsearch.version>3.1.10.RELEASE</spring.springframework.data.elasticsearch.version>
-		<spring.security.version>3.2.9.RELEASE</spring.security.version>
-		<!-- <spring.security.version>4.0.4.RELEASE</spring.security.version> -->
-		<spring.ldap.core.version>2.0.4.RELEASE</spring.ldap.core.version>
+		<!-- Spring 5.0.x -->
+		<!--<spring.framework.version>5.0.4.RELEASE</spring.framework.version>-->
+		<!--<spring.framework.version>5.0.20.RELEASE</spring.framework.version>-->
+		<!-- Spring 5.1.x -->
+		<!--<spring.framework.version>5.1.20.RELEASE</spring.framework.version>-->
+		<!-- Spring 5.2.x -->
+		<!--<spring.framework.version>5.2.25.RELEASE</spring.framework.version>-->
+		<!-- Spring 5.3.x -->
+		<!--<spring.framework.version>5.3.30</spring.framework.version>-->
+		<!-- Spring 6.0.x -->
+		<!--<spring.framework.version>6.0.13</spring.framework.version>-->
+
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Spring LDAP -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Spring LDAP 2.0.x -->
+		<!--<spring.ldap.core.version>2.0.4.RELEASE</spring.ldap.core.version>-->
+		<!-- Spring LDAP 2.1.x -->
+		<!--<spring.ldap.core.version>2.1.0.RELEASE</spring.ldap.core.version>-->
+		<!-- Spring LDAP 2.2.x -->
+		<!--<spring.ldap.core.version>2.2.1.RELEASE</spring.ldap.core.version>-->
+		<!-- Spring LDAP 2.3.x -->
+		<!--<spring.ldap.core.version>2.3.8.RELEASE</spring.ldap.core.version>-->
+		<!-- Spring LDAP 2.4.x -->
+		<!--<spring.ldap.core.version>2.4.1</spring.ldap.core.version>-->
+		<!-- Spring LDAP 3.0.x -->
+		<!--<spring.ldap.core.version>3.0.6</spring.ldap.core.version>-->
+		<!-- Spring LDAP 3.1.x -->
+		<!--<spring.ldap.core.version>3.1.2</spring.ldap.core.version>-->
+
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Spring Security -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Spring Security 3.2.x -->
+		<!--<spring.security.version>3.2.9.RELEASE</spring.security.version>-->
+		<!-- Spring Security 5.5.x -->
+		<!--<spring.security.version>5.5.8</spring.security.version>-->
+		<!-- Spring Security 5.6.x -->
+		<!--<spring.security.version>5.6.12</spring.security.version>-->
+		<!-- Spring Security 5.7.x -->
+		<!--<spring.security.version>5.7.11</spring.security.version>-->
+		<!-- Spring Security 5.8.x -->
+		<!--<spring.security.version>5.8.8</spring.security.version>-->
+		<!-- Spring Security 6.0.x -->
+		<!--<spring.security.version>6.0.8</spring.security.version>-->
+		<!-- Spring Security 6.1.x -->
+		<!--<spring.security.version>6.1.5</spring.security.version>-->
+
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Spring Data -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Spring Data 2.1.x -->
+		<!--<spring.springframework.data.version>2.1.10.RELEASE</spring.springframework.data.version>-->
+		<!--<spring.springframework.data.version>2.1.21.RELEASE</spring.springframework.data.version>-->
+		<!-- Spring Data 2.2.x -->
+		<!--<spring.springframework.data.version>2.2.13.RELEASE</spring.springframework.data.version>-->
+		<!-- Spring Data 2.3.x -->
+		<!--<spring.springframework.data.version>2.3.9.RELEASE</spring.springframework.data.version>-->
+		<!-- Spring Data 2.4.x -->
+		<!--<spring.springframework.data.version>2.4.15</spring.springframework.data.version>-->
+		<!-- Spring Data 2.5.x -->
+		<!--<spring.springframework.data.version>2.5.12</spring.springframework.data.version>-->
+		<!-- Spring Data 2.6.x -->
+		<!--<spring.springframework.data.version>2.6.10</spring.springframework.data.version>-->
+		<!-- Spring Data 2.7.x -->
+		<!--<spring.springframework.data.version>2.7.17</spring.springframework.data.version>-->
+		<!-- Spring Data 3.0.x -->
+		<!--<spring.springframework.data.version>3.0.11</spring.springframework.data.version>-->
+		<!-- Spring Data 3.1.x -->
+		<!--<spring.springframework.data.version>3.1.5</spring.springframework.data.version>-->
+
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Spring Data Mongo -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Spring Data Mongo 2.1.x -->
+		<!--<spring.springframework.data.mongo.version>2.1.10.RELEASE</spring.springframework.data.mongo.version>-->
+		<!-- Spring Data Mongo 3.3.x -->
+		<!--<spring.springframework.data.mongo.version>3.3.10</spring.springframework.data.mongo.version>-->
+		<!-- Spring Data Mongo 3.4.x -->
+		<!--<spring.springframework.data.mongo.version>3.4.17</spring.springframework.data.mongo.version>-->
+		<!-- Spring Data Mongo 4.0.x -->
+		<!--<spring.springframework.data.mongo.version>4.0.11</spring.springframework.data.mongo.version>-->
+		<!-- Spring Data Mongo 4.1.x -->
+		<!--<spring.springframework.data.mongo.version>4.1.5</spring.springframework.data.mongo.version>-->
+
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Spring Data Redis -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Spring Data Redis 2.1.x -->
+		<!--<spring.springframework.data.redis.version>2.1.10.RELEASE</spring.springframework.data.redis.version>-->
+		<!--<spring.springframework.data.redis.version>2.1.21.RELEASE</spring.springframework.data.redis.version>-->
+		<!-- Spring Data Redis 2.2.x -->
+		<!--<spring.springframework.data.redis.version>2.2.13.RELEASE</spring.springframework.data.redis.version>-->
+		<!-- Spring Data Redis 2.3.x -->
+		<!--<spring.springframework.data.redis.version>2.3.9.RELEASE</spring.springframework.data.redis.version>-->
+		<!-- Spring Data Redis 2.4.x -->
+		<!--<spring.springframework.data.redis.version>2.4.15</spring.springframework.data.redis.version>-->
+		<!-- Spring Data Redis 2.5.x -->
+		<!--<spring.springframework.data.redis.version>2.5.12</spring.springframework.data.redis.version>-->
+		<!-- Spring Data Redis 2.6.x -->
+		<!--<spring.springframework.data.redis.version>2.6.10</spring.springframework.data.redis.version>-->
+		<!-- Spring Data Redis 2.7.x -->
+		<!--<spring.springframework.data.redis.version>2.7.17</spring.springframework.data.redis.version>-->
+		<!-- Spring Data Redis 3.0.x -->
+		<!--<spring.springframework.data.redis.version>3.0.11</spring.springframework.data.redis.version>-->
+		<!-- Spring Data Redis 3.1.x -->
+		<!--<spring.springframework.data.redis.version>3.1.5</spring.springframework.data.redis.version>-->
+
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Spring Data ElasticSearch -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Spring Data ElasticSearch 3.1.x -->
+		<!--<spring.springframework.data.elasticsearch.version>3.1.10.RELEASE</spring.springframework.data.elasticsearch.version>-->
+		<!--<spring.springframework.data.elasticsearch.version>3.1.21.RELEASE</spring.springframework.data.elasticsearch.version>-->
+		<!-- Spring Data ElasticSearch 3.2.x -->
+		<!--<spring.springframework.data.elasticsearch.version>3.2.13.RELEASE</spring.springframework.data.elasticsearch.version>-->
+		<!-- Spring Data ElasticSearch 4.0.x -->
+		<!--<spring.springframework.data.elasticsearch.version>4.0.9.RELEASE</spring.springframework.data.elasticsearch.version>-->
+		<!-- Spring Data ElasticSearch 4.1.x -->
+		<!--<spring.springframework.data.elasticsearch.version>4.1.15</spring.springframework.data.elasticsearch.version>-->
+		<!-- Spring Data ElasticSearch 4.2.x -->
+		<!--<spring.springframework.data.elasticsearch.version>4.2.12</spring.springframework.data.elasticsearch.version>-->
+		<!-- Spring Data ElasticSearch 4.3.x -->
+		<!--<spring.springframework.data.elasticsearch.version>4.3.10</spring.springframework.data.elasticsearch.version>-->
+		<!-- Spring Data ElasticSearch 4.4.x -->
+		<!--<spring.springframework.data.elasticsearch.version>4.4.17</spring.springframework.data.elasticsearch.version>-->
+		<!-- Spring Data ElasticSearch 5.0.x -->
+		<!--<spring.springframework.data.elasticsearch.version>5.0.11</spring.springframework.data.elasticsearch.version>-->
+		<!-- Spring Data ElasticSearch 5.1.x -->
+		<!--<spring.springframework.data.elasticsearch.version>5.1.5</spring.springframework.data.elasticsearch.version>-->
 
 		<!-- Nimbus - Spring Security JWT Authentication -->
 		<com.nimbusds.jose.jwt.version>3.8</com.nimbusds.jose.jwt.version>
@@ -1615,7 +2142,57 @@
 								<content><![CDATA[activeProfiles=${eclipse.maven.project.activated.profiles}
 eclipse.perferences.version=1
 resolveWorkspaceProjects=true
-version=1]]>></content>
+version=1]]></content>
+							</file>
+							<file>
+								<name>.settings/org.eclipse.jdt.core.prefs</name>
+								<content><![CDATA[eclipse.preferences.version=1
+encoding/.apt_generated=${project.build.sourceEncoding}
+encoding/src/main/java=${project.build.sourceEncoding}
+encoding/src/main/resources=${project.build.sourceEncoding}
+encoding/src/test/java=${project.build.sourceEncoding}
+encoding/src/test/resources=${project.build.sourceEncoding}
+encoding/target/generated-test-sources/test-annotations=${project.build.sourceEncoding}
+org.eclipse.jdt.core.compiler.codegen.targetPlatform=${java.version}
+org.eclipse.jdt.core.compiler.compliance=${java.version}
+org.eclipse.jdt.core.compiler.problem.enablePreviewFeatures=disabled
+org.eclipse.jdt.core.compiler.problem.forbiddenReference=warning
+org.eclipse.jdt.core.compiler.problem.reportPreviewFeatures=ignore
+org.eclipse.jdt.core.compiler.processAnnotations=enabled
+org.eclipse.jdt.core.compiler.release=disabled
+org.eclipse.jdt.core.compiler.source=${java.version}]]></content>
+							</file>
+							<file>
+								<name>.settings/org.eclipse.jdt.apt.core.prefs</name>
+								<content><![CDATA[eclipse.preferences.version=1
+org.eclipse.jdt.apt.aptEnabled=true
+org.eclipse.jdt.apt.genSrcDir=.apt_generated
+org.eclipse.jdt.apt.genTestSrcDir=.apt_generated_tests
+org.eclipse.jdt.apt.processorOptions/sql.validation=true
+org.eclipse.jdt.apt.reconcileEnabled=true]]></content>
+							</file>
+							<file>
+								<name>.settings/org.hibernate.eclipse.console.prefs</name>
+								<content><![CDATA[default.configuration=${project.artifactId}
+eclipse.preferences.version=1
+hibernate3.enabled=true]]></content>
+							</file>
+							<file>
+								<name>.settings/org.eclipse.core.resources.prefs</name>
+								<content><![CDATA[eclipse.preferences.version=1
+encoding//src/main/java=${project.build.sourceEncoding}
+encoding//src/main/resources=${project.build.sourceEncoding}
+encoding//src/test/java=${project.build.sourceEncoding}
+encoding//src/test/resources=${project.build.sourceEncoding}
+encoding/<project>=${project.build.sourceEncoding}]]></content>
+							</file>
+							<file>
+								<name>.factorypath</name>
+								<content><![CDATA[<factorypath>
+	<factorypathentry kind="PLUGIN" id="org.eclipse.jst.ws.annotations.core" enabled="true" runInBatchMode="false"/>
+	<factorypathentry kind="VARJAR" id="M2_REPO/org/projectlombok/lombok/${org.projectlombok.version}/lombok-${org.projectlombok.version}.jar" enabled="true" runInBatchMode="false"/>
+	<factorypathentry kind="VARJAR" id="M2_REPO/org/seasar/doma/doma/${doma.version}/doma-${doma.version}.jar" enabled="true" runInBatchMode="false"/>
+</factorypath>]]></content>
 							</file>
 						</additionalConfig>
 	                </configuration>
