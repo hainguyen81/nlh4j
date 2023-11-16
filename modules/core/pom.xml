@@ -51,8 +51,8 @@
 
 		<!-- Support JSP Other taglib -->
 		<dependency>
-			<groupId>taglibs</groupId>
-			<artifactId>standard</artifactId>
+			<groupId>${taglibs.groupId}</groupId>
+			<artifactId>${taglibs.artifactId}</artifactId>
 		</dependency>
 
 		<!-- Spring Dependencies -->
