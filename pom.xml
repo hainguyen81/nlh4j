@@ -977,7 +977,8 @@
 		<taglibs.version>1.2.5</taglibs.version>
 		
 		<!-- Response Compression -->
-		<com.github.ziplet.version>2.0.0</com.github.ziplet.version>
+		<!--<com.github.ziplet.version>2.0.0</com.github.ziplet.version>-->
+		<com.github.ziplet.version>2.4.1</com.github.ziplet.version>
 
 		<!-- Springframework -->
 		<!-- <spring.framework.version>4.2.5.RELEASE</spring.framework.version> -->
