@@ -8,16 +8,16 @@
         <put-attribute name="module" value="C12" />
         <put-attribute name="page" value="C1202" />
         <put-attribute name="controllerMapping" value="/chgpwd" />
-        <put-attribute name="detailForm" value="/WEB-INF/views/hkfilm/C1200/detailForm.jsp" />
+        <put-attribute name="detailForm" value="/WEB-INF/views/hrm/C1200/detailForm.jsp" />
     </definition>
     <!-- S01 - System Role Management -->
     <definition name="S0100/S0101" extends="master.definition">
         <put-attribute name="module" value="S01" />
         <put-attribute name="page" value="S0101" />
         <put-attribute name="controllerMapping" value="/system/role" />
-        <put-attribute name="searchForm" value="/WEB-INF/views/hkfilm/S0100/searchForm.jsp" />
-        <put-attribute name="listColumns" value="/WEB-INF/views/hkfilm/S0100/listColumns.jsp" />
-        <put-attribute name="listItems" value="/WEB-INF/views/hkfilm/S0100/listItems.jsp" />
+        <put-attribute name="searchForm" value="/WEB-INF/views/hrm/S0100/searchForm.jsp" />
+        <put-attribute name="listColumns" value="/WEB-INF/views/hrm/S0100/listColumns.jsp" />
+        <put-attribute name="listItems" value="/WEB-INF/views/hrm/S0100/listItems.jsp" />
         <put-attribute name="showBaseActions" value="true" />
         <put-attribute name="showPagination" value="true" />
     </definition>
@@ -25,16 +25,16 @@
         <put-attribute name="module" value="S01" />
         <put-attribute name="page" value="S0102" />
         <put-attribute name="controllerMapping" value="/system/role" />
-        <put-attribute name="detailForm" value="/WEB-INF/views/hkfilm/S0100/detailForm.jsp" />
+        <put-attribute name="detailForm" value="/WEB-INF/views/hrm/S0100/detailForm.jsp" />
     </definition>
     <!-- S02 - System User Management -->
     <definition name="S0200/S0201" extends="master.definition">
         <put-attribute name="module" value="S02" />
         <put-attribute name="page" value="S0201" />
         <put-attribute name="controllerMapping" value="/system/user" />
-        <put-attribute name="searchForm" value="/WEB-INF/views/hkfilm/S0200/searchForm.jsp" />
-        <put-attribute name="listColumns" value="/WEB-INF/views/hkfilm/S0200/listColumns.jsp" />
-        <put-attribute name="listItems" value="/WEB-INF/views/hkfilm/S0200/listItems.jsp" />
+        <put-attribute name="searchForm" value="/WEB-INF/views/hrm/S0200/searchForm.jsp" />
+        <put-attribute name="listColumns" value="/WEB-INF/views/hrm/S0200/listColumns.jsp" />
+        <put-attribute name="listItems" value="/WEB-INF/views/hrm/S0200/listItems.jsp" />
         <put-attribute name="showBaseActions" value="true" />
         <put-attribute name="showPagination" value="true" />
     </definition>
@@ -42,7 +42,7 @@
         <put-attribute name="module" value="S02" />
         <put-attribute name="page" value="S0202" />
         <put-attribute name="controllerMapping" value="/system/user" />
-        <put-attribute name="detailForm" value="/WEB-INF/views/hkfilm/S0200/detailForm.jsp" />
+        <put-attribute name="detailForm" value="/WEB-INF/views/hrm/S0200/detailForm.jsp" />
     </definition>
 
     <!-- S05 - Master Department Management -->
@@ -50,9 +50,9 @@
         <put-attribute name="module" value="S05" />
         <put-attribute name="page" value="S0501" />
         <put-attribute name="controllerMapping" value="/system/department" />
-        <put-attribute name="searchForm" value="/WEB-INF/views/hkfilm/S0500/searchForm.jsp" />
-        <put-attribute name="listColumns" value="/WEB-INF/views/hkfilm/S0500/listColumns.jsp" />
-        <put-attribute name="listItems" value="/WEB-INF/views/hkfilm/S0500/listItems.jsp" />
+        <put-attribute name="searchForm" value="/WEB-INF/views/hrm/S0500/searchForm.jsp" />
+        <put-attribute name="listColumns" value="/WEB-INF/views/hrm/S0500/listColumns.jsp" />
+        <put-attribute name="listItems" value="/WEB-INF/views/hrm/S0500/listItems.jsp" />
         <put-attribute name="showBaseActions" value="true" />
         <put-attribute name="showPagination" value="true" />
     </definition>
@@ -60,7 +60,7 @@
         <put-attribute name="module" value="S05" />
         <put-attribute name="page" value="S0502" />
         <put-attribute name="controllerMapping" value="/system/department" />
-        <put-attribute name="detailForm" value="/WEB-INF/views/hkfilm/S0500/detailForm.jsp" />
+        <put-attribute name="detailForm" value="/WEB-INF/views/hrm/S0500/detailForm.jsp" />
     </definition>
 
     <!-- S06 - Master Group Management -->
@@ -68,9 +68,9 @@
         <put-attribute name="module" value="S06" />
         <put-attribute name="page" value="S0601" />
         <put-attribute name="controllerMapping" value="/system/group" />
-        <put-attribute name="searchForm" value="/WEB-INF/views/hkfilm/S0600/searchForm.jsp" />
-        <put-attribute name="listColumns" value="/WEB-INF/views/hkfilm/S0600/listColumns.jsp" />
-        <put-attribute name="listItems" value="/WEB-INF/views/hkfilm/S0600/listItems.jsp" />
+        <put-attribute name="searchForm" value="/WEB-INF/views/hrm/S0600/searchForm.jsp" />
+        <put-attribute name="listColumns" value="/WEB-INF/views/hrm/S0600/listColumns.jsp" />
+        <put-attribute name="listItems" value="/WEB-INF/views/hrm/S0600/listItems.jsp" />
         <put-attribute name="showBaseActions" value="true" />
         <put-attribute name="showPagination" value="true" />
     </definition>
@@ -78,7 +78,7 @@
         <put-attribute name="module" value="S06" />
         <put-attribute name="page" value="S0602" />
         <put-attribute name="controllerMapping" value="/system/group" />
-        <put-attribute name="detailForm" value="/WEB-INF/views/hkfilm/S0600/detailForm.jsp" />
+        <put-attribute name="detailForm" value="/WEB-INF/views/hrm/S0600/detailForm.jsp" />
     </definition>
 
     <!-- S08 - TechSkill Management -->
@@ -86,9 +86,9 @@
         <put-attribute name="module" value="S08" />
         <put-attribute name="page" value="S0801" />
         <put-attribute name="controllerMapping" value="/system/techskill" />
-        <put-attribute name="searchForm" value="/WEB-INF/views/hkfilm/S0800/searchForm.jsp" />
-        <put-attribute name="listColumns" value="/WEB-INF/views/hkfilm/S0800/listColumns.jsp" />
-        <put-attribute name="listItems" value="/WEB-INF/views/hkfilm/S0800/listItems.jsp" />
+        <put-attribute name="searchForm" value="/WEB-INF/views/hrm/S0800/searchForm.jsp" />
+        <put-attribute name="listColumns" value="/WEB-INF/views/hrm/S0800/listColumns.jsp" />
+        <put-attribute name="listItems" value="/WEB-INF/views/hrm/S0800/listItems.jsp" />
         <put-attribute name="showBaseActions" value="true" />
         <put-attribute name="showPagination" value="true" />
     </definition>
@@ -96,7 +96,7 @@
         <put-attribute name="module" value="S08" />
         <put-attribute name="page" value="S0802" />
         <put-attribute name="controllerMapping" value="/system/techskill" />
-        <put-attribute name="detailForm" value="/WEB-INF/views/hkfilm/S0800/detailForm.jsp" />
+        <put-attribute name="detailForm" value="/WEB-INF/views/hrm/S0800/detailForm.jsp" />
     </definition>
 
     <!-- S10 - Master Devices Group Management -->
@@ -104,9 +104,9 @@
         <put-attribute name="module" value="S10" />
         <put-attribute name="page" value="S1001" />
         <put-attribute name="controllerMapping" value="/system/devgroup" />
-        <put-attribute name="searchForm" value="/WEB-INF/views/hkfilm/S1000/searchForm.jsp" />
-        <put-attribute name="listColumns" value="/WEB-INF/views/hkfilm/S1000/listColumns.jsp" />
-        <put-attribute name="listItems" value="/WEB-INF/views/hkfilm/S1000/listItems.jsp" />
+        <put-attribute name="searchForm" value="/WEB-INF/views/hrm/S1000/searchForm.jsp" />
+        <put-attribute name="listColumns" value="/WEB-INF/views/hrm/S1000/listColumns.jsp" />
+        <put-attribute name="listItems" value="/WEB-INF/views/hrm/S1000/listItems.jsp" />
         <put-attribute name="showBaseActions" value="true" />
         <put-attribute name="showPagination" value="true" />
     </definition>
@@ -114,7 +114,7 @@
         <put-attribute name="module" value="S10" />
         <put-attribute name="page" value="S1002" />
         <put-attribute name="controllerMapping" value="/system/devgroup" />
-        <put-attribute name="detailForm" value="/WEB-INF/views/hkfilm/S1000/detailForm.jsp" />
+        <put-attribute name="detailForm" value="/WEB-INF/views/hrm/S1000/detailForm.jsp" />
     </definition>
 
     <!-- S11 - Master Device Management -->
@@ -122,9 +122,9 @@
         <put-attribute name="module" value="S11" />
         <put-attribute name="page" value="S1101" />
         <put-attribute name="controllerMapping" value="/system/device" />
-        <put-attribute name="searchForm" value="/WEB-INF/views/hkfilm/S1100/searchForm.jsp" />
-        <put-attribute name="listColumns" value="/WEB-INF/views/hkfilm/S1100/listColumns.jsp" />
-        <put-attribute name="listItems" value="/WEB-INF/views/hkfilm/S1100/listItems.jsp" />
+        <put-attribute name="searchForm" value="/WEB-INF/views/hrm/S1100/searchForm.jsp" />
+        <put-attribute name="listColumns" value="/WEB-INF/views/hrm/S1100/listColumns.jsp" />
+        <put-attribute name="listItems" value="/WEB-INF/views/hrm/S1100/listItems.jsp" />
         <put-attribute name="showBaseActions" value="true" />
         <put-attribute name="showPagination" value="true" />
     </definition>
@@ -132,7 +132,7 @@
         <put-attribute name="module" value="S11" />
         <put-attribute name="page" value="S1102" />
         <put-attribute name="controllerMapping" value="/system/device" />
-        <put-attribute name="detailForm" value="/WEB-INF/views/hkfilm/S1100/detailForm.jsp" />
+        <put-attribute name="detailForm" value="/WEB-INF/views/hrm/S1100/detailForm.jsp" />
     </definition>
 
      <!-- S07 - Master Position Management -->
@@ -140,9 +140,9 @@
         <put-attribute name="module" value="S07" />
         <put-attribute name="page" value="S0701" />
         <put-attribute name="controllerMapping" value="/system/position" />
-        <put-attribute name="searchForm" value="/WEB-INF/views/hkfilm/S0700/searchForm.jsp" />
-        <put-attribute name="listColumns" value="/WEB-INF/views/hkfilm/S0700/listColumns.jsp" />
-        <put-attribute name="listItems" value="/WEB-INF/views/hkfilm/S0700/listItems.jsp" />
+        <put-attribute name="searchForm" value="/WEB-INF/views/hrm/S0700/searchForm.jsp" />
+        <put-attribute name="listColumns" value="/WEB-INF/views/hrm/S0700/listColumns.jsp" />
+        <put-attribute name="listItems" value="/WEB-INF/views/hrm/S0700/listItems.jsp" />
         <put-attribute name="showBaseActions" value="true" />
         <put-attribute name="showPagination" value="true" />
     </definition>
@@ -150,7 +150,7 @@
         <put-attribute name="module" value="S07" />
         <put-attribute name="page" value="S0702" />
         <put-attribute name="controllerMapping" value="/system/position" />
-        <put-attribute name="detailForm" value="/WEB-INF/views/hkfilm/S0700/detailForm.jsp" />
+        <put-attribute name="detailForm" value="/WEB-INF/views/hrm/S0700/detailForm.jsp" />
     </definition>
 
       <!-- S09 - Master Soft Skill Management -->
@@ -158,9 +158,9 @@
         <put-attribute name="module" value="S09" />
         <put-attribute name="page" value="S0901" />
         <put-attribute name="controllerMapping" value="/system/softskill" />
-        <put-attribute name="searchForm" value="/WEB-INF/views/hkfilm/S0900/searchForm.jsp" />
-        <put-attribute name="listColumns" value="/WEB-INF/views/hkfilm/S0900/listColumns.jsp" />
-        <put-attribute name="listItems" value="/WEB-INF/views/hkfilm/S0900/listItems.jsp" />
+        <put-attribute name="searchForm" value="/WEB-INF/views/hrm/S0900/searchForm.jsp" />
+        <put-attribute name="listColumns" value="/WEB-INF/views/hrm/S0900/listColumns.jsp" />
+        <put-attribute name="listItems" value="/WEB-INF/views/hrm/S0900/listItems.jsp" />
         <put-attribute name="showBaseActions" value="true" />
         <put-attribute name="showPagination" value="true" />
     </definition>
@@ -168,7 +168,7 @@
         <put-attribute name="module" value="S09" />
         <put-attribute name="page" value="S0902" />
         <put-attribute name="controllerMapping" value="/system/softskill" />
-        <put-attribute name="detailForm" value="/WEB-INF/views/hkfilm/S0900/detailForm.jsp" />
+        <put-attribute name="detailForm" value="/WEB-INF/views/hrm/S0900/detailForm.jsp" />
     </definition>
     
     <!-- S13 - Master Program Type Management -->
@@ -176,9 +176,9 @@
         <put-attribute name="module" value="S13" />
         <put-attribute name="page" value="S1301" />
         <put-attribute name="controllerMapping" value="/system/programtype" />
-        <put-attribute name="searchForm" value="/WEB-INF/views/hkfilm/S1300/searchForm.jsp" />
-        <put-attribute name="listColumns" value="/WEB-INF/views/hkfilm/S1300/listColumns.jsp" />
-        <put-attribute name="listItems" value="/WEB-INF/views/hkfilm/S1300/listItems.jsp" />
+        <put-attribute name="searchForm" value="/WEB-INF/views/hrm/S1300/searchForm.jsp" />
+        <put-attribute name="listColumns" value="/WEB-INF/views/hrm/S1300/listColumns.jsp" />
+        <put-attribute name="listItems" value="/WEB-INF/views/hrm/S1300/listItems.jsp" />
         <put-attribute name="showBaseActions" value="true" />
         <put-attribute name="showPagination" value="true" />
     </definition>
@@ -186,6 +186,6 @@
         <put-attribute name="module" value="S13" />
         <put-attribute name="page" value="S1302" />
         <put-attribute name="controllerMapping" value="/system/programtype" />
-        <put-attribute name="detailForm" value="/WEB-INF/views/hkfilm/S1300/detailForm.jsp" />
+        <put-attribute name="detailForm" value="/WEB-INF/views/hrm/S1300/detailForm.jsp" />
     </definition>
 </tiles-definitions>
