@@ -109,6 +109,22 @@
 				<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
 				<servlet-api.version>6.0.0</servlet-api.version>-->
 
+				<!-- Web API -->
+				<!--<javaee-web-api.version>6.0</javaee-web-api.version>-->
+				<javaee-web-api.version>7.0</javaee-web-api.version>
+				<!--<javaee-web-api.version>8.0</javaee-web-api.version>-->
+				<!--<javaee-web-api.version>8.0.1</javaee-web-api.version>-->
+		
+				<!-- JSTL -->
+				<jstl.groupId>javax.servlet</jstl.groupId>
+				<jstl.artifactId>jstl</jstl.artifactId>
+				<!--<jstl.groupId>jakarta.servlet.jsp.jstl</jstl.groupId>
+				<jstl.artifactId>jakarta.servlet.jsp.jstl-api</jstl.artifactId>-->
+				<jstl.version>1.2</jstl.version>
+				<!--<jstl.version>1.2.7</jstl.version>
+				<jstl.version>2.0.0</jstl.version>
+				<jstl.version>3.0.0</jstl.version>-->
+
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Springframework -->
 				<!--
@@ -387,6 +403,22 @@
 				<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
 				<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
 				<servlet-api.version>6.0.0</servlet-api.version>
+
+				<!-- Web API -->
+				<!--<javaee-web-api.version>6.0</javaee-web-api.version>
+				<javaee-web-api.version>7.0</javaee-web-api.version>
+				<javaee-web-api.version>8.0</javaee-web-api.version>-->
+				<javaee-web-api.version>8.0.1</javaee-web-api.version>
+		
+				<!-- JSTL -->
+				<!--<jstl.groupId>javax.servlet</jstl.groupId>
+				<jstl.artifactId>jstl</jstl.artifactId>
+				<jstl.version>1.2</jstl.version>-->
+				<jstl.groupId>jakarta.servlet.jsp.jstl</jstl.groupId>
+				<jstl.artifactId>jakarta.servlet.jsp.jstl-api</jstl.artifactId>
+				<!--<jstl.version>1.2.7</jstl.version>
+				<jstl.version>2.0.0</jstl.version>-->
+				<jstl.version>3.0.0</jstl.version>
 
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Springframework -->
@@ -828,6 +860,22 @@
 				<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
 				<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
 				<servlet-api.version>6.0.0</servlet-api.version>
+
+				<!-- Web API -->
+				<!--<javaee-web-api.version>6.0</javaee-web-api.version>
+				<javaee-web-api.version>7.0</javaee-web-api.version>
+				<javaee-web-api.version>8.0</javaee-web-api.version>-->
+				<javaee-web-api.version>8.0.1</javaee-web-api.version>
+		
+				<!-- JSTL -->
+				<!--<jstl.groupId>javax.servlet</jstl.groupId>
+				<jstl.artifactId>jstl</jstl.artifactId>
+				<jstl.version>1.2</jstl.version>-->
+				<jstl.groupId>jakarta.servlet.jsp.jstl</jstl.groupId>
+				<jstl.artifactId>jakarta.servlet.jsp.jstl-api</jstl.artifactId>
+				<!--<jstl.version>1.2.7</jstl.version>
+				<jstl.version>2.0.0</jstl.version>-->
+				<jstl.version>3.0.0</jstl.version>
 
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Springframework -->
@@ -1363,7 +1411,7 @@
 		<maven.source.version>3.3.0</maven.source.version>
 		<maven.javadoc.version>3.6.2</maven.javadoc.version>
 		<maven.jar.version>3.3.0</maven.jar.version>
-		<maven.war.version>3.4.1-SNAPSHOT</maven.war.version>
+		<maven.war.version>3.4.0</maven.war.version>
 		<maven.jarsigner.version>3.0.0</maven.jarsigner.version>
 		<maven.surefire.version>3.2.2</maven.surefire.version>
 		<maven.nexus.staging.version>1.6.13</maven.nexus.staging.version>
@@ -1384,20 +1432,20 @@
 		<servlet-api.version>6.0.0</servlet-api.version>-->
 
 		<!-- Web API -->
-		<!--<javaee-web-api.version>6.0</javaee-web-api.version>
-		<javaee-web-api.version>7.0</javaee-web-api.version>
-		<javaee-web-api.version>8.0</javaee-web-api.version>-->
-		<javaee-web-api.version>8.0.1</javaee-web-api.version>
+		<!--<javaee-web-api.version>6.0</javaee-web-api.version>-->
+		<!--<javaee-web-api.version>7.0</javaee-web-api.version>-->
+		<!--<javaee-web-api.version>8.0</javaee-web-api.version>-->
+		<!--<javaee-web-api.version>8.0.1</javaee-web-api.version>-->
 
 		<!-- JSTL -->
 		<!--<jstl.groupId>javax.servlet</jstl.groupId>
-		<jstl.artifactId>jstl</jstl.artifactId>
-		<jstl.version>1.2</jstl.version>-->
-		<jstl.groupId>jakarta.servlet.jsp.jstl</jstl.groupId>
-		<jstl.artifactId>jakarta.servlet.jsp.jstl-api</jstl.artifactId>
-		<!--<jstl.version>1.2.7</jstl.version>
-		<jstl.version>2.0.0</jstl.version>-->
-		<jstl.version>3.0.0</jstl.version>
+		<jstl.artifactId>jstl</jstl.artifactId>-->
+		<!--<jstl.groupId>jakarta.servlet.jsp.jstl</jstl.groupId>
+		<jstl.artifactId>jakarta.servlet.jsp.jstl-api</jstl.artifactId>-->
+		<!--<jstl.version>1.2</jstl.version>-->
+		<!--<jstl.version>1.2.7</jstl.version>-->
+		<!--<jstl.version>2.0.0</jstl.version>-->
+		<!--<jstl.version>3.0.0</jstl.version>-->
 		
 		<!-- tag-libs -->
 		<!--<taglibs.groupId>taglibs</taglibs.groupId>
@@ -2444,6 +2492,7 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 						</execution>
 					</executions>
 					<configuration>
+						<includeDependency>false</includeDependency>
 						<obfuscate>true</obfuscate>
 						<addManifest>true</addManifest>
 						<addMavenDescriptor>true</addMavenDescriptor>
