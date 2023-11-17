@@ -52,6 +52,9 @@
 				<!-- General -->
 				<revision>1.0-jre8</revision>
 				
+				<!-- m2e profiles -->
+				<eclipse.maven.project.activated.profiles>dev,jdk8</eclipse.maven.project.activated.profiles>
+				
 				<!-- Maven Plugins -->
 				<maven.truelicense.groupId>net.java.truelicense</maven.truelicense.groupId>
 				<maven.truelicense.artifactId>truelicense-maven-plugin</maven.truelicense.artifactId>
@@ -300,6 +303,9 @@
 			<properties>
 				<!-- General -->
 				<revision>1.0-jre11</revision>
+				
+				<!-- m2e profiles -->
+				<eclipse.maven.project.activated.profiles>dev,jdk11</eclipse.maven.project.activated.profiles>
 				
 				<!-- Maven Plugins -->
 				<maven.truelicense.groupId>global.namespace.truelicense</maven.truelicense.groupId>
@@ -738,6 +744,9 @@
 			<properties>
 				<!-- General -->
 				<revision>1.0-jre17</revision>
+				
+				<!-- m2e profiles -->
+				<eclipse.maven.project.activated.profiles>dev,jdk17</eclipse.maven.project.activated.profiles>
 				
 				<!-- Maven Plugins -->
 				<maven.truelicense.groupId>net.java.truelicense</maven.truelicense.groupId>
@@ -1334,7 +1343,6 @@
 
 		<!-- Profile properties file -->
 		<profile.configuration>${root.basedir}/profiles/${build.profile.id}/config.properties</profile.configuration>
-		<eclipse.maven.project.activated.profiles>dev,jdk11</eclipse.maven.project.activated.profiles>
 
 		<!-- automatically run annotation processors within the incremental compilation -->
 		<m2e.apt.activation>jdt_apt</m2e.apt.activation>
@@ -1690,6 +1698,7 @@
 		<commons.beanutils.version>1.9.2</commons.beanutils.version>
 		<commons.configuration.version>1.10</commons.configuration.version>
 		<commons.validator.version>1.5.1</commons.validator.version>
+		<commons.codec.version>1.16.0</commons.codec.version>
 
 		<!-- HTML -->
 		<net.sf.htmlcleaner.version>2.16</net.sf.htmlcleaner.version>
@@ -3342,6 +3351,12 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 				<groupId>org.apache.poi</groupId>
 				<artifactId>poi</artifactId>
 				<version>${org.apache.poi.version}</version>
+			    <exclusions>
+			    	<exclusion>
+			    		<groupId>commons-codec</groupId>
+						<artifactId>commons-codec</artifactId>
+			    	</exclusion>
+			    </exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.poi</groupId>
@@ -3376,6 +3391,12 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 			    <groupId>org.apache.httpcomponents</groupId>
 			    <artifactId>httpclient</artifactId>
 			    <version>${http.client.version}</version>
+			    <exclusions>
+			    	<exclusion>
+			    		<groupId>commons-codec</groupId>
+						<artifactId>commons-codec</artifactId>
+			    	</exclusion>
+			    </exclusions>
 			</dependency>
 
 			<!-- Apache Tiles -->
@@ -3448,6 +3469,11 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 				<groupId>commons-validator</groupId>
 				<artifactId>commons-validator</artifactId>
 				<version>${commons.validator.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-codec</groupId>
+				<artifactId>commons-codec</artifactId>
+				<version>${commons.codec.version}</version>
 			</dependency>
 
 			<!-- HTML -->
