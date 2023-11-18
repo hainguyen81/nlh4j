@@ -9,13 +9,17 @@ buildNumber.properties
 .mvn/timing.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
+toolchains.xml
 
 # Eclipse m2e generated files
 # Eclipse Core
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
+.factorypath
 .apt_generated/
 /.apt_generated/
+.mpt_generated/
+/.mpt_generated/
 .settings/
 /.settings/

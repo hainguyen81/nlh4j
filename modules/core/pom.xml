@@ -29,8 +29,8 @@
 
 		<!-- Servlet -->
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
+			<groupId>${servlet-api.groupId}</groupId>
+			<artifactId>${servlet-api.artifactId}</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -39,8 +39,8 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
+			<groupId>${jstl.groupId}</groupId>
+			<artifactId>${jstl.artifactId}</artifactId>
 		</dependency>
 
 		<!-- Ziplet response -->
@@ -51,8 +51,8 @@
 
 		<!-- Support JSP Other taglib -->
 		<dependency>
-			<groupId>taglibs</groupId>
-			<artifactId>standard</artifactId>
+			<groupId>${taglibs.groupId}</groupId>
+			<artifactId>${taglibs.artifactId}</artifactId>
 		</dependency>
 
 		<!-- Spring Dependencies -->
@@ -363,6 +363,10 @@
 			<groupId>commons-validator</groupId>
 			<artifactId>commons-validator</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+		</dependency>
 
 		<!-- Apache POI -->
 		<dependency>
@@ -390,12 +394,12 @@
 
 		<!-- Apache HTTP Components -->
 		<dependency>
-		    <groupId>org.apache.httpcomponents</groupId>
-		    <artifactId>httpcore</artifactId>
+		    <groupId>${http.core.groupId}</groupId>
+		    <artifactId>${http.core.artifactId}</artifactId>
 		</dependency>
 		<dependency>
-		    <groupId>org.apache.httpcomponents</groupId>
-		    <artifactId>httpclient</artifactId>
+		    <groupId>${http.client.groupId}</groupId>
+		    <artifactId>${http.client.artifactId}</artifactId>
 		</dependency>
 
 		<!-- Browser Utils -->

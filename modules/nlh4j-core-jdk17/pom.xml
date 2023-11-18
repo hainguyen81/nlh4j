@@ -12,11 +12,22 @@
 
 	<!-- Present package -->
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>nlh4j-entities</artifactId>
+	<artifactId>nlh4j-core</artifactId>
 	<packaging>jar</packaging>
-	<name>nlh4j-entities</name>
+	<name>nlh4j-core</name>
 	<version>${revision}</version>
-	<description>Base Database Entities for Java Web/Mobile</description>
+	<description>Base Core Package (JDK17+) for Java Web/Mobile</description>
+	
+	<properties>
+		<!--
+			Maven Dependency Plugin for customizing
+			Override parent properties to un-pack module from JDK11 to customize for JDK17
+		-->
+		<maven.dependency.unpack.include.artifactIds>${project.artifactId}</maven.dependency.unpack.include.artifactIds>
+        <maven.dependency.unpack.artifactId>${project.artifactId}</maven.dependency.unpack.artifactId>
+		<maven.dependency.unpack.version>1.0-jre11</maven.dependency.unpack.version> <!-- unpack from module JDK11 to customize for JDK17 -->
+		<maven.dependency.unpack.skip>false</maven.dependency.unpack.skip>
+	</properties>
 
 	<!-- Dependencies -->
 	<dependencies>
@@ -25,17 +36,6 @@
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-utilities</artifactId>
 			<version>${project.version}</version>
-      	</dependency>
-      	<dependency>
-			<groupId>${project.parent.groupId}</groupId>
-			<artifactId>nlh4j-core</artifactId>
-			<version>${project.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>${project.parent.groupId}</groupId>
-					<artifactId>nlh4j-utilities</artifactId>
-				</exclusion>
-			</exclusions>
       	</dependency>
 
 		<!-- Servlet -->
@@ -170,6 +170,12 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Nimbus - Spring Security JWT Authentication -->
+		<dependency>
+			<groupId>com.nimbusds</groupId>
+			<artifactId>nimbus-jose-jwt</artifactId>
+		</dependency>
+
 		<!-- Spring LDAP -->
 		<dependency>
 			<groupId>org.springframework.ldap</groupId>
@@ -295,7 +301,13 @@
 			<artifactId>commons-dbcp2</artifactId>
 		</dependency>
 
-		<!-- seasar doma -->
+		<!-- Hibernate -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+
+		<!-- Seasar DOMA -->
 		<dependency>
 			<groupId>javax.inject</groupId>
 			<artifactId>javax.inject</artifactId>
@@ -304,6 +316,12 @@
 			<groupId>org.seasar.doma</groupId>
 			<artifactId>doma</artifactId>
 		</dependency>
+
+		<!-- Bean Validation -->
+		<dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+        </dependency>
 
 		<!-- slf4j -->
 		<dependency>

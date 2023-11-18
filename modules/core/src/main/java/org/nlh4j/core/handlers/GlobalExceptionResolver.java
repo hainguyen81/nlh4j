@@ -220,10 +220,17 @@ public class GlobalExceptionResolver implements Serializable {
 		boolean responsed = false;
 		if (response != null && RequestUtils.isAjaxRequest(request)) {
 			// handle by response entity
-			ResponseEntity<Object> responseEntity = (this.entityExceptionHandler != null
-					? this.entityExceptionHandler.handleException(innerEx, webRequest)
-							: new ResponseEntity<Object>(this.getInternalServerErrorReason(),
-									HttpStatus.INTERNAL_SERVER_ERROR));
+			ResponseEntity<Object> responseEntity;
+			try {
+				responseEntity = (this.entityExceptionHandler != null
+						? this.entityExceptionHandler.handleException(innerEx, webRequest)
+								: new ResponseEntity<Object>(this.getInternalServerErrorReason(),
+										HttpStatus.INTERNAL_SERVER_ERROR));
+			} catch (Exception e) {
+				logger.error("Could not parse response entity from real exception [{}]: {}", innerEx.getMessage(), e.getMessage(), e);
+				logger.error("Real exception: {}", innerEx.getMessage(), innerEx);
+				responseEntity = new ResponseEntity<Object>(this.getInternalServerErrorReason(), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
 			// status
 			HttpStatus status = responseEntity.getStatusCode();
 			response.setStatus(status.value());
