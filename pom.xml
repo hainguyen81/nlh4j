@@ -26,6 +26,10 @@
 		<developer>
 			<name>Hai Nguyen</name>
 			<email>hainguyenjc@gmail.com</email>
+			<roles>
+				<role>Technical/Team Supporter/Leader</role>
+			</roles>
+			<timezone>7</timezone>
 		</developer>
 	</developers>
 
@@ -51,11 +55,17 @@
 			<properties>
 				<!-- General -->
 				<revision>1.0-jre8</revision>
+
+				<!-- JDK -->
+				<java.version>1.8</java.version>
+				<jdk.toolchain>${root.basedir}/toolchains.xml</jdk.toolchain>
 				
 				<!-- m2e profiles -->
 				<eclipse.maven.project.activated.profiles>dev,jdk8</eclipse.maven.project.activated.profiles>
 				
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Maven Plugins -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<maven.truelicense.groupId>net.java.truelicense</maven.truelicense.groupId>
 				<maven.truelicense.artifactId>truelicense-maven-plugin</maven.truelicense.artifactId>
 				<maven.truelicense.version>2.6.4</maven.truelicense.version>
@@ -71,10 +81,6 @@
 				<!-- Progurad configuration -->
 				<proguard.configuration>${root.basedir}/certificate/proguard.cnf</proguard.configuration>
 				<proguard.skip>false</proguard.skip>
-
-				<!-- JDK -->
-				<java.version>1.8</java.version>
-				<jdk.toolchain>${root.basedir}/toolchains.xml</jdk.toolchain>
 
 				<!-- License password -->
 				<license.alias>${module.groupId}</license.alias>
@@ -100,11 +106,23 @@
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Servlet -->
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
-				<!-- JDK8 -->
+				<!-- 3.1.x (javax - JDK8) -->
 				<servlet-api.groupId>javax.servlet</servlet-api.groupId>
 				<servlet-api.artifactId>javax.servlet-api</servlet-api.artifactId>
 				<servlet-api.version>3.1.0</servlet-api.version>
-				<!-- JDK11+ -->
+				<!-- 4.0.x (javax) -->
+				<!--<servlet-api.groupId>javax.servlet</servlet-api.groupId>
+				<servlet-api.artifactId>javax.servlet-api</servlet-api.artifactId>
+				<servlet-api.version>4.0.1</servlet-api.version>-->
+				<!-- 4.0.x (jakarta) -->
+				<!--<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
+				<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
+				<servlet-api.version>4.0.4</servlet-api.version>-->
+				<!-- 5.0.x (jakarta) -->
+				<!--<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
+				<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
+				<servlet-api.version>5.0.0</servlet-api.version>-->
+				<!-- 6.0.x -->
 				<!--<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
 				<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
 				<servlet-api.version>6.0.0</servlet-api.version>-->
@@ -274,6 +292,7 @@
 				<!-- <org.apache.tomcat.version>11.0.0-M13</org.apache.tomcat.version> -->
 			</properties>
 			<build>
+				<!-- Plugins -->
 				<pluginManagement>
 					<plugins>
 			            <!-- Proguard -->
@@ -309,6 +328,12 @@
 					</plugins>
 				</pluginManagement>
 			</build>
+
+			<!-- Modules -->
+			<modules>
+				<!-- Base -->
+				<module>modules/utilities</module>
+			</modules>
 		</profile>
 
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
@@ -319,11 +344,20 @@
 			<properties>
 				<!-- General -->
 				<revision>1.0-jre11</revision>
+
+				<!-- JDK -->
+				<java.version>11</java.version>
+				<jdk.toolchain>${root.basedir}/toolchains.xml</jdk.toolchain>
+
+				<!-- Missing module for JDK11+ -->
+				<javax.annotation.version>1.3.2</javax.annotation.version>
 				
 				<!-- m2e profiles -->
 				<eclipse.maven.project.activated.profiles>dev,jdk11</eclipse.maven.project.activated.profiles>
 				
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Maven Plugins -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<maven.truelicense.groupId>global.namespace.truelicense</maven.truelicense.groupId>
 				<maven.truelicense.artifactId>truelicense-maven-plugin</maven.truelicense.artifactId>
 				<maven.truelicense.version>4.0.3</maven.truelicense.version>
@@ -364,13 +398,6 @@
 				<proguard.configuration>${root.basedir}/certificate/proguard.cnf</proguard.configuration>
 				<proguard.skip>true</proguard.skip>
 
-				<!-- JDK -->
-				<java.version>11</java.version>
-				<jdk.toolchain>${root.basedir}/toolchains.xml</jdk.toolchain>
-
-				<!-- Missing module for JDK11+ -->
-				<javax.annotation.version>1.3.2</javax.annotation.version>
-
 				<!-- License password -->
 				<license.alias>${module.groupId}</license.alias>
 				<license.storepass>01101981</license.storepass>
@@ -395,11 +422,23 @@
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Servlet -->
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
-				<!-- JDK8 -->
+				<!-- 3.1.x (javax - JDK8) -->
 				<!--<servlet-api.groupId>javax.servlet</servlet-api.groupId>
 				<servlet-api.artifactId>javax.servlet-api</servlet-api.artifactId>
 				<servlet-api.version>3.1.0</servlet-api.version>-->
-				<!-- JDK11+ -->
+				<!-- 4.0.x (javax) -->
+				<!--<servlet-api.groupId>javax.servlet</servlet-api.groupId>
+				<servlet-api.artifactId>javax.servlet-api</servlet-api.artifactId>
+				<servlet-api.version>4.0.1</servlet-api.version>-->
+				<!-- 4.0.x (jakarta) -->
+				<!--<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
+				<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
+				<servlet-api.version>4.0.4</servlet-api.version>-->
+				<!-- 5.0.x (jakarta) -->
+				<!--<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
+				<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
+				<servlet-api.version>5.0.0</servlet-api.version>-->
+				<!-- 6.0.x -->
 				<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
 				<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
 				<servlet-api.version>6.0.0</servlet-api.version>
@@ -569,6 +608,7 @@
 				<!-- <org.apache.tomcat.version>11.0.0-M13</org.apache.tomcat.version> -->
 			</properties>
 			<build>
+				<!-- Plugins -->
 				<pluginManagement>
 					<plugins>
 						<!-- Eclipse -->
@@ -620,6 +660,7 @@
 								</jdkToolchain>
 							</configuration>
 						</plugin>
+
 			            <!-- Proguard -->
 			            <plugin>
 							<groupId>${maven.proguard.groupId}</groupId>
@@ -751,6 +792,8 @@
 					</plugins>
 				</pluginManagement>
 			</build>
+
+			<!-- Dependencies -->
 			<dependencyManagement>
 				<dependencies>
 					<dependency>
@@ -766,6 +809,12 @@
 				    <artifactId>javax.annotation-api</artifactId>
 				</dependency>
 			</dependencies>
+
+			<!-- Modules -->
+			<modules>
+				<!-- Base -->
+				<module>modules/utilities</module>
+			</modules>
 		</profile>
 
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
@@ -776,11 +825,20 @@
 			<properties>
 				<!-- General -->
 				<revision>1.0-jre17</revision>
+
+				<!-- JDK -->
+				<java.version>17</java.version>
+				<jdk.toolchain>${root.basedir}/toolchains.xml</jdk.toolchain>
+
+				<!-- Missing module for JDK11+ -->
+				<javax.annotation.version>1.3.2</javax.annotation.version>
 				
 				<!-- m2e profiles -->
 				<eclipse.maven.project.activated.profiles>dev,jdk17</eclipse.maven.project.activated.profiles>
 				
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Maven Plugins -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<maven.truelicense.groupId>net.java.truelicense</maven.truelicense.groupId>
 				<maven.truelicense.artifactId>truelicense-maven-plugin</maven.truelicense.artifactId>
 				<maven.truelicense.version>2.6.6</maven.truelicense.version>
@@ -821,13 +879,6 @@
 				<proguard.configuration>${root.basedir}/certificate/proguard.cnf</proguard.configuration>
 				<proguard.skip>true</proguard.skip>
 
-				<!-- JDK -->
-				<java.version>17</java.version>
-				<jdk.toolchain>${root.basedir}/toolchains.xml</jdk.toolchain>
-
-				<!-- Missing module for JDK11+ -->
-				<javax.annotation.version>1.3.2</javax.annotation.version>
-
 				<!-- License password -->
 				<license.alias>${module.groupId}</license.alias>
 				<license.storepass>01101981</license.storepass>
@@ -852,14 +903,27 @@
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Servlet -->
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
-				<!-- JDK8 -->
+				<!-- 3.1.x (javax - JDK8) -->
 				<!--<servlet-api.groupId>javax.servlet</servlet-api.groupId>
 				<servlet-api.artifactId>javax.servlet-api</servlet-api.artifactId>
 				<servlet-api.version>3.1.0</servlet-api.version>-->
-				<!-- JDK11+ -->
-				<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
+				<!-- 4.0.x (javax) -->
+				<servlet-api.groupId>javax.servlet</servlet-api.groupId>
+				<servlet-api.artifactId>javax.servlet-api</servlet-api.artifactId>
+				<servlet-api.version>4.0.0</servlet-api.version>
+				<!--<servlet-api.version>4.0.1</servlet-api.version>-->
+				<!-- 4.0.x (jakarta) -->
+				<!--<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
 				<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
-				<servlet-api.version>6.0.0</servlet-api.version>
+				<servlet-api.version>4.0.4</servlet-api.version>-->
+				<!-- 5.0.x (jakarta) -->
+				<!--<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
+				<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
+				<servlet-api.version>5.0.0</servlet-api.version>-->
+				<!-- 6.0.x -->
+				<!--<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
+				<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
+				<servlet-api.version>6.0.0</servlet-api.version>-->
 
 				<!-- Web API -->
 				<!--<javaee-web-api.version>6.0</javaee-web-api.version>
@@ -1026,6 +1090,7 @@
 				<!-- <org.apache.tomcat.version>11.0.0-M13</org.apache.tomcat.version> -->
 			</properties>
 			<build>
+				<!-- Plugins -->
 				<pluginManagement>
 					<plugins>
 						<!-- Eclipse -->
@@ -1047,6 +1112,7 @@
 								</additionalConfig>
 			                </configuration>
 			            </plugin>
+
 						<!-- Compiler -->
 						<plugin>
 							<groupId>org.apache.maven.plugins</groupId>
@@ -1089,6 +1155,7 @@
 								</jdkToolchain>
 							</configuration>
 						</plugin>
+
 						<!-- Obfuscation -->
 						<plugin>
 							<groupId>${maven.truelicense.groupId}</groupId>
@@ -1107,6 +1174,7 @@
 								</dependency>
 							</dependencies>
 						</plugin>
+
 			            <!-- Proguard -->
 			            <plugin>
 							<groupId>${maven.proguard.groupId}</groupId>
@@ -1238,6 +1306,8 @@
 					</plugins>
 				</pluginManagement>
 			</build>
+
+			<!-- Dependencies -->
 			<dependencyManagement>
 				<dependencies>
 					<dependency>
@@ -1253,6 +1323,12 @@
 				    <artifactId>javax.annotation-api</artifactId>
 				</dependency>
 			</dependencies>
+
+			<!-- Modules -->
+			<modules>
+				<!-- Base -->
+				<module>modules/utilities-jdk17</module>
+			</modules>
 		</profile>
 
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
@@ -1395,7 +1471,9 @@
 		<!-- automatically run annotation processors within the incremental compilation -->
 		<m2e.apt.activation>jdt_apt</m2e.apt.activation>
 
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!-- Maven Plugins -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<maven.m2e.lifecycle.mapping.version>1.0.0</maven.m2e.lifecycle.mapping.version>
 		<maven.findbugs.version>3.0.5</maven.findbugs.version>
 		<maven.groovy.version>2.1.1</maven.groovy.version>
@@ -1418,15 +1496,41 @@
 		<maven.directory.version>0.1</maven.directory.version>
 		<maven.antrun.version>3.1.0</maven.antrun.version>
 		<maven.eclipse.version>2.10</maven.eclipse.version>
+		
+		<!-- Maven Dependency Plugin for customizing -->
+		<maven.dependency.version>3.6.1</maven.dependency.version>
+		<maven.dependency.unpack.root.directory>${project.basedir}/.mpt_generated</maven.dependency.unpack.root.directory>
+		<maven.dependency.unpack.include.groupIds>${project.groupId}</maven.dependency.unpack.include.groupIds>
+		<maven.dependency.unpack.include.artifactIds>${project.artifactId}</maven.dependency.unpack.include.artifactIds>
+        <maven.dependency.unpack.groupId>${project.groupId}</maven.dependency.unpack.groupId>
+        <maven.dependency.unpack.artifactId>${project.artifactId}</maven.dependency.unpack.artifactId>
+		<maven.dependency.unpack.version></maven.dependency.unpack.version>
+		<maven.dependency.unpack.source.includes>org/nlh4j/*.java,org/nlh4j/**/*.java</maven.dependency.unpack.source.includes>
+		<maven.dependency.unpack.source.directory>${maven.dependency.unpack.root.directory}/src/main/java</maven.dependency.unpack.source.directory>
+		<maven.dependency.unpack.resource.excludes>org/nlh4j/*.java,org/nlh4j/**/*.java,META-INF/MANIFEST.MF,META-INF/*.RSA,META-INF/*.SF,META-INF/maven,META-INF/maven/*</maven.dependency.unpack.resource.excludes>
+		<maven.dependency.unpack.resource.directory>${maven.dependency.unpack.root.directory}/src/main/resources</maven.dependency.unpack.resource.directory>
+		<maven.dependency.unpack.skip>true</maven.dependency.unpack.skip>
 
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!-- Servlet -->
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
-		<!-- JDK8 -->
+		<!-- 3.1.x (javax - JDK8) -->
 		<!--<servlet-api.groupId>javax.servlet</servlet-api.groupId>
 		<servlet-api.artifactId>javax.servlet-api</servlet-api.artifactId>
 		<servlet-api.version>3.1.0</servlet-api.version>-->
-		<!-- JDK11+ -->
+		<!-- 4.0.x (javax) -->
+		<!--<servlet-api.groupId>javax.servlet</servlet-api.groupId>
+		<servlet-api.artifactId>javax.servlet-api</servlet-api.artifactId>
+		<servlet-api.version>4.0.1</servlet-api.version>-->
+		<!-- 4.0.x (jakarta) -->
+		<!--<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
+		<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
+		<servlet-api.version>4.0.4</servlet-api.version>-->
+		<!-- 5.0.x (jakarta) -->
+		<!--<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
+		<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
+		<servlet-api.version>5.0.0</servlet-api.version>-->
+		<!-- 6.0.x -->
 		<!--<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
 		<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
 		<servlet-api.version>6.0.0</servlet-api.version>-->
@@ -1936,6 +2040,109 @@
 							        <mkdir dir="${project.basedir}/src/test/java" />
 							        <mkdir dir="${project.basedir}/src/test/resources" />
 							    </target>
+							    <target name="ensure-dependency-unpack-directories"
+							    unless="${maven.dependency.unpack.skip}">
+									<mkdir dir="${maven.dependency.unpack.source.directory}" />
+									<mkdir dir="${maven.dependency.unpack.resource.directory}" />
+								</target>
+							</configuration>
+						</execution>
+						<!-- Process sources -->
+						<execution>
+							<id>ensure-dependencies-sources</id>
+							<phase>process-sources</phase>
+							<goals>
+								<goal>run</goal>
+							</goals>
+							<configuration>
+								<target name="remove-dependency-unpack-source-directories"
+								unless="${maven.dependency.unpack.skip}">
+									<!-- remove empty source/resource directories from unpacked dependencies -->
+									<delete quiet="true" includeEmptyDirs="true" failonerror="false" verbose="true">
+										<fileset dir="${maven.dependency.unpack.source.directory}">
+											<and>
+												<size value="0" />
+												<type type="dir" />
+											</and>
+										</fileset>
+									</delete>
+									<!-- remove empty source/resource directories from unpacked dependencies -->
+									<delete quiet="true" includeEmptyDirs="true" failonerror="false" verbose="true">
+										<fileset dir="${maven.dependency.unpack.resource.directory}">
+											<and>
+												<size value="0" />
+												<type type="dir" />
+											</and>
+										</fileset>
+									</delete>
+									<!-- remove duplicate sources/resources from unpacked dependencies -->
+									<delete quiet="true" includeEmptyDirs="true" failonerror="false" verbose="true">
+										<fileset dir="${maven.dependency.unpack.source.directory}">
+											<or>
+												<present targetdir="${project.basedir}/src/main/java" />
+												<present targetdir="${project.basedir}/src/main/resources" />
+											</or>
+										</fileset>
+									</delete>
+									<!-- remove duplicate sources/resources from unpacked dependencies -->
+									<delete quiet="true" includeEmptyDirs="true" failonerror="false" verbose="true">
+										<fileset dir="${maven.dependency.unpack.resource.directory}">
+											<or>
+												<present targetdir="${project.basedir}/src/main/java" />
+												<present targetdir="${project.basedir}/src/main/resources" />
+											</or>
+										</fileset>
+									</delete>
+								</target>
+							</configuration>
+						</execution>
+						<!-- Process resources -->
+						<execution>
+							<id>ensure-dependencies-resources</id>
+							<phase>process-resources</phase>
+							<goals>
+								<goal>run</goal>
+							</goals>
+							<configuration>
+								<target name="remove-dependency-unpack-resource-directories"
+								unless="${maven.dependency.unpack.skip}">
+									<!-- remove empty source/resource directories from unpacked dependencies -->
+									<delete quiet="true" includeEmptyDirs="true" failonerror="false" verbose="true">
+										<fileset dir="${maven.dependency.unpack.source.directory}">
+											<and>
+												<size value="0" />
+												<type type="dir" />
+											</and>
+										</fileset>
+									</delete>
+									<!-- remove empty source/resource directories from unpacked dependencies -->
+									<delete quiet="true" includeEmptyDirs="true" failonerror="false" verbose="true">
+										<fileset dir="${maven.dependency.unpack.resource.directory}">
+											<and>
+												<size value="0" />
+												<type type="dir" />
+											</and>
+										</fileset>
+									</delete>
+									<!-- remove duplicate sources/resources from unpacked dependencies -->
+									<delete quiet="true" includeEmptyDirs="true" failonerror="false" verbose="true">
+										<fileset dir="${maven.dependency.unpack.source.directory}">
+											<or>
+												<present targetdir="${project.basedir}/src/main/java" />
+												<present targetdir="${project.basedir}/src/main/resources" />
+											</or>
+										</fileset>
+									</delete>
+									<!-- remove duplicate sources/resources from unpacked dependencies -->
+									<delete quiet="true" includeEmptyDirs="true" failonerror="false" verbose="true">
+										<fileset dir="${maven.dependency.unpack.resource.directory}">
+											<or>
+												<present targetdir="${project.basedir}/src/main/java" />
+												<present targetdir="${project.basedir}/src/main/resources" />
+											</or>
+										</fileset>
+									</delete>
+								</target>
 							</configuration>
 						</execution>
 					</executions>
@@ -1964,6 +2171,7 @@
 						</execution>
 					</executions>
 				</plugin>
+				<!-- Project properties -->
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>properties-maven-plugin</artifactId>
@@ -2008,6 +2216,70 @@
 						</execution>
 					</executions>
 				</plugin>
+				<!-- Dependency pugin support for un-packing dependencies to customize -->
+				<plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>${maven.dependency.version}</version>
+                    <configuration>
+                        <classifier>sources</classifier>
+                        <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
+                        <includeGroupIds>${maven.dependency.unpack.include.groupIds}</includeGroupIds>
+                        <includeArtifactIds>${maven.dependency.unpack.include.artifactIds}</includeArtifactIds>
+                        <includeClassifiers>sources</includeClassifiers>
+                        <overWriteIfNewer>true</overWriteIfNewer>
+                        <overWriteReleases>false</overWriteReleases>
+                        <overWriteSnapshots>true</overWriteSnapshots>
+                    </configuration>
+                    <executions>
+						<!-- Generate depdencies source -->
+                        <execution>
+                            <id>generate-source</id>
+                            <phase>generate-sources</phase>
+                            <goals>
+                                <goal>unpack</goal>
+                            </goals>
+                            <configuration>
+                                <artifactItems>
+                                    <artifactItem>
+                                        <groupId>${maven.dependency.unpack.groupId}</groupId>
+                                        <artifactId>${maven.dependency.unpack.artifactId}</artifactId>
+                                        <version>${maven.dependency.unpack.version}</version>
+                                        <type>jar</type>
+                                        <classifier>sources</classifier>
+                                        <overWrite>true</overWrite>
+                                        <includes>${maven.dependency.unpack.source.includes}</includes>
+                                        <outputDirectory>${maven.dependency.unpack.source.directory}</outputDirectory>
+                                    </artifactItem>
+                                </artifactItems>
+                                <skip>${maven.dependency.unpack.skip}</skip>
+                            </configuration>
+                        </execution>
+						<!-- Generate depdencies resource -->
+                        <execution>
+                            <id>generate-resource</id>
+                            <phase>generate-resources</phase>
+                            <goals>
+                                <goal>unpack</goal>
+                            </goals>
+                            <configuration>
+                                <artifactItems>
+                                    <artifactItem>
+                                        <groupId>${maven.dependency.unpack.groupId}</groupId>
+                                        <artifactId>${maven.dependency.unpack.artifactId}</artifactId>
+                                        <version>${maven.dependency.unpack.version}</version>
+                                        <type>jar</type>
+                                        <classifier>sources</classifier>
+                                        <overWrite>true</overWrite>
+                                        <excludes>${maven.dependency.unpack.resource.excludes}</excludes>
+                                        <outputDirectory>${maven.dependency.unpack.resource.directory}</outputDirectory>
+                                    </artifactItem>
+                                </artifactItems>
+                                <skip>${maven.dependency.unpack.skip}</skip>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
 				<!-- This plugin is used to release a project with Maven, saving a lot of repetitive, manual work.
 					Releasing a project is made in two steps: prepare and perform. -->
 				<!-- <plugin>
@@ -2022,6 +2294,12 @@
 					<version>${maven.build.helper.version}</version>
 					<executions>
 						<execution>
+							<id>maven-version</id>
+							<goals>
+								<goal>maven-version</goal>
+							</goals>
+						</execution>
+						<execution>
 							<id>add-source</id>
 							<phase>generate-sources</phase>
 							<goals>
@@ -2031,6 +2309,50 @@
 								<sources>
 									<source>${project.basedir}/.apt_generated</source>
 								</sources>
+							</configuration>
+						</execution>
+						<!-- Process source -->
+						<execution>
+							<id>attach-source</id>
+							<phase>process-sources</phase>
+							<goals>
+								<goal>add-source</goal>
+							</goals>
+							<configuration>
+								<sources>
+									<source>${maven.dependency.unpack.source.directory}</source>
+								</sources>
+							</configuration>
+						</execution>
+						<!-- Process resource -->
+						<execution>
+							<id>attach-resource</id>
+							<phase>process-resources</phase>
+							<goals>
+								<goal>add-resource</goal>
+							</goals>
+							<configuration>
+								<resources>
+									<!-- include all resources from generated-sources folder except JAVA files -->
+									<resource>
+										<directory>${maven.dependency.unpack.source.directory}</directory>
+										<includes>
+											<include>**/*.xhtml</include>
+										</includes>
+										<excludes>
+											<exclude>**/*.java</exclude>
+										</excludes>
+										<filtering>true</filtering>
+									</resource>
+									<!-- exclude all resources from generated-resources folder (present no need to keep current project configuration) -->
+									<resource>
+										<directory>${maven.dependency.unpack.resource.directory}</directory>
+										<excludes>
+											<exclude>**/*.java</exclude>
+										</excludes>
+										<filtering>true</filtering>
+									</resource>
+								</resources>
 							</configuration>
 						</execution>
 					</executions>
@@ -2292,6 +2614,27 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 	<factorypathentry kind="VARJAR" id="M2_REPO/org/seasar/doma/doma/${doma.version}/doma-${doma.version}.jar" enabled="true" runInBatchMode="false"/>
 </factorypath>]]></content>
 							</file>
+							<file>
+								<name>.project</name>
+								<content><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>${project.artifactId}-${project.version}</name>
+	<comment>${project.description}</comment>
+	<projects/>
+		<buildSpec>
+			<buildCommand>
+				<name>org.eclipse.jdt.core.javabuilder</name>
+			</buildCommand>
+			<buildCommand>
+				<name>org.eclipse.m2e.core.maven2Builder</name>
+			</buildCommand>
+		</buildSpec>
+		<natures>
+			<nature>org.eclipse.jdt.core.javanature</nature>
+			<nature>org.eclipse.m2e.core.maven2Nature</nature>
+		</natures>
+</projectDescription>]]></content>
+							</file>
 						</additionalConfig>
 	                </configuration>
 	            </plugin>
@@ -2419,6 +2762,13 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 							<exclude>*.java</exclude>
 							<exclude>**/*.java</exclude>
 						</excludes>
+						<archive>
+							<manifestEntries>
+								<Maven-Version>${maven.version}</Maven-Version>
+								<License>GNU Lesser General Public License (LGPL), Version 3</License>
+								<Owner>Hai Nguyen, hainguyenjc@gmail.com</Owner>
+							</manifestEntries>
+						</archive>
 					</configuration>
 				</plugin>
 				<plugin>
@@ -2610,6 +2960,19 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 										<ignore>false</ignore>
 									</action>
 								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.maven.plugins</groupId>
+										<artifactId>maven-eclipse-plugin</artifactId>
+										<versionRange>[1.+,)</versionRange>
+										<goals>
+											<goal>compile</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore>false</ignore>
+									</action>
+								</pluginExecution>
 							</pluginExecutions>
 						</lifecycleMappingMetadata>
 					</configuration>
@@ -2642,6 +3005,7 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-enforcer-plugin</artifactId>
 			</plugin>
+			<!-- Project properties -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>properties-maven-plugin</artifactId>
@@ -2658,6 +3022,11 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 				<artifactId>maven-release-plugin</artifactId>
 				<version>${maven.release.version}</version>
 			</plugin> -->
+			<!-- Dependency pugin support for un-packing dependencies to customize -->
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+			</plugin>
 			<!-- Attach more source folders -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -2756,6 +3125,7 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-enforcer-plugin</artifactId>
 			</plugin>
+			<!-- Project properties -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>properties-maven-plugin</artifactId>
@@ -2772,6 +3142,11 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 				<artifactId>maven-release-plugin</artifactId>
 				<version>${maven.release.version}</version>
 			</plugin> -->
+			<!-- Dependency pugin support for un-packing dependencies to customize -->
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+			</plugin>
 			<!-- Attach more source folders -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -3799,7 +4174,7 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 	<!-- Modules -->
 	<modules>
 		<!-- Base -->
-		<module>modules/utilities</module>
+		<!--<module>modules/utilities</module>-->
 		<module>modules/core</module>
 		<!-- License -->
 		<module>modules/license</module>
@@ -3823,4 +4198,24 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 		<!-- Android -->
 		<module>modules/android</module>
 	</modules>
+	
+	<!--
+		Object ASM and JDK Compatibility:
+		https://en.wikipedia.org/wiki/ObjectWeb_ASM#:~:text=ASM%20is%20Java%2Dcentric%20at,Python%20bytecode%2C%20etc.).&text=The%20name%20%22ASM%22%20is%20not,be%20implemented%20in%20assembly%20language.
+		Release					Release Date					Highlights
+		2.0						2005-05-17						Java 5 language support
+		3.2						2009-06-11						support for the new invokedynamic code.[2]
+		4.0						2011-10-29						Java 7 language support
+		5.0						2014-03-16						Java 8 language support
+		6.0						2017-09-23						Codebase migrated to Gitlab
+																Java 9 language support
+		6.1						2018-03-11						Java 10 language support
+		7.0						2018-10-27						Java 11 language support
+		7.1						2019-03-03						Java 13 language support
+		8.0						2020-03-28						Java 14 language support
+		9.0						2020-09-22						Java 16 language support
+		9.1						2021-02-06						Java 17 language support
+		9.2						2021-06-20						Java 18 language support
+		9.3						2022-04-03						Java 19 language support, new Maven BOM
+	-->
 </project>
