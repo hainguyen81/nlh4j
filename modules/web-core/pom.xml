@@ -423,12 +423,12 @@
 
 		<!-- Apache HTTP Components -->
 		<dependency>
-		    <groupId>org.apache.httpcomponents</groupId>
-		    <artifactId>httpcore</artifactId>
+		    <groupId>${http.core.groupId}</groupId>
+		    <artifactId>${http.core.artifactId}</artifactId>
 		</dependency>
 		<dependency>
-		    <groupId>org.apache.httpcomponents</groupId>
-		    <artifactId>httpclient</artifactId>
+		    <groupId>${http.client.groupId}</groupId>
+		    <artifactId>${http.client.artifactId}</artifactId>
 		</dependency>
 
 		<!-- Browser Utils -->
