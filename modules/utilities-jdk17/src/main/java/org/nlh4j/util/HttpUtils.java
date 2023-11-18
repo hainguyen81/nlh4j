@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
+import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -21,28 +22,29 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
+import org.apache.hc.client5.http.classic.methods.HttpDelete;
+import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.apache.hc.client5.http.classic.methods.HttpHead;
+import org.apache.hc.client5.http.classic.methods.HttpOptions;
+import org.apache.hc.client5.http.classic.methods.HttpPatch;
+import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.classic.methods.HttpPut;
+import org.apache.hc.client5.http.classic.methods.HttpTrace;
+import org.apache.hc.client5.http.classic.methods.HttpUriRequestBase;
+import org.apache.hc.client5.http.config.RequestConfig;
+import org.apache.hc.client5.http.config.RequestConfig.Builder;
+import org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.ClassicHttpRequest;
-import org.apache.http.HttpHost;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.config.RequestConfig.Builder;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpHead;
-import org.apache.http.client.methods.HttpOptions;
-import org.apache.http.client.methods.HttpPatch;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpPut;
-import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.client.methods.HttpTrace;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
+import org.apache.hc.core5.http.ClassicHttpResponse;
+import org.apache.hc.core5.http.HttpException;
+import org.apache.hc.core5.http.HttpHost;
+import org.apache.hc.core5.http.NameValuePair;
+import org.apache.hc.core5.http.io.HttpClientResponseHandler;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
+import org.apache.hc.core5.http.message.BasicNameValuePair;
+import org.apache.hc.core5.util.Timeout;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonCachable;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
@@ -713,18 +715,19 @@ public final class HttpUtils implements Serializable {
      * @param headers the request header parameters
      * @param params the request parameters
      * @param proxy the PROXY if necessary
-     * @param respHandler {@link ResponseHandler} for handling response from server
-     * @return HTTP response by the specified type belongs to the specified {@link ResponseHandler}
+     * @param respHandler {@link HttpClientResponseHandler} for handling response from server
+     * @return HTTP response by the specified type belongs to the specified {@link HttpClientResponseHandler}
      * @throws MalformedURLException thrown if invalid URL
      * @throws URISyntaxException thrown if invalid URI
      * @throws UnsupportedEncodingException thrown if invalid encoding
      */
-    protected static <T> T send(
+    @SuppressWarnings("deprecation")
+	protected static <T> T send(
             final String url, final HttpMethod method, String charset,
             Map<String, String> headers,
             Map<String, String> params,
             HttpHost proxy,
-            ResponseHandler<? extends T> respHandler)
+            HttpClientResponseHandler<? extends T> respHandler)
             throws MalformedURLException, URISyntaxException, UnsupportedEncodingException {
         Assert.hasText(url, "URL");
         Assert.notNull(method, "HTTP Method");
@@ -746,94 +749,94 @@ public final class HttpUtils implements Serializable {
                 .setAuthenticationEnabled(true)
                 .setCircularRedirectsAllowed(true)
                 .setContentCompressionEnabled(true)
-                .setConnectionRequestTimeout(-1)
-                .setConnectTimeout(-1);
+                .setConnectionRequestTimeout(Timeout.DISABLED)
+                .setConnectTimeout(Timeout.DISABLED);
         if (proxy != null) {
             reqCfgBuilder = reqCfgBuilder.setProxy(proxy);
         }
 
         // create HTTP request
-        CloseableHttpClient http = HttpClients.createDefault();
-        HttpRequestBase request = null;
-        charset = (!StringUtils.hasText(charset) ? ENCODING_UTF8 : charset);
-        if (HttpMethod.DELETE.equals(method)) {
-            request = new HttpDelete(UrlUtils.buildUri(url, lstParams));
-        } else if (HttpMethod.GET.equals(method)) {
-            request = new HttpGet(UrlUtils.buildUri(url, lstParams));
-        } else if (HttpMethod.HEAD.equals(method)) {
-            request = new HttpHead(UrlUtils.buildUri(url, lstParams));
-        } else if (HttpMethod.OPTIONS.equals(method)) {
-            request = new HttpOptions(UrlUtils.buildUri(url, lstParams));
-        } else if (HttpMethod.PATCH.equals(method)) {
-            request = new HttpPatch(UrlUtils.buildUri(url, null));
-            ((HttpPatch) request).setEntity(
-                    new UrlEncodedFormEntity(lstParams, charset));
-        } else if (HttpMethod.POST.equals(method)) {
-            request = new HttpPost(UrlUtils.buildUri(url, null));
-            ((HttpPost) request).setEntity(
-                    new UrlEncodedFormEntity(lstParams, charset));
-        } else if (HttpMethod.PUT.equals(method)) {
-            request = new HttpPut(UrlUtils.buildUri(url, null));
-            ((HttpPut) request).setEntity(
-                    new UrlEncodedFormEntity(lstParams, charset));
-        } else if (HttpMethod.TRACE.equals(method)) {
-            request = new HttpTrace(UrlUtils.buildUri(url, lstParams));
-        } else {
-            throw new IllegalArgumentException("Invaid HTTP method!");
-        }
-        // FIXME Use "if" instead of "switch" for obfuscating code,
-        // because while obfuscating code, it'll generate _clinit@12345677() method for referencing.
-        // this method will be failed on android (not support) or referencing from another class
-        //        switch(method) {
-        //            case DELETE:
-        //                request = new HttpDelete(UrlUtils.buildUri(url, lstParams));
-        //                break;
-        //            case GET:
-        //                request = new HttpGet(UrlUtils.buildUri(url, lstParams));
-        //                break;
-        //            case HEAD:
-        //                request = new HttpHead(UrlUtils.buildUri(url, lstParams));
-        //                break;
-        //            case OPTIONS:
-        //                request = new HttpOptions(UrlUtils.buildUri(url, lstParams));
-        //                break;
-        //            case PATCH:
-        //                request = new HttpPatch(UrlUtils.buildUri(url, null));
-        //                ((HttpPatch) request).setEntity(
-        //                        new UrlEncodedFormEntity(lstParams, charset));
-        //                break;
-        //            case POST:
-        //                request = new HttpPost(UrlUtils.buildUri(url, null));
-        //                ((HttpPost) request).setEntity(
-        //                        new UrlEncodedFormEntity(lstParams, charset));
-        //                break;
-        //            case PUT:
-        //                request = new HttpPut(UrlUtils.buildUri(url, null));
-        //                ((HttpPut) request).setEntity(
-        //                        new UrlEncodedFormEntity(lstParams, charset));
-        //                break;
-        //            case TRACE:
-        //                request = new HttpTrace(UrlUtils.buildUri(url, lstParams));
-        //                break;
-        //        }
+        try(CloseableHttpClient http = HttpClients.createDefault()) {
+	        HttpUriRequestBase request = null;
+	        charset = (!StringUtils.hasText(charset) ? ENCODING_UTF8 : charset);
+	        if (HttpMethod.DELETE.equals(method)) {
+	            request = new HttpDelete(UrlUtils.buildUri(url, lstParams));
+	        } else if (HttpMethod.GET.equals(method)) {
+	            request = new HttpGet(UrlUtils.buildUri(url, lstParams));
+	        } else if (HttpMethod.HEAD.equals(method)) {
+	            request = new HttpHead(UrlUtils.buildUri(url, lstParams));
+	        } else if (HttpMethod.OPTIONS.equals(method)) {
+	            request = new HttpOptions(UrlUtils.buildUri(url, lstParams));
+	        } else if (HttpMethod.PATCH.equals(method)) {
+	            request = new HttpPatch(UrlUtils.buildUri(url, null));
+	            ((HttpPatch) request).setEntity(
+	                    new UrlEncodedFormEntity(lstParams, Charset.forName(charset)));
+	        } else if (HttpMethod.POST.equals(method)) {
+	            request = new HttpPost(UrlUtils.buildUri(url, null));
+	            ((HttpPost) request).setEntity(
+	                    new UrlEncodedFormEntity(lstParams, Charset.forName(charset)));
+	        } else if (HttpMethod.PUT.equals(method)) {
+	            request = new HttpPut(UrlUtils.buildUri(url, null));
+	            ((HttpPut) request).setEntity(
+	                    new UrlEncodedFormEntity(lstParams, Charset.forName(charset)));
+	        } else if (HttpMethod.TRACE.equals(method)) {
+	            request = new HttpTrace(UrlUtils.buildUri(url, lstParams));
+	        } else {
+	            throw new IllegalArgumentException("Invaid HTTP method!");
+	        }
+	        // FIXME Use "if" instead of "switch" for obfuscating code,
+	        // because while obfuscating code, it'll generate _clinit@12345677() method for referencing.
+	        // this method will be failed on android (not support) or referencing from another class
+	        //        switch(method) {
+	        //            case DELETE:
+	        //                request = new HttpDelete(UrlUtils.buildUri(url, lstParams));
+	        //                break;
+	        //            case GET:
+	        //                request = new HttpGet(UrlUtils.buildUri(url, lstParams));
+	        //                break;
+	        //            case HEAD:
+	        //                request = new HttpHead(UrlUtils.buildUri(url, lstParams));
+	        //                break;
+	        //            case OPTIONS:
+	        //                request = new HttpOptions(UrlUtils.buildUri(url, lstParams));
+	        //                break;
+	        //            case PATCH:
+	        //                request = new HttpPatch(UrlUtils.buildUri(url, null));
+	        //                ((HttpPatch) request).setEntity(
+	        //                        new UrlEncodedFormEntity(lstParams, charset));
+	        //                break;
+	        //            case POST:
+	        //                request = new HttpPost(UrlUtils.buildUri(url, null));
+	        //                ((HttpPost) request).setEntity(
+	        //                        new UrlEncodedFormEntity(lstParams, charset));
+	        //                break;
+	        //            case PUT:
+	        //                request = new HttpPut(UrlUtils.buildUri(url, null));
+	        //                ((HttpPut) request).setEntity(
+	        //                        new UrlEncodedFormEntity(lstParams, charset));
+	        //                break;
+	        //            case TRACE:
+	        //                request = new HttpTrace(UrlUtils.buildUri(url, lstParams));
+	        //                break;
+	        //        }
 
-        /** request header parameters */
-        if (!CollectionUtils.isEmpty(headers)) {
-            for(final Iterator<String> it = headers.keySet().iterator(); it.hasNext();) {
-                String key = it.next();
-                String value = headers.get(key);
-                if (!StringUtils.hasText(key)) continue;
-                request.addHeader(key, value);
-            }
-        }
+	        /** request header parameters */
+	        if (!CollectionUtils.isEmpty(headers)) {
+	            for(final Iterator<String> it = headers.keySet().iterator(); it.hasNext();) {
+	                String key = it.next();
+	                String value = headers.get(key);
+	                if (!StringUtils.hasText(key)) continue;
+	                request.addHeader(key, value);
+	            }
+	        }
 
-        /** send request */
-        try {
+	        /** send request */
             /* Execute URL and attach after execution response handler */
             return http.execute(request, respHandler);
+
         } catch (IOException e) {
-            e.printStackTrace();
-        }
+			e.printStackTrace();
+		}
         return null;
     }
     /**
@@ -858,23 +861,17 @@ public final class HttpUtils implements Serializable {
             HttpHost proxy,
             final StringBuffer respBuf)
             throws MalformedURLException, URISyntaxException, UnsupportedEncodingException {
-        return send(url, method, charset, headers, params, proxy,
-                new ResponseHandler<Integer>() {
+        return send(url, method, charset, headers, params, proxy, new HttpClientResponseHandler<Integer>() {
 
-                    /*
-                     * (Non-Javadoc)
-                     * @see org.apache.http.client.ResponseHandler#handleResponse(org.apache.http.HttpResponse)
-                     */
-                    @Override
-                    public Integer handleResponse(HttpResponse response)
-                            throws ClientProtocolException, IOException {
-                        int status = response.getStatusLine().getStatusCode();
-                        if (response.getEntity() != null) {
-                            respBuf.append(EntityUtils.toString(response.getEntity()));
-                        }
-                        return status;
-                    }
-                });
+        	@Override
+        	public Integer handleResponse(ClassicHttpResponse response) throws HttpException, IOException {
+                int status = response.getCode();
+                if (response.getEntity() != null) {
+                    respBuf.append(EntityUtils.toString(response.getEntity()));
+                }
+                return status;
+            }
+        });
     }
     /**
      * Send request to the specified URL
@@ -908,8 +905,8 @@ public final class HttpUtils implements Serializable {
      * @param headers the request header parameters
      * @param params the request parameters
      * @param proxy the PROXY if necessary
-     * @param respHandler {@link ResponseHandler} for handling response from server
-     * @return HTTP response by the specified type belongs to the specified {@link ResponseHandler}
+     * @param respHandler {@link HttpClientResponseHandler} for handling response from server
+     * @return HTTP response by the specified type belongs to the specified {@link HttpClientResponseHandler}
      * @throws MalformedURLException thrown if invalid URL
      * @throws URISyntaxException thrown if invalid URI
      * @throws UnsupportedEncodingException thrown if invalid encoding
@@ -919,7 +916,7 @@ public final class HttpUtils implements Serializable {
             Map<String, String> headers,
             Map<String, String> params,
             HttpHost proxy,
-            ResponseHandler<? extends T> respHandler)
+            HttpClientResponseHandler<? extends T> respHandler)
             throws MalformedURLException, URISyntaxException, UnsupportedEncodingException {
         return send(url, HttpMethod.DELETE, ENCODING_UTF8, headers, params, proxy, respHandler);
     }
@@ -954,8 +951,8 @@ public final class HttpUtils implements Serializable {
      * @param headers the request header parameters
      * @param params the request parameters
      * @param proxy the PROXY if necessary
-     * @param respHandler {@link ResponseHandler} for handling response from server
-     * @return HTTP response by the specified type belongs to the specified {@link ResponseHandler}
+     * @param respHandler {@link HttpClientResponseHandler} for handling response from server
+     * @return HTTP response by the specified type belongs to the specified {@link HttpClientResponseHandler}
      * @throws MalformedURLException thrown if invalid URL
      * @throws URISyntaxException thrown if invalid URI
      * @throws UnsupportedEncodingException thrown if invalid encoding
@@ -965,7 +962,7 @@ public final class HttpUtils implements Serializable {
             Map<String, String> headers,
             Map<String, String> params,
             HttpHost proxy,
-            ResponseHandler<? extends T> respHandler)
+            HttpClientResponseHandler<? extends T> respHandler)
             throws MalformedURLException, URISyntaxException, UnsupportedEncodingException {
         return send(url, HttpMethod.GET, ENCODING_UTF8, headers, params, proxy, respHandler);
     }
@@ -1000,8 +997,8 @@ public final class HttpUtils implements Serializable {
      * @param headers the request header parameters
      * @param params the request parameters
      * @param proxy the PROXY if necessary
-     * @param respHandler {@link ResponseHandler} for handling response from server
-     * @return HTTP response by the specified type belongs to the specified {@link ResponseHandler}
+     * @param respHandler {@link HttpClientResponseHandler} for handling response from server
+     * @return HTTP response by the specified type belongs to the specified {@link HttpClientResponseHandler}
      * @throws MalformedURLException thrown if invalid URL
      * @throws URISyntaxException thrown if invalid URI
      * @throws UnsupportedEncodingException thrown if invalid encoding
@@ -1011,7 +1008,7 @@ public final class HttpUtils implements Serializable {
             Map<String, String> headers,
             Map<String, String> params,
             HttpHost proxy,
-            ResponseHandler<? extends T> respHandler)
+            HttpClientResponseHandler<? extends T> respHandler)
             throws MalformedURLException, URISyntaxException, UnsupportedEncodingException {
         return send(url, HttpMethod.HEAD, ENCODING_UTF8, headers, params, proxy, respHandler);
     }
@@ -1046,8 +1043,8 @@ public final class HttpUtils implements Serializable {
      * @param headers the request header parameters
      * @param params the request parameters
      * @param proxy the PROXY if necessary
-     * @param respHandler {@link ResponseHandler} for handling response from server
-     * @return HTTP response by the specified type belongs to the specified {@link ResponseHandler}
+     * @param respHandler {@link HttpClientResponseHandler} for handling response from server
+     * @return HTTP response by the specified type belongs to the specified {@link HttpClientResponseHandler}
      * @throws MalformedURLException thrown if invalid URL
      * @throws URISyntaxException thrown if invalid URI
      * @throws UnsupportedEncodingException thrown if invalid encoding
@@ -1057,7 +1054,7 @@ public final class HttpUtils implements Serializable {
             Map<String, String> headers,
             Map<String, String> params,
             HttpHost proxy,
-            ResponseHandler<? extends T> respHandler)
+            HttpClientResponseHandler<? extends T> respHandler)
             throws MalformedURLException, URISyntaxException, UnsupportedEncodingException {
         return send(url, HttpMethod.OPTIONS, ENCODING_UTF8, headers, params, proxy, respHandler);
     }
@@ -1092,8 +1089,8 @@ public final class HttpUtils implements Serializable {
      * @param headers the request header parameters
      * @param params the request parameters
      * @param proxy the PROXY if necessary
-     * @param respHandler {@link ResponseHandler} for handling response from server
-     * @return HTTP response by the specified type belongs to the specified {@link ResponseHandler}
+     * @param respHandler {@link HttpClientResponseHandler} for handling response from server
+     * @return HTTP response by the specified type belongs to the specified {@link HttpClientResponseHandler}
      * @throws MalformedURLException thrown if invalid URL
      * @throws URISyntaxException thrown if invalid URI
      * @throws UnsupportedEncodingException thrown if invalid encoding
@@ -1103,7 +1100,7 @@ public final class HttpUtils implements Serializable {
             Map<String, String> headers,
             Map<String, String> params,
             HttpHost proxy,
-            ResponseHandler<? extends T> respHandler)
+            HttpClientResponseHandler<? extends T> respHandler)
             throws MalformedURLException, URISyntaxException, UnsupportedEncodingException {
         return send(url, HttpMethod.PATCH, ENCODING_UTF8, headers, params, proxy, respHandler);
     }
@@ -1138,8 +1135,8 @@ public final class HttpUtils implements Serializable {
      * @param headers the request header parameters
      * @param params the request parameters
      * @param proxy the PROXY if necessary
-     * @param respHandler {@link ResponseHandler} for handling response from server
-     * @return HTTP response by the specified type belongs to the specified {@link ResponseHandler}
+     * @param respHandler {@link HttpClientResponseHandler} for handling response from server
+     * @return HTTP response by the specified type belongs to the specified {@link HttpClientResponseHandler}
      * @throws MalformedURLException thrown if invalid URL
      * @throws URISyntaxException thrown if invalid URI
      * @throws UnsupportedEncodingException thrown if invalid encoding
@@ -1149,7 +1146,7 @@ public final class HttpUtils implements Serializable {
             Map<String, String> headers,
             Map<String, String> params,
             HttpHost proxy,
-            ResponseHandler<? extends T> respHandler)
+            HttpClientResponseHandler<? extends T> respHandler)
             throws MalformedURLException, URISyntaxException, UnsupportedEncodingException {
         return send(url, HttpMethod.POST, ENCODING_UTF8, headers, params, proxy, respHandler);
     }
@@ -1184,8 +1181,8 @@ public final class HttpUtils implements Serializable {
      * @param headers the request header parameters
      * @param params the request parameters
      * @param proxy the PROXY if necessary
-     * @param respHandler {@link ResponseHandler} for handling response from server
-     * @return HTTP response by the specified type belongs to the specified {@link ResponseHandler}
+     * @param respHandler {@link HttpClientResponseHandler} for handling response from server
+     * @return HTTP response by the specified type belongs to the specified {@link HttpClientResponseHandler}
      * @throws MalformedURLException thrown if invalid URL
      * @throws URISyntaxException thrown if invalid URI
      * @throws UnsupportedEncodingException thrown if invalid encoding
@@ -1195,7 +1192,7 @@ public final class HttpUtils implements Serializable {
             Map<String, String> headers,
             Map<String, String> params,
             HttpHost proxy,
-            ResponseHandler<? extends T> respHandler)
+            HttpClientResponseHandler<? extends T> respHandler)
             throws MalformedURLException, URISyntaxException, UnsupportedEncodingException {
         return send(url, HttpMethod.PUT, ENCODING_UTF8, headers, params, proxy, respHandler);
     }
@@ -1230,8 +1227,8 @@ public final class HttpUtils implements Serializable {
      * @param headers the request header parameters
      * @param params the request parameters
      * @param proxy the PROXY if necessary
-     * @param respHandler {@link ResponseHandler} for handling response from server
-     * @return HTTP response by the specified type belongs to the specified {@link ResponseHandler}
+     * @param respHandler {@link HttpClientResponseHandler} for handling response from server
+     * @return HTTP response by the specified type belongs to the specified {@link HttpClientResponseHandler}
      * @throws MalformedURLException thrown if invalid URL
      * @throws URISyntaxException thrown if invalid URI
      * @throws UnsupportedEncodingException thrown if invalid encoding
@@ -1241,7 +1238,7 @@ public final class HttpUtils implements Serializable {
             Map<String, String> headers,
             Map<String, String> params,
             HttpHost proxy,
-            ResponseHandler<? extends T> respHandler)
+            HttpClientResponseHandler<? extends T> respHandler)
             throws MalformedURLException, URISyntaxException, UnsupportedEncodingException {
         return send(url, HttpMethod.TRACE, ENCODING_UTF8, headers, params, proxy, respHandler);
     }
