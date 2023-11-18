@@ -19,5 +19,7 @@ toolchains.xml
 .factorypath
 .apt_generated/
 /.apt_generated/
+.mpt_generated/
+/.mpt_generated/
 .settings/
 /.settings/
