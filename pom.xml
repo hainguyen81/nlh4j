@@ -2093,6 +2093,7 @@
 
 		<!-- Other -->
 		<hamcrest.version>1.3</hamcrest.version>
+
 		<!-- Beans -->
 		<!-- Use openbeans (not using java.beans) for all Java and Android -->
 		<com.google.openbeans.version>1.0</com.google.openbeans.version>
