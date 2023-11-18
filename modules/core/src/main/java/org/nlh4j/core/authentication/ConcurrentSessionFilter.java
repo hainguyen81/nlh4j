@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.web.authentication.RememberMeServices;
-
+import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 import org.nlh4j.util.BeanUtils;
 
 /**
@@ -40,6 +40,7 @@ public class ConcurrentSessionFilter
     @Inject
     private RememberMeServices rememberMeServices;
     private SessionRegistry sessionRegistry;
+    private SessionInformationExpiredStrategy sessionInformationExpiredStrategy;
 
 	/**
 	 * Initialize a new instance of {@link ConcurrentSessionFilter}
@@ -47,7 +48,7 @@ public class ConcurrentSessionFilter
 	 * @param sessionRegistry {@link SessionRegistry}
 	 */
 	public ConcurrentSessionFilter(SessionRegistry sessionRegistry) {
-        super(sessionRegistry, null);
+        super(sessionRegistry);
         this.sessionRegistry = sessionRegistry;
     }
 	/**
@@ -56,9 +57,21 @@ public class ConcurrentSessionFilter
 	 * @param sessionRegistry {@link SessionRegistry}
 	 * @param expiredUrl expired URL
 	 */
-    public ConcurrentSessionFilter(SessionRegistry sessionRegistry, String expiredUrl) {
+    @SuppressWarnings("deprecation")
+	public ConcurrentSessionFilter(SessionRegistry sessionRegistry, String expiredUrl) {
         super(sessionRegistry, expiredUrl);
         this.sessionRegistry = sessionRegistry;
+    }
+	/**
+	 * Initialize a new instance of {@link ConcurrentSessionFilter}
+	 *
+	 * @param sessionRegistry {@link SessionRegistry}
+	 * @param expiredUrl expired URL
+	 */
+    public ConcurrentSessionFilter(SessionRegistry sessionRegistry, SessionInformationExpiredStrategy sessionInformationExpiredStrategy) {
+        super(sessionRegistry, sessionInformationExpiredStrategy);
+        this.sessionRegistry = sessionRegistry;
+        this.sessionInformationExpiredStrategy = sessionInformationExpiredStrategy;
     }
 
     /**
@@ -68,6 +81,15 @@ public class ConcurrentSessionFilter
 	 */
 	protected final SessionRegistry getSessionRegistry() {
 		return this.sessionRegistry;
+	}
+
+    /**
+	 * Get the sessionInformationExpiredStrategy
+	 *
+	 * @return the sessionInformationExpiredStrategy
+	 */
+	protected final SessionInformationExpiredStrategy getSessionInformationExpiredStrategy() {
+		return this.sessionInformationExpiredStrategy;
 	}
 
 	/**

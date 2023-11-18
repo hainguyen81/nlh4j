@@ -16,7 +16,18 @@
 	<packaging>jar</packaging>
 	<name>nlh4j-utilities</name>
 	<version>${revision}</version>
-	<description>Base Utiities Package for Java Web/Mobile</description>
+	<description>Base Utiities Package (JDK17+) for Java Web/Mobile</description>
+	
+	<properties>
+		<!--
+			Maven Dependency Plugin for customizing
+			Override parent properties to un-pack module from JDK11 to customize for JDK17
+		-->
+		<maven.dependency.unpack.include.artifactIds>${project.artifactId}</maven.dependency.unpack.include.artifactIds>
+        <maven.dependency.unpack.artifactId>${project.artifactId}</maven.dependency.unpack.artifactId>
+		<maven.dependency.unpack.version>1.0-jre11</maven.dependency.unpack.version> <!-- unpack from module JDK11 to customize for JDK17 -->
+		<maven.dependency.unpack.skip>false</maven.dependency.unpack.skip>
+	</properties>
 
 	<!-- Dependencies -->
 	<dependencies>

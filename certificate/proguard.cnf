@@ -31,6 +31,7 @@
 -keep @org.springframework.stereotype.** class *
 -keep @org.springframework.web.bind.annotation.** class *
 -keep @org.springframework.transaction.annotation.** class *
+-keep @org.apache.commons.** class *
 -keep @javax.annotation.** class *
 -keep @javax.persistence.** class *
 -keep @org.nlh4j.** class *

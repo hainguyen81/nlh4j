@@ -37,7 +37,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.MongoDbFactory;
+import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationOperation;
@@ -528,15 +528,15 @@ public abstract class BaseTemplateDaoImpl implements BaseTemplateDao, Applicatio
 	 */
 	@Override
 	public MongoDatabase createDatabase(String dbName) {
-		MongoDbFactory dbFactory = Optional.ofNullable(getMongoTemplate())
-				.map(MongoTemplate::getMongoDbFactory).orElse(null);
+		MongoDatabaseFactory dbFactory = Optional.ofNullable(getMongoTemplate())
+				.map(MongoTemplate::getMongoDatabaseFactory).orElse(null);
 		if (Objects.isNull(dbFactory)) {
-			logger.warn("Could not found MongoDbFactory to create database {" + dbName + "}!");
+			logger.warn("Could not found MongoDatabaseFactory to create database {" + dbName + "}!");
 			return null;
 		}
 
 		// access data of company. if it's not exist, database has been created
-		MongoDatabase mongoDb = dbFactory.getDb(dbName);
+		MongoDatabase mongoDb = dbFactory.getMongoDatabase(dbName);
 		if (Objects.isNull(mongoDb)) {
 			logger.warn("Could not access/create database {" + dbName + "}!");
 			return null;
