@@ -737,6 +737,7 @@
 								</additionalConfig>
 			                </configuration>
 			            </plugin>
+
 						<!-- Compiler -->
 						<plugin>
 							<groupId>org.apache.maven.plugins</groupId>
@@ -2652,6 +2653,8 @@
 									<nonFilteredFileExtension>*.otf</nonFilteredFileExtension>
 									<!-- file upload SWF -->
 									<nonFilteredFileExtension>*.swf</nonFilteredFileExtension>
+									<!-- Database backup if necessary -->
+									<nonFilteredFileExtension>*.backup</nonFilteredFileExtension>
 								</nonFilteredFileExtensions>
 								<resources>
 									<!-- Copy resource exclude JAVA, CLASSES to build target directory -->
@@ -2687,8 +2690,30 @@
 											<exclude>**/*.woff2</exclude>
 											<exclude>*.otf</exclude>
 											<exclude>**/*.otf</exclude>
+											<!-- images -->
+											<exclude>*.cur</exclude>
+											<exclude>**/*.cur</exclude>
+											<exclude>*.ico</exclude>
+											<exclude>**/*.ico</exclude>
+											<exclude>*.gif</exclude>
+											<exclude>**/*.gif</exclude>
+											<exclude>*.png</exclude>
+											<exclude>**/*.png</exclude>
+											<exclude>*.jpg</exclude>
+											<exclude>**/*.jpg</exclude>
+											<exclude>*.jpeg</exclude>
+											<exclude>**/*.jpeg</exclude>
+											<exclude>*.bmp</exclude>
+											<exclude>**/*.bmp</exclude>
+											<!-- sounds -->
+											<exclude>*.wav</exclude>
+											<exclude>**/*.wav</exclude>
 											<!-- file upload SWF -->
+											<exclude>*.swf</exclude>
 											<exclude>**/*.swf</exclude>
+											<!-- Database backup if necessary -->
+											<exclude>*.backup</exclude>
+											<exclude>**/*.backup</exclude>
 										</excludes>
 									</resource>
 									<resource>
@@ -2719,8 +2744,30 @@
 											<include>**/*.woff2</include>
 											<include>*.otf</include>
 											<include>**/*.otf</include>
+											<!-- images -->
+											<include>*.cur</include>
+											<include>**/*.cur</include>
+											<include>*.ico</include>
+											<include>**/*.ico</include>
+											<include>*.gif</include>
+											<include>**/*.gif</include>
+											<include>*.png</include>
+											<include>**/*.png</include>
+											<include>*.jpg</include>
+											<include>**/*.jpg</include>
+											<include>*.jpeg</include>
+											<include>**/*.jpeg</include>
+											<include>*.bmp</include>
+											<include>**/*.bmp</include>
+											<!-- sounds -->
+											<include>*.wav</include>
+											<include>**/*.wav</include>
 											<!-- file upload SWF -->
+											<include>*.swf</include>
 											<include>**/*.swf</include>
+											<!-- Database backup if necessary -->
+											<include>*.backup</include>
+											<include>**/*.backup</include>
 										</includes>
 										<excludes>
 											<exclude>*.java</exclude>
@@ -2762,8 +2809,30 @@
 											<exclude>**/*.woff2</exclude>
 											<exclude>*.otf</exclude>
 											<exclude>**/*.otf</exclude>
+											<!-- images -->
+											<exclude>*.cur</exclude>
+											<exclude>**/*.cur</exclude>
+											<exclude>*.ico</exclude>
+											<exclude>**/*.ico</exclude>
+											<exclude>*.gif</exclude>
+											<exclude>**/*.gif</exclude>
+											<exclude>*.png</exclude>
+											<exclude>**/*.png</exclude>
+											<exclude>*.jpg</exclude>
+											<exclude>**/*.jpg</exclude>
+											<exclude>*.jpeg</exclude>
+											<exclude>**/*.jpeg</exclude>
+											<exclude>*.bmp</exclude>
+											<exclude>**/*.bmp</exclude>
+											<!-- sounds -->
+											<exclude>*.wav</exclude>
+											<exclude>**/*.wav</exclude>
 											<!-- file upload SWF -->
+											<exclude>*.swf</exclude>
 											<exclude>**/*.swf</exclude>
+											<!-- Database backup if necessary -->
+											<exclude>*.backup</exclude>
+											<exclude>**/*.backup</exclude>
 										</excludes>
 									</resource>
 									<resource>
@@ -2794,8 +2863,30 @@
 											<include>**/*.woff2</include>
 											<include>*.otf</include>
 											<include>**/*.otf</include>
+											<!-- images -->
+											<include>*.cur</include>
+											<include>**/*.cur</include>
+											<include>*.ico</include>
+											<include>**/*.ico</include>
+											<include>*.gif</include>
+											<include>**/*.gif</include>
+											<include>*.png</include>
+											<include>**/*.png</include>
+											<include>*.jpg</include>
+											<include>**/*.jpg</include>
+											<include>*.jpeg</include>
+											<include>**/*.jpeg</include>
+											<include>*.bmp</include>
+											<include>**/*.bmp</include>
+											<!-- sounds -->
+											<include>*.wav</include>
+											<include>**/*.wav</include>
 											<!-- file upload SWF -->
+											<include>*.swf</include>
 											<include>**/*.swf</include>
+											<!-- Database backup if necessary -->
+											<include>*.backup</include>
+											<include>**/*.backup</include>
 										</includes>
 										<excludes>
 											<exclude>*.java</exclude>
@@ -2980,6 +3071,7 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 						<target>${java.version}</target>
 					</configuration>
 				</plugin>
+				<!-- Source package plugin -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-source-plugin</artifactId>
@@ -2997,6 +3089,7 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 						</execution>
 					</executions>
 				</plugin>
+				<!-- Javadocs package plugin -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
@@ -3015,6 +3108,7 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 						</execution>
 					</executions>
 				</plugin>
+				<!-- JAR package plugin -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
@@ -3035,6 +3129,7 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 						</archive>
 					</configuration>
 				</plugin>
+				<!-- WAR package plugin -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-war-plugin</artifactId>
@@ -3044,6 +3139,7 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 						<packagingExcludes>*.java,**/*.java</packagingExcludes>
 					</configuration>
 				</plugin>
+				<!-- Nexus staging plugin -->
 				<plugin>
 					<groupId>org.sonatype.plugins</groupId>
 					<artifactId>nexus-staging-maven-plugin</artifactId>
@@ -3322,22 +3418,27 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 				<groupId>${maven.aspectj.groupId}</groupId>
 				<artifactId>${maven.aspectj.artifactId}</artifactId>
 			</plugin>
+			<!-- Source package plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
 			</plugin>
+			<!-- Javadocs package plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 			</plugin>
+			<!-- JAR package plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 			</plugin>
+			<!-- WAR package plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 			</plugin>
+			<!-- Nexus staging plugin -->
 			<plugin>
 				<groupId>org.sonatype.plugins</groupId>
 				<artifactId>nexus-staging-maven-plugin</artifactId>
