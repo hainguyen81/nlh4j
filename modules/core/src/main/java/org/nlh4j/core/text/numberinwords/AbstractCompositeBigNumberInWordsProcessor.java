@@ -4,8 +4,9 @@
  */
 package org.nlh4j.core.text.numberinwords;
 
-import reactor.util.Assert;
-import reactor.util.StringUtils;
+import java.util.Objects;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Composite big number processor to convert number into words (&gt; 999)
@@ -93,8 +94,8 @@ public abstract class AbstractCompositeBigNumberInWordsProcessor extends Abstrac
 	@Override
 	public String getName(String value) {
 		// check valid number processors
-		AbstractNumberHundredInWordsProcessor numberHundredProcessor = this.getNumberHundredProcessor();
-		Assert.notNull(numberHundredProcessor);
+		AbstractNumberHundredInWordsProcessor numberHundredProcessor =
+				Objects.requireNonNull(this.getNumberHundredProcessor(), "numberHundredProcessor");
 
 		// convert number into words
 		StringBuilder buffer = new StringBuilder();
@@ -115,15 +116,15 @@ public abstract class AbstractCompositeBigNumberInWordsProcessor extends Abstrac
 		// process high/low parts of number
 		String highName = this.getHighProcessor().getName(high);
 		String lowName = this.getLowProcessor().getName(low);
-		if (StringUtils.hasText(highName)) {
+		if (StringUtils.isNotBlank(highName)) {
 			buffer.append(highName);
 			buffer.append(WORDS_SEPARATOR);
 			buffer.append(super.getScaleName(exponent, this.getScaleNameDefinitionIndex()));
-			if (StringUtils.hasText(lowName)) {
+			if (StringUtils.isNotBlank(lowName)) {
 				buffer.append(WORDS_SEPARATOR);
 			}
 		}
-		if (StringUtils.hasText(lowName)) {
+		if (StringUtils.isNotBlank(lowName)) {
 			buffer.append(lowName);
 		}
 

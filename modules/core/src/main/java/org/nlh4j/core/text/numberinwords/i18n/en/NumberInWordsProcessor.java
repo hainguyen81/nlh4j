@@ -4,7 +4,7 @@
  */
 package org.nlh4j.core.text.numberinwords.i18n.en;
 
-import reactor.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.nlh4j.core.text.numberinwords.AbstractCompositeBigNumberInWordsProcessor;
 import org.nlh4j.core.text.numberinwords.BaseAbstractNumberInWordsProcessor;
 
@@ -57,7 +57,7 @@ public class NumberInWordsProcessor extends BaseAbstractNumberInWordsProcessor {
 		}
 
 		// process decimal number part
-		if (StringUtils.hasText(decimalValue)) {
+		if (StringUtils.isNotBlank(decimalValue)) {
 			name = name
 					.concat(WORDS_SEPARATOR)
 					.concat(NumberInWordsConstants.NUMBER_IN_WORDS_UNION_AND)

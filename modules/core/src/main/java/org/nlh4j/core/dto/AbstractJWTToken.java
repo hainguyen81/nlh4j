@@ -12,7 +12,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.util.Assert;
 
 import com.nimbusds.jwt.JWT;
-import com.nimbusds.jwt.ReadOnlyJWTClaimsSet;
+import com.nimbusds.jwt.JWTClaimsSet;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -54,9 +54,9 @@ public abstract class AbstractJWTToken<T extends UserDetails, A extends GrantedA
 	@Getter
 	@Setter
 	private boolean authenticated = false;
-	/** {@link ReadOnlyJWTClaimsSet} */
+	/** {@link JWTClaimsSet} */
 	@Getter
-	private ReadOnlyJWTClaimsSet claims;
+	private JWTClaimsSet claims;
 
 	/**
 	 * Initialize a new instance of {@link AbstractJWTToken}
@@ -123,7 +123,7 @@ public abstract class AbstractJWTToken<T extends UserDetails, A extends GrantedA
 	 *
 	 * @return the principal authentication object
 	 */
-	protected abstract T parsePrincipal(ReadOnlyJWTClaimsSet claims);
+	protected abstract T parsePrincipal(JWTClaimsSet claims);
 
 	/* (Non-Javadoc)
 	 * @see java.security.Principal#getName()

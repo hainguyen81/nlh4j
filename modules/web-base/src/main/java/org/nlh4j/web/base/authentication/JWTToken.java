@@ -7,7 +7,7 @@ package org.nlh4j.web.base.authentication;
 import java.util.List;
 
 import com.nimbusds.jwt.JWT;
-import com.nimbusds.jwt.ReadOnlyJWTClaimsSet;
+import com.nimbusds.jwt.JWTClaimsSet;
 
 import org.nlh4j.core.dto.AbstractJWTToken;
 import org.nlh4j.util.CollectionUtils;
@@ -44,10 +44,10 @@ public class JWTToken extends AbstractJWTToken<UserDto, RoleDto> {
     }
 
     /* (Non-Javadoc)
-     * @see org.nlh4j.core.dto.AbstractJWTToken#parsePrincipal(com.nimbusds.jwt.ReadOnlyJWTClaimsSet)
+     * @see org.nlh4j.core.dto.AbstractJWTToken#parsePrincipal(com.nimbusds.jwt.JWTClaimsSet)
      */
     @Override
-    protected UserDto parsePrincipal(ReadOnlyJWTClaimsSet claims) {
+    protected UserDto parsePrincipal(JWTClaimsSet claims) {
         UserDto user = new UserDto();
         if (claims != null) {
             user.setUserName(claims.getSubject());

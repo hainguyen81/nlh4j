@@ -6,12 +6,12 @@ package org.nlh4j.core.pagination;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Objects;
 
 import org.seasar.doma.jdbc.SelectOptions;
 
 import lombok.EqualsAndHashCode;
 import lombok.Setter;
-import reactor.util.Assert;
 import org.nlh4j.core.dto.AbstractDto;
 import org.nlh4j.util.BeanUtils;
 import org.nlh4j.util.CollectionUtils;
@@ -27,9 +27,6 @@ import org.nlh4j.util.CollectionUtils;
 @EqualsAndHashCode(callSuper = false)
 public class PaginationSearchDto<T, C> extends AbstractDto {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 1L;
 
 	/** search conditions */
@@ -55,8 +52,7 @@ public class PaginationSearchDto<T, C> extends AbstractDto {
 			}
 		}
 		// detect for unknown conditions
-		Assert.notNull(this.searchConditions, "search conditions could not be null/empty!");
-		return this.searchConditions;
+		return Objects.requireNonNull(this.searchConditions, "search conditions could not be null/empty!");
 	}
 
 	/** pagination */
@@ -86,8 +82,7 @@ public class PaginationSearchDto<T, C> extends AbstractDto {
 	 * @param pagingDto pagination information
 	 */
 	public PaginationSearchDto(PagingDto<T> pagingDto) {
-		Assert.notNull(pagingDto);
-		this.setData(pagingDto);
+		this.setData(Objects.requireNonNull(pagingDto, "pagingDto"));
 	}
 
 	/**

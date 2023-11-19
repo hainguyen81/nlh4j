@@ -7,6 +7,7 @@ package org.nlh4j.core.controller;
 import java.security.Principal;
 import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import org.springframework.messaging.MessageHeaders;
@@ -16,7 +17,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 
 import lombok.Getter;
-import reactor.util.Assert;
 import org.nlh4j.core.dto.AbstractDto;
 import org.nlh4j.core.dto.AbstractSocketDto;
 import org.nlh4j.core.dto.UserDetails;
@@ -51,7 +51,7 @@ public abstract class AbstractSocketController<K extends AbstractDto, T extends 
      * @param socketDtoClass the outbound class of the socket response data
      */
     protected AbstractSocketController(Class<T> socketDtoClass) {
-    	Assert.notNull(socketDtoClass, "socketDtoClass");
+    	this.socketDtoClass = Objects.requireNonNull(socketDtoClass, "socketDtoClass");
     }
 
     /**
@@ -70,11 +70,11 @@ public abstract class AbstractSocketController<K extends AbstractDto, T extends 
     	Authentication authentication = BeanUtils.safeType(principal, Authentication.class);
     	UserDetails user = (authentication == null ? null
     			: BeanUtils.safeType(authentication.getPrincipal(), UserDetails.class));
-    	Assert.notNull(user, "authentication");
+    	user = Objects.requireNonNull(user, "authentication");
     	T socketDto = BeanUtils.safeNewInstance(
     			this.getSocketDtoClass(),
     			new Object[] { user, messageHeaders, message });
-    	Assert.notNull(socketDto, "The socket DTO class ["
+    	socketDto = Objects.requireNonNull(socketDto, "The socket DTO class ["
     			+ this.socketDtoClass.getName() + "] has constructor with parameters: "
 				+ "authentication and original message!");
     	socketDtoSet.add(socketDto);
