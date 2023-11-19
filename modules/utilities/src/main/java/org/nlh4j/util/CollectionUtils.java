@@ -1219,6 +1219,7 @@ public final class CollectionUtils implements Serializable {
     /**
      * Remove duplicate item from the specified collection and return a new uniqued collection.<br>
      * Items should be calculated {@link Object#hashCode()} for comparing each other.
+     * @param <T> item type
      * @param collection to remove duplicate items
      * @return a new uniqued collection
      */

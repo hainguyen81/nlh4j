@@ -1,0 +1,201 @@
+-printmapping mapping.txt
+-verbose
+-dontoptimize
+# Remove from Jdk 1.8 for avoiding VerifyError
+#-dontpreverify
+-dontshrink
+-dontskipnonpubliclibraryclasses
+-dontskipnonpubliclibraryclassmembers
+-dontusemixedcaseclassnames
+-keepparameternames
+-keepdirectories
+-renamesourcefileattribute SourceFile
+-ignorewarnings
+-forceprocessing
+
+# We need to keep all annotation classes because proguard does not trace annotation attribute
+# it just filter the annotation attributes according to annotation classes it already kept.
+-keep public class * extends java.lang.annotation.Annotation {
+	*;
+}
+
+# For native methods, see http://proguard.sourceforge.net/manual/examples.html#native
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+
+# Don't obfuscate or remove your entry point
+-keep public class * { public protected *; }
+-keep @org.seasar.doma.** class *
+-keep @org.springframework.beans.factory.annotation.** class *
+-keep @org.springframework.stereotype.** class *
+-keep @org.springframework.web.bind.annotation.** class *
+-keep @org.springframework.transaction.annotation.** class *
+-keep @org.apache.commons.** class *
+-keep @javax.annotation.** class *
+-keep @javax.persistence.** class *
+-keep @jakarta.annotation.** class *
+-keep @jakarta.persistence.** class *
+-keep @org.nlh4j.** class *
+
+# Keep package/class/method names for importing in reference
+-keeppackagenames org.nlh4j.**
+-keepnames interface org.nlh4j.**
+-keepnames class org.nlh4j.**
+-keepnames class org.nlh4j.**.**$**
+-keepclassmembernames class org.nlh4j.** {
+	public protected private *;
+
+	# private field that has been annotation
+		@javax.inject.* <fields>;
+	    @javax.annotation.* <fields>;
+	    @jakarta.inject.* <fields>;
+	    @jakarta.annotation.* <fields>;
+
+	    # nlh4j
+	    @org.nlh4j.* <fields>;
+
+	    # Spring3
+	    @org.springframework.beans.factory.annotation.* <fields>;
+}
+-keepclassmembernames class org.nlh4j.**.**$** {
+	public protected private *;
+
+	# private field that has been annotation
+		@javax.inject.* <fields>;
+	    @javax.annotation.* <fields>;
+	    @jakarta.inject.* <fields>;
+	    @jakarta.annotation.* <fields>;
+
+	    # nlh4j
+	    @org.nlh4j.* <fields>;
+
+	    # Spring3
+	    @org.springframework.beans.factory.annotation.* <fields>;
+}
+# Seasar DOMA entity/table/database entity
+-keepclassmembernames @org.seasar.doma.* class org.nlh4j.** { *; }
+-keepclassmembernames @org.seasar.doma.* class org.nlh4j.**.**$** { *; }
+#-keepclassmembernames @org.seasar.doma.* class ** { *; }
+#-keepclassmembernames @org.seasar.doma.* class **.**$** { *; }
+-keepclassmembers class * {
+	@javax.inject.* *;
+    @javax.annotation.* *;
+	@jakarta.inject.* *;
+    @jakarta.annotation.* *;
+
+    # nlh4j
+    @org.nlh4j.* *;
+
+    # Spring3
+    @org.springframework.beans.factory.annotation.* *;
+
+	# Enums
+	public enum *;
+	protected enum *;
+
+	# constants
+	private static final <fields>;
+	public static final <fields>;
+	protected static final <fields>;
+	private static final **[] <fields>;
+}
+# Process bean classes by keeping setter and getter methods.
+-keep class * {
+    void set*(***);
+    boolean is*();
+    *** get*();
+}
+# For enumeration classes, see http://proguard.sourceforge.net/manual/examples.html#enumerations
+-keepclassmembers,allowoptimization public enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+# If you use Spring Boot, the Application class should be kept to launch the app.
+# The option in code below keeps any class with main method.
+-keepclasseswithmembers public class * { public static void main(java.lang.String[]);}
+
+# Suppress warnings from some packages
+-dontwarn **
+
+# Suppress notes from some packages
+-dontnote **
+
+# Uncomment if you want to have more meaningful backtraces
+# Useful for obfuscation debugging
+# Spring uses annotations extensively, so annotations should be kept in the runtime
+# to make sure Spring still works properly.
+# *Annotation* in code below is used to keep annotations.
+# You absolutely must keep this commented out for production
+# -keepattributes SourceFile,LineNumberTable
+-keepattributes *Annotation*
+-keepattributes Deprecated
+-keepattributes SourceFile
+-keepattributes LineNumberTable
+-keepattributes Signature
+-keepattributes Inject
+-keepattributes InnerClasses
+-keepattributes InnerClasses,EnclosingMethod
+-keepattributes EnclosingMethod
+# keep override methods that throwing exception
+-keepattributes Exceptions
+
+# If you use configuration files like spring.factories to customise Spring,
+# make sure these configuration files are adapted by ProGuard,
+# otherwise the class names in those files will be wrong.
+-adaptresourcefilecontents **.properties,META-INF/**.properties,META-INF/**/**.properties
+
+# By default ProGuard marks classes as final when possible even when classes are not declared as final.
+# This causes problems for Spring as Spring doesn't allow classes with @Configuration annotation to be final.
+# Use following to disable it.
+-optimizations !class/marking/final,!code/simplification/arithmetic,!field/*,!class/merging/*
+
+#################################################
+# ANDROID RULES
+#################################################
+# The official support library.
+-keep class android.support.** { *; }
+-keep interface android.support.** { *; }
+-keep public class * extends android.app.Instrumentation {
+	<init>();
+}
+-keep public class * extends android.app.Application {
+	<init>();
+    void attachBaseContext(android.content.Context);
+}
+-keep public class * extends android.app.Activity {
+	<init>();
+}
+-keep public class * extends android.app.Service {
+    <init>();
+}
+-keep public class * extends android.content.ContentProvider {
+	<init>();
+}
+-keep public class * extends android.content.BroadcastReceiver {
+	<init>();
+}
+-keep public class * extends android.app.backup.BackupAgent {
+	<init>();
+}
+-keep class * implements android.os.Parcelable {
+	public static final android.os.Parcelable$Creator *;
+}
+# keep setters in Views so that animations can still work.
+# see http://proguard.sourceforge.net/manual/examples.html#beans
+-keepclassmembers public class * extends android.view.View {
+	void set*(***);
+	*** get*();
+}
+# We want to keep methods in Activity that could be used in the XML attribute onClick
+-keepclassmembers class * extends android.app.Activity {
+	public void *(android.view.View);
+}
+# Keep resource generation classes
+-keepclassmembers class **.R$* {
+	public static <fields>;
+}
+# Javascript Interface specifics
+-keepclassmembers class * {
+	@android.webkit.JavascriptInterface <methods>;
+}

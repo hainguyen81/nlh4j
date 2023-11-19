@@ -30,9 +30,6 @@ import org.nlh4j.util.StringUtils;
 @Component
 public abstract class ControllerInterceptorAdapter extends AbstractHandlerInterceptorAdapter {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -141,6 +138,6 @@ public abstract class ControllerInterceptorAdapter extends AbstractHandlerInterc
 	 * @param value the result of method invoking
 	 */
 	protected void afterInvoke(Class<?> targetClass, String method, Object[] medArgs, Object value) {
-		;
+		// do nothing
 	}
 }

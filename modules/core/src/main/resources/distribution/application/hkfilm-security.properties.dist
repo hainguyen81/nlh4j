@@ -1,9 +1,0 @@
-# Authentication Provider
-# Name or default class name by spring autowired components scan
-sec.auth.prov=hkFilmAuthenticationProvider
-
-# Authentication Locale Filter
-sec.auth.locale.filter=hkfilmLocaleConfigurerFilter
-
-# Authentication Logout Handler
-sec.auth.logout.handler=hkfilmLogoutSuccessHandler

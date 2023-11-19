@@ -24,7 +24,7 @@ package org.nlh4j.thumbnailer;
  * Dummy class for converting Text documents into Openoffice-Textfiles.
  *
  * Tika could be used to detect ms-word-files, but quite a heavy library. Maybe it would be useful as a preperator as well?
- * @see {@link JODConverterThumbnailer}
+ * @see JodThumbnailer
  */
 public class WordThumbnailer extends JodThumbnailer {
 
@@ -60,6 +60,7 @@ public class WordThumbnailer extends JodThumbnailer {
      * @return MIME-Types
      * @see <a href="http://www.artofsolving.com/opensource/jodconverter/guide/supportedformats">supportedformats</a>
      */
+	@Override
 	public String[] getAcceptedMIMETypes() {
 		return new String[] {
 				"text/plain"

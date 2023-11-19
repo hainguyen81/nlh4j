@@ -6,7 +6,8 @@ package org.nlh4j.core.text.numberinwords.i18n.vi;
 
 import org.springframework.util.StringUtils;
 
-import reactor.util.Assert;
+import java.util.Objects;
+
 import org.nlh4j.core.text.numberinwords.AbstractNumberHundredInWordsProcessor;
 import org.nlh4j.core.text.numberinwords.AbstractNumberTenthInWordsProcessor;
 import org.nlh4j.core.text.numberinwords.AbstractNumberUnitInWordsProcessor;
@@ -77,10 +78,10 @@ public class NumberHundredInWordsProcessor extends AbstractNumberHundredInWordsP
 	@Override
 	public String getName(String value) {
 		// check valid number processors
-		AbstractNumberUnitInWordsProcessor numberUnitProcessor = this.getNumberUnitProcessor();
-		Assert.notNull(numberUnitProcessor);
-		AbstractNumberTenthInWordsProcessor numberTenthProcessor = this.getNumberTenthProcessor();
-		Assert.notNull(numberTenthProcessor);
+		AbstractNumberUnitInWordsProcessor numberUnitProcessor =
+				Objects.requireNonNull(this.getNumberUnitProcessor(), "numberUnitProcessor");
+		AbstractNumberTenthInWordsProcessor numberTenthProcessor =
+				Objects.requireNonNull(this.getNumberTenthProcessor(), "numberTenthProcessor");
 
 		// convert number into words
 		StringBuilder buffer = new StringBuilder();

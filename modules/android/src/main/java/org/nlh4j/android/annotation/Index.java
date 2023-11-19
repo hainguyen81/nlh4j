@@ -14,7 +14,7 @@
  ******************************************************************************/
 package org.nlh4j.android.annotation;
 
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import static java.lang.annotation.RetentionPolicy.*;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -37,7 +37,7 @@ import java.lang.annotation.Target;
  * <p> If <code>ASC</code> or <code>DESC</code> is not specified,
  * <code>ASC</code> (ascending order) is assumed.
  *
- * @see {@link Table}
+ * @see Table
  *
  * @since Java Persistence 2.1
  *

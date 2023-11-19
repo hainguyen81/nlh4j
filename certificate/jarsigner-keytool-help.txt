@@ -1,0 +1,7 @@
+1. keytool -genkey -noprompt -trustcacerts -keyalg RSA -alias vn.co.exex.isev -keypass systemexe -keystore .keystore.jks -storepass systemexe -validity 3650
+
+2. keytool -export -alias vn.co.exex.isev -storepass systemexe -file .keystore.cer -keystore .keystore.jks
+
+3. keytool -import -v -trustcacerts -alias vn.co.exex.isev -file .keystore.cer -keystore .keystore.cacerts.jks -keypass systemexe -storepass systemexe
+
+4. jarsigner.exe -verbose -keystore .keystore.cacerts.jks -storepass systemexe -storetype JKS -keypass systemexe target\isev-utilities.jar vn.co.exex.isev

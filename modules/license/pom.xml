@@ -12,11 +12,10 @@
 
 	<!-- Present package -->
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>${project.parent.groupId}</groupId>
 	<artifactId>nlh4j-license</artifactId>
-	<version>${project.parent.version}</version>
 	<packaging>jar</packaging>
 	<name>nlh4j-license</name>
+	<version>${revision}</version>
 	<description>Base License Generation for Java Web/Mobile</description>
 
 	<!-- Dependencies -->
@@ -25,14 +24,13 @@
       	<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-utilities</artifactId>
-			<version>${module.version}</version>
+			<version>${project.version}</version>
       	</dependency>
 
 		<!-- Lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>${org.projectlombok.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -40,6 +38,13 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Others -->
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-all</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

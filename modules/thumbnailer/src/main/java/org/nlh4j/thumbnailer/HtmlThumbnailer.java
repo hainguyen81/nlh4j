@@ -25,7 +25,7 @@ package org.nlh4j.thumbnailer;
  *
  * (The preview won't be better than what OpenOffice can achieve. See also
  * issue https://github.com/benjamin4ruby/java-thumbnailer/issues/8)
- * @see {@link JODConverterThumbnailer}
+ * @see JodThumbnailer
  */
 public class HtmlThumbnailer extends JodThumbnailer {
 
@@ -61,6 +61,7 @@ public class HtmlThumbnailer extends JodThumbnailer {
      * @return MIME-Types
      * @see <a href="http://www.artofsolving.com/opensource/jodconverter/guide/supportedformats">supportedformats</a>
      */
+	@Override
 	public String[] getAcceptedMIMETypes() {
 		return new String[] { "text/html" };
 	}

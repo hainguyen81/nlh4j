@@ -3,6 +3,15 @@
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
+	<!-- Present package -->
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.nlh4j</groupId>
+	<artifactId>nlh4j</artifactId>
+	<version>1.0</version>
+	<packaging>pom</packaging>
+	<name>nlh4j</name>
+	<description>Base Package for Java Web/Mobile</description>
+
 	<!-- License -->
 	<licenses>
 		<license>
@@ -17,6 +26,10 @@
 		<developer>
 			<name>Hai Nguyen</name>
 			<email>hainguyenjc@gmail.com</email>
+			<roles>
+				<role>Technical/Team Supporter/Leader</role>
+			</roles>
+			<timezone>7</timezone>
 		</developer>
 	</developers>
 
@@ -34,6 +47,1542 @@
 
 	<!-- Profile configuration -->
 	<profiles>
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- JDK 1.8 -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<profile>
+			<id>jdk8</id>
+			<properties>
+				<!-- General -->
+				<revision>1.0-jre8</revision>
+
+				<!-- JDK -->
+				<java.version>1.8</java.version>
+				<jdk.toolchain>${root.basedir}/toolchains.xml</jdk.toolchain>
+				
+				<!-- m2e profiles -->
+				<eclipse.maven.project.activated.profiles>dev,jdk8</eclipse.maven.project.activated.profiles>
+				
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Maven Plugins -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<maven.truelicense.groupId>net.java.truelicense</maven.truelicense.groupId>
+				<maven.truelicense.artifactId>truelicense-maven-plugin</maven.truelicense.artifactId>
+				<maven.truelicense.version>2.6.4</maven.truelicense.version>
+				<maven.truelicense.scope>annotated</maven.truelicense.scope>
+				<maven.proguard.groupId>com.github.wvengen</maven.proguard.groupId>
+				<maven.proguard.artifactId>proguard-maven-plugin</maven.proguard.artifactId>
+				<maven.proguard.version>2.0.14</maven.proguard.version>
+				<maven.proguard-base.version>5.3.2</maven.proguard-base.version>
+				<maven.aspectj.groupId>org.codehaus.mojo</maven.aspectj.groupId>
+				<maven.aspectj.artifactId>aspectj-maven-plugin</maven.aspectj.artifactId>
+				<maven.aspectj.version>1.14.0</maven.aspectj.version>
+
+				<!-- Progurad configuration -->
+				<proguard.configuration>${root.basedir}/certificate/proguard.cnf</proguard.configuration>
+				<proguard.skip>false</proguard.skip>
+
+				<!-- License password -->
+				<license.alias>${module.groupId}</license.alias>
+				<license.storepass>01101981</license.storepass>
+				<license.keypass>01101981</license.keypass>
+
+				<!-- JAR Signer -->
+				<jarsigner.skip>false</jarsigner.skip>
+				<jarsigner.verbose>true</jarsigner.verbose>
+				<jarsigner.keystore>${certificate.basedir}/jdk8/${module.groupId}.keystore.jks</jarsigner.keystore>
+				<jarsigner.alias>${license.alias}</jarsigner.alias>
+				<jarsigner.storepass>${license.storepass}</jarsigner.storepass>
+				<jarsigner.keypass>${license.keypass}</jarsigner.keypass>
+				<jarsigner.storetype>JKS</jarsigner.storetype>
+
+				<!-- Lombok -->
+				<org.projectlombok.version>1.16.18</org.projectlombok.version>
+				
+				<!-- AspectJ -->
+				<org.aspectj.version>1.8.13</org.aspectj.version>
+				<org.aspectj.skip>false</org.aspectj.skip>
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Servlet -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- 3.1.x (javax - JDK8) -->
+				<servlet-api.groupId>javax.servlet</servlet-api.groupId>
+				<servlet-api.artifactId>javax.servlet-api</servlet-api.artifactId>
+				<servlet-api.version>3.1.0</servlet-api.version>
+				<!-- 4.0.x (javax) -->
+				<!--<servlet-api.groupId>javax.servlet</servlet-api.groupId>
+				<servlet-api.artifactId>javax.servlet-api</servlet-api.artifactId>
+				<servlet-api.version>4.0.1</servlet-api.version>-->
+				<!-- 4.0.x (jakarta) -->
+				<!--<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
+				<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
+				<servlet-api.version>4.0.4</servlet-api.version>-->
+				<!-- 5.0.x (jakarta) -->
+				<!--<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
+				<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
+				<servlet-api.version>5.0.0</servlet-api.version>-->
+				<!-- 6.0.x -->
+				<!--<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
+				<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
+				<servlet-api.version>6.0.0</servlet-api.version>-->
+
+				<!-- Web API -->
+				<!--<javaee-web-api.version>6.0</javaee-web-api.version>-->
+				<javaee-web-api.version>7.0</javaee-web-api.version>
+				<!--<javaee-web-api.version>8.0</javaee-web-api.version>-->
+				<!--<javaee-web-api.version>8.0.1</javaee-web-api.version>-->
+		
+				<!-- JSTL -->
+				<jstl.groupId>javax.servlet</jstl.groupId>
+				<jstl.artifactId>jstl</jstl.artifactId>
+				<!--<jstl.groupId>jakarta.servlet.jsp.jstl</jstl.groupId>
+				<jstl.artifactId>jakarta.servlet.jsp.jstl-api</jstl.artifactId>-->
+				<jstl.version>1.2</jstl.version>
+				<!--<jstl.version>1.2.7</jstl.version>
+				<jstl.version>2.0.0</jstl.version>
+				<jstl.version>3.0.0</jstl.version>-->
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Springframework -->
+				<!--
+					 https://github.com/spring-projects/spring-framework/wiki/Spring-Framework-Versions
+					 + Supported Versions
+						6.2.x		is the next planned feature branch (November 2024).
+						6.1.x		is the upcoming feature branch (November 2023).
+						6.0.x		is the main production line as of November 2022. This new generation of the framework comes with a JDK 17 and Jakarta EE 9 baseline.
+						5.3.x		is the final feature branch of the 5th generation, with long-term support provided on JDK 8, JDK 11, JDK 17 and the Java EE 8 level.
+						4.3.x		reached its official EOL (end-of-life) on December 31st, 2020. No further maintenance and security patches are planned in that line.
+						3.2.x		reached its official EOL (end-of-life) on December 31st, 2016. No further maintenance and security patches are planned in that line.
+					 + JDK Version Range:
+						Spring Framework 6.2.x:		JDK 17-25 (expected)
+						Spring Framework 6.1.x:		JDK 17-23
+						Spring Framework 6.0.x:		JDK 17-21
+						Spring Framework 5.3.x:		JDK 8-21 (as of 5.3.26)
+					 + Java/Jakarta EE Versions
+						Spring Framework 6.2.x:		Jakarta EE 9-11 (jakarta namespace)
+						Spring Framework 6.1.x:		Jakarta EE 9-10 (jakarta namespace)
+						Spring Framework 6.0.x:		Jakarta EE 9-10 (jakarta namespace)
+						Spring Framework 5.3.x:		Java EE 7-8 (javax namespace)
+				-->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- <spring.framework.version>4.2.5.RELEASE</spring.framework.version> -->
+				<!-- <spring.framework.version>4.0.6.RELEASE</spring.framework.version> -->
+				<!-- FIXME New version to avoid SecurityException of Spring AOP and maven jar signer.
+					Could not generate CGLIB subclass... Common causes of this problem include
+					using a final class or a non-visible class; nested exception is java.lang.IllegalArgumentException:
+					Cannot subclass final class... -->
+				<!-- Spring 5.0.x -->
+				<!--<spring.framework.version>5.0.4.RELEASE</spring.framework.version>-->
+				<!--<spring.framework.version>5.0.20.RELEASE</spring.framework.version>-->
+				<!-- Spring 5.1.x -->
+				<!--<spring.framework.version>5.1.20.RELEASE</spring.framework.version>-->
+				<!-- Spring 5.2.x -->
+				<!--<spring.framework.version>5.2.25.RELEASE</spring.framework.version>-->
+				<!-- Spring 5.3.x -->
+				<spring.framework.version>5.3.30</spring.framework.version>
+				<!-- Spring 6.0.x -->
+				<!--<spring.framework.version>6.0.13</spring.framework.version>-->
+				<!--<spring.framework.version>6.0.14</spring.framework.version>-->
+				<!-- Spring 6.1.x -->
+				<!--<spring.framework.version>6.1.0</spring.framework.version>-->
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring LDAP -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring LDAP 2.0.x -->
+				<!--<spring.ldap.core.version>2.0.4.RELEASE</spring.ldap.core.version>-->
+				<!-- Spring LDAP 2.1.x -->
+				<!--<spring.ldap.core.version>2.1.0.RELEASE</spring.ldap.core.version>-->
+				<!-- Spring LDAP 2.2.x -->
+				<!--<spring.ldap.core.version>2.2.1.RELEASE</spring.ldap.core.version>-->
+				<!-- Spring LDAP 2.3.x -->
+				<!--<spring.ldap.core.version>2.3.8.RELEASE</spring.ldap.core.version>-->
+				<!-- Spring LDAP 2.4.x -->
+				<spring.ldap.core.version>2.4.1</spring.ldap.core.version>
+				<!-- Spring LDAP 3.0.x -->
+				<!--<spring.ldap.core.version>3.0.6</spring.ldap.core.version>-->
+				<!-- Spring LDAP 3.1.x -->
+				<!--<spring.ldap.core.version>3.1.2</spring.ldap.core.version>-->
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Security -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Security 3.2.x -->
+				<!--<spring.security.version>3.2.9.RELEASE</spring.security.version>-->
+				<!-- Spring Security 5.5.x -->
+				<!--<spring.security.version>5.5.8</spring.security.version>-->
+				<!-- Spring Security 5.6.x -->
+				<!--<spring.security.version>5.6.12</spring.security.version>-->
+				<!-- Spring Security 5.7.x -->
+				<!--<spring.security.version>5.7.11</spring.security.version>-->
+				<!-- Spring Security 5.8.x -->
+				<spring.security.version>5.8.8</spring.security.version>
+				<!-- Spring Security 6.0.x -->
+				<!--<spring.security.version>6.0.8</spring.security.version>-->
+				<!-- Spring Security 6.1.x -->
+				<!--<spring.security.version>6.1.5</spring.security.version>-->
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Data -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Data 2.1.x -->
+				<!--<spring.springframework.data.version>2.1.10.RELEASE</spring.springframework.data.version>-->
+				<!--<spring.springframework.data.version>2.1.21.RELEASE</spring.springframework.data.version>-->
+				<!-- Spring Data 2.2.x -->
+				<!--<spring.springframework.data.version>2.2.13.RELEASE</spring.springframework.data.version>-->
+				<!-- Spring Data 2.3.x -->
+				<!--<spring.springframework.data.version>2.3.9.RELEASE</spring.springframework.data.version>-->
+				<!-- Spring Data 2.4.x -->
+				<!--<spring.springframework.data.version>2.4.15</spring.springframework.data.version>-->
+				<!-- Spring Data 2.5.x -->
+				<!--<spring.springframework.data.version>2.5.12</spring.springframework.data.version>-->
+				<!-- Spring Data 2.6.x -->
+				<!--<spring.springframework.data.version>2.6.10</spring.springframework.data.version>-->
+				<!-- Spring Data 2.7.x -->
+				<spring.springframework.data.version>2.7.17</spring.springframework.data.version>
+				<!-- Spring Data 3.0.x -->
+				<!--<spring.springframework.data.version>3.0.11</spring.springframework.data.version>-->
+				<!-- Spring Data 3.1.x -->
+				<!--<spring.springframework.data.version>3.1.5</spring.springframework.data.version>-->
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Data Mongo -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Data Mongo 2.1.x -->
+				<!--<spring.springframework.data.mongo.version>2.1.10.RELEASE</spring.springframework.data.mongo.version>-->
+				<!-- Spring Data Mongo 3.3.x -->
+				<!--<spring.springframework.data.mongo.version>3.3.10</spring.springframework.data.mongo.version>-->
+				<!-- Spring Data Mongo 3.4.x -->
+				<spring.springframework.data.mongo.version>3.4.17</spring.springframework.data.mongo.version>
+				<!-- Spring Data Mongo 4.0.x -->
+				<!--<spring.springframework.data.mongo.version>4.0.11</spring.springframework.data.mongo.version>-->
+				<!-- Spring Data Mongo 4.1.x -->
+				<!--<spring.springframework.data.mongo.version>4.1.5</spring.springframework.data.mongo.version>-->
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Apache HTTP Components (CORE) -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- JDK8/11 -->
+				<http.core.groupId>org.apache.httpcomponents</http.core.groupId>
+				<http.core.artifactId>httpcore</http.core.artifactId>
+				<http.core.version>4.4.5</http.core.version>
+		
+				<!-- JDK17+ (HTTP/1.1) -->
+				<!--<http.core.groupId>org.apache.httpcomponents.core5</http.core.groupId>
+				<http.core.artifactId>httpcore5</http.core.artifactId>-->
+				<!-- 5.0.x -->
+				<!--<http.core.version>5.0.4</http.core.version>-->
+				<!-- 5.1.x -->
+				<!--<http.core.version>5.1.5</http.core.version>-->
+				<!-- 5.2.x -->
+				<!--<http.core.version>5.2.1</http.core.version>-->
+				<!--<http.core.version>5.2.2</http.core.version>-->
+				<!--<http.core.version>5.2.3</http.core.version>-->
+		
+				<!-- JDK17+ (HTTP/2) -->
+				<!--<http.core.groupId>org.apache.httpcomponents.core5</http.core.groupId>
+				<http.core.artifactId>httpcore5-h2</http.core.artifactId>-->
+				<!-- 5.0.x -->
+				<!--<http.core.version>5.0.4</http.core.version>-->
+				<!-- 5.1.x -->
+				<!--<http.core.version>5.1.5</http.core.version>-->
+				<!-- 5.2.x -->
+				<!--<http.core.version>5.2.1</http.core.version>-->
+				<!--<http.core.version>5.2.2</http.core.version>-->
+				<!--<http.core.version>5.2.3</http.core.version>-->
+				
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Apache HTTP Components (CLIENT) -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- JDK8/11 -->
+				<http.client.groupId>org.apache.httpcomponents</http.client.groupId>
+				<http.client.artifactId>httpclient</http.client.artifactId>
+				<http.client.version>4.5.2</http.client.version>
+		
+				<!-- JDK17+ -->
+				<!--<http.client.groupId>org.apache.httpcomponents.client5</http.client.groupId>
+				<http.client.artifactId>httpclient5</http.client.artifactId>-->
+				<!-- 5.0.x -->
+				<!--<http.client.version>5.0.4</http.client.version>-->
+				<!-- 5.1.x -->
+				<!--<http.client.version>5.1.5</http.client.version>-->
+				<!-- 5.2.x -->
+				<!--<http.client.version>5.2.1</http.client.version>-->
+				
+				<!--
+				Servlet Spec	JSP Spec	EL Spec		WebSocket Spec		Authentication (JASPIC) Spec	Apache Tomcat Version	Latest Released Version		Supported Java Versions
+				6.1				4.0			6.0			TBD					TBD								11.0.x					11.0.0-M13 (alpha)			21+
+				6.0				3.1			5.0			2.1					3.0								10.1.x					10.1.16						11+
+				5.0				3.0			4.0			2.0					2.0								10.0.x (superseded)		10.0.27 (superseded)		8+
+				4.0				2.3			3.0			1.1					1.1								9.0.x					9.0.82						8+
+				3.1				2.3			3.0			1.1					1.1								8.5.x					8.5.96						7+
+				3.1				2.3			3.0			1.1					N/A								8.0.x (superseded)		8.0.53 (superseded)			7+
+				3.0				2.2			2.2			1.1					N/A								7.0.x (archived)		7.0.109 (archived)			6+ (7+ for WebSocket)
+				2.5				2.1			2.1			N/A					N/A								6.0.x (archived)		6.0.53 (archived)			5+
+				2.4				2.0			N/A			N/A					N/A								5.5.x (archived)		5.5.36 (archived)			1.4+
+				2.3				1.2			N/A			N/A					N/A								4.1.x (archived)		4.1.40 (archived)			1.3+
+				2.2				1.1			N/A			N/A					N/A								3.3.x (archived)		3.3.2 (archived)			1.1+
+				-->
+				<!-- Spring websocket depencencies -->
+				<!-- Tomcat 7.0.x (JDK6/7+ - 7 and later for WebSocket) -->
+				<!-- <org.apache.tomcat.version>7.0.52</org.apache.tomcat.version> -->
+				<!-- <org.apache.tomcat.version>7.0.109</org.apache.tomcat.version> -->
+				<!-- Tomcat 8.0.x (JDK7+) -->
+				<org.apache.tomcat.version>8.0.41</org.apache.tomcat.version>
+				<!-- <org.apache.tomcat.version>8.0.53</org.apache.tomcat.version> -->
+				<!-- Tomcat 8.5.x (JDK7+) -->
+				<!-- <org.apache.tomcat.version>8.5.11</org.apache.tomcat.version> -->
+				<!-- <org.apache.tomcat.version>8.5.95</org.apache.tomcat.version> -->
+				<!-- Tomcat 9.0.x (JDK8+) -->
+				<!-- <org.apache.tomcat.version>9.0.0.M17</org.apache.tomcat.version> -->
+				<!-- <org.apache.tomcat.version>9.0.82</org.apache.tomcat.version> -->
+				<!-- Tomcat 10.0.x (JDK8+) -->
+				<!-- <org.apache.tomcat.version>10.0.27</org.apache.tomcat.version> -->
+				<!-- Tomcat 10.1.x (JDK11+) -->
+				<!-- <org.apache.tomcat.version>10.1.15</org.apache.tomcat.version> -->
+				<!-- Tomcat 11.0.x (JDK21+) -->
+				<!-- <org.apache.tomcat.version>11.0.0-M13</org.apache.tomcat.version> -->
+			</properties>
+			<build>
+				<!-- Plugins -->
+				<pluginManagement>
+					<plugins>
+			            <!-- Proguard -->
+			            <plugin>
+							<groupId>${maven.proguard.groupId}</groupId>
+							<artifactId>${maven.proguard.artifactId}</artifactId>
+							<version>${maven.proguard.version}</version>
+							<configuration>
+								<!-- internal proguard -->
+								<proguardVersion>${maven.proguard-base.version}</proguardVersion>
+
+								<!--
+								List external jars your application depends on
+								(that not listed in maven dependencies).
+								You probably depend on Java runtime (rt.jar).
+								JCE stands for Java Cryptography Extension.
+								You probably don't need it, but my application does.
+								-->
+								<libs> <!-- JDK8 -->
+									<lib>${java.home}/lib/rt.jar</lib>
+									<lib>${java.home}/lib/jce.jar</lib>
+									<lib>${java.home}/lib/ext/sunjce_provider.jar</lib>
+								</libs>
+							</configuration>
+							<dependencies>
+								<dependency>
+									<groupId>net.sf.proguard</groupId>
+									<artifactId>proguard-base</artifactId>
+									<version>${maven.proguard-base.version}</version>
+								</dependency>
+							</dependencies>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+			</build>
+
+			<!-- Modules -->
+			<modules>
+				<!-- Base -->
+				<module>modules/utilities</module>
+				<module>modules/core</module>
+			</modules>
+		</profile>
+
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- JDK 11 -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<profile>
+			<id>jdk11</id>
+			<properties>
+				<!-- General -->
+				<revision>1.0-jre11</revision>
+
+				<!-- JDK -->
+				<java.version>11</java.version>
+				<jdk.toolchain>${root.basedir}/toolchains.xml</jdk.toolchain>
+
+				<!-- Missing module for JDK11+ -->
+				<javax.annotation.version>1.3.2</javax.annotation.version>
+				
+				<!-- m2e profiles -->
+				<eclipse.maven.project.activated.profiles>dev,jdk11</eclipse.maven.project.activated.profiles>
+				
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Maven Plugins -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<maven.truelicense.groupId>global.namespace.truelicense</maven.truelicense.groupId>
+				<maven.truelicense.artifactId>truelicense-maven-plugin</maven.truelicense.artifactId>
+				<maven.truelicense.version>4.0.3</maven.truelicense.version>
+				<maven.truelicense.scope>annotated</maven.truelicense.scope>
+				<!--
+				For:
+				<groupId>com.github.wvengen</groupId>
+				<artifactId>proguard-maven-plugin</artifactId>
+				<name>proguard-maven-plugin</name>
+				<version>2.6.0</version>
+				-->
+				<maven.proguard.groupId>com.github.wvengen</maven.proguard.groupId>
+				<maven.proguard.artifactId>proguard-maven-plugin</maven.proguard.artifactId>
+				<maven.proguard.version>2.6.0</maven.proguard.version>
+				<maven.proguard-base.version>7.4.0</maven.proguard-base.version>
+				<maven.proguard-core.version>9.1.0</maven.proguard-core.version>
+				<!--
+				For:
+				<groupId>com.github.dingxin</groupId>
+				<artifactId>proguard-maven-plugin</artifactId>
+				<name>Maven Plugin for ProGuard</name>
+				<version>1.0.3</version>
+				-->
+				<!--<maven.proguard.groupId>com.github.dingxin</maven.proguard.groupId>
+				<maven.proguard.artifactId>proguard-maven-plugin</maven.proguard.artifactId>
+				<maven.proguard.version>1.0.3</maven.proguard.version>
+				<maven.proguard-base.version>6.0.2</maven.proguard-base.version>-->
+				
+				<!-- Maven AspectJ ok with these 2 plugins -->
+				<maven.aspectj.groupId>org.codehaus.mojo</maven.aspectj.groupId>
+				<maven.aspectj.artifactId>aspectj-maven-plugin</maven.aspectj.artifactId>
+				<maven.aspectj.version>1.14.0</maven.aspectj.version>
+				<!--<maven.aspectj.groupId>com.nickwongdev</maven.aspectj.groupId>
+				<maven.aspectj.artifactId>aspectj-maven-plugin</maven.aspectj.artifactId>
+				<maven.aspectj.version>1.12.1</maven.aspectj.version>-->
+
+				<!-- Progurad configuration -->
+				<proguard.configuration>${root.basedir}/certificate/proguard.cnf</proguard.configuration>
+				<proguard.skip>true</proguard.skip>
+
+				<!-- License password -->
+				<license.alias>${module.groupId}</license.alias>
+				<license.storepass>01101981</license.storepass>
+				<license.keypass>01101981</license.keypass>
+
+				<!-- JAR Signer -->
+				<jarsigner.skip>false</jarsigner.skip>
+				<jarsigner.verbose>true</jarsigner.verbose>
+				<jarsigner.keystore>${certificate.basedir}/jdk11/jdk11.${module.groupId}.keystore.jks</jarsigner.keystore>
+				<jarsigner.alias>${license.alias}</jarsigner.alias>
+				<jarsigner.storepass>${license.storepass}</jarsigner.storepass>
+				<jarsigner.keypass>${license.keypass}</jarsigner.keypass>
+				<jarsigner.storetype>JKS</jarsigner.storetype>
+
+				<!-- Lombok (Many improvements for lombok's JDK10/11 support) -->
+				<org.projectlombok.version>1.18.4</org.projectlombok.version>
+				
+				<!-- AspectJ -->
+				<org.aspectj.version>1.9.7</org.aspectj.version>
+				<org.aspectj.skip>false</org.aspectj.skip>
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Servlet -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- 3.1.x (javax - JDK8) -->
+				<!--<servlet-api.groupId>javax.servlet</servlet-api.groupId>
+				<servlet-api.artifactId>javax.servlet-api</servlet-api.artifactId>
+				<servlet-api.version>3.1.0</servlet-api.version>-->
+				<!-- 4.0.x (javax) -->
+				<!--<servlet-api.groupId>javax.servlet</servlet-api.groupId>
+				<servlet-api.artifactId>javax.servlet-api</servlet-api.artifactId>
+				<servlet-api.version>4.0.1</servlet-api.version>-->
+				<!-- 4.0.x (jakarta) -->
+				<!--<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
+				<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
+				<servlet-api.version>4.0.4</servlet-api.version>-->
+				<!-- 5.0.x (jakarta) -->
+				<!--<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
+				<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
+				<servlet-api.version>5.0.0</servlet-api.version>-->
+				<!-- 6.0.x -->
+				<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
+				<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
+				<servlet-api.version>6.0.0</servlet-api.version>
+
+				<!-- Web API -->
+				<!--<javaee-web-api.version>6.0</javaee-web-api.version>
+				<javaee-web-api.version>7.0</javaee-web-api.version>
+				<javaee-web-api.version>8.0</javaee-web-api.version>-->
+				<javaee-web-api.version>8.0.1</javaee-web-api.version>
+		
+				<!-- JSTL -->
+				<!--<jstl.groupId>javax.servlet</jstl.groupId>
+				<jstl.artifactId>jstl</jstl.artifactId>
+				<jstl.version>1.2</jstl.version>-->
+				<jstl.groupId>jakarta.servlet.jsp.jstl</jstl.groupId>
+				<jstl.artifactId>jakarta.servlet.jsp.jstl-api</jstl.artifactId>
+				<!--<jstl.version>1.2.7</jstl.version>
+				<jstl.version>2.0.0</jstl.version>-->
+				<jstl.version>3.0.0</jstl.version>
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Springframework -->
+				<!--
+					 https://github.com/spring-projects/spring-framework/wiki/Spring-Framework-Versions
+					 + Supported Versions
+						6.2.x		is the next planned feature branch (November 2024).
+						6.1.x		is the upcoming feature branch (November 2023).
+						6.0.x		is the main production line as of November 2022. This new generation of the framework comes with a JDK 17 and Jakarta EE 9 baseline.
+						5.3.x		is the final feature branch of the 5th generation, with long-term support provided on JDK 8, JDK 11, JDK 17 and the Java EE 8 level.
+						4.3.x		reached its official EOL (end-of-life) on December 31st, 2020. No further maintenance and security patches are planned in that line.
+						3.2.x		reached its official EOL (end-of-life) on December 31st, 2016. No further maintenance and security patches are planned in that line.
+					 + JDK Version Range:
+						Spring Framework 6.2.x:		JDK 17-25 (expected)
+						Spring Framework 6.1.x:		JDK 17-23
+						Spring Framework 6.0.x:		JDK 17-21
+						Spring Framework 5.3.x:		JDK 8-21 (as of 5.3.26)
+					 + Java/Jakarta EE Versions
+						Spring Framework 6.2.x:		Jakarta EE 9-11 (jakarta namespace)
+						Spring Framework 6.1.x:		Jakarta EE 9-10 (jakarta namespace)
+						Spring Framework 6.0.x:		Jakarta EE 9-10 (jakarta namespace)
+						Spring Framework 5.3.x:		Java EE 7-8 (javax namespace)
+				-->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- <spring.framework.version>4.2.5.RELEASE</spring.framework.version> -->
+				<!-- <spring.framework.version>4.0.6.RELEASE</spring.framework.version> -->
+				<!-- FIXME New version to avoid SecurityException of Spring AOP and maven jar signer.
+					Could not generate CGLIB subclass... Common causes of this problem include
+					using a final class or a non-visible class; nested exception is java.lang.IllegalArgumentException:
+					Cannot subclass final class... -->
+				<!-- Spring 5.0.x -->
+				<!--<spring.framework.version>5.0.4.RELEASE</spring.framework.version>-->
+				<!--<spring.framework.version>5.0.20.RELEASE</spring.framework.version>-->
+				<!-- Spring 5.1.x -->
+				<!--<spring.framework.version>5.1.20.RELEASE</spring.framework.version>-->
+				<!-- Spring 5.2.x -->
+				<!--<spring.framework.version>5.2.25.RELEASE</spring.framework.version>-->
+				<!-- Spring 5.3.x -->
+				<spring.framework.version>5.3.30</spring.framework.version>
+				<!-- Spring 6.0.x -->
+				<!--<spring.framework.version>6.0.13</spring.framework.version>-->
+				<!--<spring.framework.version>6.0.14</spring.framework.version>-->
+				<!-- Spring 6.1.x -->
+				<!--<spring.framework.version>6.1.0</spring.framework.version>-->
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring LDAP -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring LDAP 2.0.x -->
+				<!--<spring.ldap.core.version>2.0.4.RELEASE</spring.ldap.core.version>-->
+				<!-- Spring LDAP 2.1.x -->
+				<!--<spring.ldap.core.version>2.1.0.RELEASE</spring.ldap.core.version>-->
+				<!-- Spring LDAP 2.2.x -->
+				<!--<spring.ldap.core.version>2.2.1.RELEASE</spring.ldap.core.version>-->
+				<!-- Spring LDAP 2.3.x -->
+				<!--<spring.ldap.core.version>2.3.8.RELEASE</spring.ldap.core.version>-->
+				<!-- Spring LDAP 2.4.x -->
+				<spring.ldap.core.version>2.4.1</spring.ldap.core.version>
+				<!-- Spring LDAP 3.0.x -->
+				<!--<spring.ldap.core.version>3.0.6</spring.ldap.core.version>-->
+				<!-- Spring LDAP 3.1.x -->
+				<!--<spring.ldap.core.version>3.1.2</spring.ldap.core.version>-->
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Security -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Security 3.2.x -->
+				<!--<spring.security.version>3.2.9.RELEASE</spring.security.version>-->
+				<!-- Spring Security 5.5.x -->
+				<!--<spring.security.version>5.5.8</spring.security.version>-->
+				<!-- Spring Security 5.6.x -->
+				<!--<spring.security.version>5.6.12</spring.security.version>-->
+				<!-- Spring Security 5.7.x -->
+				<!--<spring.security.version>5.7.11</spring.security.version>-->
+				<!-- Spring Security 5.8.x -->
+				<spring.security.version>5.8.8</spring.security.version>
+				<!-- Spring Security 6.0.x -->
+				<!--<spring.security.version>6.0.8</spring.security.version>-->
+				<!-- Spring Security 6.1.x -->
+				<!--<spring.security.version>6.1.5</spring.security.version>-->
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Data -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Data 2.1.x -->
+				<!--<spring.springframework.data.version>2.1.10.RELEASE</spring.springframework.data.version>-->
+				<!--<spring.springframework.data.version>2.1.21.RELEASE</spring.springframework.data.version>-->
+				<!-- Spring Data 2.2.x -->
+				<!--<spring.springframework.data.version>2.2.13.RELEASE</spring.springframework.data.version>-->
+				<!-- Spring Data 2.3.x -->
+				<!--<spring.springframework.data.version>2.3.9.RELEASE</spring.springframework.data.version>-->
+				<!-- Spring Data 2.4.x -->
+				<!--<spring.springframework.data.version>2.4.15</spring.springframework.data.version>-->
+				<!-- Spring Data 2.5.x -->
+				<!--<spring.springframework.data.version>2.5.12</spring.springframework.data.version>-->
+				<!-- Spring Data 2.6.x -->
+				<!--<spring.springframework.data.version>2.6.10</spring.springframework.data.version>-->
+				<!-- Spring Data 2.7.x -->
+				<spring.springframework.data.version>2.7.17</spring.springframework.data.version>
+				<!-- Spring Data 3.0.x -->
+				<!--<spring.springframework.data.version>3.0.11</spring.springframework.data.version>-->
+				<!-- Spring Data 3.1.x -->
+				<!--<spring.springframework.data.version>3.1.5</spring.springframework.data.version>-->
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Data Mongo -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Data Mongo 2.1.x -->
+				<!--<spring.springframework.data.mongo.version>2.1.10.RELEASE</spring.springframework.data.mongo.version>-->
+				<!-- Spring Data Mongo 3.3.x -->
+				<!--<spring.springframework.data.mongo.version>3.3.10</spring.springframework.data.mongo.version>-->
+				<!-- Spring Data Mongo 3.4.x -->
+				<spring.springframework.data.mongo.version>3.4.17</spring.springframework.data.mongo.version>
+				<!-- Spring Data Mongo 4.0.x -->
+				<!--<spring.springframework.data.mongo.version>4.0.11</spring.springframework.data.mongo.version>-->
+				<!-- Spring Data Mongo 4.1.x -->
+				<!--<spring.springframework.data.mongo.version>4.1.5</spring.springframework.data.mongo.version>-->
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Apache HTTP Components (CORE) -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- JDK8/11 -->
+				<http.core.groupId>org.apache.httpcomponents</http.core.groupId>
+				<http.core.artifactId>httpcore</http.core.artifactId>
+				<http.core.version>4.4.5</http.core.version>
+		
+				<!-- JDK17+ (HTTP/1.1) -->
+				<!--<http.core.groupId>org.apache.httpcomponents.core5</http.core.groupId>
+				<http.core.artifactId>httpcore5</http.core.artifactId>-->
+				<!-- 5.0.x -->
+				<!--<http.core.version>5.0.4</http.core.version>-->
+				<!-- 5.1.x -->
+				<!--<http.core.version>5.1.5</http.core.version>-->
+				<!-- 5.2.x -->
+				<!--<http.core.version>5.2.1</http.core.version>-->
+				<!--<http.core.version>5.2.2</http.core.version>-->
+				<!--<http.core.version>5.2.3</http.core.version>-->
+		
+				<!-- JDK17+ (HTTP/2) -->
+				<!--<http.core.groupId>org.apache.httpcomponents.core5</http.core.groupId>
+				<http.core.artifactId>httpcore5-h2</http.core.artifactId>-->
+				<!-- 5.0.x -->
+				<!--<http.core.version>5.0.4</http.core.version>-->
+				<!-- 5.1.x -->
+				<!--<http.core.version>5.1.5</http.core.version>-->
+				<!-- 5.2.x -->
+				<!--<http.core.version>5.2.1</http.core.version>-->
+				<!--<http.core.version>5.2.2</http.core.version>-->
+				<!--<http.core.version>5.2.3</http.core.version>-->
+				
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Apache HTTP Components (CLIENT) -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- JDK8/11 -->
+				<http.client.groupId>org.apache.httpcomponents</http.client.groupId>
+				<http.client.artifactId>httpclient</http.client.artifactId>
+				<http.client.version>4.5.2</http.client.version>
+		
+				<!-- JDK17+ -->
+				<!--<http.client.groupId>org.apache.httpcomponents.client5</http.client.groupId>
+				<http.client.artifactId>httpclient5</http.client.artifactId>-->
+				<!-- 5.0.x -->
+				<!--<http.client.version>5.0.4</http.client.version>-->
+				<!-- 5.1.x -->
+				<!--<http.client.version>5.1.5</http.client.version>-->
+				<!-- 5.2.x -->
+				<!--<http.client.version>5.2.1</http.client.version>-->
+				
+				<!--
+				Servlet Spec	JSP Spec	EL Spec		WebSocket Spec		Authentication (JASPIC) Spec	Apache Tomcat Version	Latest Released Version		Supported Java Versions
+				6.1				4.0			6.0			TBD					TBD								11.0.x					11.0.0-M13 (alpha)			21+
+				6.0				3.1			5.0			2.1					3.0								10.1.x					10.1.16						11+
+				5.0				3.0			4.0			2.0					2.0								10.0.x (superseded)		10.0.27 (superseded)		8+
+				4.0				2.3			3.0			1.1					1.1								9.0.x					9.0.82						8+
+				3.1				2.3			3.0			1.1					1.1								8.5.x					8.5.96						7+
+				3.1				2.3			3.0			1.1					N/A								8.0.x (superseded)		8.0.53 (superseded)			7+
+				3.0				2.2			2.2			1.1					N/A								7.0.x (archived)		7.0.109 (archived)			6+ (7+ for WebSocket)
+				2.5				2.1			2.1			N/A					N/A								6.0.x (archived)		6.0.53 (archived)			5+
+				2.4				2.0			N/A			N/A					N/A								5.5.x (archived)		5.5.36 (archived)			1.4+
+				2.3				1.2			N/A			N/A					N/A								4.1.x (archived)		4.1.40 (archived)			1.3+
+				2.2				1.1			N/A			N/A					N/A								3.3.x (archived)		3.3.2 (archived)			1.1+
+				-->
+				<!-- Spring websocket depencencies -->
+				<!-- Tomcat 7.0.x (JDK6/7+ - 7 and later for WebSocket) -->
+				<!-- <org.apache.tomcat.version>7.0.52</org.apache.tomcat.version> -->
+				<!-- <org.apache.tomcat.version>7.0.109</org.apache.tomcat.version> -->
+				<!-- Tomcat 8.0.x (JDK7+) -->
+				<!-- <org.apache.tomcat.version>8.0.41</org.apache.tomcat.version> -->
+				<!-- <org.apache.tomcat.version>8.0.53</org.apache.tomcat.version> -->
+				<!-- Tomcat 8.5.x (JDK7+) -->
+				<!-- <org.apache.tomcat.version>8.5.11</org.apache.tomcat.version> -->
+				<!-- <org.apache.tomcat.version>8.5.95</org.apache.tomcat.version> -->
+				<!-- Tomcat 9.0.x (JDK8+) -->
+				<!-- <org.apache.tomcat.version>9.0.0.M17</org.apache.tomcat.version> -->
+				<!-- <org.apache.tomcat.version>9.0.82</org.apache.tomcat.version> -->
+				<!-- Tomcat 10.0.x (JDK8+) -->
+				<!-- <org.apache.tomcat.version>10.0.27</org.apache.tomcat.version> -->
+				<!-- Tomcat 10.1.x (JDK11+) -->
+				<org.apache.tomcat.version>10.1.15</org.apache.tomcat.version>
+				<!-- Tomcat 11.0.x (JDK21+) -->
+				<!-- <org.apache.tomcat.version>11.0.0-M13</org.apache.tomcat.version> -->
+			</properties>
+			<build>
+				<!-- Plugins -->
+				<pluginManagement>
+					<plugins>
+						<!-- Eclipse -->
+			            <plugin>
+			                <groupId>org.apache.maven.plugins</groupId>
+			                <artifactId>maven-eclipse-plugin</artifactId>
+			                <version>${maven.eclipse.version}</version>
+			                <configuration>
+								<additionalConfig>
+									<file>
+										<name>.factorypath</name>
+										<content><![CDATA[<factorypath>
+	<factorypathentry kind="PLUGIN" id="org.eclipse.jst.ws.annotations.core" enabled="true" runInBatchMode="false"/>
+	<factorypathentry kind="VARJAR" id="M2_REPO/org/projectlombok/lombok/${org.projectlombok.version}/lombok-${org.projectlombok.version}.jar" enabled="true" runInBatchMode="false"/>
+	<factorypathentry kind="VARJAR" id="M2_REPO/org/seasar/doma/doma/${doma.version}/doma-${doma.version}.jar" enabled="true" runInBatchMode="false"/>
+	<factorypathentry kind="VARJAR" id="M2_REPO/javax/annotation/javax.annotation-api/${javax.annotation.version}/javax.annotation-api-${javax.annotation.version}.jar" enabled="true" runInBatchMode="false"/>
+</factorypath>]]></content>
+									</file>
+								</additionalConfig>
+			                </configuration>
+			            </plugin>
+
+						<!-- Compiler -->
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-compiler-plugin</artifactId>
+							<version>${maven.compiler.version}</version>
+							<configuration>
+								<annotationProcessorPaths>
+									<path>
+										<groupId>org.projectlombok</groupId>
+										<artifactId>lombok</artifactId>
+										<version>${org.projectlombok.version}</version>
+									</path>
+									<path>
+										<groupId>org.seasar.doma</groupId>
+										<artifactId>doma</artifactId>
+										<version>${doma.version}</version>
+									</path>
+									<!-- for JDK11+ -->
+									<path>
+										<groupId>javax.annotation</groupId>
+									    <artifactId>javax.annotation-api</artifactId>
+									    <version>${javax.annotation.version}</version>
+									</path>
+								</annotationProcessorPaths>
+								<!-- for JDK11+ -->
+								<jdkToolchain>
+									<version>${java.version}</version>
+								</jdkToolchain>
+							</configuration>
+						</plugin>
+
+			            <!-- Proguard -->
+			            <plugin>
+							<groupId>${maven.proguard.groupId}</groupId>
+							<artifactId>${maven.proguard.artifactId}</artifactId>
+							<version>${maven.proguard.version}</version>
+							<configuration>
+								<!-- internal proguard -->
+								<proguardVersion>${maven.proguard-base.version}</proguardVersion>
+
+								<!--
+								List external jars your application depends on
+								(that not listed in maven dependencies).
+								You probably depend on Java runtime (rt.jar).
+								JCE stands for Java Cryptography Extension.
+								You probably don't need it, but my application does.
+								-->
+								<libs> <!-- JDK11+ -->
+									<lib>${java.home}/lib/jrt-fs.jar</lib>
+				                    <lib>${java.home}/jmods/java.base.jmod(!**.jar;!module-info.class)</lib>
+				                    <lib>${java.home}/jmods/java.compiler.jmod</lib>
+				                    <lib>${java.home}/jmods/java.corba.jmod</lib>
+				                    <lib>${java.home}/jmods/java.datatransfer.jmod</lib>
+				                    <lib>${java.home}/jmods/java.desktop.jmod</lib>
+				                    <lib>${java.home}/jmods/java.instrument.jmod</lib>
+				                    <lib>${java.home}/jmods/java.logging.jmod</lib>
+				                    <lib>${java.home}/jmods/java.management.jmod</lib>
+				                    <lib>${java.home}/jmods/java.management.rmi.jmod</lib>
+				                    <lib>${java.home}/jmods/java.naming.jmod</lib>
+				                    <lib>${java.home}/jmods/java.prefs.jmod</lib>
+				                    <lib>${java.home}/jmods/java.rmi.jmod</lib>
+				                    <lib>${java.home}/jmods/java.scripting.jmod</lib>
+				                    <lib>${java.home}/jmods/java.se.ee.jmod</lib>
+				                    <lib>${java.home}/jmods/java.se.jmod</lib>
+				                    <lib>${java.home}/jmods/java.security.jgss.jmod</lib>
+				                    <lib>${java.home}/jmods/java.security.sasl.jmod</lib>
+				                    <lib>${java.home}/jmods/java.smartcardio.jmod</lib>
+				                    <lib>${java.home}/jmods/java.sql.jmod</lib>
+				                    <lib>${java.home}/jmods/java.sql.rowset.jmod</lib>
+				                    <lib>${java.home}/jmods/java.transaction.jmod</lib>
+				                    <lib>${java.home}/jmods/java.xml.bind.jmod</lib>
+				                    <lib>${java.home}/jmods/java.xml.crypto.jmod</lib>
+				                    <lib>${java.home}/jmods/java.xml.jmod</lib>
+				                    <lib>${java.home}/jmods/java.xml.ws.annotation.jmod</lib>
+				                    <lib>${java.home}/jmods/java.xml.ws.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.accessibility.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.aot.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.attach.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.charsets.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.compiler.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.crypto.cryptoki.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.crypto.ec.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.crypto.mscapi.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.dynalink.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.editpad.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.hotspot.agent.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.httpserver.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.incubator.httpclient.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.internal.ed.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.internal.jvmstat.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.internal.le.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.internal.opt.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.internal.vm.ci.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.internal.vm.compiler.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.internal.vm.compiler.management.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jartool.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.javadoc.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jcmd.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jconsole.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jdeps.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jdi.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jdwp.agent.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jlink.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jshell.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jsobject.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jstatd.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.localedata.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.management.agent.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.management.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.naming.dns.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.naming.rmi.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.net.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.pack.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.rmic.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.scripting.nashorn.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.scripting.nashorn.shell.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.sctp.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.security.auth.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.security.jgss.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.unsupported.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.xml.bind.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.xml.dom.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.xml.ws.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.zipfs.jmod</lib>
+								</libs>
+							</configuration>
+							<dependencies>
+								<!--
+								For:
+								<groupId>com.github.wvengen</groupId>
+								<artifactId>proguard-maven-plugin</artifactId>
+								<name>proguard-maven-plugin</name>
+								<version>2.6.0</version>
+								-->
+								<dependency>
+									<groupId>com.guardsquare</groupId>
+									<artifactId>proguard-base</artifactId>
+									<version>${maven.proguard-base.version}</version>
+								</dependency>
+								<dependency>
+									<groupId>com.guardsquare</groupId>
+									<artifactId>proguard-core</artifactId>
+									<version>${maven.proguard-core.version}</version>
+								</dependency>
+
+								<!--
+								For:
+								<groupId>com.github.dingxin</groupId>
+								<artifactId>proguard-maven-plugin</artifactId>
+								<name>Maven Plugin for ProGuard</name>
+								<version>1.0.3</version>
+								-->
+								<!--<dependency>
+									<groupId>net.sf.proguard</groupId>
+									<artifactId>proguard-base</artifactId>
+									<version>${maven.proguard-base.version}</version>
+								</dependency>-->
+							</dependencies>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+			</build>
+
+			<!-- Dependencies -->
+			<dependencyManagement>
+				<dependencies>
+					<dependency>
+					    <groupId>javax.annotation</groupId>
+					    <artifactId>javax.annotation-api</artifactId>
+					    <version>${javax.annotation.version}</version>
+					</dependency>
+				</dependencies>
+			</dependencyManagement>
+			<dependencies>
+				<dependency>
+				    <groupId>javax.annotation</groupId>
+				    <artifactId>javax.annotation-api</artifactId>
+				</dependency>
+			</dependencies>
+
+			<!-- Modules -->
+			<modules>
+				<!-- Base -->
+				<module>modules/utilities</module>
+				<module>modules/core</module>
+			</modules>
+		</profile>
+
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- JDK 17 -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<profile>
+			<id>jdk17</id>
+			<properties>
+				<!-- General -->
+				<revision>1.0-jre17</revision>
+
+				<!-- JDK -->
+				<java.version>17</java.version>
+				<jdk.toolchain>${root.basedir}/toolchains.xml</jdk.toolchain>
+
+				<!-- Missing module for JDK17+ -->
+				<jakarta.annotation.version>2.1.1</jakarta.annotation.version>
+				
+				<!-- m2e profiles -->
+				<eclipse.maven.project.activated.profiles>dev,jdk17</eclipse.maven.project.activated.profiles>
+
+				<!--
+					FIXME Trouble with APT Annotation Processor:
+					https://github.com/redhat-developer/vscode-java/issues/580#issuecomment-443302372
+					- add <m2e.apt.activation>disabled</m2e.apt.activation> to your pom <properties> section
+					- set org.eclipse.jdt.core.compiler.processAnnotations=disabled in .settings/org.eclipse.jdt.core.prefs
+					- set org.eclipse.jdt.apt.aptEnabled=false in .settings/org.eclipse.jdt.apt.core.prefs
+					- execute the Update project configuration command from the pom.xml context menu
+				-->
+				<!-- automatically run annotation processors within the incremental compilation -->
+				<m2e.apt.activation>disabled</m2e.apt.activation>
+				<m2e.apt.processAnnotations>disabled</m2e.apt.processAnnotations>
+				<m2e.apt.aptEnabled>false</m2e.apt.aptEnabled>
+				
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Maven Plugins -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<maven.truelicense.groupId>net.java.truelicense</maven.truelicense.groupId>
+				<maven.truelicense.artifactId>truelicense-maven-plugin</maven.truelicense.artifactId>
+				<maven.truelicense.version>2.6.6</maven.truelicense.version>
+				<maven.truelicense.scope>none</maven.truelicense.scope> <!-- FIXME Current not support for JDK17+ -->
+				<!--
+				For:
+				<groupId>com.github.wvengen</groupId>
+				<artifactId>proguard-maven-plugin</artifactId>
+				<name>proguard-maven-plugin</name>
+				<version>2.6.0</version>
+				-->
+				<maven.proguard.groupId>com.github.wvengen</maven.proguard.groupId>
+				<maven.proguard.artifactId>proguard-maven-plugin</maven.proguard.artifactId>
+				<maven.proguard.version>2.6.0</maven.proguard.version>
+				<maven.proguard-base.version>7.4.0</maven.proguard-base.version>
+				<maven.proguard-core.version>9.1.0</maven.proguard-core.version>
+				<!--
+				For:
+				<groupId>com.github.dingxin</groupId>
+				<artifactId>proguard-maven-plugin</artifactId>
+				<name>Maven Plugin for ProGuard</name>
+				<version>1.0.3</version>
+				-->
+				<!--<maven.proguard.groupId>com.github.dingxin</maven.proguard.groupId>
+				<maven.proguard.artifactId>proguard-maven-plugin</maven.proguard.artifactId>
+				<maven.proguard.version>1.0.3</maven.proguard.version>
+				<maven.proguard-base.version>6.0.2</maven.proguard-base.version>-->
+				
+				<!-- Maven AspectJ ok with these 2 plugins -->
+				<maven.aspectj.groupId>org.codehaus.mojo</maven.aspectj.groupId>
+				<maven.aspectj.artifactId>aspectj-maven-plugin</maven.aspectj.artifactId>
+				<maven.aspectj.version>1.14.0</maven.aspectj.version>
+				<!--<maven.aspectj.groupId>com.nickwongdev</maven.aspectj.groupId>
+				<maven.aspectj.artifactId>aspectj-maven-plugin</maven.aspectj.artifactId>
+				<maven.aspectj.version>1.12.1</maven.aspectj.version>-->
+
+				<!-- Progurad configuration -->
+				<proguard.configuration>${root.basedir}/certificate/proguard.cnf</proguard.configuration>
+				<proguard.skip>true</proguard.skip>
+
+				<!-- License password -->
+				<license.alias>${module.groupId}</license.alias>
+				<license.storepass>01101981</license.storepass>
+				<license.keypass>01101981</license.keypass>
+
+				<!-- JAR Signer -->
+				<jarsigner.skip>false</jarsigner.skip>
+				<jarsigner.verbose>true</jarsigner.verbose>
+				<jarsigner.keystore>${certificate.basedir}/jdk17/jdk17.${module.groupId}.keystore.jks</jarsigner.keystore>
+				<jarsigner.alias>${license.alias}</jarsigner.alias>
+				<jarsigner.storepass>${license.storepass}</jarsigner.storepass>
+				<jarsigner.keypass>${license.keypass}</jarsigner.keypass>
+				<jarsigner.storetype>JKS</jarsigner.storetype>
+
+				<!-- Lombok (Many improvements for lombok's JDK10/11 support) -->
+				<org.projectlombok.version>1.18.20</org.projectlombok.version>
+				
+				<!-- AspectJ -->
+				<org.aspectj.version>1.9.20.1</org.aspectj.version>
+				<org.aspectj.skip>false</org.aspectj.skip>
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Servlet -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- 3.1.x (javax - JDK8) -->
+				<!--<servlet-api.groupId>javax.servlet</servlet-api.groupId>
+				<servlet-api.artifactId>javax.servlet-api</servlet-api.artifactId>
+				<servlet-api.version>3.1.0</servlet-api.version>-->
+				<!-- 4.0.x (javax) -->
+				<!--<servlet-api.groupId>javax.servlet</servlet-api.groupId>
+				<servlet-api.artifactId>javax.servlet-api</servlet-api.artifactId>
+				<servlet-api.version>4.0.0</servlet-api.version>-->
+				<!--<servlet-api.version>4.0.1</servlet-api.version>-->
+				<!-- 4.0.x (jakarta) -->
+				<!--<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
+				<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
+				<servlet-api.version>4.0.4</servlet-api.version>-->
+				<!-- 5.0.x (jakarta) -->
+				<!--<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
+				<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
+				<servlet-api.version>5.0.0</servlet-api.version>-->
+				<!-- 6.0.x -->
+				<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
+				<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
+				<servlet-api.version>6.0.0</servlet-api.version>
+
+				<!-- Web API -->
+				<!--<javaee-web-api.version>6.0</javaee-web-api.version>
+				<javaee-web-api.version>7.0</javaee-web-api.version>
+				<javaee-web-api.version>8.0</javaee-web-api.version>-->
+				<javaee-web-api.version>8.0.1</javaee-web-api.version>
+		
+				<!-- JSTL -->
+				<!--<jstl.groupId>javax.servlet</jstl.groupId>
+				<jstl.artifactId>jstl</jstl.artifactId>
+				<jstl.version>1.2</jstl.version>-->
+				<jstl.groupId>jakarta.servlet.jsp.jstl</jstl.groupId>
+				<jstl.artifactId>jakarta.servlet.jsp.jstl-api</jstl.artifactId>
+				<!--<jstl.version>1.2.7</jstl.version>
+				<jstl.version>2.0.0</jstl.version>-->
+				<jstl.version>3.0.0</jstl.version>
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Springframework -->
+				<!--
+					 https://github.com/spring-projects/spring-framework/wiki/Spring-Framework-Versions
+					 + Supported Versions
+						6.2.x		is the next planned feature branch (November 2024).
+						6.1.x		is the upcoming feature branch (November 2023).
+						6.0.x		is the main production line as of November 2022. This new generation of the framework comes with a JDK 17 and Jakarta EE 9 baseline.
+						5.3.x		is the final feature branch of the 5th generation, with long-term support provided on JDK 8, JDK 11, JDK 17 and the Java EE 8 level.
+						4.3.x		reached its official EOL (end-of-life) on December 31st, 2020. No further maintenance and security patches are planned in that line.
+						3.2.x		reached its official EOL (end-of-life) on December 31st, 2016. No further maintenance and security patches are planned in that line.
+					 + JDK Version Range:
+						Spring Framework 6.2.x:		JDK 17-25 (expected)
+						Spring Framework 6.1.x:		JDK 17-23
+						Spring Framework 6.0.x:		JDK 17-21
+						Spring Framework 5.3.x:		JDK 8-21 (as of 5.3.26)
+					 + Java/Jakarta EE Versions
+						Spring Framework 6.2.x:		Jakarta EE 9-11 (jakarta namespace)
+						Spring Framework 6.1.x:		Jakarta EE 9-10 (jakarta namespace)
+						Spring Framework 6.0.x:		Jakarta EE 9-10 (jakarta namespace)
+						Spring Framework 5.3.x:		Java EE 7-8 (javax namespace)
+				-->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- <spring.framework.version>4.2.5.RELEASE</spring.framework.version> -->
+				<!-- <spring.framework.version>4.0.6.RELEASE</spring.framework.version> -->
+				<!-- FIXME New version to avoid SecurityException of Spring AOP and maven jar signer.
+					Could not generate CGLIB subclass... Common causes of this problem include
+					using a final class or a non-visible class; nested exception is java.lang.IllegalArgumentException:
+					Cannot subclass final class... -->
+				<!-- Spring 5.0.x -->
+				<!--<spring.framework.version>5.0.4.RELEASE</spring.framework.version>-->
+				<!--<spring.framework.version>5.0.20.RELEASE</spring.framework.version>-->
+				<!-- Spring 5.1.x -->
+				<!--<spring.framework.version>5.1.20.RELEASE</spring.framework.version>-->
+				<!-- Spring 5.2.x -->
+				<!--<spring.framework.version>5.2.25.RELEASE</spring.framework.version>-->
+				<!-- Spring 5.3.x -->
+				<!--<spring.framework.version>5.3.30</spring.framework.version>-->
+				<!-- Spring 6.0.x -->
+				<spring.framework.version>6.0.13</spring.framework.version>
+				<!--<spring.framework.version>6.0.14</spring.framework.version>-->
+				<!-- Spring 6.1.x -->
+				<!--<spring.framework.version>6.1.0</spring.framework.version>-->
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring LDAP -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring LDAP 2.0.x -->
+				<!--<spring.ldap.core.version>2.0.4.RELEASE</spring.ldap.core.version>-->
+				<!-- Spring LDAP 2.1.x -->
+				<!--<spring.ldap.core.version>2.1.0.RELEASE</spring.ldap.core.version>-->
+				<!-- Spring LDAP 2.2.x -->
+				<!--<spring.ldap.core.version>2.2.1.RELEASE</spring.ldap.core.version>-->
+				<!-- Spring LDAP 2.3.x -->
+				<!--<spring.ldap.core.version>2.3.8.RELEASE</spring.ldap.core.version>-->
+				<!-- Spring LDAP 2.4.x -->
+				<!--<spring.ldap.core.version>2.4.1</spring.ldap.core.version>-->
+				<!-- Spring LDAP 3.0.x -->
+				<!--<spring.ldap.core.version>3.0.6</spring.ldap.core.version>-->
+				<!-- Spring LDAP 3.1.x -->
+				<spring.ldap.core.version>3.1.2</spring.ldap.core.version>
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Security -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Security 3.2.x -->
+				<!--<spring.security.version>3.2.9.RELEASE</spring.security.version>-->
+				<!-- Spring Security 5.5.x -->
+				<!--<spring.security.version>5.5.8</spring.security.version>-->
+				<!-- Spring Security 5.6.x -->
+				<!--<spring.security.version>5.6.12</spring.security.version>-->
+				<!-- Spring Security 5.7.x -->
+				<!--<spring.security.version>5.7.11</spring.security.version>-->
+				<!-- Spring Security 5.8.x -->
+				<!--<spring.security.version>5.8.8</spring.security.version>-->
+				<!-- Spring Security 6.0.x -->
+				<!--<spring.security.version>6.0.8</spring.security.version>-->
+				<!-- Spring Security 6.1.x -->
+				<spring.security.version>6.1.5</spring.security.version>
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Data -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Data 2.1.x -->
+				<!--<spring.springframework.data.version>2.1.10.RELEASE</spring.springframework.data.version>-->
+				<!--<spring.springframework.data.version>2.1.21.RELEASE</spring.springframework.data.version>-->
+				<!-- Spring Data 2.2.x -->
+				<!--<spring.springframework.data.version>2.2.13.RELEASE</spring.springframework.data.version>-->
+				<!-- Spring Data 2.3.x -->
+				<!--<spring.springframework.data.version>2.3.9.RELEASE</spring.springframework.data.version>-->
+				<!-- Spring Data 2.4.x -->
+				<!--<spring.springframework.data.version>2.4.15</spring.springframework.data.version>-->
+				<!-- Spring Data 2.5.x -->
+				<!--<spring.springframework.data.version>2.5.12</spring.springframework.data.version>-->
+				<!-- Spring Data 2.6.x -->
+				<!--<spring.springframework.data.version>2.6.10</spring.springframework.data.version>-->
+				<!-- Spring Data 2.7.x -->
+				<!--<spring.springframework.data.version>2.7.17</spring.springframework.data.version>-->
+				<!-- Spring Data 3.0.x -->
+				<!--<spring.springframework.data.version>3.0.11</spring.springframework.data.version>-->
+				<!-- Spring Data 3.1.x -->
+				<spring.springframework.data.version>3.1.5</spring.springframework.data.version>
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Data Mongo -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring Data Mongo 2.1.x -->
+				<!--<spring.springframework.data.mongo.version>2.1.10.RELEASE</spring.springframework.data.mongo.version>-->
+				<!-- Spring Data Mongo 3.3.x -->
+				<!--<spring.springframework.data.mongo.version>3.3.10</spring.springframework.data.mongo.version>-->
+				<!-- Spring Data Mongo 3.4.x -->
+				<!--<spring.springframework.data.mongo.version>3.4.17</spring.springframework.data.mongo.version>-->
+				<!-- Spring Data Mongo 4.0.x -->
+				<!--<spring.springframework.data.mongo.version>4.0.11</spring.springframework.data.mongo.version>-->
+				<!-- Spring Data Mongo 4.1.x -->
+				<spring.springframework.data.mongo.version>4.1.5</spring.springframework.data.mongo.version>
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Apache HTTP Components (CORE) -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- JDK8/11 -->
+				<!--<http.core.groupId>org.apache.httpcomponents</http.core.groupId>
+				<http.core.artifactId>httpcore</http.core.artifactId>
+				<http.core.version>4.4.5</http.core.version>-->
+		
+				<!-- JDK17+ (HTTP/1.1) -->
+				<http.core.groupId>org.apache.httpcomponents.core5</http.core.groupId>
+				<http.core.artifactId>httpcore5</http.core.artifactId>
+				<!-- 5.0.x -->
+				<!--<http.core.version>5.0.4</http.core.version>-->
+				<!-- 5.1.x -->
+				<!--<http.core.version>5.1.5</http.core.version>-->
+				<!-- 5.2.x -->
+				<!--<http.core.version>5.2.1</http.core.version>-->
+				<!--<http.core.version>5.2.2</http.core.version>-->
+				<http.core.version>5.2.3</http.core.version>
+		
+				<!-- JDK17+ (HTTP/2) -->
+				<!--<http.core.groupId>org.apache.httpcomponents.core5</http.core.groupId>
+				<http.core.artifactId>httpcore5-h2</http.core.artifactId>-->
+				<!-- 5.0.x -->
+				<!--<http.core.version>5.0.4</http.core.version>-->
+				<!-- 5.1.x -->
+				<!--<http.core.version>5.1.5</http.core.version>-->
+				<!-- 5.2.x -->
+				<!--<http.core.version>5.2.1</http.core.version>-->
+				<!--<http.core.version>5.2.2</http.core.version>-->
+				<!--<http.core.version>5.2.3</http.core.version>-->
+				
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Apache HTTP Components (CLIENT) -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- JDK8/11 -->
+				<!--<http.client.groupId>org.apache.httpcomponents</http.client.groupId>
+				<http.client.artifactId>httpclient</http.client.artifactId>
+				<http.client.version>4.5.2</http.client.version>-->
+		
+				<!-- JDK17+ -->
+				<http.client.groupId>org.apache.httpcomponents.client5</http.client.groupId>
+				<http.client.artifactId>httpclient5</http.client.artifactId>
+				<!-- 5.0.x -->
+				<!--<http.client.version>5.0.4</http.client.version>-->
+				<!-- 5.1.x -->
+				<!--<http.client.version>5.1.5</http.client.version>-->
+				<!-- 5.2.x -->
+				<http.client.version>5.2.1</http.client.version>
+				
+				<!--
+				Servlet Spec	JSP Spec	EL Spec		WebSocket Spec		Authentication (JASPIC) Spec	Apache Tomcat Version	Latest Released Version		Supported Java Versions
+				6.1				4.0			6.0			TBD					TBD								11.0.x					11.0.0-M13 (alpha)			21+
+				6.0				3.1			5.0			2.1					3.0								10.1.x					10.1.16						11+
+				5.0				3.0			4.0			2.0					2.0								10.0.x (superseded)		10.0.27 (superseded)		8+
+				4.0				2.3			3.0			1.1					1.1								9.0.x					9.0.82						8+
+				3.1				2.3			3.0			1.1					1.1								8.5.x					8.5.96						7+
+				3.1				2.3			3.0			1.1					N/A								8.0.x (superseded)		8.0.53 (superseded)			7+
+				3.0				2.2			2.2			1.1					N/A								7.0.x (archived)		7.0.109 (archived)			6+ (7+ for WebSocket)
+				2.5				2.1			2.1			N/A					N/A								6.0.x (archived)		6.0.53 (archived)			5+
+				2.4				2.0			N/A			N/A					N/A								5.5.x (archived)		5.5.36 (archived)			1.4+
+				2.3				1.2			N/A			N/A					N/A								4.1.x (archived)		4.1.40 (archived)			1.3+
+				2.2				1.1			N/A			N/A					N/A								3.3.x (archived)		3.3.2 (archived)			1.1+
+				-->
+				<!-- Spring websocket depencencies -->
+				<!-- Tomcat 7.0.x (JDK6/7+ - 7 and later for WebSocket) -->
+				<!-- <org.apache.tomcat.version>7.0.52</org.apache.tomcat.version> -->
+				<!-- <org.apache.tomcat.version>7.0.109</org.apache.tomcat.version> -->
+				<!-- Tomcat 8.0.x (JDK7+) -->
+				<!-- <org.apache.tomcat.version>8.0.41</org.apache.tomcat.version> -->
+				<!-- <org.apache.tomcat.version>8.0.53</org.apache.tomcat.version> -->
+				<!-- Tomcat 8.5.x (JDK7+) -->
+				<!-- <org.apache.tomcat.version>8.5.11</org.apache.tomcat.version> -->
+				<!-- <org.apache.tomcat.version>8.5.95</org.apache.tomcat.version> -->
+				<!-- Tomcat 9.0.x (JDK8+) -->
+				<!-- <org.apache.tomcat.version>9.0.0.M17</org.apache.tomcat.version> -->
+				<!-- <org.apache.tomcat.version>9.0.82</org.apache.tomcat.version> -->
+				<!-- Tomcat 10.0.x (JDK8+) -->
+				<!-- <org.apache.tomcat.version>10.0.27</org.apache.tomcat.version> -->
+				<!-- Tomcat 10.1.x (JDK11+) -->
+				<org.apache.tomcat.version>10.1.15</org.apache.tomcat.version>
+				<!-- Tomcat 11.0.x (JDK21+) -->
+				<!-- <org.apache.tomcat.version>11.0.0-M13</org.apache.tomcat.version> -->
+			</properties>
+			<build>
+				<!-- Plugins -->
+				<pluginManagement>
+					<plugins>
+						<!-- Eclipse -->
+			            <plugin>
+			                <groupId>org.apache.maven.plugins</groupId>
+			                <artifactId>maven-eclipse-plugin</artifactId>
+			                <version>${maven.eclipse.version}</version>
+			                <configuration>
+								<additionalConfig>
+									<file>
+										<name>.factorypath</name>
+										<content><![CDATA[<factorypath>
+	<factorypathentry kind="PLUGIN" id="org.eclipse.jst.ws.annotations.core" enabled="true" runInBatchMode="false"/>
+	<factorypathentry kind="VARJAR" id="M2_REPO/org/projectlombok/lombok/${org.projectlombok.version}/lombok-${org.projectlombok.version}.jar" enabled="true" runInBatchMode="false"/>
+	<factorypathentry kind="VARJAR" id="M2_REPO/org/seasar/doma/doma/${doma.version}/doma-${doma.version}.jar" enabled="true" runInBatchMode="false"/>
+	<factorypathentry kind="VARJAR" id="M2_REPO/jakarta/annotation/jakarta.annotation-api/${jakarta.annotation.version}/jakarta.annotation-api-${jakarta.annotation.version}.jar" enabled="true" runInBatchMode="false"/>
+</factorypath>]]></content>
+									</file>
+								</additionalConfig>
+			                </configuration>
+			            </plugin>
+
+						<!-- Compiler -->
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-compiler-plugin</artifactId>
+							<version>${maven.compiler.version}</version>
+							<configuration>
+								<compilerArgs>
+						            <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED</arg>
+						            <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED</arg>
+						            <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED</arg>
+						            <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED</arg>
+						            <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED</arg>
+						            <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED</arg>
+						            <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED</arg>
+						            <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</arg>
+						            <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</arg>
+						            <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.jvm=ALL-UNNAMED</arg>
+						        </compilerArgs>
+								<annotationProcessorPaths>
+									<path>
+										<groupId>org.projectlombok</groupId>
+										<artifactId>lombok</artifactId>
+										<version>${org.projectlombok.version}</version>
+									</path>
+									<path>
+										<groupId>org.seasar.doma</groupId>
+										<artifactId>doma</artifactId>
+										<version>${doma.version}</version>
+									</path>
+									<!-- for JDK17+ -->
+									<path>
+										<groupId>jakarta.annotation</groupId>
+									    <artifactId>jakarta.annotation-api</artifactId>
+									    <version>${jakarta.annotation.version}</version>
+									</path>
+								</annotationProcessorPaths>
+								<!-- for JDK17+ -->
+								<jdkToolchain>
+									<version>${java.version}</version>
+								</jdkToolchain>
+							</configuration>
+						</plugin>
+
+						<!-- Obfuscation -->
+						<plugin>
+							<groupId>${maven.truelicense.groupId}</groupId>
+							<artifactId>${maven.truelicense.artifactId}</artifactId>
+							<version>${maven.truelicense.version}</version>
+							<dependencies>
+								<dependency>
+								    <groupId>org.codehaus.plexus</groupId>
+								    <artifactId>plexus-utils</artifactId>
+								    <version>4.0.0</version>
+								</dependency>
+								<dependency>
+								    <groupId>org.ow2.asm</groupId>
+								    <artifactId>asm-tree</artifactId>
+								    <version>9.6</version>
+								</dependency>
+							</dependencies>
+						</plugin>
+
+			            <!-- Proguard -->
+			            <plugin>
+							<groupId>${maven.proguard.groupId}</groupId>
+							<artifactId>${maven.proguard.artifactId}</artifactId>
+							<version>${maven.proguard.version}</version>
+							<configuration>
+								<!-- internal proguard -->
+								<proguardVersion>${maven.proguard-base.version}</proguardVersion>
+
+								<!--
+								List external jars your application depends on
+								(that not listed in maven dependencies).
+								You probably depend on Java runtime (rt.jar).
+								JCE stands for Java Cryptography Extension.
+								You probably don't need it, but my application does.
+								-->
+								<libs> <!-- JDK11+ -->
+									<lib>${java.home}/lib/jrt-fs.jar</lib>
+				                    <lib>${java.home}/jmods/java.base.jmod(!**.jar;!module-info.class)</lib>
+				                    <lib>${java.home}/jmods/java.compiler.jmod</lib>
+				                    <lib>${java.home}/jmods/java.corba.jmod</lib>
+				                    <lib>${java.home}/jmods/java.datatransfer.jmod</lib>
+				                    <lib>${java.home}/jmods/java.desktop.jmod</lib>
+				                    <lib>${java.home}/jmods/java.instrument.jmod</lib>
+				                    <lib>${java.home}/jmods/java.logging.jmod</lib>
+				                    <lib>${java.home}/jmods/java.management.jmod</lib>
+				                    <lib>${java.home}/jmods/java.management.rmi.jmod</lib>
+				                    <lib>${java.home}/jmods/java.naming.jmod</lib>
+				                    <lib>${java.home}/jmods/java.prefs.jmod</lib>
+				                    <lib>${java.home}/jmods/java.rmi.jmod</lib>
+				                    <lib>${java.home}/jmods/java.scripting.jmod</lib>
+				                    <lib>${java.home}/jmods/java.se.ee.jmod</lib>
+				                    <lib>${java.home}/jmods/java.se.jmod</lib>
+				                    <lib>${java.home}/jmods/java.security.jgss.jmod</lib>
+				                    <lib>${java.home}/jmods/java.security.sasl.jmod</lib>
+				                    <lib>${java.home}/jmods/java.smartcardio.jmod</lib>
+				                    <lib>${java.home}/jmods/java.sql.jmod</lib>
+				                    <lib>${java.home}/jmods/java.sql.rowset.jmod</lib>
+				                    <lib>${java.home}/jmods/java.transaction.jmod</lib>
+				                    <lib>${java.home}/jmods/java.xml.bind.jmod</lib>
+				                    <lib>${java.home}/jmods/java.xml.crypto.jmod</lib>
+				                    <lib>${java.home}/jmods/java.xml.jmod</lib>
+				                    <lib>${java.home}/jmods/java.xml.ws.annotation.jmod</lib>
+				                    <lib>${java.home}/jmods/java.xml.ws.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.accessibility.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.aot.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.attach.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.charsets.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.compiler.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.crypto.cryptoki.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.crypto.ec.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.crypto.mscapi.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.dynalink.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.editpad.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.hotspot.agent.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.httpserver.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.incubator.httpclient.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.internal.ed.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.internal.jvmstat.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.internal.le.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.internal.opt.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.internal.vm.ci.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.internal.vm.compiler.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.internal.vm.compiler.management.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jartool.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.javadoc.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jcmd.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jconsole.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jdeps.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jdi.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jdwp.agent.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jlink.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jshell.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jsobject.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.jstatd.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.localedata.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.management.agent.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.management.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.naming.dns.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.naming.rmi.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.net.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.pack.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.rmic.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.scripting.nashorn.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.scripting.nashorn.shell.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.sctp.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.security.auth.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.security.jgss.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.unsupported.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.xml.bind.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.xml.dom.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.xml.ws.jmod</lib>
+				                    <lib>${java.home}/jmods/jdk.zipfs.jmod</lib>
+								</libs>
+							</configuration>
+							<dependencies>
+								<!--
+								For:
+								<groupId>com.github.wvengen</groupId>
+								<artifactId>proguard-maven-plugin</artifactId>
+								<name>proguard-maven-plugin</name>
+								<version>2.6.0</version>
+								-->
+								<dependency>
+									<groupId>com.guardsquare</groupId>
+									<artifactId>proguard-base</artifactId>
+									<version>${maven.proguard-base.version}</version>
+								</dependency>
+								<dependency>
+									<groupId>com.guardsquare</groupId>
+									<artifactId>proguard-core</artifactId>
+									<version>${maven.proguard-core.version}</version>
+								</dependency>
+
+								<!--
+								For:
+								<groupId>com.github.dingxin</groupId>
+								<artifactId>proguard-maven-plugin</artifactId>
+								<name>Maven Plugin for ProGuard</name>
+								<version>1.0.3</version>
+								-->
+								<!--<dependency>
+									<groupId>net.sf.proguard</groupId>
+									<artifactId>proguard-base</artifactId>
+									<version>${maven.proguard-base.version}</version>
+								</dependency>-->
+							</dependencies>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+			</build>
+
+			<!-- Dependencies -->
+			<dependencyManagement>
+				<dependencies>
+					<dependency>
+					    <groupId>jakarta.annotation</groupId>
+					    <artifactId>jakarta.annotation-api</artifactId>
+					    <version>${jakarta.annotation.version}</version>
+					</dependency>
+				</dependencies>
+			</dependencyManagement>
+			<dependencies>
+				<dependency>
+				    <groupId>jakarta.annotation</groupId>
+				    <artifactId>jakarta.annotation-api</artifactId>
+				</dependency>
+			</dependencies>
+
+			<!-- Modules -->
+			<modules>
+				<!-- Base -->
+				<module>modules/utilities-jdk17</module>
+				<module>modules/core-jdk17</module>
+			</modules>
+		</profile>
+
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Quality Check -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+        <profile>
+            <id>qualityCheck</id>
+            <build>
+                <plugins>
+                	<!-- Check javadocs -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>test-javadocs</id>
+                                <goals>
+                                    <goal>test-jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                	<!-- Check cycleclic -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <dependencies>
+                            <dependency>
+                                <groupId>de.andrena.tools.nopackagecycles</groupId>
+                                <artifactId>no-package-cycles-enforcer-rule</artifactId>
+                                <version>1.0.9</version>
+                            </dependency>
+                        </dependencies>
+                        <executions>
+                            <execution>
+                                <id>enforce-maven</id>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                                <configuration>
+                                    <rules>
+                                        <requireMavenVersion>
+                                            <version>3.1</version>
+                                        </requireMavenVersion>
+                                    </rules>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>enforce-no-package-cycles</id>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                                <phase>test</phase>
+                                <configuration>
+                                    <rules>
+                                        <NoPackageCyclesRule implementation="de.andrena.tools.nopackagecycles.NoPackageCyclesRule">
+                                            <includeTests>false</includeTests>
+                                            <excludedPackages>
+                                                <excludedPackage>org.dom4j</excludedPackage>
+                                                <excludedPackage>${project.groupId}</excludedPackage>
+                                            </excludedPackages>
+                                        </NoPackageCyclesRule>
+                                    </rules>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
 		<!-- The configuration of the development profile -->
 		<profile>
 			<id>dev</id>
@@ -79,100 +1628,405 @@
 	<!-- Properties -->
 	<properties>
 		<!-- Package properties -->
-		<!-- <root.basedir>${maven.multiModuleProjectDirectory}</root.basedir> --> <!-- require maven 3.3.1 or greater  -->
-		<!-- <root.basedir>E:/Java.Working/16-1.projects.4.8.0/nlh4j</root.basedir> -->
-		<root.basedir>${maven.multiModuleProjectDirectory}</root.basedir>
+		<root.basedir>${maven.multiModuleProjectDirectory}</root.basedir> <!-- require maven 3.3.1 or greater  -->
+		<!-- <root.basedir>E:/Java.Working/20.eclispe.2023-09/nlh4j</root.basedir>
+		<maven.multiModuleProjectDirectory>${root.basedir}</maven.multiModuleProjectDirectory> -->
+		<root.artifactId>nlh4j</root.artifactId>
 		<module.groupId>org.nlh4j</module.groupId>
-		<module.version>1.0</module.version>
+
+		<!-- Project settings -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<finalName>${project.artifactId}-${project.version}</finalName>
-		<java.version>1.8</java.version>
+		
+		<!-- Certificate -->
+		<certificate.basedir>${root.basedir}/certificate</certificate.basedir>
 
 		<!-- Profile properties file -->
 		<profile.configuration>${root.basedir}/profiles/${build.profile.id}/config.properties</profile.configuration>
 
-		<!-- License password -->
-		<license.alias>${module.groupId}</license.alias>
-		<license.storepass>01101981</license.storepass>
-		<license.keypass>01101981</license.keypass>
+		<!-- automatically run annotation processors within the incremental compilation -->
+		<m2e.apt.activation>jdt_apt</m2e.apt.activation>
+		<m2e.apt.processAnnotations>enabled</m2e.apt.processAnnotations>
+		<m2e.apt.aptEnabled>true</m2e.apt.aptEnabled>
 
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!-- Maven Plugins -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<maven.m2e.lifecycle.mapping.version>1.0.0</maven.m2e.lifecycle.mapping.version>
-		<maven.findbugs.version>3.0.6-SNAPSHOT</maven.findbugs.version>
-		<maven.groovy.version>2.1</maven.groovy.version>
-		<maven.enforcer.version>3.0.0-M1</maven.enforcer.version>
-		<maven.versions.version>2.5</maven.versions.version>
-		<maven.properties.version>1.0.0</maven.properties.version>
-		<maven.release.version>2.5.3</maven.release.version>
-		<maven.build.helper.version>3.0.0</maven.build.helper.version>
-		<maven.resources.version>3.0.2</maven.resources.version>
-		<maven.compiler.version>3.7.0</maven.compiler.version>
-		<maven.aspectj.version>1.11</maven.aspectj.version>
-		<maven.source.version>3.0.1</maven.source.version>
-		<maven.javadoc.version>2.10.4</maven.javadoc.version>
-		<maven.jar.version>3.0.2</maven.jar.version>
-		<maven.war.version>3.2.2</maven.war.version>
-		<maven.jarsigner.version>1.4</maven.jarsigner.version>
-		<maven.surefire.version>2.19.1</maven.surefire.version>
-		<maven.nexus.staging.version>1.6.7</maven.nexus.staging.version>
-		<maven.truelicense.version>2.6.4</maven.truelicense.version>
-		<maven.proguard.version>2.0.14</maven.proguard.version>
+		<maven.findbugs.version>3.0.5</maven.findbugs.version>
+		<maven.findbugs.skip>true</maven.findbugs.skip>
+		<maven.findbugs.output.xml>${root.basedir}/fb.report-${revision}.xml</maven.findbugs.output.xml>
+		<maven.groovy.version>2.1.1</maven.groovy.version>
+		<maven.enforcer.version>3.4.1</maven.enforcer.version>
+		<maven.versions.version>2.16.1</maven.versions.version>
+		<maven.properties.version>1.2.1</maven.properties.version>
+		<maven.release.version>3.0.1</maven.release.version>
+		<maven.build.helper.version>3.4.0</maven.build.helper.version>
+		<maven.resources.version>3.3.1</maven.resources.version>
+		<maven.compiler.version>3.11.0</maven.compiler.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+    	<maven.compiler.target>${java.version}</maven.compiler.target>
+		<maven.source.version>3.3.0</maven.source.version>
+		<maven.javadoc.version>3.6.2</maven.javadoc.version>
+		<maven.jar.version>3.3.0</maven.jar.version>
+		<maven.war.version>3.4.0</maven.war.version>
+		<maven.jarsigner.version>3.0.0</maven.jarsigner.version>
+		<maven.surefire.version>3.2.2</maven.surefire.version>
+		<maven.nexus.staging.version>1.6.13</maven.nexus.staging.version>
+		<maven.directory.version>0.1</maven.directory.version>
+		<maven.antrun.version>3.1.0</maven.antrun.version>
+		<maven.eclipse.version>2.10</maven.eclipse.version>
+		
+		<!-- Maven Dependency Plugin for customizing -->
+		<maven.dependency.version>3.6.1</maven.dependency.version>
+		<maven.dependency.unpack.root.directory>${project.basedir}/.mpt_generated</maven.dependency.unpack.root.directory>
+		<maven.dependency.unpack.include.groupIds>${project.groupId}</maven.dependency.unpack.include.groupIds>
+		<maven.dependency.unpack.include.artifactIds>${project.artifactId}</maven.dependency.unpack.include.artifactIds>
+        <maven.dependency.unpack.groupId>${project.groupId}</maven.dependency.unpack.groupId>
+        <maven.dependency.unpack.artifactId>${project.artifactId}</maven.dependency.unpack.artifactId>
+		<maven.dependency.unpack.version></maven.dependency.unpack.version>
+		<maven.dependency.unpack.source.includes>org/nlh4j/*.java,org/nlh4j/**/*.java</maven.dependency.unpack.source.includes>
+		<maven.dependency.unpack.source.directory>${maven.dependency.unpack.root.directory}/src/main/java</maven.dependency.unpack.source.directory>
+		<maven.dependency.unpack.resource.excludes>org/nlh4j/*.java,org/nlh4j/**/*.java,META-INF/MANIFEST.MF,META-INF/*.RSA,META-INF/*.SF,META-INF/maven,META-INF/maven/*</maven.dependency.unpack.resource.excludes>
+		<maven.dependency.unpack.resource.directory>${maven.dependency.unpack.root.directory}/src/main/resources</maven.dependency.unpack.resource.directory>
+		<maven.dependency.unpack.skip>true</maven.dependency.unpack.skip>
 
-		<!-- JAR Signer -->
-		<jarsigner.skip>false</jarsigner.skip>
-		<jarsigner.verbose>true</jarsigner.verbose>
-		<jarsigner.keystore>${root.basedir}/${module.groupId}.keystore.jks</jarsigner.keystore>
-		<jarsigner.alias>${license.alias}</jarsigner.alias>
-		<jarsigner.storepass>${license.storepass}</jarsigner.storepass>
-		<jarsigner.keypass>${license.keypass}</jarsigner.keypass>
-		<jarsigner.storetype>JKS</jarsigner.storetype>
-
-		<!-- Progurad configuration -->
-		<proguard.configuration>${root.basedir}/proguard.cnf</proguard.configuration>
-		<proguard.skip>false</proguard.skip>
-
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!-- Servlet -->
-		<javax.servlet-api.version>3.1.0</javax.servlet-api.version>
-		<javaee-web-api.version>7.0</javaee-web-api.version>
-		<jstl.version>1.2</jstl.version>
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- 3.1.x (javax - JDK8) -->
+		<!--<servlet-api.groupId>javax.servlet</servlet-api.groupId>
+		<servlet-api.artifactId>javax.servlet-api</servlet-api.artifactId>
+		<servlet-api.version>3.1.0</servlet-api.version>-->
+		<!-- 4.0.x (javax) -->
+		<!--<servlet-api.groupId>javax.servlet</servlet-api.groupId>
+		<servlet-api.artifactId>javax.servlet-api</servlet-api.artifactId>
+		<servlet-api.version>4.0.1</servlet-api.version>-->
+		<!-- 4.0.x (jakarta) -->
+		<!--<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
+		<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
+		<servlet-api.version>4.0.4</servlet-api.version>-->
+		<!-- 5.0.x (jakarta) -->
+		<!--<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
+		<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
+		<servlet-api.version>5.0.0</servlet-api.version>-->
+		<!-- 6.0.x -->
+		<!--<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
+		<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
+		<servlet-api.version>6.0.0</servlet-api.version>-->
 
+		<!-- Web API -->
+		<!--<javaee-web-api.version>6.0</javaee-web-api.version>-->
+		<!--<javaee-web-api.version>7.0</javaee-web-api.version>-->
+		<!--<javaee-web-api.version>8.0</javaee-web-api.version>-->
+		<!--<javaee-web-api.version>8.0.1</javaee-web-api.version>-->
+
+		<!-- JSTL -->
+		<!--<jstl.groupId>javax.servlet</jstl.groupId>
+		<jstl.artifactId>jstl</jstl.artifactId>-->
+		<!--<jstl.groupId>jakarta.servlet.jsp.jstl</jstl.groupId>
+		<jstl.artifactId>jakarta.servlet.jsp.jstl-api</jstl.artifactId>-->
+		<!--<jstl.version>1.2</jstl.version>-->
+		<!--<jstl.version>1.2.7</jstl.version>-->
+		<!--<jstl.version>2.0.0</jstl.version>-->
+		<!--<jstl.version>3.0.0</jstl.version>-->
+		
 		<!-- tag-libs -->
-		<taglibs.version>1.1.2</taglibs.version>
-
+		<!--<taglibs.groupId>taglibs</taglibs.groupId>
+		<taglibs.artifactId>standard</taglibs.artifactId>
+		<taglibs.version>1.1.2</taglibs.version>-->
+		<taglibs.groupId>org.apache.taglibs</taglibs.groupId>
+		<taglibs.artifactId>taglibs-standard-impl</taglibs.artifactId>
+		<taglibs.version>1.2.5</taglibs.version>
+		
 		<!-- Response Compression -->
-		<com.github.ziplet.version>2.0.0</com.github.ziplet.version>
+		<!--<com.github.ziplet.version>2.0.0</com.github.ziplet.version>-->
+		<com.github.ziplet.version>2.4.1</com.github.ziplet.version>
 
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!-- Springframework -->
+		<!--
+			 https://github.com/spring-projects/spring-framework/wiki/Spring-Framework-Versions
+			 + Supported Versions
+				6.2.x		is the next planned feature branch (November 2024).
+				6.1.x		is the upcoming feature branch (November 2023).
+				6.0.x		is the main production line as of November 2022. This new generation of the framework comes with a JDK 17 and Jakarta EE 9 baseline.
+				5.3.x		is the final feature branch of the 5th generation, with long-term support provided on JDK 8, JDK 11, JDK 17 and the Java EE 8 level.
+				4.3.x		reached its official EOL (end-of-life) on December 31st, 2020. No further maintenance and security patches are planned in that line.
+				3.2.x		reached its official EOL (end-of-life) on December 31st, 2016. No further maintenance and security patches are planned in that line.
+			 + JDK Version Range:
+				Spring Framework 6.2.x:		JDK 17-25 (expected)
+				Spring Framework 6.1.x:		JDK 17-23
+				Spring Framework 6.0.x:		JDK 17-21
+				Spring Framework 5.3.x:		JDK 8-21 (as of 5.3.26)
+			 + Java/Jakarta EE Versions
+				Spring Framework 6.2.x:		Jakarta EE 9-11 (jakarta namespace)
+				Spring Framework 6.1.x:		Jakarta EE 9-10 (jakarta namespace)
+				Spring Framework 6.0.x:		Jakarta EE 9-10 (jakarta namespace)
+				Spring Framework 5.3.x:		Java EE 7-8 (javax namespace)
+		-->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!-- <spring.framework.version>4.2.5.RELEASE</spring.framework.version> -->
 		<!-- <spring.framework.version>4.0.6.RELEASE</spring.framework.version> -->
 		<!-- FIXME New version to avoid SecurityException of Spring AOP and maven jar signer.
 			Could not generate CGLIB subclass... Common causes of this problem include
 			using a final class or a non-visible class; nested exception is java.lang.IllegalArgumentException:
 			Cannot subclass final class... -->
-		<spring.framework.version>5.0.4.RELEASE</spring.framework.version>
-		<spring.springframework.data.version>2.1.10.RELEASE</spring.springframework.data.version>
-		<spring.springframework.data.mongo.version>2.1.10.RELEASE</spring.springframework.data.mongo.version>
-		<spring.springframework.data.redis.version>2.1.10.RELEASE</spring.springframework.data.redis.version>
-		<spring.springframework.data.elasticsearch.version>3.1.10.RELEASE</spring.springframework.data.elasticsearch.version>
-		<spring.security.version>3.2.9.RELEASE</spring.security.version>
-		<!-- <spring.security.version>4.0.4.RELEASE</spring.security.version> -->
-		<spring.ldap.core.version>2.0.4.RELEASE</spring.ldap.core.version>
-		<org.aspectj.version>1.8.13</org.aspectj.version>
+		<!-- Spring 5.0.x -->
+		<!--<spring.framework.version>5.0.4.RELEASE</spring.framework.version>-->
+		<!--<spring.framework.version>5.0.20.RELEASE</spring.framework.version>-->
+		<!-- Spring 5.1.x -->
+		<!--<spring.framework.version>5.1.20.RELEASE</spring.framework.version>-->
+		<!-- Spring 5.2.x -->
+		<!--<spring.framework.version>5.2.25.RELEASE</spring.framework.version>-->
+		<!-- Spring 5.3.x -->
+		<!--<spring.framework.version>5.3.30</spring.framework.version>-->
+		<!-- Spring 6.0.x -->
+		<!--<spring.framework.version>6.0.13</spring.framework.version>-->
 
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Spring LDAP -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Spring LDAP 2.0.x -->
+		<!--<spring.ldap.core.version>2.0.4.RELEASE</spring.ldap.core.version>-->
+		<!-- Spring LDAP 2.1.x -->
+		<!--<spring.ldap.core.version>2.1.0.RELEASE</spring.ldap.core.version>-->
+		<!-- Spring LDAP 2.2.x -->
+		<!--<spring.ldap.core.version>2.2.1.RELEASE</spring.ldap.core.version>-->
+		<!-- Spring LDAP 2.3.x -->
+		<!--<spring.ldap.core.version>2.3.8.RELEASE</spring.ldap.core.version>-->
+		<!-- Spring LDAP 2.4.x -->
+		<!--<spring.ldap.core.version>2.4.1</spring.ldap.core.version>-->
+		<!-- Spring LDAP 3.0.x -->
+		<!--<spring.ldap.core.version>3.0.6</spring.ldap.core.version>-->
+		<!-- Spring LDAP 3.1.x -->
+		<!--<spring.ldap.core.version>3.1.2</spring.ldap.core.version>-->
+
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Spring Security -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Spring Security 3.2.x -->
+		<!--<spring.security.version>3.2.9.RELEASE</spring.security.version>-->
+		<!-- Spring Security 5.5.x -->
+		<!--<spring.security.version>5.5.8</spring.security.version>-->
+		<!-- Spring Security 5.6.x -->
+		<!--<spring.security.version>5.6.12</spring.security.version>-->
+		<!-- Spring Security 5.7.x -->
+		<!--<spring.security.version>5.7.11</spring.security.version>-->
+		<!-- Spring Security 5.8.x -->
+		<!--<spring.security.version>5.8.8</spring.security.version>-->
+		<!-- Spring Security 6.0.x -->
+		<!--<spring.security.version>6.0.8</spring.security.version>-->
+		<!-- Spring Security 6.1.x -->
+		<!--<spring.security.version>6.1.5</spring.security.version>-->
+
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Spring Data -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Spring Data 2.1.x -->
+		<!--<spring.springframework.data.version>2.1.10.RELEASE</spring.springframework.data.version>-->
+		<!--<spring.springframework.data.version>2.1.21.RELEASE</spring.springframework.data.version>-->
+		<!-- Spring Data 2.2.x -->
+		<!--<spring.springframework.data.version>2.2.13.RELEASE</spring.springframework.data.version>-->
+		<!-- Spring Data 2.3.x -->
+		<!--<spring.springframework.data.version>2.3.9.RELEASE</spring.springframework.data.version>-->
+		<!-- Spring Data 2.4.x -->
+		<!--<spring.springframework.data.version>2.4.15</spring.springframework.data.version>-->
+		<!-- Spring Data 2.5.x -->
+		<!--<spring.springframework.data.version>2.5.12</spring.springframework.data.version>-->
+		<!-- Spring Data 2.6.x -->
+		<!--<spring.springframework.data.version>2.6.10</spring.springframework.data.version>-->
+		<!-- Spring Data 2.7.x -->
+		<!--<spring.springframework.data.version>2.7.17</spring.springframework.data.version>-->
+		<!-- Spring Data 3.0.x -->
+		<!--<spring.springframework.data.version>3.0.11</spring.springframework.data.version>-->
+		<!-- Spring Data 3.1.x -->
+		<!--<spring.springframework.data.version>3.1.5</spring.springframework.data.version>-->
+
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Spring Data Mongo -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Spring Data Mongo 2.1.x -->
+		<!--<spring.springframework.data.mongo.version>2.1.10.RELEASE</spring.springframework.data.mongo.version>-->
+		<!-- Spring Data Mongo 3.3.x -->
+		<!--<spring.springframework.data.mongo.version>3.3.10</spring.springframework.data.mongo.version>-->
+		<!-- Spring Data Mongo 3.4.x -->
+		<!--<spring.springframework.data.mongo.version>3.4.17</spring.springframework.data.mongo.version>-->
+		<!-- Spring Data Mongo 4.0.x -->
+		<!--<spring.springframework.data.mongo.version>4.0.11</spring.springframework.data.mongo.version>-->
+		<!-- Spring Data Mongo 4.1.x -->
+		<!--<spring.springframework.data.mongo.version>4.1.5</spring.springframework.data.mongo.version>-->
+
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Spring Data Redis -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Spring Data Redis 2.1.x -->
+		<!--<spring.springframework.data.redis.version>2.1.10.RELEASE</spring.springframework.data.redis.version>-->
+		<!--<spring.springframework.data.redis.version>2.1.21.RELEASE</spring.springframework.data.redis.version>-->
+		<!-- Spring Data Redis 2.2.x -->
+		<!--<spring.springframework.data.redis.version>2.2.13.RELEASE</spring.springframework.data.redis.version>-->
+		<!-- Spring Data Redis 2.3.x -->
+		<!--<spring.springframework.data.redis.version>2.3.9.RELEASE</spring.springframework.data.redis.version>-->
+		<!-- Spring Data Redis 2.4.x -->
+		<!--<spring.springframework.data.redis.version>2.4.15</spring.springframework.data.redis.version>-->
+		<!-- Spring Data Redis 2.5.x -->
+		<!--<spring.springframework.data.redis.version>2.5.12</spring.springframework.data.redis.version>-->
+		<!-- Spring Data Redis 2.6.x -->
+		<!--<spring.springframework.data.redis.version>2.6.10</spring.springframework.data.redis.version>-->
+		<!-- Spring Data Redis 2.7.x -->
+		<!--<spring.springframework.data.redis.version>2.7.17</spring.springframework.data.redis.version>-->
+		<!-- Spring Data Redis 3.0.x -->
+		<!--<spring.springframework.data.redis.version>3.0.11</spring.springframework.data.redis.version>-->
+		<!-- Spring Data Redis 3.1.x -->
+		<!--<spring.springframework.data.redis.version>3.1.5</spring.springframework.data.redis.version>-->
+
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Spring Data ElasticSearch -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Spring Data ElasticSearch 3.1.x -->
+		<!--<spring.springframework.data.elasticsearch.version>3.1.10.RELEASE</spring.springframework.data.elasticsearch.version>-->
+		<!--<spring.springframework.data.elasticsearch.version>3.1.21.RELEASE</spring.springframework.data.elasticsearch.version>-->
+		<!-- Spring Data ElasticSearch 3.2.x -->
+		<!--<spring.springframework.data.elasticsearch.version>3.2.13.RELEASE</spring.springframework.data.elasticsearch.version>-->
+		<!-- Spring Data ElasticSearch 4.0.x -->
+		<!--<spring.springframework.data.elasticsearch.version>4.0.9.RELEASE</spring.springframework.data.elasticsearch.version>-->
+		<!-- Spring Data ElasticSearch 4.1.x -->
+		<!--<spring.springframework.data.elasticsearch.version>4.1.15</spring.springframework.data.elasticsearch.version>-->
+		<!-- Spring Data ElasticSearch 4.2.x -->
+		<!--<spring.springframework.data.elasticsearch.version>4.2.12</spring.springframework.data.elasticsearch.version>-->
+		<!-- Spring Data ElasticSearch 4.3.x -->
+		<!--<spring.springframework.data.elasticsearch.version>4.3.10</spring.springframework.data.elasticsearch.version>-->
+		<!-- Spring Data ElasticSearch 4.4.x -->
+		<!--<spring.springframework.data.elasticsearch.version>4.4.17</spring.springframework.data.elasticsearch.version>-->
+		<!-- Spring Data ElasticSearch 5.0.x -->
+		<!--<spring.springframework.data.elasticsearch.version>5.0.11</spring.springframework.data.elasticsearch.version>-->
+		<!-- Spring Data ElasticSearch 5.1.x -->
+		<!--<spring.springframework.data.elasticsearch.version>5.1.5</spring.springframework.data.elasticsearch.version>-->
+
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Spring websocket depencencies (javax/jakarta websocket-api) -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- 1.0.x (javax) -->
+		<!--<javax.websocket.groupId>javax.websocket</javax.websocket.groupId>
+		<javax.websocket.artifactId>javax.websocket-api</javax.websocket.artifactId>-->
+		<!--<javax.websocket.version>1.0</javax.websocket.version>-->
+		<!-- 1.1.x (javax) -->
+		<!--<javax.websocket.version>1.1</javax.websocket.version>-->
+		<!-- 1.1.x (jakarta) -->
+		<javax.websocket.groupId>jakarta.websocket</javax.websocket.groupId>
+		<javax.websocket.artifactId>jakarta.websocket-api</javax.websocket.artifactId>
+		<!--<javax.websocket.version>1.1.2</javax.websocket.version>-->
+		<!-- 2.0.x (jakarta) -->
+		<!--<javax.websocket.version>2.0.0</javax.websocket.version>-->
+		<!-- 2.1.x (jakarta) -->
+		<!--<javax.websocket.version>2.1.0</javax.websocket.version>-->
+		<javax.websocket.version>2.1.1</javax.websocket.version>
+
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Spring websocket depencencies (Reactor TCP Components - org/io) -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- reactor-net (org.projectreactor) -->
+		<!--<projectreactor.groupId>org.projectreactor</projectreactor.groupId>
+		<projectreactor.artifactId>reactor-net</projectreactor.artifactId>
+		<projectreactor.version>1.1.6.RELEASE</projectreactor.version>-->
+		<!-- reactor-net (io.projectreactor) -->
+		<!--<projectreactor.groupId>io.projectreactor</projectreactor.groupId>
+		<projectreactor.artifactId>reactor-net</projectreactor.artifactId>
+		<projectreactor.version>2.0.8.RELEASE</projectreactor.version>-->
+
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Apache HTTP Components (CORE) -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- JDK8/11 -->
+		<!--<http.core.groupId>org.apache.httpcomponents</http.core.groupId>
+		<http.core.artifactId>httpcore</http.core.artifactId>
+		<http.core.version>4.4.5</http.core.version>-->
+
+		<!-- JDK17+ (HTTP/1.1) -->
+		<!--<http.core.groupId>org.apache.httpcomponents.core5</http.core.groupId>
+		<http.core.artifactId>httpcore5</http.core.artifactId>-->
+		<!-- 5.0.x -->
+		<!--<http.core.version>5.0.4</http.core.version>-->
+		<!-- 5.1.x -->
+		<!--<http.core.version>5.1.5</http.core.version>-->
+		<!-- 5.2.x -->
+		<!--<http.core.version>5.2.3</http.core.version>-->
+
+		<!-- JDK17+ (HTTP/2) -->
+		<!--<http.core.groupId>org.apache.httpcomponents.core5</http.core.groupId>
+		<http.core.artifactId>httpcore5-h2</http.core.artifactId>-->
+		<!-- 5.0.x -->
+		<!--<http.core.version>5.0.4</http.core.version>-->
+		<!-- 5.1.x -->
+		<!--<http.core.version>5.1.5</http.core.version>-->
+		<!-- 5.2.x -->
+		<!--<http.core.version>5.2.3</http.core.version>-->
+		
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Apache HTTP Components (CLIENT) -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- JDK8/11 -->
+		<!--<http.client.groupId>org.apache.httpcomponents</http.client.groupId>
+		<http.client.artifactId>httpclient</http.client.artifactId>
+		<http.client.version>4.5.2</http.client.version>-->
+
+		<!-- JDK17+ -->
+		<!--<http.client.groupId>org.apache.httpcomponents.client5</http.client.groupId>
+		<http.client.artifactId>httpclient5</http.client.artifactId>-->
+		<!-- 5.0.x -->
+		<!--<http.client.version>5.0.4</http.client.version>-->
+		<!-- 5.1.x -->
+		<!--<http.client.version>5.1.5</http.client.version>-->
+		<!-- 5.2.x -->
+		<!--<http.client.version>5.2.3</http.client.version>-->
+
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!-- Nimbus - Spring Security JWT Authentication -->
-		<com.nimbusds.jose.jwt.version>3.8</com.nimbusds.jose.jwt.version>
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- 3.8.x -->
+		<!--<com.nimbusds.jose.jwt.version>3.8</com.nimbusds.jose.jwt.version>-->
+		<!--<com.nimbusds.jose.jwt.version>3.8.2</com.nimbusds.jose.jwt.version>-->
+		<!-- 7.9.x -->
+		<!--<com.nimbusds.jose.jwt.version>7.9</com.nimbusds.jose.jwt.version>-->
+		<!-- 9.31.x -->
+		<!--<com.nimbusds.jose.jwt.version>9.31</com.nimbusds.jose.jwt.version>-->
+		<!-- 9.37.x -->
+		<com.nimbusds.jose.jwt.version>9.37</com.nimbusds.jose.jwt.version>
+		<!--<com.nimbusds.jose.jwt.version>9.37.1</com.nimbusds.jose.jwt.version>-->
 
-		<!-- Spring websocket depencencies -->
-		<javax.websocket.version>1.0</javax.websocket.version>
-		<org.projectreactor.version>1.1.6.RELEASE</org.projectreactor.version>
-		<!-- Tomcat 7.x -->
+		<!--
+		Servlet Spec	JSP Spec	EL Spec		WebSocket Spec		Authentication (JASPIC) Spec	Apache Tomcat Version	Latest Released Version		Supported Java Versions
+		6.1				4.0			6.0			TBD					TBD								11.0.x					11.0.0-M13 (alpha)			21+
+		6.0				3.1			5.0			2.1					3.0								10.1.x					10.1.16						11+
+		5.0				3.0			4.0			2.0					2.0								10.0.x (superseded)		10.0.27 (superseded)		8+
+		4.0				2.3			3.0			1.1					1.1								9.0.x					9.0.82						8+
+		3.1				2.3			3.0			1.1					1.1								8.5.x					8.5.96						7+
+		3.1				2.3			3.0			1.1					N/A								8.0.x (superseded)		8.0.53 (superseded)			7+
+		3.0				2.2			2.2			1.1					N/A								7.0.x (archived)		7.0.109 (archived)			6+ (7+ for WebSocket)
+		2.5				2.1			2.1			N/A					N/A								6.0.x (archived)		6.0.53 (archived)			5+
+		2.4				2.0			N/A			N/A					N/A								5.5.x (archived)		5.5.36 (archived)			1.4+
+		2.3				1.2			N/A			N/A					N/A								4.1.x (archived)		4.1.40 (archived)			1.3+
+		2.2				1.1			N/A			N/A					N/A								3.3.x (archived)		3.3.2 (archived)			1.1+
+		-->
+		<!-- Tomcat 7.0.x (JDK6/7+ - 7 and later for WebSocket) -->
 		<!-- <org.apache.tomcat.version>7.0.52</org.apache.tomcat.version> -->
-		<!-- Tomcat 8.0.x -->
-		<org.apache.tomcat.version>8.0.41</org.apache.tomcat.version>
-		<!-- Tomcat 8.5.x -->
+		<!-- <org.apache.tomcat.version>7.0.109</org.apache.tomcat.version> -->
+		<!-- Tomcat 8.0.x (JDK7+) -->
+		<!-- <org.apache.tomcat.version>8.0.41</org.apache.tomcat.version> -->
+		<!-- <org.apache.tomcat.version>8.0.53</org.apache.tomcat.version> -->
+		<!-- Tomcat 8.5.x (JDK7+) -->
 		<!-- <org.apache.tomcat.version>8.5.11</org.apache.tomcat.version> -->
-		<!-- Tomcat 9.x -->
+		<!-- <org.apache.tomcat.version>8.5.95</org.apache.tomcat.version> -->
+		<!-- Tomcat 9.0.x (JDK8+) -->
 		<!-- <org.apache.tomcat.version>9.0.0.M17</org.apache.tomcat.version> -->
+		<!-- <org.apache.tomcat.version>9.0.82</org.apache.tomcat.version> -->
+		<!-- Tomcat 10.0.x (JDK8+) -->
+		<!-- <org.apache.tomcat.version>10.0.27</org.apache.tomcat.version> -->
+		<!-- Tomcat 10.1.x (JDK11+) -->
+		<!-- <org.apache.tomcat.version>10.1.15</org.apache.tomcat.version> -->
+		<!-- Tomcat 11.0.x (JDK21+) -->
+		<!-- <org.apache.tomcat.version>11.0.0-M13</org.apache.tomcat.version> -->
 
 		<!-- Quartz -->
 		<quartz.c3p0.version>0.9.1.1</quartz.c3p0.version>
@@ -244,10 +2098,6 @@
 		<!-- Apache Commons Upload -->
 		<commons.fileupload.version>1.3.1</commons.fileupload.version>
 
-		<!-- Apache HTTP Components -->
-		<http.core.version>4.4.5</http.core.version>
-		<http.client.version>4.5.2</http.client.version>
-
 		<!-- Apache Tiles -->
 		<tiles.version>3.0.5</tiles.version>
 
@@ -257,10 +2107,12 @@
 		<!-- Apache Commons Utilities -->
 		<commons.lang.version>2.6</commons.lang.version>
 		<commons.lang3.version>3.3.2</commons.lang3.version>
+		<commons.collections4.version>4.4</commons.collections4.version>
 		<commons.io.version>1.3.2</commons.io.version>
 		<commons.beanutils.version>1.9.2</commons.beanutils.version>
 		<commons.configuration.version>1.10</commons.configuration.version>
 		<commons.validator.version>1.5.1</commons.validator.version>
+		<commons.codec.version>1.16.0</commons.codec.version>
 
 		<!-- HTML -->
 		<net.sf.htmlcleaner.version>2.16</net.sf.htmlcleaner.version>
@@ -275,24 +2127,22 @@
 		<!-- Firebase -->
 		<com.google.firebase.version>6.3.0</com.google.firebase.version>
 
-		<!-- Lombok -->
-		<org.projectlombok.version>1.16.18</org.projectlombok.version>
-
 		<!-- Test JUNIT -->
 		<junit.version>4.11</junit.version>
 
 		<!-- Other -->
 		<hamcrest.version>1.3</hamcrest.version>
+
 		<!-- Beans -->
 		<!-- Use openbeans (not using java.beans) for all Java and Android -->
 		<com.google.openbeans.version>1.0</com.google.openbeans.version>
 
 		<!-- Barcode4j Dependency -->
-		<avalon-framework.version>4.2.0</avalon-framework.version>
+		<!-- <avalon-framework.version>4.2.0</avalon-framework.version>
 		<avalon-framework-api.version>4.2.0</avalon-framework-api.version>
-		<avalon-framework-impl.version>4.2.0</avalon-framework-impl.version>
-		<!-- <avalon-framework-api.version>4.3.1</avalon-framework-api.version>
-		<avalon-framework-impl.version>4.3.1</avalon-framework-impl.version> -->
+		<avalon-framework-impl.version>4.2.0</avalon-framework-impl.version> -->
+		<avalon-framework-api.version>4.3.1</avalon-framework-api.version>
+		<avalon-framework-impl.version>4.3.1</avalon-framework-impl.version>
 		<!-- Barcode4j -->
 		<net.sf.barcode4j.version>2.1</net.sf.barcode4j.version>
 
@@ -330,6 +2180,7 @@
 			<!-- Ensures that the config.properties file is always loaded from the
 				configuration directory of the active Maven profile. -->
 			<filter>${profile.configuration}</filter>
+			<!-- <filter>${root.basedir}/profiles/${build.profile.id}/config.properties</filter> -->
 		</filters>
 		<pluginManagement>
 			<plugins>
@@ -338,6 +2189,66 @@
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>findbugs-maven-plugin</artifactId>
 					<version>${maven.findbugs.version}</version>
+					<configuration>
+						<skip>${maven.findbugs.skip}</skip>
+						<debug>true</debug>
+						<fork>true</fork>
+						<!--
+		                    Enables analysis which takes more memory but finds more bugs.
+		                    If you run out of memory, changes the value of the effort element
+		                    to 'low'.
+		                -->
+		                <effort>Low</effort>
+		                <!-- Build doesn't fail if problems are found -->
+		                <failOnError>false</failOnError>
+		                <!-- Reports all bugs (other values are medium and max) -->
+		                <threshold>Low</threshold>
+						<xmlOutput>true</xmlOutput>
+						<!-- Optional directory to put findbugs xdoc xml report -->
+						<xmlOutputDirectory>${maven.findbugs.output.xml}</xmlOutputDirectory>
+						<plugins>
+				            <plugin>
+				                <groupId>com.mebigfatguy.fb-contrib</groupId>
+				                <artifactId>fb-contrib</artifactId>
+				                <version>7.6.0</version>
+				            </plugin>
+				            <plugin>
+		                        <groupId>com.h3xstream.findsecbugs</groupId>
+		                        <artifactId>findsecbugs-plugin</artifactId>
+		                        <version>1.12.0</version>
+		                    </plugin>
+				        </plugins>
+					</configuration>
+		            <executions>
+		                <!-- 
+		                    Ensures that FindBugs inspects source code when project is compiled. 
+		                -->
+		                <execution>
+		                    <id>analyze-compile</id>
+		                    <phase>compile</phase>
+		                    <goals>
+		                        <goal>check</goal>
+		                    </goals>
+		                </execution>
+		            </executions>
+				</plugin>
+				<!-- Plugin for supporting root directory -->
+				<plugin>
+				    <groupId>org.commonjava.maven.plugins</groupId>
+				    <artifactId>directory-maven-plugin</artifactId>
+				    <version>${maven.directory.version}</version>
+				    <executions>
+				        <execution>
+				            <id>directories</id>
+				            <goals>
+				                <goal>highest-basedir</goal>
+				            </goals>
+				            <phase>initialize</phase>
+				            <configuration>
+				                <property>root.basedir</property>
+				            </configuration>
+				        </execution>
+				    </executions>
 				</plugin>
 				<!-- Groovy for supporting root directory -->
 				<plugin>
@@ -377,6 +2288,7 @@
 											} else {
 												log.info( 'Root directory path {' + basePath + '}');
 												project.properties[ 'root.basedir' ] = basePath;
+												project.properties[ 'maven.multiModuleProjectDirectory' ] = basePath;
 											}
 										} else {
 											log.error( 'Could not find root directory!' );
@@ -384,6 +2296,158 @@
 										}
 									]]>
 								</source>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<!-- Initialization -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-antrun-plugin</artifactId>
+					<version>${maven.antrun.version}</version>
+					<configuration>
+					    <exportAntProperties>false</exportAntProperties>
+					</configuration>
+					<executions>
+						<!-- Pre-Clean -->
+						<execution>
+							<id>clean-folders</id>
+							<phase>pre-clean</phase>
+							<goals>
+							    <goal>run</goal>
+							</goals>
+							<configuration>
+							    <target>
+							        <delete includeEmptyDirs="true"
+							        verbose="true" quiet="true"
+							        failonerror="false" performGCOnFailedDelete="true">
+										<fileset dir="${project.basedir}" includes="**/target/"/>
+									</delete>
+							        <delete includeEmptyDirs="true"
+							        verbose="true" quiet="true"
+							        failonerror="false" performGCOnFailedDelete="true">
+										<fileset dir="${project.basedir}" includes="**/.apt_generated/"/>
+									</delete>
+							    </target>
+							</configuration>
+						</execution>
+						<!-- Initialization -->
+						<execution>
+							<id>ensure-generated-folders</id>
+							<phase>initialize</phase>
+							<goals>
+							    <goal>run</goal>
+							</goals>
+							<configuration>
+							    <target>
+							        <mkdir dir="${project.basedir}/src/main/java" />
+							        <mkdir dir="${project.basedir}/src/main/resources" />
+							        <mkdir dir="${project.basedir}/src/test/java" />
+							        <mkdir dir="${project.basedir}/src/test/resources" />
+							    </target>
+							    <target name="ensure-dependency-unpack-directories"
+							    unless="${maven.dependency.unpack.skip}">
+									<mkdir dir="${maven.dependency.unpack.source.directory}" />
+									<mkdir dir="${maven.dependency.unpack.resource.directory}" />
+								</target>
+							</configuration>
+						</execution>
+						<!-- Process sources -->
+						<execution>
+							<id>ensure-dependencies-sources</id>
+							<phase>process-sources</phase>
+							<goals>
+								<goal>run</goal>
+							</goals>
+							<configuration>
+								<target name="remove-dependency-unpack-source-directories"
+								unless="${maven.dependency.unpack.skip}">
+									<!-- remove empty source/resource directories from unpacked dependencies -->
+									<delete quiet="true" includeEmptyDirs="true" failonerror="false" verbose="true">
+										<fileset dir="${maven.dependency.unpack.source.directory}">
+											<and>
+												<size value="0" />
+												<type type="dir" />
+											</and>
+										</fileset>
+									</delete>
+									<!-- remove empty source/resource directories from unpacked dependencies -->
+									<delete quiet="true" includeEmptyDirs="true" failonerror="false" verbose="true">
+										<fileset dir="${maven.dependency.unpack.resource.directory}">
+											<and>
+												<size value="0" />
+												<type type="dir" />
+											</and>
+										</fileset>
+									</delete>
+									<!-- remove duplicate sources/resources from unpacked dependencies -->
+									<delete quiet="true" includeEmptyDirs="true" failonerror="false" verbose="true">
+										<fileset dir="${maven.dependency.unpack.source.directory}">
+											<or>
+												<present targetdir="${project.basedir}/src/main/java" />
+												<present targetdir="${project.basedir}/src/main/resources" />
+											</or>
+										</fileset>
+									</delete>
+									<!-- remove duplicate sources/resources from unpacked dependencies -->
+									<delete quiet="true" includeEmptyDirs="true" failonerror="false" verbose="true">
+										<fileset dir="${maven.dependency.unpack.resource.directory}">
+											<or>
+												<present targetdir="${project.basedir}/src/main/java" />
+												<present targetdir="${project.basedir}/src/main/resources" />
+											</or>
+										</fileset>
+									</delete>
+								</target>
+							</configuration>
+						</execution>
+						<!-- Process resources -->
+						<execution>
+							<id>ensure-dependencies-resources</id>
+							<phase>process-resources</phase>
+							<goals>
+								<goal>run</goal>
+							</goals>
+							<configuration>
+								<target name="remove-dependency-unpack-resource-directories"
+								unless="${maven.dependency.unpack.skip}">
+									<!-- remove empty source/resource directories from unpacked dependencies -->
+									<delete quiet="true" includeEmptyDirs="true" failonerror="false" verbose="true">
+										<fileset dir="${maven.dependency.unpack.source.directory}">
+											<and>
+												<size value="0" />
+												<type type="dir" />
+											</and>
+										</fileset>
+									</delete>
+									<!-- remove empty source/resource directories from unpacked dependencies -->
+									<delete quiet="true" includeEmptyDirs="true" failonerror="false" verbose="true">
+										<fileset dir="${maven.dependency.unpack.resource.directory}">
+											<and>
+												<size value="0" />
+												<type type="dir" />
+											</and>
+										</fileset>
+									</delete>
+									<!-- remove duplicate sources/resources from unpacked dependencies -->
+									<delete quiet="true" includeEmptyDirs="true" failonerror="false" verbose="true">
+										<fileset dir="${maven.dependency.unpack.source.directory}">
+											<or>
+												<present targetdir="${project.basedir}/src/main/java" />
+												<present targetdir="${project.basedir}/src/main/resources" />
+											</or>
+										</fileset>
+									</delete>
+									<!-- remove duplicate sources/resources from unpacked dependencies -->
+									<delete quiet="true" includeEmptyDirs="true" failonerror="false" verbose="true">
+										<fileset dir="${maven.dependency.unpack.resource.directory}">
+											<or>
+												<present targetdir="${project.basedir}/src/main/java" />
+												<present targetdir="${project.basedir}/src/main/resources" />
+											</or>
+										</fileset>
+									</delete>
+								</target>
 							</configuration>
 						</execution>
 					</executions>
@@ -412,6 +2476,7 @@
 						</execution>
 					</executions>
 				</plugin>
+				<!-- Project properties -->
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>properties-maven-plugin</artifactId>
@@ -425,6 +2490,7 @@
 							<configuration>
 								<files>
 									<file>${profile.configuration}</file>
+									<!-- <file>${root.basedir}/profiles/${build.profile.id}/config.properties</file> -->
 								</files>
 							</configuration>
 						</execution>
@@ -455,6 +2521,70 @@
 						</execution>
 					</executions>
 				</plugin>
+				<!-- Dependency pugin support for un-packing dependencies to customize -->
+				<plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>${maven.dependency.version}</version>
+                    <configuration>
+                        <classifier>sources</classifier>
+                        <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
+                        <includeGroupIds>${maven.dependency.unpack.include.groupIds}</includeGroupIds>
+                        <includeArtifactIds>${maven.dependency.unpack.include.artifactIds}</includeArtifactIds>
+                        <includeClassifiers>sources</includeClassifiers>
+                        <overWriteIfNewer>true</overWriteIfNewer>
+                        <overWriteReleases>false</overWriteReleases>
+                        <overWriteSnapshots>true</overWriteSnapshots>
+                    </configuration>
+                    <executions>
+						<!-- Generate depdencies source -->
+                        <execution>
+                            <id>generate-source</id>
+                            <phase>generate-sources</phase>
+                            <goals>
+                                <goal>unpack</goal>
+                            </goals>
+                            <configuration>
+                                <artifactItems>
+                                    <artifactItem>
+                                        <groupId>${maven.dependency.unpack.groupId}</groupId>
+                                        <artifactId>${maven.dependency.unpack.artifactId}</artifactId>
+                                        <version>${maven.dependency.unpack.version}</version>
+                                        <type>jar</type>
+                                        <classifier>sources</classifier>
+                                        <overWrite>true</overWrite>
+                                        <includes>${maven.dependency.unpack.source.includes}</includes>
+                                        <outputDirectory>${maven.dependency.unpack.source.directory}</outputDirectory>
+                                    </artifactItem>
+                                </artifactItems>
+                                <skip>${maven.dependency.unpack.skip}</skip>
+                            </configuration>
+                        </execution>
+						<!-- Generate depdencies resource -->
+                        <execution>
+                            <id>generate-resource</id>
+                            <phase>generate-resources</phase>
+                            <goals>
+                                <goal>unpack</goal>
+                            </goals>
+                            <configuration>
+                                <artifactItems>
+                                    <artifactItem>
+                                        <groupId>${maven.dependency.unpack.groupId}</groupId>
+                                        <artifactId>${maven.dependency.unpack.artifactId}</artifactId>
+                                        <version>${maven.dependency.unpack.version}</version>
+                                        <type>jar</type>
+                                        <classifier>sources</classifier>
+                                        <overWrite>true</overWrite>
+                                        <excludes>${maven.dependency.unpack.resource.excludes}</excludes>
+                                        <outputDirectory>${maven.dependency.unpack.resource.directory}</outputDirectory>
+                                    </artifactItem>
+                                </artifactItems>
+                                <skip>${maven.dependency.unpack.skip}</skip>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
 				<!-- This plugin is used to release a project with Maven, saving a lot of repetitive, manual work.
 					Releasing a project is made in two steps: prepare and perform. -->
 				<!-- <plugin>
@@ -469,6 +2599,12 @@
 					<version>${maven.build.helper.version}</version>
 					<executions>
 						<execution>
+							<id>maven-version</id>
+							<goals>
+								<goal>maven-version</goal>
+							</goals>
+						</execution>
+						<execution>
 							<id>add-source</id>
 							<phase>generate-sources</phase>
 							<goals>
@@ -478,6 +2614,50 @@
 								<sources>
 									<source>${project.basedir}/.apt_generated</source>
 								</sources>
+							</configuration>
+						</execution>
+						<!-- Process source -->
+						<execution>
+							<id>attach-source</id>
+							<phase>process-sources</phase>
+							<goals>
+								<goal>add-source</goal>
+							</goals>
+							<configuration>
+								<sources>
+									<source>${maven.dependency.unpack.source.directory}</source>
+								</sources>
+							</configuration>
+						</execution>
+						<!-- Process resource -->
+						<execution>
+							<id>attach-resource</id>
+							<phase>process-resources</phase>
+							<goals>
+								<goal>add-resource</goal>
+							</goals>
+							<configuration>
+								<resources>
+									<!-- include all resources from generated-sources folder except JAVA files -->
+									<resource>
+										<directory>${maven.dependency.unpack.source.directory}</directory>
+										<includes>
+											<include>**/*.xhtml</include>
+										</includes>
+										<excludes>
+											<exclude>**/*.java</exclude>
+										</excludes>
+										<filtering>true</filtering>
+									</resource>
+									<!-- exclude all resources from generated-resources folder (present no need to keep current project configuration) -->
+									<resource>
+										<directory>${maven.dependency.unpack.resource.directory}</directory>
+										<excludes>
+											<exclude>**/*.java</exclude>
+										</excludes>
+										<filtering>true</filtering>
+									</resource>
+								</resources>
 							</configuration>
 						</execution>
 					</executions>
@@ -511,6 +2691,10 @@
 									<nonFilteredFileExtension>*.woff</nonFilteredFileExtension>
 									<nonFilteredFileExtension>*.woff2</nonFilteredFileExtension>
 									<nonFilteredFileExtension>*.otf</nonFilteredFileExtension>
+									<!-- file upload SWF -->
+									<nonFilteredFileExtension>*.swf</nonFilteredFileExtension>
+									<!-- Database backup if necessary -->
+									<nonFilteredFileExtension>*.backup</nonFilteredFileExtension>
 								</nonFilteredFileExtensions>
 								<resources>
 									<!-- Copy resource exclude JAVA, CLASSES to build target directory -->
@@ -546,6 +2730,30 @@
 											<exclude>**/*.woff2</exclude>
 											<exclude>*.otf</exclude>
 											<exclude>**/*.otf</exclude>
+											<!-- images -->
+											<exclude>*.cur</exclude>
+											<exclude>**/*.cur</exclude>
+											<exclude>*.ico</exclude>
+											<exclude>**/*.ico</exclude>
+											<exclude>*.gif</exclude>
+											<exclude>**/*.gif</exclude>
+											<exclude>*.png</exclude>
+											<exclude>**/*.png</exclude>
+											<exclude>*.jpg</exclude>
+											<exclude>**/*.jpg</exclude>
+											<exclude>*.jpeg</exclude>
+											<exclude>**/*.jpeg</exclude>
+											<exclude>*.bmp</exclude>
+											<exclude>**/*.bmp</exclude>
+											<!-- sounds -->
+											<exclude>*.wav</exclude>
+											<exclude>**/*.wav</exclude>
+											<!-- file upload SWF -->
+											<exclude>*.swf</exclude>
+											<exclude>**/*.swf</exclude>
+											<!-- Database backup if necessary -->
+											<exclude>*.backup</exclude>
+											<exclude>**/*.backup</exclude>
 										</excludes>
 									</resource>
 									<resource>
@@ -576,6 +2784,30 @@
 											<include>**/*.woff2</include>
 											<include>*.otf</include>
 											<include>**/*.otf</include>
+											<!-- images -->
+											<include>*.cur</include>
+											<include>**/*.cur</include>
+											<include>*.ico</include>
+											<include>**/*.ico</include>
+											<include>*.gif</include>
+											<include>**/*.gif</include>
+											<include>*.png</include>
+											<include>**/*.png</include>
+											<include>*.jpg</include>
+											<include>**/*.jpg</include>
+											<include>*.jpeg</include>
+											<include>**/*.jpeg</include>
+											<include>*.bmp</include>
+											<include>**/*.bmp</include>
+											<!-- sounds -->
+											<include>*.wav</include>
+											<include>**/*.wav</include>
+											<!-- file upload SWF -->
+											<include>*.swf</include>
+											<include>**/*.swf</include>
+											<!-- Database backup if necessary -->
+											<include>*.backup</include>
+											<include>**/*.backup</include>
 										</includes>
 										<excludes>
 											<exclude>*.java</exclude>
@@ -617,6 +2849,30 @@
 											<exclude>**/*.woff2</exclude>
 											<exclude>*.otf</exclude>
 											<exclude>**/*.otf</exclude>
+											<!-- images -->
+											<exclude>*.cur</exclude>
+											<exclude>**/*.cur</exclude>
+											<exclude>*.ico</exclude>
+											<exclude>**/*.ico</exclude>
+											<exclude>*.gif</exclude>
+											<exclude>**/*.gif</exclude>
+											<exclude>*.png</exclude>
+											<exclude>**/*.png</exclude>
+											<exclude>*.jpg</exclude>
+											<exclude>**/*.jpg</exclude>
+											<exclude>*.jpeg</exclude>
+											<exclude>**/*.jpeg</exclude>
+											<exclude>*.bmp</exclude>
+											<exclude>**/*.bmp</exclude>
+											<!-- sounds -->
+											<exclude>*.wav</exclude>
+											<exclude>**/*.wav</exclude>
+											<!-- file upload SWF -->
+											<exclude>*.swf</exclude>
+											<exclude>**/*.swf</exclude>
+											<!-- Database backup if necessary -->
+											<exclude>*.backup</exclude>
+											<exclude>**/*.backup</exclude>
 										</excludes>
 									</resource>
 									<resource>
@@ -647,6 +2903,30 @@
 											<include>**/*.woff2</include>
 											<include>*.otf</include>
 											<include>**/*.otf</include>
+											<!-- images -->
+											<include>*.cur</include>
+											<include>**/*.cur</include>
+											<include>*.ico</include>
+											<include>**/*.ico</include>
+											<include>*.gif</include>
+											<include>**/*.gif</include>
+											<include>*.png</include>
+											<include>**/*.png</include>
+											<include>*.jpg</include>
+											<include>**/*.jpg</include>
+											<include>*.jpeg</include>
+											<include>**/*.jpeg</include>
+											<include>*.bmp</include>
+											<include>**/*.bmp</include>
+											<!-- sounds -->
+											<include>*.wav</include>
+											<include>**/*.wav</include>
+											<!-- file upload SWF -->
+											<include>*.swf</include>
+											<include>**/*.swf</include>
+											<!-- Database backup if necessary -->
+											<include>*.backup</include>
+											<include>**/*.backup</include>
 										</includes>
 										<excludes>
 											<exclude>*.java</exclude>
@@ -660,6 +2940,99 @@
 						</execution>
 					</executions>
 				</plugin>
+				<!-- Eclipse -->
+	            <plugin>
+	                <groupId>org.apache.maven.plugins</groupId>
+	                <artifactId>maven-eclipse-plugin</artifactId>
+	                <version>${maven.eclipse.version}</version>
+	                <configuration>
+	                    <downloadSources>true</downloadSources>
+	                    <downloadJavadocs>true</downloadJavadocs>
+	                    <additionalProjectFacets>
+							<jst.java>${java.version}</jst.java>
+						</additionalProjectFacets>
+						<additionalConfig>
+							<file>
+								<name>.settings/org.eclipse.m2e.core.prefs</name>
+								<content><![CDATA[activeProfiles=${eclipse.maven.project.activated.profiles}
+eclipse.perferences.version=1
+resolveWorkspaceProjects=true
+version=1]]></content>
+							</file>
+							<file>
+								<name>.settings/org.eclipse.jdt.core.prefs</name>
+								<content><![CDATA[eclipse.preferences.version=1
+encoding/.apt_generated=${project.build.sourceEncoding}
+encoding/src/main/java=${project.build.sourceEncoding}
+encoding/src/main/resources=${project.build.sourceEncoding}
+encoding/src/test/java=${project.build.sourceEncoding}
+encoding/src/test/resources=${project.build.sourceEncoding}
+encoding/target/generated-test-sources/test-annotations=${project.build.sourceEncoding}
+org.eclipse.jdt.core.compiler.codegen.targetPlatform=${java.version}
+org.eclipse.jdt.core.compiler.compliance=${java.version}
+org.eclipse.jdt.core.compiler.problem.enablePreviewFeatures=disabled
+org.eclipse.jdt.core.compiler.problem.forbiddenReference=warning
+org.eclipse.jdt.core.compiler.problem.reportPreviewFeatures=ignore
+org.eclipse.jdt.core.compiler.processAnnotations=${m2e.apt.processAnnotations}
+org.eclipse.jdt.core.compiler.release=disabled
+org.eclipse.jdt.core.compiler.source=${java.version}]]></content>
+							</file>
+							<file>
+								<name>.settings/org.eclipse.jdt.apt.core.prefs</name>
+								<content><![CDATA[eclipse.preferences.version=1
+org.eclipse.jdt.apt.aptEnabled=${m2e.apt.aptEnabled}
+org.eclipse.jdt.apt.genSrcDir=.apt_generated
+org.eclipse.jdt.apt.genTestSrcDir=.apt_generated_tests
+org.eclipse.jdt.apt.processorOptions/sql.validation=true
+org.eclipse.jdt.apt.reconcileEnabled=true]]></content>
+							</file>
+							<file>
+								<name>.settings/org.hibernate.eclipse.console.prefs</name>
+								<content><![CDATA[default.configuration=${project.artifactId}
+eclipse.preferences.version=1
+hibernate3.enabled=true]]></content>
+							</file>
+							<file>
+								<name>.settings/org.eclipse.core.resources.prefs</name>
+								<content><![CDATA[eclipse.preferences.version=1
+encoding//src/main/java=${project.build.sourceEncoding}
+encoding//src/main/resources=${project.build.sourceEncoding}
+encoding//src/test/java=${project.build.sourceEncoding}
+encoding//src/test/resources=${project.build.sourceEncoding}
+encoding/<project>=${project.build.sourceEncoding}]]></content>
+							</file>
+							<file>
+								<name>.factorypath</name>
+								<content><![CDATA[<factorypath>
+	<factorypathentry kind="PLUGIN" id="org.eclipse.jst.ws.annotations.core" enabled="true" runInBatchMode="false"/>
+	<factorypathentry kind="VARJAR" id="M2_REPO/org/projectlombok/lombok/${org.projectlombok.version}/lombok-${org.projectlombok.version}.jar" enabled="true" runInBatchMode="false"/>
+	<factorypathentry kind="VARJAR" id="M2_REPO/org/seasar/doma/doma/${doma.version}/doma-${doma.version}.jar" enabled="true" runInBatchMode="false"/>
+</factorypath>]]></content>
+							</file>
+							<file>
+								<name>.project</name>
+								<content><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>${project.artifactId}-${project.version}</name>
+	<comment>${project.description}</comment>
+	<projects/>
+		<buildSpec>
+			<buildCommand>
+				<name>org.eclipse.jdt.core.javabuilder</name>
+			</buildCommand>
+			<buildCommand>
+				<name>org.eclipse.m2e.core.maven2Builder</name>
+			</buildCommand>
+		</buildSpec>
+		<natures>
+			<nature>org.eclipse.jdt.core.javanature</nature>
+			<nature>org.eclipse.m2e.core.maven2Nature</nature>
+		</natures>
+</projectDescription>]]></content>
+							</file>
+						</additionalConfig>
+	                </configuration>
+	            </plugin>
 				<!-- Compiler -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -698,8 +3071,8 @@
 				</plugin>
 				<!-- AspectJ (AOP) -->
 				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>aspectj-maven-plugin</artifactId>
+					<groupId>${maven.aspectj.groupId}</groupId>
+					<artifactId>${maven.aspectj.artifactId}</artifactId>
 					<version>${maven.aspectj.version}</version>
 					<dependencies>
 						<dependency>
@@ -721,7 +3094,10 @@
 						</execution>
 					</executions>
 					<configuration>
+						<skip>${org.aspectj.skip}</skip>
 						<outxml>true</outxml>
+						<XnoInline>true</XnoInline> <!-- Fix for JDK11+ - ClassCastException: ConstantUtf8 -->
+						<XserializableAspects>true</XserializableAspects>
 						<showWeaveInfo/>
 	                    <!-- START: for working with Lombok -->
 	                    <forceAjcCompile>true</forceAjcCompile>
@@ -735,12 +3111,14 @@
 						<target>${java.version}</target>
 					</configuration>
 				</plugin>
+				<!-- Source package plugin -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-source-plugin</artifactId>
 					<version>${maven.source.version}</version>
 					<configuration>
 						<attach>true</attach>
+						<forceCreation>true</forceCreation>
 					</configuration>
 					<executions>
 						<execution>
@@ -751,6 +3129,7 @@
 						</execution>
 					</executions>
 				</plugin>
+				<!-- Javadocs package plugin -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
@@ -769,6 +3148,7 @@
 						</execution>
 					</executions>
 				</plugin>
+				<!-- JAR package plugin -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
@@ -780,8 +3160,16 @@
 							<exclude>*.java</exclude>
 							<exclude>**/*.java</exclude>
 						</excludes>
+						<archive>
+							<manifestEntries>
+								<Maven-Version>${maven.version}</Maven-Version>
+								<License>GNU Lesser General Public License (LGPL), Version 3</License>
+								<Owner>Hai Nguyen, hainguyenjc@gmail.com</Owner>
+							</manifestEntries>
+						</archive>
 					</configuration>
 				</plugin>
+				<!-- WAR package plugin -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-war-plugin</artifactId>
@@ -791,6 +3179,7 @@
 						<packagingExcludes>*.java,**/*.java</packagingExcludes>
 					</configuration>
 				</plugin>
+				<!-- Nexus staging plugin -->
 				<plugin>
 					<groupId>org.sonatype.plugins</groupId>
 					<artifactId>nexus-staging-maven-plugin</artifactId>
@@ -814,12 +3203,13 @@
 				</plugin>
 				<!-- Obfuscation -->
 				<plugin>
-					<groupId>net.java.truelicense</groupId>
-					<artifactId>truelicense-maven-plugin</artifactId>
+					<groupId>${maven.truelicense.groupId}</groupId>
+					<artifactId>${maven.truelicense.artifactId}</artifactId>
 					<version>${maven.truelicense.version}</version>
 					<configuration>
 						<!-- Avoid exceed maximum bytes while using aspectj -->
 						<maxBytes>99999</maxBytes>
+						<scope>${maven.truelicense.scope}</scope>
 					</configuration>
 					<executions>
 						<execution>
@@ -828,6 +3218,9 @@
 								<!-- The default life cycle phase of this goal is generate-sources. -->
 								<goal>generate-main-sources</goal>
 							</goals>
+							<configuration>
+								<scope>${maven.truelicense.scope}</scope>
+							</configuration>
 						</execution>
 						<execution>
 							<id>obfuscate-main-classes</id>
@@ -835,12 +3228,16 @@
 								<!-- The default life cycle phase of this goal is process-classes. -->
 								<goal>obfuscate-main-classes</goal>
 							</goals>
+							<configuration>
+								<scope>${maven.truelicense.scope}</scope>
+							</configuration>
 						</execution>
 					</executions>
 	            </plugin>
+	            <!-- Proguard -->
 	            <plugin>
-					<groupId>com.github.wvengen</groupId>
-					<artifactId>proguard-maven-plugin</artifactId>
+					<groupId>${maven.proguard.groupId}</groupId>
+					<artifactId>${maven.proguard.artifactId}</artifactId>
 					<version>${maven.proguard.version}</version>
 					<executions>
 						<execution>
@@ -851,17 +3248,24 @@
 						</execution>
 					</executions>
 					<configuration>
-						<!-- internal proguard -->
-						<proguardVersion>5.3.2</proguardVersion>
+						<includeDependency>false</includeDependency>
 						<obfuscate>true</obfuscate>
+						<addManifest>true</addManifest>
+						<addMavenDescriptor>true</addMavenDescriptor>
+						<silent>false</silent>
 						<injarNotExistsSkip>true</injarNotExistsSkip>
 						<skip>${proguard.skip}</skip>
+						
+						<inFilter>!module-info.class,!META-INF/maven/**</inFilter>
+						<outFilter>!META-INF/maven/**</outFilter>
+						<dependencyFilter>!module-info.class,!META-INF/**</dependencyFilter>
 
 						<!-- Our application is so big that ProGuard had ran out of memory -->
 						<maxMemory>1024m</maxMemory>
 
 						<!-- File with proguard configuration -->
 						<proguardInclude>${proguard.configuration}</proguardInclude>
+						<!-- <proguardInclude>${root.basedir}/proguard.cnf</proguardInclude> -->
 
 						<!-- Now exclude all modules that are embedded in the jar, so that
 						ProGuard won't see a redefinition of each single class.
@@ -874,19 +3278,6 @@
 						    </exclusion>
 						</exclusions>
 						-->
-
-						<!--
-						List external jars your application depends on
-						(that not listed in maven dependencies).
-						You probably depend on Java runtime (rt.jar).
-						JCE stands for Java Cryptography Extension.
-						You probably don't need it, but my application does.
-						-->
-						<libs>
-							<lib>${java.home}/lib/rt.jar</lib>
-							<lib>${java.home}/lib/jce.jar</lib>
-							<lib>${java.home}/lib/ext/sunjce_provider.jar</lib>
-						</libs>
 					</configuration>
 				</plugin>
 				<!-- To sign packages (must after proguard plugin in POM build to avoid error: jarsigner verify SHA-256 digest error for class ...) -->
@@ -936,6 +3327,20 @@
 							<pluginExecutions>
 								<pluginExecution>
 									<pluginExecutionFilter>
+										<groupId>global.namespace.truelicense</groupId>
+										<artifactId>truelicense-maven-plugin</artifactId>
+										<versionRange>[2.+,)</versionRange>
+										<goals>
+											<goal>generate-main-sources</goal>
+											<goal>obfuscate-main-classes</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore>false</ignore>
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
 										<groupId>net.java.truelicense</groupId>
 										<artifactId>truelicense-maven-plugin</artifactId>
 										<versionRange>[2.+,)</versionRange>
@@ -950,11 +3355,65 @@
 								</pluginExecution>
 								<pluginExecution>
 									<pluginExecutionFilter>
-										<groupId>org.codehaus.mojo</groupId>
-										<artifactId>aspectj-maven-plugin</artifactId>
+										<groupId>${maven.aspectj.groupId}</groupId>
+										<artifactId>${maven.aspectj.artifactId}</artifactId>
 										<versionRange>[1.+,)</versionRange>
 										<goals>
 											<goal>compile</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore>false</ignore>
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.maven.plugins</groupId>
+										<artifactId>maven-eclipse-plugin</artifactId>
+										<versionRange>[1.+,)</versionRange>
+										<goals>
+											<goal>eclipse</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore>false</ignore>
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.maven.plugins</groupId>
+										<artifactId>maven-resources-plugin</artifactId>
+										<versionRange>[1.+,)</versionRange>
+										<goals>
+											<goal>resources</goal>
+											<goal>copy-resources</goal>
+											<goal>testResources</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore>false</ignore>
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.codehaus.mojo</groupId>
+										<artifactId>properties-maven-plugin</artifactId>
+										<versionRange>[1.+,)</versionRange>
+										<goals>
+											<goal>read-project-properties</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore>false</ignore>
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.maven.plugins</groupId>
+                    					<artifactId>maven-dependency-plugin</artifactId>
+										<versionRange>[1.+,)</versionRange>
+										<goals>
+											<goal>unpack</goal>
 										</goals>
 									</pluginExecutionFilter>
 									<action>
@@ -968,21 +3427,32 @@
 			</plugins>
 		</pluginManagement>
 		<plugins>
+			<!-- Plugin for supporting root directory -->
+			<plugin>
+			    <groupId>org.commonjava.maven.plugins</groupId>
+			    <artifactId>directory-maven-plugin</artifactId>
+			</plugin>
 			<!-- Groovy for supporting root directory -->
-			<!-- <plugin>
+			<plugin>
 				<groupId>org.codehaus.gmaven</groupId>
 				<artifactId>groovy-maven-plugin</artifactId>
-			</plugin> -->
+			</plugin>
 			<!-- Find bugs -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>findbugs-maven-plugin</artifactId>
+			</plugin>
+			<!-- Make some directories ensure existing -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
 			</plugin>
 			<!-- Enforce JDK version -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-enforcer-plugin</artifactId>
 			</plugin>
+			<!-- Project properties -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>properties-maven-plugin</artifactId>
@@ -999,6 +3469,11 @@
 				<artifactId>maven-release-plugin</artifactId>
 				<version>${maven.release.version}</version>
 			</plugin> -->
+			<!-- Dependency pugin support for un-packing dependencies to customize -->
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+			</plugin>
 			<!-- Attach more source folders -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -1009,6 +3484,11 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
 			</plugin>
+			<!-- Eclipse -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-eclipse-plugin</artifactId>
+            </plugin>
 			<!-- Compiler -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -1016,25 +3496,30 @@
 			</plugin>
 			<!-- AspectJ (AOP) -->
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>aspectj-maven-plugin</artifactId>
+				<groupId>${maven.aspectj.groupId}</groupId>
+				<artifactId>${maven.aspectj.artifactId}</artifactId>
 			</plugin>
+			<!-- Source package plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
 			</plugin>
+			<!-- Javadocs package plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 			</plugin>
+			<!-- JAR package plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 			</plugin>
+			<!-- WAR package plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 			</plugin>
+			<!-- Nexus staging plugin -->
 			<plugin>
 				<groupId>org.sonatype.plugins</groupId>
 				<artifactId>nexus-staging-maven-plugin</artifactId>
@@ -1047,12 +3532,13 @@
 			</plugin>
 			<!-- Obfuscation -->
 			<plugin>
-				<groupId>net.java.truelicense</groupId>
-				<artifactId>truelicense-maven-plugin</artifactId>
+				<groupId>${maven.truelicense.groupId}</groupId>
+				<artifactId>${maven.truelicense.artifactId}</artifactId>
 			</plugin>
+			<!-- Proguard -->
 			<plugin>
-				<groupId>com.github.wvengen</groupId>
-				<artifactId>proguard-maven-plugin</artifactId>
+				<groupId>${maven.proguard.groupId}</groupId>
+				<artifactId>${maven.proguard.artifactId}</artifactId>
 			</plugin>
 			<!-- To sign packages (must after proguard plugin in POM build to avoid error: jarsigner verify SHA-256 digest error for class ...) -->
 			<plugin>
@@ -1081,11 +3567,17 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>findbugs-maven-plugin</artifactId>
 			</plugin>
+			<!-- Make some directories ensure existing -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+			</plugin>
 			<!-- Enforce JDK version -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-enforcer-plugin</artifactId>
 			</plugin>
+			<!-- Project properties -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>properties-maven-plugin</artifactId>
@@ -1102,6 +3594,11 @@
 				<artifactId>maven-release-plugin</artifactId>
 				<version>${maven.release.version}</version>
 			</plugin> -->
+			<!-- Dependency pugin support for un-packing dependencies to customize -->
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+			</plugin>
 			<!-- Attach more source folders -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -1112,6 +3609,11 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
 			</plugin>
+			<!-- Eclipse -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-eclipse-plugin</artifactId>
+            </plugin>
 			<!-- Compiler -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -1119,8 +3621,8 @@
 			</plugin>
 			<!-- AspectJ (AOP) -->
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>aspectj-maven-plugin</artifactId>
+				<groupId>${maven.aspectj.groupId}</groupId>
+				<artifactId>${maven.aspectj.artifactId}</artifactId>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -1150,12 +3652,13 @@
 			</plugin>
 			<!-- Obfuscation -->
 			<plugin>
-				<groupId>net.java.truelicense</groupId>
-				<artifactId>truelicense-maven-plugin</artifactId>
+				<groupId>${maven.truelicense.groupId}</groupId>
+				<artifactId>${maven.truelicense.artifactId}</artifactId>
 			</plugin>
+			<!-- Proguard -->
 			<plugin>
-				<groupId>com.github.wvengen</groupId>
-				<artifactId>proguard-maven-plugin</artifactId>
+				<groupId>${maven.proguard.groupId}</groupId>
+				<artifactId>${maven.proguard.artifactId}</artifactId>
 			</plugin>
 			<!-- To sign packages (must after proguard plugin in POM build to avoid error: jarsigner verify SHA-256 digest error for class ...) -->
 			<plugin>
@@ -1208,6 +3711,18 @@
 		<repository>
 			<id>org.apache.httpcomponents</id>
 			<url>https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient</url>
+		</repository>
+		<repository>
+			<id>org.apache.httpcomponents.core5</id>
+			<url>https://mvnrepository.com/artifact/org.apache.httpcomponents.core5/httpcore5</url>
+		</repository>
+		<repository>
+			<id>org.apache.httpcomponents.core5-h2</id>
+			<url>https://mvnrepository.com/artifact/org.apache.httpcomponents.core5/httpcore5-h2</url>
+		</repository>
+		<repository>
+			<id>org.apache.httpcomponents.client5</id>
+			<url>https://mvnrepository.com/artifact/org.apache.httpcomponents.client5/httpclient5</url>
 		</repository>
 		<repository>
 			<id>maven.atlassian.com</id>
@@ -1284,9 +3799,9 @@
 
 			<!-- Servlet -->
 			<dependency>
-				<groupId>javax.servlet</groupId>
-				<artifactId>javax.servlet-api</artifactId>
-				<version>${javax.servlet-api.version}</version>
+				<groupId>${servlet-api.groupId}</groupId>
+				<artifactId>${servlet-api.artifactId}</artifactId>
+				<version>${servlet-api.version}</version>
 				<scope>provided</scope>
 			</dependency>
 			<dependency>
@@ -1296,8 +3811,8 @@
 				<scope>provided</scope>
 			</dependency>
 			<dependency>
-				<groupId>javax.servlet</groupId>
-				<artifactId>jstl</artifactId>
+				<groupId>${jstl.groupId}</groupId>
+				<artifactId>${jstl.artifactId}</artifactId>
 				<version>${jstl.version}</version>
 			</dependency>
 
@@ -1318,8 +3833,8 @@
 
 			<!-- Support JSP Other taglib -->
 			<dependency>
-				<groupId>taglibs</groupId>
-				<artifactId>standard</artifactId>
+				<groupId>${taglibs.groupId}</groupId>
+				<artifactId>${taglibs.artifactId}</artifactId>
 				<version>${taglibs.version}</version>
 			</dependency>
 
@@ -1398,16 +3913,17 @@
 
 			<!-- Spring websocket -->
 			<dependency> <!-- Websocket dependence -->
-				<groupId>javax.websocket</groupId>
-				<artifactId>javax.websocket-api</artifactId>
+				<groupId>${javax.websocket.groupId}</groupId>
+				<artifactId>${javax.websocket.artifactId}</artifactId>
 				<version>${javax.websocket.version}</version>
 				<scope>provided</scope>
 			</dependency>
-			<dependency> <!-- Websocket dependence -->
-				<groupId>org.projectreactor</groupId>
-				<artifactId>reactor-net</artifactId>
-				<version>${org.projectreactor.version}</version>
-			</dependency>
+			<!-- Websocket dependence -->
+			<!--<dependency>
+				<groupId>${projectreactor.groupId}</groupId>
+				<artifactId>${projectreactor.artifactId}</artifactId>
+				<version>${projectreactor.version}</version>
+			</dependency>-->
 			<dependency> <!-- Websocket dependence -->
 				<groupId>org.apache.tomcat.embed</groupId>
 				<artifactId>tomcat-embed-websocket</artifactId>
@@ -1520,21 +4036,16 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
-			<dependency>
+			<!-- <dependency>
 				<groupId>org.springframework.data</groupId>
 				<artifactId>spring-data-redis</artifactId>
 				<version>${spring.springframework.data.redis.version}</version>
-			</dependency>
-			<dependency>
+			</dependency> -->
+			<!-- <dependency>
 				<groupId>org.springframework.data</groupId>
     			<artifactId>spring-data-elasticsearch</artifactId>
 				<version>${spring.springframework.data.elasticsearch.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.mongodb</groupId>
-				<artifactId>mongo-java-driver</artifactId>
-				<version>${mongo.java.driver.version}</version>
-			</dependency>
+			</dependency> -->
 
 			<!-- Quartz -->
 			<dependency> <!-- Quartz dependence -->
@@ -1729,6 +4240,12 @@
 				<groupId>org.apache.poi</groupId>
 				<artifactId>poi</artifactId>
 				<version>${org.apache.poi.version}</version>
+			    <exclusions>
+			    	<exclusion>
+			    		<groupId>commons-codec</groupId>
+						<artifactId>commons-codec</artifactId>
+			    	</exclusion>
+			    </exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.poi</groupId>
@@ -1755,14 +4272,20 @@
 
 			<!-- Apache HTTP Components -->
 			<dependency>
-			    <groupId>org.apache.httpcomponents</groupId>
-			    <artifactId>httpcore</artifactId>
+			    <groupId>${http.core.groupId}</groupId>
+			    <artifactId>${http.core.artifactId}</artifactId>
 			    <version>${http.core.version}</version>
 			</dependency>
 			<dependency>
-			    <groupId>org.apache.httpcomponents</groupId>
-			    <artifactId>httpclient</artifactId>
+			    <groupId>${http.client.groupId}</groupId>
+			    <artifactId>${http.client.artifactId}</artifactId>
 			    <version>${http.client.version}</version>
+			    <exclusions>
+			    	<exclusion>
+			    		<groupId>commons-codec</groupId>
+						<artifactId>commons-codec</artifactId>
+			    	</exclusion>
+			    </exclusions>
 			</dependency>
 
 			<!-- Apache Tiles -->
@@ -1812,6 +4335,11 @@
 				<version>${commons.lang3.version}</version>
 			</dependency>
 			<dependency>
+			    <groupId>org.apache.commons</groupId>
+			    <artifactId>commons-collections4</artifactId>
+			    <version>${commons.collections4.version}</version>
+			</dependency>
+			<dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-io</artifactId>
 				<version>${commons.io.version}</version>
@@ -1830,6 +4358,11 @@
 				<groupId>commons-validator</groupId>
 				<artifactId>commons-validator</artifactId>
 				<version>${commons.validator.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-codec</groupId>
+				<artifactId>commons-codec</artifactId>
+				<version>${commons.codec.version}</version>
 			</dependency>
 
 			<!-- HTML -->
@@ -1924,7 +4457,7 @@
 	        </dependency>
 
 			<!-- Barcode4j Dependency -->
-			<dependency>
+			<!-- <dependency>
 				<groupId>avalon-framework</groupId>
 				<artifactId>avalon-framework</artifactId>
 				<version>${avalon-framework.version}</version>
@@ -1938,8 +4471,8 @@
 				<groupId>avalon-framework</groupId>
 				<artifactId>avalon-framework-impl</artifactId>
 				<version>${avalon-framework-impl.version}</version>
-			</dependency>
-			<!-- <dependency>
+			</dependency> -->
+			<dependency>
 				<groupId>org.apache.avalon.framework</groupId>
 				<artifactId>avalon-framework-api</artifactId>
 				<version>${avalon-framework-api.version}</version>
@@ -1948,7 +4481,7 @@
 				<groupId>org.apache.avalon.framework</groupId>
 				<artifactId>avalon-framework-impl</artifactId>
 				<version>${avalon-framework-impl.version}</version>
-			</dependency> -->
+			</dependency>
 
 			<!-- Barcode4j -->
 			<dependency>
@@ -2103,20 +4636,11 @@
 		</dependency>
 	</dependencies>
 
-	<!-- Present package -->
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.nlh4j</groupId>
-	<artifactId>nlh4j</artifactId>
-	<version>1.0</version>
-	<packaging>pom</packaging>
-	<name>nlh4j</name>
-	<description>Base Package for Java Web/Mobile</description>
-
 	<!-- Modules -->
 	<modules>
 		<!-- Base -->
-		<module>modules/utilities</module>
-		<module>modules/core</module>
+		<!--<module>modules/utilities</module>-->
+		<!--<module>modules/core</module>-->
 		<!-- License -->
 		<module>modules/license</module>
 		<!-- SMS -->
@@ -2139,4 +4663,24 @@
 		<!-- Android -->
 		<module>modules/android</module>
 	</modules>
+	
+	<!--
+		Object ASM and JDK Compatibility:
+		https://en.wikipedia.org/wiki/ObjectWeb_ASM#:~:text=ASM%20is%20Java%2Dcentric%20at,Python%20bytecode%2C%20etc.).&text=The%20name%20%22ASM%22%20is%20not,be%20implemented%20in%20assembly%20language.
+		Release					Release Date					Highlights
+		2.0						2005-05-17						Java 5 language support
+		3.2						2009-06-11						support for the new invokedynamic code.[2]
+		4.0						2011-10-29						Java 7 language support
+		5.0						2014-03-16						Java 8 language support
+		6.0						2017-09-23						Codebase migrated to Gitlab
+																Java 9 language support
+		6.1						2018-03-11						Java 10 language support
+		7.0						2018-10-27						Java 11 language support
+		7.1						2019-03-03						Java 13 language support
+		8.0						2020-03-28						Java 14 language support
+		9.0						2020-09-22						Java 16 language support
+		9.1						2021-02-06						Java 17 language support
+		9.2						2021-06-20						Java 18 language support
+		9.3						2022-04-03						Java 19 language support, new Maven BOM
+	-->
 </project>

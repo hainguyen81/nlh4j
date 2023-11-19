@@ -5,10 +5,12 @@
 package org.nlh4j.core.intercepter;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.math.NumberUtils;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,7 +50,7 @@ public abstract class AbstractHandlerInterceptorAdapter extends HandlerIntercept
 		sw.start();
 		try {
 			this.post(request, response, handler, modelAndView);
-			long startTime = (long) request.getAttribute("startTime");
+			long startTime = NumberUtils.toLong(Objects.toString(request.getAttribute("startTime")), 0L);
 			long endTime = System.currentTimeMillis();
 			request.setAttribute("endTime", endTime);
 			request.setAttribute("totalTime", endTime - startTime);

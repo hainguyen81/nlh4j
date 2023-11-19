@@ -12,7 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import org.nlh4j.core.authentication.ExexAuthenticationProvider;
+import org.nlh4j.core.authentication.Nlh4jAuthenticationProvider;
 import org.nlh4j.core.util.AuthenticationUtils;
 import org.nlh4j.web.base.dashboard.dto.SidebarDto;
 import org.nlh4j.web.base.dashboard.service.DashboardService;
@@ -22,13 +22,13 @@ import org.nlh4j.web.core.dto.UserDto;
 import org.nlh4j.web.core.service.ModuleService;
 
 /**
- * An extended class of {@link ExexAuthenticationProvider}
+ * An extended class of {@link Nlh4jAuthenticationProvider}
  *
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  *
  */
 @Component(value = "authenticationProvider")
-public class AuthenticationProvider extends ExexAuthenticationProvider {
+public class AuthenticationProvider extends Nlh4jAuthenticationProvider {
 
     /** */
     private static final long serialVersionUID = 1L;
@@ -45,7 +45,7 @@ public class AuthenticationProvider extends ExexAuthenticationProvider {
     protected DashboardService dashboardService;
 
     /* (Non-Javadoc)
-     * @see org.nlh4j.core.authentication.ExexAuthenticationProvider#afterAuthenticate(org.springframework.security.core.Authentication)
+     * @see org.nlh4j.core.authentication.Nlh4jAuthenticationProvider#afterAuthenticate(org.springframework.security.core.Authentication)
      */
     @Override
     protected void afterAuthenticate(Authentication authentication) {

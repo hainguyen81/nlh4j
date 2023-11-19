@@ -46,10 +46,12 @@ import lombok.Setter;
  * Performance note: this may take several seconds per file. The first time this Thumbnailer is called, OpenOffice is started.
  *
  * Depends on:
+ * <ul>
  * <li>OpenOffice 3 / LibreOffice
  * <li>JODConverter 3 beta5 or higher
  * <li>Aperture Core (MIME Type detection)
  * <li>OpenOfficeThumbnailer
+ * </ul>
  *
  * TODO Be stricter about which kind of files to process. Currently it converts just like everything. (See tests/ThumbnailersFailingTest)
  *
@@ -215,6 +217,7 @@ public abstract class JodThumbnailer extends AbstractThumbnailer {
     /**
      * Close thumbnailer
      */
+    @Override
 	public void close() throws IOException {
 		try {
 		    this.getOpenOfficeThumbnailer().close();
@@ -257,6 +260,7 @@ public abstract class JodThumbnailer extends AbstractThumbnailer {
 	 * @throws IOException			If file cannot be read/written
 	 * @throws ThumbnailerException If the thumbnailing process failed.
 	 */
+	@Override
 	public void generateThumbnail(File input, File output, String mimeType) throws IOException, ThumbnailerException {
 		String ext = FileUtils.getFileExtension(input.getPath());
 		File inputTmp = null;

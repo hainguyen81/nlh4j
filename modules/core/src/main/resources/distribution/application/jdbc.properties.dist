@@ -1,9 +1,9 @@
 #DB Properties - DEV
 jdbc.server=localhost
 jdbc.port=5432
-jdbc.database=hkfilm
+jdbc.database=nlh4j
 jdbc.username=postgres
 jdbc.password=postgres
 
 #Doma Repository
-doma.repository.prefix=hkfilm
+doma.repository.prefix=nlh4j

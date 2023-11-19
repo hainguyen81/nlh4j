@@ -14,6 +14,7 @@ import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.JWTClaimsSet.Builder;
 import com.nimbusds.jwt.SignedJWT;
 
 /**
@@ -54,14 +55,7 @@ public final class JWTUtils implements Serializable {
 		String token = null;
 		try {
 			// Let's set the JWT Claims
-			JWTClaimsSet claimsSet = new JWTClaimsSet();
-			claimsSet.setIssuer(iss);
-	        claimsSet.setSubject(sub);
-	        claimsSet.setAudience(aud);
-	        claimsSet.setExpirationTime(expire);
-	        claimsSet.setNotBeforeTime(nbf);
-	        claimsSet.setIssueTime(iat);
-	        claimsSet.setJWTID(jti);
+			JWTClaimsSet claimsSet = createJwtClaimsSet(iss, sub, aud, expire, nbf, iat, jti);
 
 	        // sign JWT
 	        token = signJWT(algorithm, privateKey, claimsSet);
@@ -101,14 +95,7 @@ public final class JWTUtils implements Serializable {
         String token = null;
         try {
             // Let's set the JWT Claims
-            JWTClaimsSet claimsSet = new JWTClaimsSet();
-            claimsSet.setIssuer(iss);
-            claimsSet.setSubject(sub);
-            claimsSet.setAudience(aud);
-            claimsSet.setExpirationTime(expire);
-            claimsSet.setNotBeforeTime(nbf);
-            claimsSet.setIssueTime(iat);
-            claimsSet.setJWTID(jti);
+            JWTClaimsSet claimsSet = createJwtClaimsSet(iss, sub, aud, expire, nbf, iat, jti);
 
             // sign JWT
             token = signJWT(algorithm, secretKey, claimsSet);
@@ -170,5 +157,58 @@ public final class JWTUtils implements Serializable {
             signed = null;
         }
         return signed;
+    }
+    
+    /**
+	 * Create a new instance of {@link JWTClaimsSet}
+	 * 
+	 * @param iss The iss (issuer) claim identifies the principal that issued the JWT.
+     * @param sub The sub (subject) claim identifies the principal that is the subject of the JWT.
+     * @param aud The aud (audience) claim identifies the audiences that the JWT is
+     * intended for according to draft 18 of the JWT spec,
+     * the aud claim is option and may be present in singular or as a list.
+     * @param expire The exp (expiration time) claim identifies the expiration time on
+     * or after which the JWT MUST NOT be accepted for processing.
+     * @param nbf The nbf (not before) claim identifies the time before
+     * which the JWT MUST NOT be accepted for processing.
+     * @param iat The iat (issued at) claim identifies the time at which the JWT was issued.
+     * @param jti The jti (JWT ID) claim provides a unique identifier for the JWT.
+	 * 
+	 * @return {@link JWTClaimsSet}
+     */
+    public static JWTClaimsSet createJwtClaimsSet(
+    		String iss, String sub, String aud,
+            Date expire, Date nbf, Date iat, String jti) {
+    	return createJwtClaimsSetBuilder(iss, sub, aud, expire, nbf, iat, jti).build();
+    }
+    
+    /**
+	 * Create a new instance of {@link Builder} for building {@link JWTClaimsSet}
+	 * 
+	 * @param iss The iss (issuer) claim identifies the principal that issued the JWT.
+     * @param sub The sub (subject) claim identifies the principal that is the subject of the JWT.
+     * @param aud The aud (audience) claim identifies the audiences that the JWT is
+     * intended for according to draft 18 of the JWT spec,
+     * the aud claim is option and may be present in singular or as a list.
+     * @param expire The exp (expiration time) claim identifies the expiration time on
+     * or after which the JWT MUST NOT be accepted for processing.
+     * @param nbf The nbf (not before) claim identifies the time before
+     * which the JWT MUST NOT be accepted for processing.
+     * @param iat The iat (issued at) claim identifies the time at which the JWT was issued.
+     * @param jti The jti (JWT ID) claim provides a unique identifier for the JWT.
+	 * 
+	 * @return {@link Builder} for building {@link JWTClaimsSet}
+     */
+    public static Builder createJwtClaimsSetBuilder(
+    		String iss, String sub, String aud,
+            Date expire, Date nbf, Date iat, String jti) {
+    	return new Builder()
+				.issuer(iss)
+				.issueTime(iat)
+				.subject(sub)
+				.audience(aud)
+				.expirationTime(expire)
+				.notBeforeTime(nbf)
+				.jwtID(jti);
     }
 }

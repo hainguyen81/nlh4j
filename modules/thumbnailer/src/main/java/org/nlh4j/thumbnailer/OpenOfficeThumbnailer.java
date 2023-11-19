@@ -38,9 +38,10 @@ import org.nlh4j.util.StreamUtils;
  * This class extracts Thumbnails from OpenOffice-Files.
  *
  * Depends:
- * <li> <i>NOT</i> on OpenOffice, as the Thumbnail is already inside the file. (184x256px regardless of page orientation)
+ * <ul>
+ * <li><i>NOT</i> on OpenOffice, as the Thumbnail is already inside the file. (184x256px regardless of page orientation)
  * 		(So if the thumbnail generation is not correct, it's OpenOffice's fault, not our's :-)</li>
- *
+ * </ul>
  */
 public class OpenOfficeThumbnailer extends AbstractThumbnailer {
 

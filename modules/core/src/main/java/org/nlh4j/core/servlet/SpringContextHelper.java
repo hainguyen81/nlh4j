@@ -26,7 +26,6 @@ import org.nlh4j.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
@@ -61,12 +60,12 @@ public final class SpringContextHelper implements Serializable {
 	 */
 	@Getter
 	@Setter
-	private ServletConfig servletConfig;
+	private transient ServletConfig servletConfig;
 	@Getter
 	@Setter
-	private ServletContext servletContext;
+	private transient ServletContext servletContext;
 	@Setter
-	private ApplicationContext applicationContext;
+	private transient ApplicationContext applicationContext;
 
 	/** {@link ApplicationContextProvider} */
 	@Inject
@@ -145,17 +144,10 @@ public final class SpringContextHelper implements Serializable {
         Object bean = null;
         if (applicationContext != null) {
         	ApplicationContext ctx = applicationContext;
-        	while(ctx != null && bean == null) {
-	            try {
-	                bean = ctx.getBean(beanRef);
-	            }
-	            catch (NoSuchBeanDefinitionException e) {
-	                logger.warn(e.getMessage());
-	                bean = null;
-	            }
+        	while(ctx != null) {
+	            try { bean = ctx.getBean(beanRef); }
 	            catch (BeansException e) {
 	            	logger.warn(e.getMessage());
-	                bean = null;
 	            } finally {
 	            	if (bean != null) break;
 	            	else ctx = ctx.getParent();
@@ -199,17 +191,10 @@ public final class SpringContextHelper implements Serializable {
     	T bean = null;
         if (applicationContext != null) {
         	ApplicationContext ctx = applicationContext;
-        	while(ctx != null && bean == null) {
-	            try {
-	                bean = ctx.getBean(beanRef, requiredType);
-	            }
-	            catch (NoSuchBeanDefinitionException e) {
-	                logger.warn(e.getMessage());
-	                bean = null;
-	            }
+        	while(ctx != null) {
+	            try { bean = ctx.getBean(beanRef, requiredType); }
 	            catch (BeansException e) {
 	            	logger.warn(e.getMessage());
-	                bean = null;
 	            } finally {
 	            	if (bean != null) break;
 	            	else ctx = ctx.getParent();
@@ -256,17 +241,10 @@ public final class SpringContextHelper implements Serializable {
     	Object bean = null;
         if (applicationContext != null) {
         	ApplicationContext ctx = applicationContext;
-        	while(ctx != null && bean == null) {
-	            try {
-	                bean = ctx.getBean(beanRef, args);
-	            }
-	            catch (NoSuchBeanDefinitionException e) {
-	                logger.warn(e.getMessage());
-	                bean = null;
-	            }
+        	while(ctx != null) {
+	            try { bean = ctx.getBean(beanRef, args); }
 	            catch (BeansException e) {
 	            	logger.warn(e.getMessage());
-	                bean = null;
 	            } finally {
 	            	if (bean != null) break;
 	            	else ctx = ctx.getParent();
@@ -359,9 +337,7 @@ public final class SpringContextHelper implements Serializable {
     	if (applicationContext != null && beanClass != null) {
     		ApplicationContext ctx = applicationContext;
     		while(CollectionUtils.isEmpty(beans) && ctx != null) {
-		    	try {
-		    		beans = ctx.getBeansOfType(beanClass, Boolean.TRUE, Boolean.FALSE);
-		    	}
+		    	try { beans = ctx.getBeansOfType(beanClass, Boolean.TRUE, Boolean.FALSE); }
 		    	catch (BeansException e) {
 		    		logger.warn(e.getMessage());
 		    		beans = null;
@@ -419,9 +395,7 @@ public final class SpringContextHelper implements Serializable {
     	if (applicationContext != null && beanClass != null) {
     		ApplicationContext ctx = applicationContext;
     		while(CollectionUtils.isEmpty(beans) && ctx != null) {
-		    	try {
-		    		beans = ctx.getBeansOfType(beanClass, Boolean.TRUE, Boolean.FALSE);
-		    	}
+		    	try { beans = ctx.getBeansOfType(beanClass, Boolean.TRUE, Boolean.FALSE); }
 		    	catch (BeansException e) {
 		    		logger.warn(e.getMessage());
 		    		beans = null;

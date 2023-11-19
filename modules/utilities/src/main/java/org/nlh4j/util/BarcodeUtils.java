@@ -144,11 +144,10 @@ public final class BarcodeUtils implements Serializable {
      *
      * @param configuration XML barcode configuration string or file path
      * @param data barcode data
-     * @param outputImage the generated barcode output image object
      * @param resolution the desired image resolution (dots per inch)
      * @param imageType the desired image type (Values: BufferedImage.TYPE_*)
      *
-     * @return true for successfully; else false
+     * @return the generated barcode output image object
      */
     public static BufferedImage generate(String configuration, String data, int resolution, int imageType) {
         return generate(configuration, data, resolution, imageType, Boolean.FALSE, 0);

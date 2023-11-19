@@ -10,20 +10,19 @@
 		<relativePath>${root.basedir}/pom.xml</relativePath>
 	</parent>
 
+	<!-- Present package -->
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>nlh4j-web-config</artifactId>
+	<packaging>jar</packaging>
+	<name>nlh4j-web-config</name>
+	<version>${revision}</version>
+	<description>Base Web Configuration for Java Web/Mobile</description>
+
 	<!-- Properties -->
 	<properties>
 		<!-- Progurad configuration -->
 		<proguard.skip>true</proguard.skip>
 	</properties>
-
-	<!-- Present package -->
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>${project.parent.groupId}</groupId>
-	<artifactId>nlh4j-web-config</artifactId>
-	<version>${project.parent.version}</version>
-	<packaging>jar</packaging>
-	<name>nlh4j-web-config</name>
-	<description>Base Web Configuration for Java Web/Mobile</description>
 
 	<!-- Dependencies -->
 	<dependencies>

@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -92,7 +93,7 @@ public class TokenRememberMeServices extends TokenBasedRememberMeServices implem
 	 * @see org.springframework.security.web.authentication.rememberme.AbstractRememberMeServices#afterPropertiesSet()
 	 */
 	@Override
-	public void afterPropertiesSet() throws Exception {}
+	public void afterPropertiesSet() {}
 
 	/* (Non-Javadoc)
 	 * @see org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices#processAutoLoginCookie(java.lang.String[], javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
@@ -110,7 +111,7 @@ public class TokenRememberMeServices extends TokenBasedRememberMeServices implem
 	    // parse token expired time
         long tokenExpiryTime;
         try {
-            tokenExpiryTime = new Long(cookieTokens[1]).longValue();
+            tokenExpiryTime = NumberUtils.toLong(cookieTokens[1], 0L);
         }
         catch (NumberFormatException nfe) {
             throw new InvalidCookieException(

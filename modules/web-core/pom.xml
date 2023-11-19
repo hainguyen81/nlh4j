@@ -12,11 +12,10 @@
 
 	<!-- Present package -->
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>${project.parent.groupId}</groupId>
 	<artifactId>nlh4j-web-core</artifactId>
-	<version>${project.parent.version}</version>
 	<packaging>jar</packaging>
 	<name>nlh4j-web-core</name>
+	<version>${revision}</version>
 	<description>Base Web Core for Java Web/Mobile</description>
 
 	<!-- Dependencies -->
@@ -25,28 +24,58 @@
       	<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-utilities</artifactId>
-			<version>${module.version}</version>
+			<version>${project.version}</version>
       	</dependency>
       	<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-core</artifactId>
-			<version>${module.version}</version>
+			<version>${project.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>${project.parent.groupId}</groupId>
+					<artifactId>nlh4j-utilities</artifactId>
+				</exclusion>
+			</exclusions>
       	</dependency>
       	<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-entities</artifactId>
-			<version>${module.version}</version>
+			<version>${project.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>${project.parent.groupId}</groupId>
+					<artifactId>nlh4j-utilities</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>${project.parent.groupId}</groupId>
+					<artifactId>nlh4j-core</artifactId>
+				</exclusion>
+			</exclusions>
       	</dependency>
       	<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>nlh4j-domain</artifactId>
-			<version>${module.version}</version>
+			<version>${project.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>${project.parent.groupId}</groupId>
+					<artifactId>nlh4j-utilities</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>${project.parent.groupId}</groupId>
+					<artifactId>nlh4j-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>${project.parent.groupId}</groupId>
+					<artifactId>nlh4j-entities</artifactId>
+				</exclusion>
+			</exclusions>
       	</dependency>
 
 		<!-- Servlet -->
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
+			<groupId>${servlet-api.groupId}</groupId>
+			<artifactId>${servlet-api.artifactId}</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -55,8 +84,8 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
+			<groupId>${jstl.groupId}</groupId>
+			<artifactId>${jstl.artifactId}</artifactId>
 		</dependency>
 
 		<!-- Ziplet response -->
@@ -67,8 +96,8 @@
 
 		<!-- Support JSP Other taglib -->
 		<dependency>
-			<groupId>taglibs</groupId>
-			<artifactId>standard</artifactId>
+			<groupId>${taglibs.groupId}</groupId>
+			<artifactId>${taglibs.artifactId}</artifactId>
 		</dependency>
 
 		<!-- Spring Dependencies -->
@@ -123,14 +152,15 @@
 
 		<!-- Spring websocket -->
 		<dependency> <!-- Websocket dependence -->
-			<groupId>javax.websocket</groupId>
-			<artifactId>javax.websocket-api</artifactId>
+			<groupId>${javax.websocket.groupId}</groupId>
+			<artifactId>${javax.websocket.artifactId}</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		<dependency> <!-- Websocket dependence -->
-			<groupId>org.projectreactor</groupId>
-			<artifactId>reactor-net</artifactId>
-		</dependency>
+		<!-- Websocket dependence -->
+		<!--<dependency>
+			<groupId>${projectreactor.groupId}</groupId>
+			<artifactId>${projectreactor.artifactId}</artifactId>
+		</dependency>-->
 		<dependency> <!-- Websocket dependence -->
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-websocket</artifactId>
@@ -363,6 +393,10 @@
 			<groupId>commons-validator</groupId>
 			<artifactId>commons-validator</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+		</dependency>
 
 		<!-- Apache POI -->
 		<dependency>
@@ -390,12 +424,12 @@
 
 		<!-- Apache HTTP Components -->
 		<dependency>
-		    <groupId>org.apache.httpcomponents</groupId>
-		    <artifactId>httpcore</artifactId>
+		    <groupId>${http.core.groupId}</groupId>
+		    <artifactId>${http.core.artifactId}</artifactId>
 		</dependency>
 		<dependency>
-		    <groupId>org.apache.httpcomponents</groupId>
-		    <artifactId>httpclient</artifactId>
+		    <groupId>${http.client.groupId}</groupId>
+		    <artifactId>${http.client.artifactId}</artifactId>
 		</dependency>
 
 		<!-- Browser Utils -->

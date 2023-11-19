@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<!-- Parent -->
+	<parent>
+		<groupId>org.nlh4j</groupId>
+		<artifactId>nlh4j</artifactId>
+		<version>1.0</version>
+		<relativePath>${root.basedir}/pom.xml</relativePath>
+	</parent>
+
+	<!-- Present package -->
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>nlh4j-core</artifactId>
+	<packaging>jar</packaging>
+	<name>nlh4j-core</name>
+	<version>${revision}</version>
+	<description>Base Core Package (JDK17+) for Java Web/Mobile</description>
+	
+	<properties>
+		<!--
+			Maven Dependency Plugin for customizing
+			Override parent properties to un-pack module from JDK11 to customize for JDK17
+		-->
+		<maven.dependency.unpack.include.artifactIds>${project.artifactId}</maven.dependency.unpack.include.artifactIds>
+        <maven.dependency.unpack.artifactId>${project.artifactId}</maven.dependency.unpack.artifactId>
+		<maven.dependency.unpack.version>1.0-jre11</maven.dependency.unpack.version> <!-- unpack from module JDK11 to customize for JDK17 -->
+		<maven.dependency.unpack.skip>false</maven.dependency.unpack.skip>
+	</properties>
+
+	<!-- Dependencies -->
+	<dependencies>
+		<!-- NLH4J -->
+      	<dependency>
+			<groupId>${project.parent.groupId}</groupId>
+			<artifactId>nlh4j-utilities</artifactId>
+			<version>${project.version}</version>
+      	</dependency>
+
+		<!-- Servlet -->
+		<dependency>
+			<groupId>${servlet-api.groupId}</groupId>
+			<artifactId>${servlet-api.artifactId}</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-web-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>${jstl.groupId}</groupId>
+			<artifactId>${jstl.artifactId}</artifactId>
+		</dependency>
+
+		<!-- Ziplet response -->
+		<dependency>
+			<groupId>com.github.ziplet</groupId>
+			<artifactId>ziplet</artifactId>
+		</dependency>
+
+		<!-- Support JSP Other taglib -->
+		<dependency>
+			<groupId>${taglibs.groupId}</groupId>
+			<artifactId>${taglibs.artifactId}</artifactId>
+		</dependency>
+
+		<!-- Spring Dependencies -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-expression</artifactId>
+		</dependency>
+
+		<!-- Spring JDBC -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+		</dependency>
+
+		<!-- Spring MVC -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+		</dependency>
+
+		<!-- Spring websocket -->
+		<dependency> <!-- Websocket dependence -->
+			<groupId>${javax.websocket.groupId}</groupId>
+			<artifactId>${javax.websocket.artifactId}</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!-- Websocket dependence -->
+		<!--<dependency>
+			<groupId>${projectreactor.groupId}</groupId>
+			<artifactId>${projectreactor.artifactId}</artifactId>
+		</dependency>-->
+		<dependency> <!-- Websocket dependence -->
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-websocket</artifactId>
+			<!-- provided for not conflicting with tomcat libraries -->
+			<scope>provided</scope>
+		</dependency>
+		<dependency> <!-- Websocket dependence -->
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-coyote</artifactId>
+			<!-- provided for not conflicting with tomcat libraries -->
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-websocket</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-messaging</artifactId>
+		</dependency>
+
+		<!-- Spring Security Dependencies -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Nimbus - Spring Security JWT Authentication -->
+		<dependency>
+			<groupId>com.nimbusds</groupId>
+			<artifactId>nimbus-jose-jwt</artifactId>
+		</dependency>
+
+		<!-- Spring LDAP -->
+		<dependency>
+			<groupId>org.springframework.ldap</groupId>
+			<artifactId>spring-ldap-core</artifactId>
+		</dependency>
+
+		<!-- Spring AOP + AspectJ -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+		</dependency>
+
+		<!-- Quartz -->
+		<dependency> <!-- Quartz dependence -->
+			<groupId>c3p0</groupId>
+			<artifactId>c3p0</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz-jobs</artifactId>
+		</dependency>
+
+		<!-- JodaTime -->
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+		</dependency>
+
+		<!-- Lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!--  Jackson: Java to Json conversion -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-core-asl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-jaxrs</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-xc</artifactId>
+		</dependency>
+
+		<!--  Jackson: Java to Xml conversion -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>com.fasterxml.jackson.module</groupId>
+		    <artifactId>jackson-module-jaxb-annotations</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+		</dependency>
+		<dependency> <!-- Required by jackson-dataformat-xml -->
+		    <groupId>com.fasterxml.woodstox</groupId>
+		    <artifactId>woodstox-core</artifactId>
+		</dependency>
+		<dependency> <!-- Required by jackson-dataformat-xml -->
+			<groupId>org.codehaus.woodstox</groupId>
+			<artifactId>stax2-api</artifactId>
+		</dependency>
+
+		<!-- Datasource -->
+		<dependency>
+			<groupId>com.mchange</groupId>
+			<artifactId>c3p0</artifactId>
+		</dependency>
+
+		<!-- PostgreSQL -->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+		</dependency>
+
+		<!-- SQL Server -->
+		<dependency>
+			<groupId>com.hynnet</groupId>
+			<artifactId>sqljdbc4-chs</artifactId>
+		</dependency>
+
+		<!-- Jasperreport Libary -->
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.sourceforge.jexcelapi</groupId>
+			<artifactId>jxl</artifactId>
+		</dependency>
+
+		<!-- DHCP -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-dbcp2</artifactId>
+		</dependency>
+
+		<!-- Hibernate -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+
+		<!-- Seasar DOMA -->
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.seasar.doma</groupId>
+			<artifactId>doma</artifactId>
+		</dependency>
+
+		<!-- Bean Validation -->
+		<dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+        </dependency>
+
+		<!-- slf4j -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+		</dependency>
+		<dependency> <!-- logback -->
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+		</dependency>
+
+		<!-- Mail -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+		</dependency>
+
+		<!-- Freemarker -->
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+		</dependency>
+
+		<!-- Commons -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-io</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-configuration</groupId>
+			<artifactId>commons-configuration</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-validator</groupId>
+			<artifactId>commons-validator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+		</dependency>
+
+		<!-- Apache POI -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml-schemas</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-scratchpad</artifactId>
+		</dependency>
+
+		<!-- Apache Commons Upload -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+		</dependency>
+
+		<!-- Apache HTTP Components -->
+		<dependency>
+		    <groupId>${http.core.groupId}</groupId>
+		    <artifactId>${http.core.artifactId}</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>${http.client.groupId}</groupId>
+		    <artifactId>${http.client.artifactId}</artifactId>
+		</dependency>
+
+		<!-- Browser Utils -->
+        <dependency>
+			<groupId>eu.bitwalker</groupId>
+			<artifactId>UserAgentUtils</artifactId>
+		</dependency>
+
+		<!-- Apache Tiles -->
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-jsp</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-servlet</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-template</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-el</artifactId>
+		</dependency>
+
+		<!-- HTML -->
+		<dependency>
+			<groupId>net.sourceforge.htmlcleaner</groupId>
+			<artifactId>htmlcleaner</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+		</dependency>
+
+		<!-- Web service libs -->
+		<dependency>
+		    <groupId>com.sun.jersey</groupId>
+		    <artifactId>jersey-server</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>com.sun.jersey</groupId>
+		    <artifactId>jersey-json</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>com.sun.jersey.contribs</groupId>
+		    <artifactId>jersey-spring</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey.contribs</groupId>
+			<artifactId>jersey-multipart</artifactId>
+		</dependency>
+
+		<!-- Test -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Others -->
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-all</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+</project>

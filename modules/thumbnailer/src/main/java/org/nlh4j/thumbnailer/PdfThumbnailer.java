@@ -51,7 +51,9 @@ import org.springframework.util.Assert;
  * (TODO : Try to override PDPage.convertToImage - this is where the heavy lifting takes place)
  *
  * Depends on:
- * <li>PDFBox (>= 1.5.0)</li>
+ * <ul>
+ * <li>PDFBox (&gt;= 1.5.0)</li>
+ * </ul>
  */
 public class PdfThumbnailer extends AbstractThumbnailer {
 
@@ -131,7 +133,7 @@ public class PdfThumbnailer extends AbstractThumbnailer {
         graphics.scale(scaling, scaling);
         PDFRenderer renderer = new PDFRenderer(document);
         PageDrawerParameters drawerParameters = BeanUtils.safeNewInstance(
-                PageDrawerParameters.class, new Object[] { renderer, page, true });
+                PageDrawerParameters.class, renderer, page, true);
         Assert.notNull(drawerParameters, "Could not create parameter(s) to draw!");
         PageDrawer drawer = new PageDrawer(drawerParameters);
         drawer.drawPage(graphics, mBox);
@@ -158,6 +160,7 @@ public class PdfThumbnailer extends AbstractThumbnailer {
      *
      * @return MIME-Types
      */
+    @Override
 	public String[] getAcceptedMIMETypes() {
 		return new String[] { "application/pdf" };
 	}

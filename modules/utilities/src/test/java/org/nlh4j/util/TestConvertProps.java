@@ -28,8 +28,7 @@ public final class TestConvertProps {
      *
      * @return properties
      */
-    @Test
-    public Properties readProps(String file) {
+    private Properties readProps(String file) {
         Properties props = null;
         try {
             props = new Properties();
@@ -48,8 +47,7 @@ public final class TestConvertProps {
      *
      * @return new properties with key as value
      */
-    @Test
-    public Properties keyAsValue(Properties props) {
+    private Properties keyAsValue(Properties props) {
         Properties newProps = null;
         try {
             newProps = new Properties();
@@ -75,8 +73,7 @@ public final class TestConvertProps {
      *
      * @return true for successful; else failed
      */
-    @Test
-    public boolean writeProps(Properties props, String file, String comments) {
+    private boolean writeProps(Properties props, String file, String comments) {
         boolean ok = false;
         try {
             props.store(new FileOutputStream(file), comments);
@@ -95,8 +92,7 @@ public final class TestConvertProps {
      *
      * @return file paths list
      */
-    @Test
-    public List<String> listFiles(String folder, final String filter) {
+    private List<String> listFiles(String folder, final String filter) {
         List<String> files = new LinkedList<String>();
         try {
             File dir = new File(folder);
@@ -128,10 +124,9 @@ public final class TestConvertProps {
      *
      * @param folder folder
      */
-    @Test
-    public void doIt(String folder) {
-        List<String> files = listFiles(folder, "jp.*.properties");
+    private void doIt(String folder) {
         try {
+            List<String> files = listFiles(folder, "jp.*.properties");
             for(String file : files) {
                 String fileName = FileUtils.getBaseFileName(file);
                 String newFileName = fileName.replace("jp.", "");

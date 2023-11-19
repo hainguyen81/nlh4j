@@ -1,0 +1,9 @@
+# Authentication Provider
+# Name or default class name by spring autowired components scan
+sec.auth.prov=nlh4jAuthenticationProvider
+
+# Authentication Locale Filter
+sec.auth.locale.filter=nlh4jLocaleConfigurerFilter
+
+# Authentication Logout Handler
+sec.auth.logout.handler=nlh4jLogoutSuccessHandler

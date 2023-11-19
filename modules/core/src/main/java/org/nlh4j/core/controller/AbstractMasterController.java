@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -30,7 +31,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import reactor.util.Assert;
 import org.nlh4j.core.annotation.ExecutePermission;
 import org.nlh4j.core.dto.AbstractDto;
 import org.nlh4j.core.dto.BaseEntityParamControllerDto;
@@ -184,13 +184,11 @@ public abstract class AbstractMasterController
 		// check by bean validation
 		this.checkBinding(result);
 
-		// show page
-		Assert.notNull(entitypk);
 		// attach more attributes if necessary
 		ModelAndView mav = new ModelAndView(this.getDetailPage());
 		return this.attachModelAndView(
 		        // create page view
-		        this.detail(mav, entitypk, false, false),
+		        this.detail(mav, Objects.requireNonNull(entitypk, "entitypk"), false, false),
 		        MasterPageType.VIEW);
 	}
 	/**
@@ -216,13 +214,11 @@ public abstract class AbstractMasterController
 			throw new ApplicationValidationException(result);
 		}
 
-		// show page
-		Assert.notNull(entitypk);
 		// attach more attributes if necessary
 		ModelAndView mav = new ModelAndView(this.getDetailPage());
 		return this.attachModelAndView(
 		        // create page view
-                this.detail(mav, entitypk, false, true),
+                this.detail(mav, Objects.requireNonNull(entitypk, "entitypk"), false, true),
                 MasterPageType.UPDATE);
 	}
 	/**
@@ -257,8 +253,7 @@ public abstract class AbstractMasterController
 		this.checkBinding(result);
 
 		// search entity
-	    Assert.notNull(entitypk);
-		return this.findEntityBy(entitypk.getPk());
+		return this.findEntityBy(Objects.requireNonNull(entitypk, "entitypk").getPk());
 	}
 	protected abstract T findEntityBy(PK entitypk);
 
@@ -275,9 +270,7 @@ public abstract class AbstractMasterController
 		// check by bean validation
 		this.checkBinding(result);
 
-		// check unique
-	    Assert.notNull(entitypk);
-		return (this.isUnique(entitypk.getPk())
+		return (this.isUnique(Objects.requireNonNull(entitypk, "entitypk").getPk())
 				? new ResponseEntity<String>((String) null, HttpStatus.CONFLICT)
 						: new ResponseEntity<String>((String) null, HttpStatus.OK));
 	}
@@ -524,7 +517,7 @@ public abstract class AbstractMasterController
 
 		// perform deletion
 		try {
-		    Assert.notNull(entitypk);
+		    entitypk = Objects.requireNonNull(entitypk, "entitypk");
 			// check entity whether existed
 			if (this.findEntityBy(entitypk.getPk()) == null) {
 				return new ResponseEntity<String>((String) null, headers, HttpStatus.NOT_FOUND);

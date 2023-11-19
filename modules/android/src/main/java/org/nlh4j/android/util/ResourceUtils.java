@@ -373,7 +373,6 @@ public final class ResourceUtils implements Serializable {
      *
      * @param context to get resource. NULL for system resource
      * @param resId resource identity
-     * @param quantity the resource quantity
      *
      * @return resource movie value or NULL if failed
      */
@@ -391,7 +390,6 @@ public final class ResourceUtils implements Serializable {
      * Get resource movie value
      *
      * @param resId resource identity
-     * @param quantity the resource quantity
      *
      * @return resource movie value or NULL if failed
      */

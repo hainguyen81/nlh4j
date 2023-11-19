@@ -12,19 +12,18 @@
 
 	<!-- Present package -->
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>${project.parent.groupId}</groupId>
 	<artifactId>nlh4j-utilities</artifactId>
-	<version>${project.parent.version}</version>
 	<packaging>jar</packaging>
 	<name>nlh4j-utilities</name>
+	<version>${revision}</version>
 	<description>Base Utiities Package for Java Web/Mobile</description>
 
 	<!-- Dependencies -->
 	<dependencies>
 		<!-- Servlet -->
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
+			<groupId>${servlet-api.groupId}</groupId>
+			<artifactId>${servlet-api.artifactId}</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -153,6 +152,10 @@
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
 		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-collections4</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-io</artifactId>
 		</dependency>
@@ -172,6 +175,10 @@
 			<groupId>commons-validator</groupId>
 			<artifactId>commons-validator</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+		</dependency>
 
 		<!-- Apache POI -->
 		<dependency>
@@ -185,16 +192,16 @@
 
 		<!-- Apache HTTP Components -->
 		<dependency>
-		    <groupId>org.apache.httpcomponents</groupId>
-		    <artifactId>httpcore</artifactId>
+		    <groupId>${http.core.groupId}</groupId>
+		    <artifactId>${http.core.artifactId}</artifactId>
 		</dependency>
 		<dependency>
-		    <groupId>org.apache.httpcomponents</groupId>
-		    <artifactId>httpclient</artifactId>
+		    <groupId>${http.client.groupId}</groupId>
+		    <artifactId>${http.client.artifactId}</artifactId>
 		</dependency>
 
 		<!-- Barcode4j Dependency -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>avalon-framework</groupId>
 			<artifactId>avalon-framework</artifactId>
 		</dependency>
@@ -205,15 +212,15 @@
 		<dependency>
 			<groupId>avalon-framework</groupId>
 			<artifactId>avalon-framework-impl</artifactId>
-		</dependency>
-		<!-- dependency>
+		</dependency> -->
+		<dependency>
 			<groupId>org.apache.avalon.framework</groupId>
 			<artifactId>avalon-framework-api</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.avalon.framework</groupId>
 			<artifactId>avalon-framework-impl</artifactId>
-		</dependency -->
+		</dependency>
 
 		<!-- Barcode4j -->
 		<dependency>

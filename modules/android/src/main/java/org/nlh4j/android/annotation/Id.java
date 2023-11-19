@@ -15,11 +15,13 @@
  ******************************************************************************/
 package org.nlh4j.android.annotation;
 
-import java.lang.annotation.Target;
+import static java.lang.annotation.ElementType.*;
+import static java.lang.annotation.RetentionPolicy.*;
+
 import java.lang.annotation.Retention;
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import java.lang.annotation.Target;
+
+import javax.persistence.GeneratedValue;
 
 /**
  * Specifies the primary key of an entity.
@@ -44,8 +46,8 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  *   public Long getId() { return id; }
  * </pre>
  *
- * @see {@link Column}
- * @see {@link GeneratedValue}
+ * @see Column
+ * @see GeneratedValue
  *
  * @since Java Persistence 1.0
  */

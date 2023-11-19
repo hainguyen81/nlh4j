@@ -5,6 +5,7 @@
 package org.nlh4j.android.enums;
 
 import android.media.MediaRecorder.AudioSource;
+import android.provider.MediaStore.Audio;
 
 /**
  * {@link Audio} source type

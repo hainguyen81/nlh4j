@@ -1,6 +1,6 @@
 /*
  * @(#)AbstractEntityActivity.java 1.0 Oct 27, 2016
- * Copyright 2016 by SystemEXE Inc. All rights reserved.
+ * Copyright 2015 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.android.activities;
 
@@ -14,7 +14,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.apache.commons.lang3.math.NumberUtils;
-import org.apache.poi.ss.formula.functions.T;
 import org.nlh4j.android.annotation.ResourceElement;
 import org.nlh4j.android.db.AbstractEntity;
 import org.nlh4j.android.db.SqlLiteEntityDao;
@@ -62,18 +61,18 @@ public abstract class AbstractEntityActivity<T extends AbstractEntity> extends A
     /** entity data */
     private T entity;
     /** whole field layouts */
-    private Map<String, Map<String, View>> groups;
+    private transient Map<String, Map<String, View>> groups;
     /** whole field layouts */
-    private Map<String, View> layouts;
+    private transient Map<String, View> layouts;
     /** whole data field layout */
-    private Map<String, View> fields;
+    private transient Map<String, View> fields;
     /** whole data field caption layout */
-    private Map<String, View> labels;
+    private transient Map<String, View> labels;
     /** save action */
-    private Button saveBtn;
+    private transient Button saveBtn;
     /** reset action */
-    private Button resetBtn;
-    /** @see {@link SqlLiteEntityDao} */
+    private transient Button resetBtn;
+    /** {@link SqlLiteEntityDao} */
     private SqlLiteEntityDao<T> entityDao;
 
     /**

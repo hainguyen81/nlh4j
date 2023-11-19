@@ -36,7 +36,9 @@ public final class ThreadLocalHolder implements Serializable {
 
 	/**
 	 * Get value from holder
-	 * @return
+	 * @param <T> value type to cast
+	 * @param valueClass value class
+	 * @return value
 	 */
 	public static <T> T getValue(Class<T> valueClass) {
 		return BeanUtils.safeType(holder.get(), valueClass);
@@ -44,6 +46,7 @@ public final class ThreadLocalHolder implements Serializable {
 
 	/**
 	 * Store value into holder
+	 * @param <T> value type
 	 * @param value to store
 	 * @param requiredNotNull specify whether checking value is not NULL
 	 */
@@ -53,6 +56,7 @@ public final class ThreadLocalHolder implements Serializable {
 	}
 	/**
      * Store value into holder
+     * @param <T> value type
      * @param value to store
      */
     public static <T> void setValue(T value) {

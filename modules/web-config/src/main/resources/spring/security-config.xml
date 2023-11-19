@@ -126,7 +126,7 @@
 
 	<!-- Login entry point -->
 	<beans:bean id="authenticationEntryPoint"
-	    class="org.nlh4j.core.authentication.ExexAuthenticationEntryPoint"
+	    class="org.nlh4j.core.authentication.Nlh4jAuthenticationEntryPoint"
    	    scope="singleton"
    	    autowire="constructor">
         <beans:constructor-arg index="0" value="${sec.auth.entry.login.url}" type="java.lang.String" />
@@ -207,7 +207,7 @@
 		p:defaultFailureUrl="${sec.auth.entry.login.url}" />
 
 	<!-- We just actually need to set the default target url here -->
-	<!-- FIXME For HKFilm -->
+	<!-- FIXME For HRM -->
 	<beans:bean id="customAuthenticationSuccessHandler"
 		class="${sec.auth.success.handler}"
    	    scope="singleton"

@@ -199,8 +199,8 @@ public final class RuntimeUtils implements Serializable {
      * mechanism used by the bootstrap class loader to search for class
      * files.
      *
-     * @return <tt>true</tt> if the Java virtual machine supports the
-     * class path mechanism; <tt>false</tt> otherwise.
+     * @return <b>true</b> if the Java virtual machine supports the
+     * class path mechanism; <b>false</b> otherwise.
      */
     public static boolean isBootClassPathSupported() {
         RuntimeMXBean intRuntime = getRuntimeMx();
@@ -230,7 +230,7 @@ public final class RuntimeUtils implements Serializable {
 
     /**
      * Returns the input arguments passed to the Java virtual machine
-     * which does not include the arguments to the <tt>main</tt> method.
+     * which does not include the arguments to the <b>main</b> method.
      * This method returns an empty list if there is no input argument
      * to the Java virtual machine.
      * <p>
@@ -246,9 +246,9 @@ public final class RuntimeUtils implements Serializable {
      *
      * <p>
      * <b>MBeanServer access</b>:<br>
-     * The mapped type of <tt>List&lt;String&gt;</tt> is <tt>String[]</tt>.
+     * The mapped type of <b>List&lt;String&gt;</b> is <b>String[]</b>.
      *
-     * @return a list of <tt>String</tt> objects; each element
+     * @return a list of <b>String</b> objects; each element
      * is an argument passed to the Java virtual machine.
      */
     public static List<String> getInputArguments() {
@@ -283,27 +283,27 @@ public final class RuntimeUtils implements Serializable {
      * Returns a map of names and values of all system properties.
      * This method calls {@link System#getProperties} to get all
      * system properties.  Properties whose name or value is not
-     * a <tt>String</tt> are omitted.
+     * a <b>String</b> are omitted.
      *
      * <p>
      * <b>MBeanServer access</b>:<br>
-     * The mapped type of <tt>Map&lt;String,String&gt;</tt> is
+     * The mapped type of <b>Map&lt;String,String&gt;</b> is
      * {@link javax.management.openmbean.TabularData TabularData}
      * with two items in each row as follows:
      * <blockquote>
-     * <table border>
+     * <table>
      * <caption>System Properties</caption>
      * <tr>
      *   <th>Item Name</th>
      *   <th>Item Type</th>
      *   </tr>
      * <tr>
-     *   <td><tt>key</tt></td>
-     *   <td><tt>String</tt></td>
+     *   <td><b>key</b></td>
+     *   <td><b>String</b></td>
      *   </tr>
      * <tr>
-     *   <td><tt>value</tt></td>
-     *   <td><tt>String</tt></td>
+     *   <td><b>value</b></td>
+     *   <td><b>String</b></td>
      *   </tr>
      * </table>
      * </blockquote>
@@ -439,9 +439,9 @@ public final class RuntimeUtils implements Serializable {
      * Executes the specified string command in a separate process.
      *
      * <p>This is a convenience method.  An invocation of the form
-     * <tt>exec(command)</tt>
+     * <b>exec(command)</b>
      * behaves in exactly the same way as the invocation
-     * <tt>{@link RuntimeUtils#exec(String, String[], File, StringBuffer, StringBuffer)}</tt>.
+     * <b>{@link #exec(String, String[], File, StringBuilder, StringBuilder)}</b>.
      *
      * @param   command   a specified system command.
      *
@@ -458,16 +458,16 @@ public final class RuntimeUtils implements Serializable {
      * specified environment.
      *
      * <p>This is a convenience method.  An invocation of the form
-     * <tt>exec(command, envp)</tt>
+     * <b>exec(command, envp)</b>
      * behaves in exactly the same way as the invocation
-     * <tt>{@link RuntimeUtils#exec(String, String[], File, StringBuffer, StringBuffer)}</tt>.
+     * <b>{@link #exec(String, String[], File, StringBuilder, StringBuilder)}</b>.
      *
      * @param   command   a specified system command.
      *
      * @param   envp      array of strings, each element of which
      *                    has environment variable settings in the format
      *                    <i>name</i>=<i>value</i>, or
-     *                    <tt>null</tt> if the subprocess should inherit
+     *                    <b>null</b> if the subprocess should inherit
      *                    the environment of the current process.
      *
      * @param   output    the output of command line or null if fail
@@ -485,9 +485,9 @@ public final class RuntimeUtils implements Serializable {
      * specified environment and working directory.
      *
      * <p>This is a convenience method.  An invocation of the form
-     * <tt>exec(command, envp, dir)</tt>
+     * <b>exec(command, envp, dir)</b>
      * behaves in exactly the same way as the invocation
-     * <tt>{@link RuntimeUtils#exec(String[], String[], File, StringBuffer, StringBuffer)}</tt>,
+     * <b>{@link #exec(String[], String[], File, StringBuilder, StringBuilder)}</b>,
      * where <code>cmdarray</code> is an array of all the tokens in
      * <code>command</code>.
      *
@@ -503,11 +503,11 @@ public final class RuntimeUtils implements Serializable {
      * @param   envp      array of strings, each element of which
      *                    has environment variable settings in the format
      *                    <i>name</i>=<i>value</i>, or
-     *                    <tt>null</tt> if the subprocess should inherit
+     *                    <b>null</b> if the subprocess should inherit
      *                    the environment of the current process.
      *
      * @param   dir       the working directory of the subprocess, or
-     *                    <tt>null</tt> if the subprocess should inherit
+     *                    <b>null</b> if the subprocess should inherit
      *                    the working directory of the current process.
      *
      * @param   output    the output of command line or null if fail
@@ -529,9 +529,9 @@ public final class RuntimeUtils implements Serializable {
      * Executes the specified command and arguments in a separate process.
      *
      * <p>This is a convenience method.  An invocation of the form
-     * <tt>exec(cmdarray)</tt>
+     * <b>exec(cmdarray)</b>
      * behaves in exactly the same way as the invocation
-     * <tt>{@link RuntimeUtils#exec(String[], String[], File, StringBuilder, StringBuilder)}</tt>.
+     * <b>{@link #exec(String[], String[], File, StringBuilder, StringBuilder)}</b>.
      *
      * @param   cmdarray  array containing the command to call and
      *                    its arguments.
@@ -549,9 +549,9 @@ public final class RuntimeUtils implements Serializable {
      * with the specified environment.
      *
      * <p>This is a convenience method.  An invocation of the form
-     * <tt>exec(cmdarray, envp)</tt>
+     * <b>exec(cmdarray, envp)</b>
      * behaves in exactly the same way as the invocation
-     * <tt>{@link RuntimeUtils#exec(String[], String[], File, StringBuilder, StringBuilder)}</tt>.
+     * <b>{@link #exec(String[], String[], File, StringBuilder, StringBuilder)}</b>.
      *
      * @param   cmdarray  array containing the command to call and
      *                    its arguments.
@@ -559,7 +559,7 @@ public final class RuntimeUtils implements Serializable {
      * @param   envp      array of strings, each element of which
      *                    has environment variable settings in the format
      *                    <i>name</i>=<i>value</i>, or
-     *                    <tt>null</tt> if the subprocess should inherit
+     *                    <b>null</b> if the subprocess should inherit
      *                    the environment of the current process.
      *
      * @param   output    the output of command line or null if fail
@@ -586,7 +586,7 @@ public final class RuntimeUtils implements Serializable {
      * but at the very least the command must be a non-empty list of
      * non-null strings.
      *
-     * <p>If <tt>envp</tt> is <tt>null</tt>, the subprocess inherits the
+     * <p>If <b>envp</b> is <b>null</b>, the subprocess inherits the
      * environment settings of the current process.
      *
      * <p>A minimal set of system dependent environment variables may
@@ -597,8 +597,8 @@ public final class RuntimeUtils implements Serializable {
      * <p>{@link ProcessBuilder#start()} is now the preferred way to
      * start a process with a modified environment.
      *
-     * <p>The working directory of the new subprocess is specified by <tt>dir</tt>.
-     * If <tt>dir</tt> is <tt>null</tt>, the subprocess inherits the
+     * <p>The working directory of the new subprocess is specified by <b>dir</b>.
+     * If <b>dir</b> is <b>null</b>, the subprocess inherits the
      * current working directory of the current process.
      *
      * <p>If a security manager exists, its
@@ -626,11 +626,11 @@ public final class RuntimeUtils implements Serializable {
      * @param   envp      array of strings, each element of which
      *                    has environment variable settings in the format
      *                    <i>name</i>=<i>value</i>, or
-     *                    <tt>null</tt> if the subprocess should inherit
+     *                    <b>null</b> if the subprocess should inherit
      *                    the environment of the current process.
      *
      * @param   dir       the working directory of the subprocess, or
-     *                    <tt>null</tt> if the subprocess should inherit
+     *                    <b>null</b> if the subprocess should inherit
      *                    the working directory of the current process.
      *
      * @param   output    the output of command line or null if fail
