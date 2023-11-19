@@ -1,5 +1,5 @@
 /*
- * @(#)ExexAuthenticationEntryPoint.java 1.0 Aug 28, 2015
+ * @(#)Nlh4jAuthenticationEntryPoint.java 1.0 Aug 28, 2015
  * Copyright 2015 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.core.authentication;
@@ -32,7 +32,7 @@ import org.nlh4j.util.RequestUtils;
  *
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  */
-public class ExexAuthenticationEntryPoint extends LoginUrlAuthenticationEntryPoint implements Serializable {
+public class Nlh4jAuthenticationEntryPoint extends LoginUrlAuthenticationEntryPoint implements Serializable {
 
     /** */
     private static final long serialVersionUID = 1L;
@@ -49,11 +49,11 @@ public class ExexAuthenticationEntryPoint extends LoginUrlAuthenticationEntryPoi
     protected MessageService messageService;
 
     /**
-     * Initialize a new instance of {@link ExexAuthenticationEntryPoint}
+     * Initialize a new instance of {@link Nlh4jAuthenticationEntryPoint}
      *
      * @param loginFormUrl login form URL
      */
-    public ExexAuthenticationEntryPoint(String loginFormUrl) {
+    public Nlh4jAuthenticationEntryPoint(String loginFormUrl) {
         super(loginFormUrl);
     }
 

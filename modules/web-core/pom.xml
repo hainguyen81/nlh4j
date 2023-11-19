@@ -152,14 +152,15 @@
 
 		<!-- Spring websocket -->
 		<dependency> <!-- Websocket dependence -->
-			<groupId>javax.websocket</groupId>
-			<artifactId>javax.websocket-api</artifactId>
+			<groupId>${javax.websocket.groupId}</groupId>
+			<artifactId>${javax.websocket.artifactId}</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		<dependency> <!-- Websocket dependence -->
-			<groupId>org.projectreactor</groupId>
-			<artifactId>reactor-net</artifactId>
-		</dependency>
+		<!-- Websocket dependence -->
+		<!--<dependency>
+			<groupId>${projectreactor.groupId}</groupId>
+			<artifactId>${projectreactor.artifactId}</artifactId>
+		</dependency>-->
 		<dependency> <!-- Websocket dependence -->
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-websocket</artifactId>

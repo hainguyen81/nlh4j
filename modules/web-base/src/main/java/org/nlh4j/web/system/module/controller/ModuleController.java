@@ -5,6 +5,7 @@
 package org.nlh4j.web.system.module.controller;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import reactor.util.Assert;
+import org.apache.commons.lang3.StringUtils;
 import org.nlh4j.core.annotation.ExecutePermission;
 import org.nlh4j.core.dto.AbstractDto;
 import org.nlh4j.web.base.common.Module;
@@ -88,8 +88,10 @@ public class ModuleController extends
      */
     @RequestMapping(value = "/checkUniqueUrl", method = RequestMethod.POST)
     public ResponseEntity<String> checkUrlUnique(@RequestBody ModuleUrlUniqueDto urlUniq) {
-        Assert.notNull(urlUniq, "unique");
-        Assert.hasText(urlUniq.getUrl(), "unique URL");
+    	urlUniq = Objects.requireNonNull(urlUniq, "unique");
+    	if (StringUtils.isBlank(urlUniq.getUrl())) {
+    		throw new IllegalArgumentException("unique URL");
+    	}
         return (super.getMasterService().isUrlUniqueConstraint(
         		urlUniq.getId(), urlUniq.getCode(), urlUniq.getUrl())
                 ? new ResponseEntity<String>((String) null, HttpStatus.CONFLICT)

@@ -4,10 +4,10 @@
  */
 package org.nlh4j.core.text.numberinwords;
 
-import org.apache.commons.lang3.ArrayUtils;
-import org.springframework.util.StringUtils;
+import java.util.Objects;
 
-import reactor.util.Assert;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Number tenth processor to convert number into words (number from 20 to 99)
@@ -53,11 +53,12 @@ public abstract class AbstractNumberTenthInWordsProcessor extends AbstractNumber
 	@Override
 	public String getName(String value) {
 		// check valid number unit processor
-		AbstractNumberUnitInWordsProcessor numberUnitProcessor = this.getNumberUnitProcessor();
-		Assert.notNull(numberUnitProcessor);
+		AbstractNumberUnitInWordsProcessor numberUnitProcessor =
+				Objects.requireNonNull(this.getNumberUnitProcessor(), "numberUnitProcessor");
 		int lowerLimit = this.getLowerLimitTenth();
-		Assert.isTrue(lowerLimit >= 10 && ((lowerLimit % 10) == 0),
-				"The lower limit of number tenth must be equals or greater than 10 and (% 10) = 0");
+		if (!(lowerLimit >= 10 && ((lowerLimit % 10) == 0))) {
+			throw new IllegalArgumentException("The lower limit of number tenth must be equals or greater than 10 and (% 10) = 0");
+		}
 
 		// check valid tokens
 		String[] tokens = this.getTenthTokens();
@@ -93,7 +94,7 @@ public abstract class AbstractNumberTenthInWordsProcessor extends AbstractNumber
 		}
 		if (number != 0) {
 			if (tensFound) {
-				if (StringUtils.hasText(sep)) buffer.append(sep);
+				if (StringUtils.isNotBlank(sep)) buffer.append(sep);
 				else buffer.append(WORDS_SEPARATOR);
 			}
 			buffer.append(numberUnitProcessor.getName(number));

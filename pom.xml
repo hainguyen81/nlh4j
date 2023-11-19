@@ -737,6 +737,7 @@
 								</additionalConfig>
 			                </configuration>
 			            </plugin>
+
 						<!-- Compiler -->
 						<plugin>
 							<groupId>org.apache.maven.plugins</groupId>
@@ -1904,6 +1905,37 @@
 		<!--<spring.springframework.data.elasticsearch.version>5.1.5</spring.springframework.data.elasticsearch.version>-->
 
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Spring websocket depencencies (javax/jakarta websocket-api) -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- 1.0.x (javax) -->
+		<!--<javax.websocket.groupId>javax.websocket</javax.websocket.groupId>
+		<javax.websocket.artifactId>javax.websocket-api</javax.websocket.artifactId>-->
+		<!--<javax.websocket.version>1.0</javax.websocket.version>-->
+		<!-- 1.1.x (javax) -->
+		<!--<javax.websocket.version>1.1</javax.websocket.version>-->
+		<!-- 1.1.x (jakarta) -->
+		<javax.websocket.groupId>jakarta.websocket</javax.websocket.groupId>
+		<javax.websocket.artifactId>jakarta.websocket-api</javax.websocket.artifactId>
+		<!--<javax.websocket.version>1.1.2</javax.websocket.version>-->
+		<!-- 2.0.x (jakarta) -->
+		<!--<javax.websocket.version>2.0.0</javax.websocket.version>-->
+		<!-- 2.1.x (jakarta) -->
+		<!--<javax.websocket.version>2.1.0</javax.websocket.version>-->
+		<javax.websocket.version>2.1.1</javax.websocket.version>
+
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Spring websocket depencencies (Reactor TCP Components - org/io) -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- reactor-net (org.projectreactor) -->
+		<!--<projectreactor.groupId>org.projectreactor</projectreactor.groupId>
+		<projectreactor.artifactId>reactor-net</projectreactor.artifactId>
+		<projectreactor.version>1.1.6.RELEASE</projectreactor.version>-->
+		<!-- reactor-net (io.projectreactor) -->
+		<!--<projectreactor.groupId>io.projectreactor</projectreactor.groupId>
+		<projectreactor.artifactId>reactor-net</projectreactor.artifactId>
+		<projectreactor.version>2.0.8.RELEASE</projectreactor.version>-->
+
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!-- Apache HTTP Components (CORE) -->
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!-- JDK8/11 -->
@@ -1949,8 +1981,19 @@
 		<!-- 5.2.x -->
 		<!--<http.client.version>5.2.3</http.client.version>-->
 
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!-- Nimbus - Spring Security JWT Authentication -->
-		<com.nimbusds.jose.jwt.version>3.8</com.nimbusds.jose.jwt.version>
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- 3.8.x -->
+		<!--<com.nimbusds.jose.jwt.version>3.8</com.nimbusds.jose.jwt.version>-->
+		<!--<com.nimbusds.jose.jwt.version>3.8.2</com.nimbusds.jose.jwt.version>-->
+		<!-- 7.9.x -->
+		<!--<com.nimbusds.jose.jwt.version>7.9</com.nimbusds.jose.jwt.version>-->
+		<!-- 9.31.x -->
+		<!--<com.nimbusds.jose.jwt.version>9.31</com.nimbusds.jose.jwt.version>-->
+		<!-- 9.37.x -->
+		<com.nimbusds.jose.jwt.version>9.37</com.nimbusds.jose.jwt.version>
+		<!--<com.nimbusds.jose.jwt.version>9.37.1</com.nimbusds.jose.jwt.version>-->
 
 		<!--
 		Servlet Spec	JSP Spec	EL Spec		WebSocket Spec		Authentication (JASPIC) Spec	Apache Tomcat Version	Latest Released Version		Supported Java Versions
@@ -1966,9 +2009,6 @@
 		2.3				1.2			N/A			N/A					N/A								4.1.x (archived)		4.1.40 (archived)			1.3+
 		2.2				1.1			N/A			N/A					N/A								3.3.x (archived)		3.3.2 (archived)			1.1+
 		-->
-		<!-- Spring websocket depencencies -->
-		<javax.websocket.version>1.0</javax.websocket.version>
-		<org.projectreactor.version>1.1.6.RELEASE</org.projectreactor.version>
 		<!-- Tomcat 7.0.x (JDK6/7+ - 7 and later for WebSocket) -->
 		<!-- <org.apache.tomcat.version>7.0.52</org.apache.tomcat.version> -->
 		<!-- <org.apache.tomcat.version>7.0.109</org.apache.tomcat.version> -->
@@ -2092,6 +2132,7 @@
 
 		<!-- Other -->
 		<hamcrest.version>1.3</hamcrest.version>
+
 		<!-- Beans -->
 		<!-- Use openbeans (not using java.beans) for all Java and Android -->
 		<com.google.openbeans.version>1.0</com.google.openbeans.version>
@@ -2652,6 +2693,8 @@
 									<nonFilteredFileExtension>*.otf</nonFilteredFileExtension>
 									<!-- file upload SWF -->
 									<nonFilteredFileExtension>*.swf</nonFilteredFileExtension>
+									<!-- Database backup if necessary -->
+									<nonFilteredFileExtension>*.backup</nonFilteredFileExtension>
 								</nonFilteredFileExtensions>
 								<resources>
 									<!-- Copy resource exclude JAVA, CLASSES to build target directory -->
@@ -2687,8 +2730,30 @@
 											<exclude>**/*.woff2</exclude>
 											<exclude>*.otf</exclude>
 											<exclude>**/*.otf</exclude>
+											<!-- images -->
+											<exclude>*.cur</exclude>
+											<exclude>**/*.cur</exclude>
+											<exclude>*.ico</exclude>
+											<exclude>**/*.ico</exclude>
+											<exclude>*.gif</exclude>
+											<exclude>**/*.gif</exclude>
+											<exclude>*.png</exclude>
+											<exclude>**/*.png</exclude>
+											<exclude>*.jpg</exclude>
+											<exclude>**/*.jpg</exclude>
+											<exclude>*.jpeg</exclude>
+											<exclude>**/*.jpeg</exclude>
+											<exclude>*.bmp</exclude>
+											<exclude>**/*.bmp</exclude>
+											<!-- sounds -->
+											<exclude>*.wav</exclude>
+											<exclude>**/*.wav</exclude>
 											<!-- file upload SWF -->
+											<exclude>*.swf</exclude>
 											<exclude>**/*.swf</exclude>
+											<!-- Database backup if necessary -->
+											<exclude>*.backup</exclude>
+											<exclude>**/*.backup</exclude>
 										</excludes>
 									</resource>
 									<resource>
@@ -2719,8 +2784,30 @@
 											<include>**/*.woff2</include>
 											<include>*.otf</include>
 											<include>**/*.otf</include>
+											<!-- images -->
+											<include>*.cur</include>
+											<include>**/*.cur</include>
+											<include>*.ico</include>
+											<include>**/*.ico</include>
+											<include>*.gif</include>
+											<include>**/*.gif</include>
+											<include>*.png</include>
+											<include>**/*.png</include>
+											<include>*.jpg</include>
+											<include>**/*.jpg</include>
+											<include>*.jpeg</include>
+											<include>**/*.jpeg</include>
+											<include>*.bmp</include>
+											<include>**/*.bmp</include>
+											<!-- sounds -->
+											<include>*.wav</include>
+											<include>**/*.wav</include>
 											<!-- file upload SWF -->
+											<include>*.swf</include>
 											<include>**/*.swf</include>
+											<!-- Database backup if necessary -->
+											<include>*.backup</include>
+											<include>**/*.backup</include>
 										</includes>
 										<excludes>
 											<exclude>*.java</exclude>
@@ -2762,8 +2849,30 @@
 											<exclude>**/*.woff2</exclude>
 											<exclude>*.otf</exclude>
 											<exclude>**/*.otf</exclude>
+											<!-- images -->
+											<exclude>*.cur</exclude>
+											<exclude>**/*.cur</exclude>
+											<exclude>*.ico</exclude>
+											<exclude>**/*.ico</exclude>
+											<exclude>*.gif</exclude>
+											<exclude>**/*.gif</exclude>
+											<exclude>*.png</exclude>
+											<exclude>**/*.png</exclude>
+											<exclude>*.jpg</exclude>
+											<exclude>**/*.jpg</exclude>
+											<exclude>*.jpeg</exclude>
+											<exclude>**/*.jpeg</exclude>
+											<exclude>*.bmp</exclude>
+											<exclude>**/*.bmp</exclude>
+											<!-- sounds -->
+											<exclude>*.wav</exclude>
+											<exclude>**/*.wav</exclude>
 											<!-- file upload SWF -->
+											<exclude>*.swf</exclude>
 											<exclude>**/*.swf</exclude>
+											<!-- Database backup if necessary -->
+											<exclude>*.backup</exclude>
+											<exclude>**/*.backup</exclude>
 										</excludes>
 									</resource>
 									<resource>
@@ -2794,8 +2903,30 @@
 											<include>**/*.woff2</include>
 											<include>*.otf</include>
 											<include>**/*.otf</include>
+											<!-- images -->
+											<include>*.cur</include>
+											<include>**/*.cur</include>
+											<include>*.ico</include>
+											<include>**/*.ico</include>
+											<include>*.gif</include>
+											<include>**/*.gif</include>
+											<include>*.png</include>
+											<include>**/*.png</include>
+											<include>*.jpg</include>
+											<include>**/*.jpg</include>
+											<include>*.jpeg</include>
+											<include>**/*.jpeg</include>
+											<include>*.bmp</include>
+											<include>**/*.bmp</include>
+											<!-- sounds -->
+											<include>*.wav</include>
+											<include>**/*.wav</include>
 											<!-- file upload SWF -->
+											<include>*.swf</include>
 											<include>**/*.swf</include>
+											<!-- Database backup if necessary -->
+											<include>*.backup</include>
+											<include>**/*.backup</include>
 										</includes>
 										<excludes>
 											<exclude>*.java</exclude>
@@ -2980,6 +3111,7 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 						<target>${java.version}</target>
 					</configuration>
 				</plugin>
+				<!-- Source package plugin -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-source-plugin</artifactId>
@@ -2997,6 +3129,7 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 						</execution>
 					</executions>
 				</plugin>
+				<!-- Javadocs package plugin -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
@@ -3015,6 +3148,7 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 						</execution>
 					</executions>
 				</plugin>
+				<!-- JAR package plugin -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
@@ -3035,6 +3169,7 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 						</archive>
 					</configuration>
 				</plugin>
+				<!-- WAR package plugin -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-war-plugin</artifactId>
@@ -3044,6 +3179,7 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 						<packagingExcludes>*.java,**/*.java</packagingExcludes>
 					</configuration>
 				</plugin>
+				<!-- Nexus staging plugin -->
 				<plugin>
 					<groupId>org.sonatype.plugins</groupId>
 					<artifactId>nexus-staging-maven-plugin</artifactId>
@@ -3236,7 +3372,35 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 										<artifactId>maven-eclipse-plugin</artifactId>
 										<versionRange>[1.+,)</versionRange>
 										<goals>
-											<goal>compile</goal>
+											<goal>eclipse</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore>false</ignore>
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.maven.plugins</groupId>
+										<artifactId>maven-resources-plugin</artifactId>
+										<versionRange>[1.+,)</versionRange>
+										<goals>
+											<goal>resources</goal>
+											<goal>copy-resources</goal>
+											<goal>testResources</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore>false</ignore>
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.codehaus.mojo</groupId>
+										<artifactId>properties-mven-plugin</artifactId>
+										<versionRange>[1.+,)</versionRange>
+										<goals>
+											<goal>read-project-properties</goal>
 										</goals>
 									</pluginExecutionFilter>
 									<action>
@@ -3322,22 +3486,27 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 				<groupId>${maven.aspectj.groupId}</groupId>
 				<artifactId>${maven.aspectj.artifactId}</artifactId>
 			</plugin>
+			<!-- Source package plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
 			</plugin>
+			<!-- Javadocs package plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 			</plugin>
+			<!-- JAR package plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 			</plugin>
+			<!-- WAR package plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 			</plugin>
+			<!-- Nexus staging plugin -->
 			<plugin>
 				<groupId>org.sonatype.plugins</groupId>
 				<artifactId>nexus-staging-maven-plugin</artifactId>
@@ -3731,16 +3900,17 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 
 			<!-- Spring websocket -->
 			<dependency> <!-- Websocket dependence -->
-				<groupId>javax.websocket</groupId>
-				<artifactId>javax.websocket-api</artifactId>
+				<groupId>${javax.websocket.groupId}</groupId>
+				<artifactId>${javax.websocket.artifactId}</artifactId>
 				<version>${javax.websocket.version}</version>
 				<scope>provided</scope>
 			</dependency>
-			<dependency> <!-- Websocket dependence -->
-				<groupId>org.projectreactor</groupId>
-				<artifactId>reactor-net</artifactId>
-				<version>${org.projectreactor.version}</version>
-			</dependency>
+			<!-- Websocket dependence -->
+			<!--<dependency>
+				<groupId>${projectreactor.groupId}</groupId>
+				<artifactId>${projectreactor.artifactId}</artifactId>
+				<version>${projectreactor.version}</version>
+			</dependency>-->
 			<dependency> <!-- Websocket dependence -->
 				<groupId>org.apache.tomcat.embed</groupId>
 				<artifactId>tomcat-embed-websocket</artifactId>
