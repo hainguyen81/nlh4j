@@ -1,11 +1,12 @@
 /*
- * @(#)ExexAuthenticationProvider.java 1.0 Aug 28, 2015
+ * @(#)Nlh4jAuthenticationProvider.java 1.0 Aug 28, 2015
  * Copyright 2015 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.core.authentication;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -21,14 +22,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import com.nimbusds.jwt.JWT;
-import com.nimbusds.jwt.ReadOnlyJWTClaimsSet;
+import com.nimbusds.jwt.JWTClaimsSet;
 
 import lombok.Getter;
 import lombok.Setter;
-import reactor.util.Assert;
+
+import org.apache.commons.lang3.StringUtils;
 import org.nlh4j.core.dto.AbstractJWTToken;
 import org.nlh4j.core.dto.UserDetails;
 import org.nlh4j.core.service.MessageService;
@@ -43,8 +44,8 @@ import org.nlh4j.util.RequestUtils;
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  *
  */
-@Component(value = "exexAuthenticationProvider")
-public class ExexAuthenticationProvider implements AuthenticationProvider, Serializable {
+@Component(value = "nh4jAuthenticationProvider")
+public class Nlh4jAuthenticationProvider implements AuthenticationProvider, Serializable {
 
 	/** */
     private static final long serialVersionUID = 1L;
@@ -148,8 +149,10 @@ public class ExexAuthenticationProvider implements AuthenticationProvider, Seria
 	 */
 	private Authentication internalLogin(String username, Object cridenticals, boolean encrypted)
 			throws AuthenticationException {
-		Assert.hasText(username, "username");
-		Assert.notNull(cridenticals, "cridenticals");
+		if (StringUtils.isBlank(username)) {
+			throw new IllegalArgumentException("username must be not blank/null");
+		}
+		cridenticals = Objects.requireNonNull(cridenticals, "cridenticals");
 
 		// login
 		UserDetails user = userService.login(username, cridenticals, encrypted);
@@ -172,8 +175,7 @@ public class ExexAuthenticationProvider implements AuthenticationProvider, Seria
 	 */
 	private Authentication internalAuthenticate(UsernamePasswordAuthenticationToken auth)
 			throws AuthenticationException {
-		Assert.notNull(auth, "authentication");
-		return this.internalLogin(String.valueOf(auth.getPrincipal()), auth.getCredentials(), false);
+		return this.internalLogin(String.valueOf(Objects.requireNonNull(auth, "auth").getPrincipal()), auth.getCredentials(), false);
 	}
 	/**
 	 * Authenticate {@link RememberMeAuthenticationToken}
@@ -185,10 +187,10 @@ public class ExexAuthenticationProvider implements AuthenticationProvider, Seria
 	 * @exception AuthenticationException thrown if authenticating has been failed
 	 */
 	private Authentication internalRememberAuthenticate(RememberMeAuthenticationToken auth) throws AuthenticationException {
-		Assert.notNull(auth, "authentication");
+		auth = Objects.requireNonNull(auth, "authentication");
 
 		// check remember key
-		if (!StringUtils.hasText(this.getRememberKey())
+		if (StringUtils.isBlank(this.getRememberKey())
 				|| (this.getRememberKey().hashCode() != auth.getKeyHash())) {
             throw new BadCredentialsException(this.getUnAuthorizedReason());
         }
@@ -214,7 +216,7 @@ public class ExexAuthenticationProvider implements AuthenticationProvider, Seria
 	private <T extends UserDetails, A extends GrantedAuthority>
 			Authentication internalJWTAuthenticate(AbstractJWTToken<T, A> auth)
 					throws AuthenticationException {
-		Assert.notNull(auth, "authentication");
+		auth = Objects.requireNonNull(auth, "authentication");
 
 		// require token
 		JWT jwt = auth.getJwt();
@@ -224,7 +226,7 @@ public class ExexAuthenticationProvider implements AuthenticationProvider, Seria
 
 		// check token expiration
         Date referenceTime = new Date();
-        ReadOnlyJWTClaimsSet claims = auth.getClaims();
+        JWTClaimsSet claims = auth.getClaims();
         Date expirationTime = (claims == null ? null : claims.getExpirationTime());
         if (expirationTime == null || expirationTime.before(referenceTime)) {
             throw new BadCredentialsException("The token has expired!!!");
@@ -271,12 +273,12 @@ public class ExexAuthenticationProvider implements AuthenticationProvider, Seria
      * @return the {@link HttpStatus}.UNAUTHORIZED reason phase
      */
     public String getUnAuthorizedReason() {
-        if (!StringUtils.hasText(this.unAuthorizedReason)
-                && StringUtils.hasText(this.getUnAuthorizedReasonKey())) {
+        if (StringUtils.isBlank(this.unAuthorizedReason)
+                && StringUtils.isNotBlank(this.getUnAuthorizedReasonKey())) {
             this.unAuthorizedReason = this.messageService.getMessage(
                     this.getUnAuthorizedReasonKey());
         }
-        if (!StringUtils.hasText(this.unAuthorizedReason)) {
+        if (StringUtils.isBlank(this.unAuthorizedReason)) {
             this.unAuthorizedReason = HttpStatus.UNAUTHORIZED.getReasonPhrase();
         }
         return this.unAuthorizedReason;

@@ -34,6 +34,8 @@
 -keep @org.apache.commons.** class *
 -keep @javax.annotation.** class *
 -keep @javax.persistence.** class *
+-keep @jakarta.annotation.** class *
+-keep @jakarta.persistence.** class *
 -keep @org.nlh4j.** class *
 
 # Keep package/class/method names for importing in reference
@@ -47,6 +49,8 @@
 	# private field that has been annotation
 		@javax.inject.* <fields>;
 	    @javax.annotation.* <fields>;
+	    @jakarta.inject.* <fields>;
+	    @jakarta.annotation.* <fields>;
 
 	    # nlh4j
 	    @org.nlh4j.* <fields>;
@@ -60,6 +64,8 @@
 	# private field that has been annotation
 		@javax.inject.* <fields>;
 	    @javax.annotation.* <fields>;
+	    @jakarta.inject.* <fields>;
+	    @jakarta.annotation.* <fields>;
 
 	    # nlh4j
 	    @org.nlh4j.* <fields>;
@@ -75,6 +81,8 @@
 -keepclassmembers class * {
 	@javax.inject.* *;
     @javax.annotation.* *;
+	@jakarta.inject.* *;
+    @jakarta.annotation.* *;
 
     # nlh4j
     @org.nlh4j.* *;

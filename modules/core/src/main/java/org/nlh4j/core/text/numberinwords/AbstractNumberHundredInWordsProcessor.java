@@ -4,8 +4,7 @@
  */
 package org.nlh4j.core.text.numberinwords;
 
-import reactor.util.Assert;
-
+import java.util.Objects;
 
 /**
  * Number hundred processor to convert number into words (number from 100 to 999)
@@ -38,10 +37,10 @@ public abstract class AbstractNumberHundredInWordsProcessor extends AbstractNumb
 	@Override
 	public String getName(String value) {
 		// check valid number processors
-		AbstractNumberUnitInWordsProcessor numberUnitProcessor = this.getNumberUnitProcessor();
-		Assert.notNull(numberUnitProcessor);
-		AbstractNumberTenthInWordsProcessor numberTenthProcessor = this.getNumberTenthProcessor();
-		Assert.notNull(numberTenthProcessor);
+		AbstractNumberUnitInWordsProcessor numberUnitProcessor =
+				Objects.requireNonNull(this.getNumberUnitProcessor(), "numberUnitProcessor");
+		AbstractNumberTenthInWordsProcessor numberTenthProcessor =
+				Objects.requireNonNull(this.getNumberTenthProcessor(), "numberTenthProcessor");
 
 		// convert number into words
 		StringBuilder buffer = new StringBuilder();

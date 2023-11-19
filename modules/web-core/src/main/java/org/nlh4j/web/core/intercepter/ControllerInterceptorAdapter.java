@@ -15,6 +15,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.annotation.Aspect;
 import org.nlh4j.core.annotation.ExecutePermission;
 import org.nlh4j.core.annotation.NotifyClients;
@@ -28,8 +29,6 @@ import org.nlh4j.web.core.service.ModuleService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-
-import reactor.util.StringUtils;
 
 /**
  * WEB controller intercepter adapter
@@ -189,8 +188,7 @@ public class ControllerInterceptorAdapter extends org.nlh4j.core.intercepter.Con
             if (mav != null) {
 	            mav.addObject("modules", modList);
 	            mav.addObject("functions", funcList);
-	            mav.addObject("functionsString",
-	                    org.springframework.util.StringUtils.collectionToDelimitedString(funcList, "|"));
+	            mav.addObject("functionsString", StringUtils.join(funcList, "|"));
 	            mav.addObject("moduleClass", moduleCss);
 	            mav.addObject("time", DateUtils.currentTimestamp().getTime());
             }
@@ -269,7 +267,7 @@ public class ControllerInterceptorAdapter extends org.nlh4j.core.intercepter.Con
                 allowed = moduleService.isEnabled(arrModules);
                 if (!allowed) {
                     logger.warn(
-                            "ACCESS DENIED - One of [" + StringUtils.arrayToDelimitedString(arrModules, "|") + "] modules "
+                            "ACCESS DENIED - One of [" + StringUtils.join(arrModules, "|") + "] modules "
                             + "maybe disabled or not existed from database!!!");
                 }
 
@@ -278,9 +276,8 @@ public class ControllerInterceptorAdapter extends org.nlh4j.core.intercepter.Con
                 allowed = moduleService.hasPermission(userName, arrModules, arrFuncs);
                 if (!allowed) {
                     logger.warn(
-                            "ACCESS DENIED - [" + userName + "] hasnt enough ["
-                            + org.springframework.util.StringUtils.arrayToDelimitedString(arrFuncs, "|") + "] "
-                            + "permission on [" + StringUtils.arrayToDelimitedString(arrModules, "|") + "] modules!!!");
+                            "ACCESS DENIED - [" + userName + "] hasnt enough [" + StringUtils.join(arrFuncs, "|") + "] "
+                            + "permission on [" + StringUtils.join(arrModules, "|") + "] modules!!!");
                 }
             }
         }

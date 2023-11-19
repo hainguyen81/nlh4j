@@ -5,6 +5,7 @@
 package org.nlh4j.core.dto;
 
 import java.sql.Timestamp;
+import java.util.Objects;
 
 import org.nlh4j.util.DateUtils;
 import org.springframework.messaging.MessageHeaders;
@@ -13,7 +14,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import reactor.util.Assert;
 
 /**
  * Abstract socket message DTO
@@ -53,9 +53,8 @@ public abstract class AbstractSocketDto<T extends AbstractDto> extends AbstractD
 	 * @param original the received socket data
 	 */
 	protected AbstractSocketDto(UserDetails sender, MessageHeaders headers, T original) {
-		Assert.notNull(sender, "sender");
 		this.setOriginal(original);
-		this.setSender(sender);
+		this.setSender(Objects.requireNonNull(sender, "sender"));
 		this.setHeaders(headers);
 	}
 

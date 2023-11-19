@@ -4,10 +4,10 @@
  */
 package org.nlh4j.core.text.numberinwords.i18n.vi;
 
-import org.apache.commons.lang3.ArrayUtils;
-import org.springframework.util.StringUtils;
+import java.util.Objects;
 
-import reactor.util.Assert;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.nlh4j.core.text.numberinwords.AbstractNumberTenthInWordsProcessor;
 import org.nlh4j.core.text.numberinwords.AbstractNumberUnitInWordsProcessor;
 import org.nlh4j.core.text.numberinwords.ScaleUnit;
@@ -95,11 +95,13 @@ public class NumberTenthInWordsProcessor extends AbstractNumberTenthInWordsProce
 	@Override
 	public String getName(String value) {
 		// check valid number unit processor
-		AbstractNumberUnitInWordsProcessor numberUnitProcessor = this.getNumberUnitProcessor();
-		Assert.notNull(numberUnitProcessor);
+		AbstractNumberUnitInWordsProcessor numberUnitProcessor =
+				Objects.requireNonNull(this.getNumberUnitProcessor(), "numberUnitProcessor");
 		int lowerLimit = this.getLowerLimitTenth();
-		Assert.isTrue(lowerLimit >= 10 && ((lowerLimit % 10) == 0),
-				"The lower limit of number tenth must be equals or greater than 10 and (% 10) = 0");
+		if (!(lowerLimit >= 10 && ((lowerLimit % 10) == 0))) {
+			throw new IllegalArgumentException(
+					"The lower limit of number tenth must be equals or greater than 10 and (% 10) = 0");
+		}
 
 		// check valid tokens
 		String[] tokens = this.getTenthTokens();
@@ -144,8 +146,9 @@ public class NumberTenthInWordsProcessor extends AbstractNumberTenthInWordsProce
 		if (number != 0) {
 			((NumberUnitInWordsProcessor) numberUnitProcessor).setSpecialCase(unitSpecialCase);
 			String unitName = numberUnitProcessor.getName(number);
-			if (!tensFound && StringUtils.hasText(unitName)
-					&& this.isUseWordsUnionSeparator() && useSpecialUnion && StringUtils.hasText(sep)) {
+			if (!tensFound && StringUtils.isNotBlank(unitName)
+					&& this.isUseWordsUnionSeparator()
+					&& useSpecialUnion && StringUtils.isNotBlank(sep)) {
 				buffer.append(sep);
 				buffer.append(WORDS_SEPARATOR);
 			}
