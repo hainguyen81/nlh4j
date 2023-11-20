@@ -1673,7 +1673,6 @@
 		<maven.war.version>3.4.0</maven.war.version>
 		<maven.jarsigner.version>3.0.0</maven.jarsigner.version>
 		<maven.surefire.version>3.2.2</maven.surefire.version>
-		<maven.nexus.staging.version>1.6.13</maven.nexus.staging.version>
 		<maven.directory.version>0.1</maven.directory.version>
 		<maven.antrun.version>3.1.0</maven.antrun.version>
 		<maven.eclipse.version>2.10</maven.eclipse.version>
@@ -1691,6 +1690,30 @@
 		<maven.dependency.unpack.resource.excludes>org/nlh4j/*.java,org/nlh4j/**/*.java,META-INF/MANIFEST.MF,META-INF/*.RSA,META-INF/*.SF,META-INF/maven,META-INF/maven/*</maven.dependency.unpack.resource.excludes>
 		<maven.dependency.unpack.resource.directory>${maven.dependency.unpack.root.directory}/src/main/resources</maven.dependency.unpack.resource.directory>
 		<maven.dependency.unpack.skip>true</maven.dependency.unpack.skip>
+
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!--
+			NLH4J GITHUB Repository SITE plugin:
+			https://github.com/github/maven-plugins#readme
+			https://stackoverflow.com/questions/14013644/hosting-a-maven-repository-on-github/14013645#14013645
+		-->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- site plugin -->
+		<maven.github.repo.deployment>${root.basedir}/github-repo/${revision}</maven.github.repo.deployment>
+		<maven.github.repo.branch>refs/heads/${revision}</maven.github.repo.branch>
+		<maven.github.repo.path>nlh4j/${revision}</maven.github.repo.path>
+		<maven.github.site.force>true</maven.github.site.force>
+		<maven.github.site.merge>true</maven.github.site.merge>
+		<!-- configured server in maven settings.xml -->
+		<github.global.server>nlh4j_github_repo</github.global.server>
+		<github.global.repo.name>nlh4j-repo</github.global.repo.name>
+		<github.global.repo.owner>hainguyen81</github.global.repo.owner>
+		<maven.github.site.version>0.12</maven.github.site.version>
+		<maven.deploy.version>3.1.1</maven.deploy.version>
+		<!-- Deploy using maven nexus staging plugin -->
+		<maven.nexus.staging.version>1.6.13</maven.nexus.staging.version>
+		<maven.nexus.staging.serverId>${maven.github.repo.settings.name}</maven.nexus.staging.serverId>
+		<maven.nexus.staging.nexusUrl>https://github.com/hainguyen81/nlh4j-repo.git</maven.nexus.staging.nexusUrl>
 
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!-- Servlet -->
@@ -2339,11 +2362,12 @@
 							    <goal>run</goal>
 							</goals>
 							<configuration>
-							    <target>
+							    <target name="ensure-directories">
 							        <mkdir dir="${project.basedir}/src/main/java" />
 							        <mkdir dir="${project.basedir}/src/main/resources" />
 							        <mkdir dir="${project.basedir}/src/test/java" />
 							        <mkdir dir="${project.basedir}/src/test/resources" />
+							        <mkdir dir="${maven.github.repo.deployment}" />
 							    </target>
 							    <target name="ensure-dependency-unpack-directories"
 							    unless="${maven.dependency.unpack.skip}">
@@ -3180,17 +3204,17 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 					</configuration>
 				</plugin>
 				<!-- Nexus staging plugin -->
-				<plugin>
+				<!--<plugin>
 					<groupId>org.sonatype.plugins</groupId>
 					<artifactId>nexus-staging-maven-plugin</artifactId>
 					<version>${maven.nexus.staging.version}</version>
 					<extensions>true</extensions>
 					<configuration>
-						<serverId>ossrh</serverId>
-						<nexusUrl>https://oss.sonatype.org/</nexusUrl>
 						<autoReleaseAfterClose>true</autoReleaseAfterClose>
+						<serverId>${maven.nexus.staging.serverId}</serverId>
+						<nexusUrl>${maven.nexus.staging.nexusUrl}</nexusUrl>
 					</configuration>
-				</plugin>
+				</plugin>-->
 				<!-- FIXME Present, surefire, truelicense, proguard and jarsigner
 					has VerifyError exception -->
 				<plugin>
@@ -3280,7 +3304,59 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 						-->
 					</configuration>
 				</plugin>
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!--
+					NLH4J GITHUB Repository SITE plugin:
+					https://github.com/github/maven-plugins#readme
+					https://stackoverflow.com/questions/14013644/hosting-a-maven-repository-on-github/14013645#14013645
+				-->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- GITHUB site plugin - to push the NLH4J build to NLH4J GITHUB repository -->
+				<plugin>
+					<groupId>com.github.github</groupId>
+					<artifactId>site-maven-plugin</artifactId>
+					<version>${maven.github.site.version}</version>
+					<configuration>
+						<force>${maven.github.site.force}</force>
+						<merge>${maven.github.site.merge}</merge>
+						<message>Creating site for ${project.artifactId}-${project.version} (${revision})</message>
+
+						<!-- github repo (server name in maven settings.xml) -->
+						<server>${github.global.server}</server>
+						<repositoryName>${github.global.repo.name}</repositoryName>
+						<repositoryOwner>${github.global.repo.owner}</repositoryOwner>
+						<!-- remote branch name -->
+						<branch>${maven.github.repo.branch}</branch>
+						<path>${maven.github.repo.path}</path>
+                		<includes><include>**/*</include></includes>
+						<!-- disable webpage processing -->
+						<noJekyll>true</noJekyll>
+						<!-- matches distribution management repository url above -->
+						<outputDirectory>${maven.github.repo.deployment}</outputDirectory>
+					</configuration>
+					<executions>
+						<execution>
+							<goals>
+								<goal>site</goal>
+							</goals>
+							<phase>deploy</phase>
+						</execution>
+					</executions>
+				</plugin>
+				<!-- Deploy to NLH4J GITHUB Repository SITE -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>${maven.deploy.version}</version>
+					<configuration>
+						<altDeploymentRepository>nlh4j.github.repo::default::file://${maven.github.repo.deployment}</altDeploymentRepository>
+					</configuration>
+    			</plugin>
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- To sign packages (must after proguard plugin in POM build to avoid error: jarsigner verify SHA-256 digest error for class ...) -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jarsigner-plugin</artifactId>
@@ -3520,10 +3596,10 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 				<artifactId>maven-war-plugin</artifactId>
 			</plugin>
 			<!-- Nexus staging plugin -->
-			<plugin>
+			<!--<plugin>
 				<groupId>org.sonatype.plugins</groupId>
 				<artifactId>nexus-staging-maven-plugin</artifactId>
-			</plugin>
+			</plugin>-->
 			<!-- FIXME Present, surefire, truelicense, proguard and jarsigner
 				has VerifyError exception -->
 			<plugin>
@@ -3545,6 +3621,25 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jarsigner-plugin</artifactId>
 			</plugin>
+
+			<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+			<!--
+				NLH4J GITHUB Repository SITE plugin:
+				https://github.com/github/maven-plugins#readme
+				https://stackoverflow.com/questions/14013644/hosting-a-maven-repository-on-github/14013645#14013645
+			-->
+			<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+			<!-- GITHUB site plugin - to push the NLH4J build to NLH4J GITHUB repository -->
+			<plugin>
+				<groupId>com.github.github</groupId>
+				<artifactId>site-maven-plugin</artifactId>
+			</plugin>
+			<!-- Deploy to NLH4J GITHUB Repository SITE -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+			</plugin>
+
 			<!-- This plugin's configuration is used to store Eclipse m2e settings only.
 				It has no influence on the Maven build itself. -->
 			<plugin>
@@ -3640,10 +3735,11 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 			</plugin>
-			<plugin>
+			<!-- Nexus staging plugin -->
+			<!--<plugin>
 				<groupId>org.sonatype.plugins</groupId>
 				<artifactId>nexus-staging-maven-plugin</artifactId>
-			</plugin>
+			</plugin>-->
 			<!-- FIXME Present, surefire, truelicense, proguard and jarsigner
 				has VerifyError exception -->
 			<plugin>
@@ -3665,6 +3761,25 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jarsigner-plugin</artifactId>
 			</plugin>
+
+			<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+			<!--
+				NLH4J GITHUB Repository SITE plugin:
+				https://github.com/github/maven-plugins#readme
+				https://stackoverflow.com/questions/14013644/hosting-a-maven-repository-on-github/14013645#14013645
+			-->
+			<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+			<!-- GITHUB site plugin - to push the NLH4J build to NLH4J GITHUB repository -->
+			<plugin>
+				<groupId>com.github.github</groupId>
+				<artifactId>site-maven-plugin</artifactId>
+			</plugin>
+			<!-- Deploy to NLH4J GITHUB Repository SITE -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+			</plugin>
+
 			<!-- This plugin's configuration is used to store Eclipse m2e settings only.
 				It has no influence on the Maven build itself. -->
 			<plugin>
@@ -4635,6 +4750,23 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 			<artifactId>aspectjweaver</artifactId>
 		</dependency>
 	</dependencies>
+	
+	<!--
+		NLH4J GITHUB Repository SITE plugin:
+		https://github.com/github/maven-plugins#readme
+		https://stackoverflow.com/questions/14013644/hosting-a-maven-repository-on-github/14013645#14013645
+	-->
+	<distributionManagement>
+		<repository>
+	        <id>nlh4j.github.repo</id>
+	        <name>NLH4J GITHUB Site Repository</name>
+	        <url>file://${maven.github.repo.deployment}</url>
+	    </repository>
+	    <snapshotRepository>
+			<id>${maven.nexus.staging.serverId}</id>
+			<url>${maven.nexus.staging.nexusUrl}</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 	<!-- Modules -->
 	<modules>
