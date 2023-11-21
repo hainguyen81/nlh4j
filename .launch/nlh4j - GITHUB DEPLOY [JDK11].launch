@@ -2,10 +2,10 @@
 <launchConfiguration type="org.eclipse.m2e.Maven2LaunchConfigurationType">
     <intAttribute key="M2_COLORS" value="0"/>
     <booleanAttribute key="M2_DEBUG_OUTPUT" value="true"/>
-    <stringAttribute key="M2_GOALS" value="clean install eclipse:clean eclipse:eclipse"/>
+    <stringAttribute key="M2_GOALS" value="clean deploy"/>
     <booleanAttribute key="M2_NON_RECURSIVE" value="false"/>
     <booleanAttribute key="M2_OFFLINE" value="false"/>
-    <stringAttribute key="M2_PROFILES" value="dev,jdk17"/>
+    <stringAttribute key="M2_PROFILES" value="dev,jdk11"/>
     <listAttribute key="M2_PROPERTIES"/>
     <stringAttribute key="M2_RUNTIME" value="apache-maven-3.8.4"/>
     <booleanAttribute key="M2_SKIP_TESTS" value="false"/>
@@ -14,13 +14,13 @@
     <stringAttribute key="M2_USER_SETTINGS" value=""/>
     <booleanAttribute key="M2_WORKSPACE_RESOLUTION" value="true"/>
     <booleanAttribute key="org.eclipse.debug.core.ATTR_FORCE_SYSTEM_CONSOLE_ENCODING" value="false"/>
-    <stringAttribute key="org.eclipse.debug.ui.ATTR_CAPTURE_IN_FILE" value="${workspace_loc:/nlh4j}/jdk17.org.nlh4j.log"/>
+    <stringAttribute key="org.eclipse.debug.ui.ATTR_CAPTURE_IN_FILE" value="${workspace_loc:/nlh4j}/jdk11.org.nlh4j.log"/>
     <listAttribute key="org.eclipse.debug.ui.favoriteGroups">
         <listEntry value="org.eclipse.debug.ui.launchGroup.debug"/>
     </listAttribute>
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_ATTR_USE_ARGFILE" value="false"/>
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_SHOW_CODEDETAILS_IN_EXCEPTION_MESSAGES" value="true"/>
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_CLASSPATH_ONLY_JAR" value="false"/>
-    <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/17.0.9.x64/"/>
+    <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/11.0.20.x64/"/>
     <stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:/nlh4j}"/>
 </launchConfiguration>
