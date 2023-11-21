@@ -1634,6 +1634,10 @@
 		<root.artifactId>nlh4j</root.artifactId>
 		<module.groupId>org.nlh4j</module.groupId>
 
+		<!-- Maven build timestamp -->
+		<timestamp>${maven.build.timestamp}</timestamp>
+		<maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
+
 		<!-- Project settings -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -1698,18 +1702,28 @@
 			https://stackoverflow.com/questions/14013644/hosting-a-maven-repository-on-github/14013645#14013645
 		-->
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- NLH4J GITHUB Repository: Before 2019 -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!-- site plugin -->
-		<maven.github.repo.deployment>${root.basedir}/github-repo/${revision}</maven.github.repo.deployment>
+		<!--<maven.github.repo.deployment>${root.basedir}/github-repo/${revision}</maven.github.repo.deployment>
 		<maven.github.repo.branch>refs/heads/${revision}</maven.github.repo.branch>
 		<maven.github.repo.path>nlh4j/${revision}</maven.github.repo.path>
 		<maven.github.site.force>true</maven.github.site.force>
-		<maven.github.site.merge>true</maven.github.site.merge>
+		<maven.github.site.merge>true</maven.github.site.merge>-->
 		<!-- configured server in maven settings.xml -->
-		<github.global.server>nlh4j_github_repo</github.global.server>
+		<!--<github.global.server>nlh4j_github_repo</github.global.server>
 		<github.global.repo.name>nlh4j-repo</github.global.repo.name>
 		<github.global.repo.owner>hainguyen81</github.global.repo.owner>
 		<maven.github.site.version>0.12</maven.github.site.version>
+		<maven.deploy.version>3.1.1</maven.deploy.version>-->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- NLH4J GITHUB Repository: From 2019 -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<github.global.server>nlh4j_github_repo</github.global.server>
+		<github.global.repo.name>nlh4j-repo/${revision}</github.global.repo.name>
+		<github.global.repo.owner>hainguyen81</github.global.repo.owner>
 		<maven.deploy.version>3.1.1</maven.deploy.version>
+
 		<!-- Deploy using maven nexus staging plugin -->
 		<maven.nexus.staging.version>1.6.13</maven.nexus.staging.version>
 		<maven.nexus.staging.serverId>${maven.github.repo.settings.name}</maven.nexus.staging.serverId>
@@ -2367,7 +2381,8 @@
 							        <mkdir dir="${project.basedir}/src/main/resources" />
 							        <mkdir dir="${project.basedir}/src/test/java" />
 							        <mkdir dir="${project.basedir}/src/test/resources" />
-							        <mkdir dir="${maven.github.repo.deployment}" />
+							        <!-- NLH4J GITHUB Repository: Before 2019 -->
+							        <!--<mkdir dir="${maven.github.repo.deployment}" />-->
 							    </target>
 							    <target name="ensure-dependency-unpack-directories"
 							    unless="${maven.dependency.unpack.skip}">
@@ -3312,27 +3327,32 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 					https://stackoverflow.com/questions/14013644/hosting-a-maven-repository-on-github/14013645#14013645
 				-->
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Before 2019 -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- GITHUB site plugin - to push the NLH4J build to NLH4J GITHUB repository -->
-				<plugin>
+				<!--<plugin>
 					<groupId>com.github.github</groupId>
 					<artifactId>site-maven-plugin</artifactId>
 					<version>${maven.github.site.version}</version>
 					<configuration>
 						<force>${maven.github.site.force}</force>
 						<merge>${maven.github.site.merge}</merge>
-						<message>Creating site for ${project.artifactId}-${project.version} (${revision})</message>
+						// disable webpage processing 
+						<noJekyll>true</noJekyll>
+						// git commit message 
+						<message>Creating site for ${project.artifactId}-${project.version} (${revision}) on ${timestamp}</message>
 
-						<!-- github repo (server name in maven settings.xml) -->
+						// github repo (server name in maven settings.xml) 
 						<server>${github.global.server}</server>
 						<repositoryName>${github.global.repo.name}</repositoryName>
 						<repositoryOwner>${github.global.repo.owner}</repositoryOwner>
-						<!-- remote branch name -->
+						// remote branch name 
 						<branch>${maven.github.repo.branch}</branch>
 						<path>${maven.github.repo.path}</path>
                 		<includes><include>**/*</include></includes>
-						<!-- disable webpage processing -->
+						// disable webpage processing 
 						<noJekyll>true</noJekyll>
-						<!-- matches distribution management repository url above -->
+						// matches distribution management repository url above 
 						<outputDirectory>${maven.github.repo.deployment}</outputDirectory>
 					</configuration>
 					<executions>
@@ -3343,15 +3363,16 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 							<phase>deploy</phase>
 						</execution>
 					</executions>
-				</plugin>
+				</plugin>-->
 				<!-- Deploy to NLH4J GITHUB Repository SITE -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-deploy-plugin</artifactId>
 					<version>${maven.deploy.version}</version>
-					<configuration>
+					<!-- NLH4J GITHUB Repository: Before 2019 -->
+					<!--<configuration>
 						<altDeploymentRepository>nlh4j.github.repo::default::file://${maven.github.repo.deployment}</altDeploymentRepository>
-					</configuration>
+					</configuration>-->
     			</plugin>
 
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
@@ -3900,6 +3921,14 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 			<id>aperture.sourceforge.net</id>
 			<url>http://aperture.sourceforge.net/maven</url>
 		</repository> -->
+	    <!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- NLH4J GITHUB Repository: From 2019 -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+	    <!--<repository>
+			<id>${github.global.server}</id>
+			<name>NLH4J GitHub Repository</name>
+			<url>https://maven.pkg.github.com/${github.global.repo.owner}/${github.global.repo.name}</url>
+		</repository>-->
 	</repositories>
 
 	<!-- Dependencies -->
@@ -4757,11 +4786,24 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 		https://stackoverflow.com/questions/14013644/hosting-a-maven-repository-on-github/14013645#14013645
 	-->
 	<distributionManagement>
-		<repository>
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- NLH4J GITHUB Repository: Before 2019 -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!--<repository>
 	        <id>nlh4j.github.repo</id>
 	        <name>NLH4J GITHUB Site Repository</name>
 	        <url>file://${maven.github.repo.deployment}</url>
-	    </repository>
+	    </repository>-->
+	    <!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- NLH4J GITHUB Repository: From 2019 -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+	    <repository>
+			<id>${github.global.server}</id>
+			<name>NLH4J GitHub Repository</name>
+			<url>https://maven.pkg.github.com/${github.global.repo.owner}/${github.global.repo.name}</url>
+		</repository>
+
+		<!-- Nexus Staging Repository -->
 	    <snapshotRepository>
 			<id>${maven.nexus.staging.serverId}</id>
 			<url>${maven.nexus.staging.nexusUrl}</url>
