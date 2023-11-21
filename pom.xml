@@ -1705,7 +1705,7 @@
 		<!-- NLH4J GITHUB Repository: Before 2019 -->
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!-- site plugin -->
-		<!--<maven.github.repo.deployment>${root.basedir}/github-repo/${revision}</maven.github.repo.deployment>
+		<!--<maven.github.repo.deployment>${root.basedir}/.github-repo/${revision}</maven.github.repo.deployment>
 		<maven.github.repo.branch>refs/heads/${revision}</maven.github.repo.branch>
 		<maven.github.repo.path>nlh4j/${revision}</maven.github.repo.path>
 		<maven.github.site.force>true</maven.github.site.force>
