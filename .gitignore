@@ -24,3 +24,5 @@ toolchains.xml
 .settings/
 /.settings/
 github-repo
+.github-repo
+.gitignore
