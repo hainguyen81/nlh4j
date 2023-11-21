@@ -1,5 +1,5 @@
 /*
- * @(#)ThumbnailerException.java 1.0 May 29, 2015
+ * @(#)ThumbnailerException.java
  * Copyright 2015 by GNU Lesser General Public License (LGPL).
  * All rights reserved.
  */

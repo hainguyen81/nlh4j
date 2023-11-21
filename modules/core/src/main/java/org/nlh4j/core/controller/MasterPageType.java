@@ -1,5 +1,5 @@
 /*
- * @(#)MasterPageType.java 1.0 Oct 23, 2016
+ * @(#)MasterPageType.java
  * Copyright 2016 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.core.controller;

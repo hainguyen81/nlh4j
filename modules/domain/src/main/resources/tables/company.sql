@@ -86,7 +86,7 @@ INSERT INTO company(
 	enabled,
 	created_at, created_user
 ) VALUES (
-	1, 'SEX', 'SystemEXE Viet Nam',
+	1, 'NLH4J', 'NLH4J',
 	'364 Cộng Hòa, P.13, Q.TB, TP.HCM',
 	TRUE,
 	1, CURRENT_TIMESTAMP

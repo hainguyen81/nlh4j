@@ -1,5 +1,5 @@
 /*
- * @(#)TelephonyReceiver.java 1.0 Nov 7, 2016
+ * @(#)TelephonyReceiver.java
  * Copyright 2015 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.android.receivers;

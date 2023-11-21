@@ -1,5 +1,5 @@
 /*
- * @(#)SimpleObserve.java 1.0 Aug 12, 2018
+ * @(#)SimpleObserve.java
  * Copyright 2018 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.mongo.observation;

@@ -1,5 +1,5 @@
 /*
- * @(#)SessionDestroyedListener.java 1.0 Jun 1, 2015
+ * @(#)SessionDestroyedListener.java
  * Copyright 2015 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.core.authentication;

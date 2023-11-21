@@ -1,5 +1,5 @@
 /*
- * @(#)TestLicenseUtils.java 1.0 Nov 2, 2016
+ * @(#)TestLicenseUtils.java
  * Copyright 2016 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.util;
@@ -59,12 +59,12 @@ public final class TestLicenseUtils implements Serializable {
      */
     @Test
     public void testCreateLicenseFromKeyStore() {
-    	String keyStore = "F:\\Java.Working\\17.Temp\\IsevLicenseTool\\.keystore.jks";
-    	String licenseIn = "F:\\Java.Working\\17.Temp\\IsevLicenseTool\\license.lic";
-    	String licenseOut = "F:\\Java.Working\\17.Temp\\IsevLicenseTool\\license.out.lic";
+    	String keyStore = "F:\\Java.Working\\17.Temp\\LicenseTool\\.keystore.jks";
+    	String licenseIn = "F:\\Java.Working\\17.Temp\\LicenseTool\\license.lic";
+    	String licenseOut = "F:\\Java.Working\\17.Temp\\LicenseTool\\license.out.lic";
     	String serialKey = "Serial.Key";
     	String keyStoreType = "JKS";
-    	String keyStorePass = "systemexe";
+    	String keyStorePass = "01101981";
     	String alias = "org.nlh4j";
     	if (Files.exists(Paths.get(keyStore))) {
         	KeyPair keyPair = EncryptUtils.getKeyPairFrom(keyStore, keyStoreType, keyStorePass, keyStorePass, alias);

@@ -1,7 +1,7 @@
-1. keytool -genkey -noprompt -trustcacerts -keyalg RSA -alias vn.co.exex.isev -keypass systemexe -keystore .keystore.jks -storepass systemexe -validity 3650
+1. keytool -genkey -noprompt -trustcacerts -keyalg RSA -alias org.nlh4j -keypass 01101981 -keystore .keystore.jks -storepass 01101981 -validity 3650
 
-2. keytool -export -alias vn.co.exex.isev -storepass systemexe -file .keystore.cer -keystore .keystore.jks
+2. keytool -export -alias org.nlh4j -storepass 01101981 -file .keystore.cer -keystore .keystore.jks
 
-3. keytool -import -v -trustcacerts -alias vn.co.exex.isev -file .keystore.cer -keystore .keystore.cacerts.jks -keypass systemexe -storepass systemexe
+3. keytool -import -v -trustcacerts -alias org.nlh4j -file .keystore.cer -keystore .keystore.cacerts.jks -keypass 01101981 -storepass 01101981
 
-4. jarsigner.exe -verbose -keystore .keystore.cacerts.jks -storepass systemexe -storetype JKS -keypass systemexe target\isev-utilities.jar vn.co.exex.isev
+4. jarsigner.exe -verbose -keystore .keystore.cacerts.jks -storepass 01101981 -storetype JKS -keypass 01101981 target\nlh4j-utilities.jar org.nlh4j

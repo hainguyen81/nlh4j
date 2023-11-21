@@ -8,4 +8,4 @@
 <#assign importServiceNames = ["org.springframework.stereotype.Service"] />
 <#assign importNames = ["org.seasar.doma.Table", "org.seasar.doma.Entity", "org.seasar.doma.Column", "org.seasar.doma.Id", "org.seasar.doma.GeneratedValue", "org.seasar.doma.GenerationType", "lombok.Getter", "lombok.Setter"] />
 <#assign importDtoNames = ["lombok.Data"] />
-<#assign author="exex">
+<#assign author="Hai Nguyen">

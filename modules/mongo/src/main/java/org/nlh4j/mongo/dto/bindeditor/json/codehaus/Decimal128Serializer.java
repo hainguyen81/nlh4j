@@ -1,5 +1,5 @@
 /*
- * @(#)Decimal128Serializer.java 1.0 Aug 28, 2015
+ * @(#)Decimal128Serializer.java
  * Copyright 2015 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.mongo.dto.bindeditor.json.codehaus;

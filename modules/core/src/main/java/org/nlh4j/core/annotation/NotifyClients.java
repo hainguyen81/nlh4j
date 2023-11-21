@@ -1,5 +1,5 @@
 /*
- * @(#)NotifyClients.java 1.0 Mar 12, 2017
+ * @(#)NotifyClients.java
  * Copyright 2017 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.core.annotation;

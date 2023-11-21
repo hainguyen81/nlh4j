@@ -5,7 +5,7 @@
 	<display-name>NLH4J Utilities</display-name>
 	<tlib-version>1.0</tlib-version>
 	<short-name>base-jstl</short-name>
-	<uri>http://nlh4j.org.vn/base-jstl</uri>
+	<uri>http://nlh4j.org/base-jstl</uri>
 	<function>
 		<name>sidebarModules</name>
 		<function-class>org.nlh4j.web.base.util.TagUtils</function-class>

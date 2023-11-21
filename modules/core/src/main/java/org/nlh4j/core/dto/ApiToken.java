@@ -1,5 +1,5 @@
 /*
- * @(#)ApiToken.java 1.0 Apr 10, 2017
+ * @(#)ApiToken.java
  * Copyright 2017 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.core.dto;

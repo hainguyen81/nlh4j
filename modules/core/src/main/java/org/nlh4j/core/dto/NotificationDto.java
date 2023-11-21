@@ -1,6 +1,6 @@
 /*
- * @(#)NotificationDto.java 1.0 Aug 28, 2015 Copyright 2015 by GNU Lesser General Public License (LGPL).
- * All rights reserved.
+ * @(#)NotificationDto.java
+ * Copyright 2015 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.core.dto;
 

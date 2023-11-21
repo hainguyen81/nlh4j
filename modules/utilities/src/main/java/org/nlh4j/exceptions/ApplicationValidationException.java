@@ -1,5 +1,5 @@
 /*
- * @(#)ApplicationInvalidRequestException.java 1.0 Feb 15, 2017
+ * @(#)ApplicationInvalidRequestException.java
  * Copyright 2017 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.exceptions;

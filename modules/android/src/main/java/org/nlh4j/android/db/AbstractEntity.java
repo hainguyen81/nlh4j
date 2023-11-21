@@ -1,5 +1,5 @@
 /*
- * @(#)AbstractEntity.java 1.0 Oct 26, 2016
+ * @(#)AbstractEntity.java
  * Copyright 2016 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.android.db;

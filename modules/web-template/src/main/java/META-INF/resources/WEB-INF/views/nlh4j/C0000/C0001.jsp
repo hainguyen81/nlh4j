@@ -14,10 +14,10 @@
 <!-- ------------------------------------------------- -->
 <%@ include file="/WEB-INF/tags/app/AppCssLibs.inc" %>
 
-<%-- exex - Styles --%>
+<%-- NLH4J - Styles --%>
 <%@ include file="/WEB-INF/tags/app/AppCss.inc" %>
 
-<%-- exex - Screen Style --%>
+<%-- NLH4J - Screen Style --%>
 <nlh4jTags:Css src="C0000/C0001.css" theme="${appTheme}" />
 
 <!-- autocomplete: off, autocorrect: off, autocapitalize: off, spellcheck: false --> 

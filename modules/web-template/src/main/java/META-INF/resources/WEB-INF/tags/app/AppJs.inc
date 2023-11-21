@@ -80,9 +80,9 @@
 <!-- ------------------------------------------------- -->
 <!-- APPLICATION -->
 <!-- ------------------------------------------------- -->
-<%-- exex - Scripts --%>
+<%-- NLH4J - Scripts --%>
 <nlh4jTags:Js src="common/const.js" />
-<%-- exex - Include socket script by profile --%>
+<%-- NLH4J - Include socket script by profile --%>
 <c:if test="${nlh4j:isSocketProfile()}">
 <nlh4jTags:Script>APP_INCLUDES.push('ngStomp')</nlh4jTags:Script>
 </c:if>

@@ -1,5 +1,5 @@
 /*
- * @(#)ResourceGreedyCacheSqlFileRepository.java 1.0 Jan 10, 2017
+ * @(#)ResourceGreedyCacheSqlFileRepository.java
  * Copyright 2017 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package jp.doma.config;

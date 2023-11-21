@@ -1,5 +1,5 @@
 /*
- * @(#)EncryptUtils.java 1.0 Aug 28, 2015
+ * @(#)EncryptUtils.java
  * Copyright 2015 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.util;

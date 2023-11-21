@@ -1,5 +1,5 @@
 /*
- * @(#)IMessageBuilder.java 1.0 Aug 5, 2018
+ * @(#)IMessageBuilder.java
  * Copyright 2018 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.firebase.messaging;

@@ -1,5 +1,5 @@
 /*
- * @(#)AbstractSplashScreenActivity.java 1.0 Oct 25, 2016
+ * @(#)AbstractSplashScreenActivity.java
  * Copyright 2015 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.android.activities;

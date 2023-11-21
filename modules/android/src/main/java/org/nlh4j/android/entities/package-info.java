@@ -1,5 +1,5 @@
 /*
- * @(#)package-info.java 1.0 Nov 15, 2016
+ * @(#)package-info.java
  * Copyright 2015 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 /**

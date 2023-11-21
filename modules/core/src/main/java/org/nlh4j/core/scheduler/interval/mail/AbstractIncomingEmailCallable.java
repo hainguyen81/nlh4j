@@ -1,5 +1,5 @@
 /*
- * @(#)IncomingEmailCallable.java 1.0 Sep 27, 2016
+ * @(#)IncomingEmailCallable.java
  * Copyright 2016 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.core.scheduler.interval.mail;
