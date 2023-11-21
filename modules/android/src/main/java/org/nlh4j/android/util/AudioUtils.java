@@ -1,5 +1,5 @@
 /*
- * @(#)AudioUtils.java 1.0 Nov 12, 2016
+ * @(#)AudioUtils.java
  * Copyright 2015 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.android.util;

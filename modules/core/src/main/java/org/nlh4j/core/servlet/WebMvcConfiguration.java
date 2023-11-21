@@ -1,5 +1,5 @@
 /*
- * @(#)WebMvcConfiguration.java 1.0 Apr 18, 2017
+ * @(#)WebMvcConfiguration.java
  * Copyright 2017 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.core.servlet;

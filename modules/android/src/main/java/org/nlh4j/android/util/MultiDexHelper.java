@@ -1,5 +1,5 @@
 /*
- * @(#)MultiDexHelper.java 1.0 Oct 22, 2016
+ * @(#)MultiDexHelper.java
  * Copyright 2016 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.android.util;

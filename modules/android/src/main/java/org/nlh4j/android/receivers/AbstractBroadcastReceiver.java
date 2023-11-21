@@ -1,5 +1,5 @@
 /*
- * @(#)AbstractBroadcastReceiver.java 1.0 Nov 16, 2016
+ * @(#)AbstractBroadcastReceiver.java
  * Copyright 2016 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.android.receivers;

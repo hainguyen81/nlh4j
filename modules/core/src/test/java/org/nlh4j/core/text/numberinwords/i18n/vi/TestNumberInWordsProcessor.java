@@ -1,5 +1,5 @@
 /*
- * @(#)TestNumberInWordsProcessor.java 1.0 Oct 5, 2016
+ * @(#)TestNumberInWordsProcessor.java
  * Copyright 2016 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.core.text.numberinwords.i18n.vi;

@@ -19,7 +19,7 @@
 <!-- ------------------------------------------------- -->
 <%@ include file="/WEB-INF/tags/app/AppCssLibs.inc" %>
 
-<%-- exex - Styles --%>
+<%-- NLH4J - Styles --%>
 <%@ include file="/WEB-INF/tags/app/AppCss.inc" %>
 
 <!-- ------------------------------------------------- -->
@@ -27,7 +27,7 @@
 <!-- ------------------------------------------------- -->
 <%@ include file="/WEB-INF/tags/app/AppJsLibs.inc" %>
 
-<%-- exex - Scripts --%>
+<%-- NLH4J - Scripts --%>
 <%@ include file="/WEB-INF/tags/app/AppJs.inc" %>
 
 <jsp:doBody />

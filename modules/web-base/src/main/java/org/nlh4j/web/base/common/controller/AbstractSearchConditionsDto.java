@@ -1,5 +1,5 @@
 /*
- * @(#)AbstractSearchConditionsDto.java 1.0 Aug 28, 2015
+ * @(#)AbstractSearchConditionsDto.java
  * Copyright 2015 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.web.base.common.controller;

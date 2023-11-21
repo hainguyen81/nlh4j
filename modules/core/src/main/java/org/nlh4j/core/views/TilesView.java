@@ -1,5 +1,5 @@
 /*
- * @(#)TilesView.java 1.0 Jan 8, 2017
+ * @(#)TilesView.java
  * Copyright 2017 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.core.views;

@@ -1,5 +1,5 @@
 /*
- * @(#)ExcelThumbnailer.java 1.0 May 29, 2015
+ * @(#)ExcelThumbnailer.java
  * Copyright (C) 2011 Come_IN Computerclubs (University of Siegen)
  *
  * This library is free software; you can redistribute it and/or

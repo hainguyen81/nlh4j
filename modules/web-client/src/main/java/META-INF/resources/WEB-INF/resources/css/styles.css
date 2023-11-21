@@ -345,7 +345,7 @@ opacity
 1;
 }
 }
-.exexNotification {
+.nlh4jNotification {
 	margin: 0 0 6px;
 	padding: 15px 15px 15px 50px;
 	width: 300px;
@@ -364,7 +364,7 @@ opacity
 	filter: alpha(opacity = 80);
 }
 
-.exexNotification:hover {
+.nlh4jNotification:hover {
 	-moz-box-shadow: 0 0 12px #000000;
 	-webkit-box-shadow: 0 0 12px #000000;
 	box-shadow: 0 0 12px #000000;

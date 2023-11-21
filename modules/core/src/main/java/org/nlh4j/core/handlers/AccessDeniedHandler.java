@@ -1,5 +1,5 @@
 /*
- * @(#)AccessDeniedHandler.java 1.0 Mar 23, 2017
+ * @(#)AccessDeniedHandler.java
  * Copyright 2017 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.core.handlers;

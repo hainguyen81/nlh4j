@@ -1,5 +1,5 @@
 /*
- * @(#)TestEncryptUtils.java 1.0 Nov 2, 2016
+ * @(#)TestEncryptUtils.java
  * Copyright 2016 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.util;
@@ -66,7 +66,7 @@ public final class TestEncryptUtils implements Serializable {
      */
     @Test
     public void testLicense() {
-        String password = null; //"vn.co.system.exex";
+        String password = null;
         String serialKey = "Serial";
         String licenseIn = "D:/licenseIn.lic";
         String licenseOut = "D:/licenseOut.lic";

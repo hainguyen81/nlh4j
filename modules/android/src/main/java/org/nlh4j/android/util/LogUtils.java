@@ -1,5 +1,5 @@
 /*
- * @(#)LogUtils.java 1.0 Oct 8, 2016
+ * @(#)LogUtils.java
  * Copyright 2016 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.android.util;

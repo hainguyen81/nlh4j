@@ -1,5 +1,5 @@
 /*
- * @(#)CommonsMultipartResolver.java 1.0 Mar 2, 2017
+ * @(#)CommonsMultipartResolver.java
  * Copyright 2017 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.core.handlers;

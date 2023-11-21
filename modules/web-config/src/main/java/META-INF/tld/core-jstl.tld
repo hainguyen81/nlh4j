@@ -5,7 +5,7 @@
 	<display-name>NLH4J JSTL CORE</display-name>
 	<tlib-version>1.0</tlib-version>
 	<short-name>core-jstl</short-name>
-	<uri>http://nlh4j.org.vn/core-jstl</uri>
+	<uri>http://nlh4j.org/core-jstl</uri>
 	<!-- Message JSP tag -->
 	<tag>
 		<description>Retrieves the message with the given code, or text if code isn't resolvable.

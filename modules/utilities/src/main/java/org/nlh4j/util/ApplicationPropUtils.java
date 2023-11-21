@@ -1,5 +1,5 @@
 /*
- * @(#)ApplicationPropUtils.java 1.0 May 29, 2015 Copyright 2015 by GNU Lesser General Public License (LGPL). All
+ * @(#)ApplicationPropUtils.java Copyright 2015 by GNU Lesser General Public License (LGPL). All
  * rights reserved.
  */
 package org.nlh4j.util;

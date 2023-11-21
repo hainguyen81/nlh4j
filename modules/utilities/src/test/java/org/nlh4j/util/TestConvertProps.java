@@ -1,5 +1,5 @@
 /*
- * @(#)TestConvertProps.java 1.0 Dec 27, 2016
+ * @(#)TestConvertProps.java
  * Copyright 2016 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.util;

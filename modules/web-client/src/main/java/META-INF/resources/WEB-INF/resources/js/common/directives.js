@@ -979,7 +979,7 @@ importDirective('datepicker', function($document, $http) {
 			// buttonが押下されたら、datepickerを表示する。
 			angular.element(scope.datepickerTrigger).on('click', function() {
 				angular.element(this).hide();
-				angular.element(element).show().find('.exexDatepicker > input').focus();
+				angular.element(element).show().find('.nlh4jDatepicker > input').focus();
 			});
 			// 背景がクリックされたら閉じる
 			$document.on('click', function(event) {
@@ -1018,7 +1018,7 @@ importDirective('datepicker', function($document, $http) {
 			dateValidation : '=',
 		},
 		link : linker,
-		controller : 'exexDatepcikerController'
+		controller : 'nlh4jDatepcikerController'
 	};
 });
 

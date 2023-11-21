@@ -1,5 +1,5 @@
 /*
- * @(#)AbstractEntityActivity.java 1.0 Oct 27, 2016
+ * @(#)AbstractEntityActivity.java
  * Copyright 2015 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.android.activities;
