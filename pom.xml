@@ -3650,11 +3650,13 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 				https://stackoverflow.com/questions/14013644/hosting-a-maven-repository-on-github/14013645#14013645
 			-->
 			<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+			<!-- Before 2019 -->
+			<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 			<!-- GITHUB site plugin - to push the NLH4J build to NLH4J GITHUB repository -->
-			<plugin>
+			<!--<plugin>
 				<groupId>com.github.github</groupId>
 				<artifactId>site-maven-plugin</artifactId>
-			</plugin>
+			</plugin>-->
 			<!-- Deploy to NLH4J GITHUB Repository SITE -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -3790,11 +3792,13 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 				https://stackoverflow.com/questions/14013644/hosting-a-maven-repository-on-github/14013645#14013645
 			-->
 			<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+			<!-- Before 2019 -->
+			<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 			<!-- GITHUB site plugin - to push the NLH4J build to NLH4J GITHUB repository -->
-			<plugin>
+			<!--<plugin>
 				<groupId>com.github.github</groupId>
 				<artifactId>site-maven-plugin</artifactId>
-			</plugin>
+			</plugin>-->
 			<!-- Deploy to NLH4J GITHUB Repository SITE -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
