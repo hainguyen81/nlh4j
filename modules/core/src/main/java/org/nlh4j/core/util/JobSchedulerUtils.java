@@ -8,29 +8,29 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
 
-import org.quartz.JobKey;
-import org.quartz.Scheduler;
-import org.quartz.SchedulerContext;
-import org.quartz.SchedulerException;
-import org.quartz.Trigger;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Profile;
-import org.springframework.util.Assert;
-
 import org.nlh4j.core.context.profiles.SpringProfiles;
 import org.nlh4j.core.scheduler.BaseIntervalJob;
 import org.nlh4j.core.scheduler.IntervalJob;
 import org.nlh4j.core.scheduler.JobScheduler;
 import org.nlh4j.core.scheduler.JobSchedulerImpl;
 import org.nlh4j.util.BeanUtils;
+import org.quartz.JobKey;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerContext;
+import org.quartz.SchedulerException;
+import org.quartz.Trigger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Profile;
+import org.springframework.util.Assert;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Scheduled job manager utility
  *
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  */
+@Slf4j
 @Profile(value = { SpringProfiles.PROFILE_QUARTZ, SpringProfiles.PROFILE_FULL })
 public final class JobSchedulerUtils implements Serializable {
 
@@ -39,10 +39,6 @@ public final class JobSchedulerUtils implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * slf4j
-	 */
-	protected transient static final Logger logger = LoggerFactory.getLogger(JobSchedulerUtils.class);
 	/** job scheduler */
 	private static JobScheduler _jobScheduler;
 
@@ -245,7 +241,7 @@ public final class JobSchedulerUtils implements Serializable {
 		try {
 			sc = _jobScheduler.getContext();
 		} catch (SchedulerException e) {
-			logger.error("Can not get Spring context from scheduler context. Error: " + e.getMessage());
+			log.error("Can not get Spring context from scheduler context. Error: " + e.getMessage());
 		}
 
 		return (ApplicationContext) sc.get("applicationContext");
@@ -271,7 +267,7 @@ public final class JobSchedulerUtils implements Serializable {
 			schedule(job);
 		}
 		catch (Exception e) {
-			logger.error(e.getMessage(), e);
+			log.error(e.getMessage(), e);
 		}
 	}
 	/**
@@ -291,7 +287,7 @@ public final class JobSchedulerUtils implements Serializable {
 			schedule(job);
 		}
 		catch (Exception e) {
-			logger.error(e.getMessage(), e);
+			log.error(e.getMessage(), e);
 		}
 	}
     /**
@@ -310,7 +306,7 @@ public final class JobSchedulerUtils implements Serializable {
 			schedule(job);
 		}
 		catch (Exception e) {
-			logger.error(e.getMessage(), e);
+			log.error(e.getMessage(), e);
 		}
 	}
     /**
@@ -330,7 +326,7 @@ public final class JobSchedulerUtils implements Serializable {
 			schedule(job);
 		}
 		catch (Exception e) {
-			logger.error(e.getMessage(), e);
+			log.error(e.getMessage(), e);
 		}
 	}
 
@@ -342,12 +338,12 @@ public final class JobSchedulerUtils implements Serializable {
 			// only applying on started scheduler
 			if (JobSchedulerUtils.isStarted()) {
 				// starts old jobs
-				logger.debug("*********************** Regists [ALL OLD JOBS] [START] ***********************");
+				log.debug("*********************** Regists [ALL OLD JOBS] [START] ***********************");
 				reschedulerJobsInStore();
-				logger.debug("*********************** Regists [ALL OLD JOBS] [END] ***********************");
+				log.debug("*********************** Regists [ALL OLD JOBS] [END] ***********************");
 			}
 		} catch (Exception ex) {
-			logger.error(ex.getMessage(), ex);
+			log.error(ex.getMessage(), ex);
 		}
 	}
 
@@ -371,7 +367,7 @@ public final class JobSchedulerUtils implements Serializable {
 			}
 		}
 		catch (Exception ex) {
-			logger.error(ex.getMessage(), ex);
+			log.error(ex.getMessage(), ex);
 		}
 	}
 }

@@ -33,8 +33,6 @@ import org.seasar.doma.jdbc.SqlFileNotFoundException;
 import org.seasar.doma.jdbc.SqlFileRepository;
 import org.seasar.doma.jdbc.SqlNode;
 import org.seasar.doma.jdbc.dialect.Dialect;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -45,6 +43,7 @@ import org.springframework.stereotype.Component;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Extend {@link SqlFileRepository} for classpath repository
@@ -52,6 +51,7 @@ import lombok.Setter;
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  *
  */
+@Slf4j
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 @Singleton
@@ -59,11 +59,6 @@ public class ResourceGreedyCacheSqlFileRepository implements InitializingBean, D
 
     /** */
     private static final long serialVersionUID = 1L;
-
-    /**
-     * SLF4J
-     */
-    private static final Logger logger = LoggerFactory.getLogger(ResourceGreedyCacheSqlFileRepository.class);
 
     /** default SQL cache capacity */
     private static final int DEFAULT_CACHE_CAPACITY = 200;
@@ -253,7 +248,7 @@ public class ResourceGreedyCacheSqlFileRepository implements InitializingBean, D
             	resources = (CollectionUtils.isEmpty(resources)
             			? this.resourceScanner.get(resPath) : resources);
             	if (!CollectionUtils.isEmpty(resources)) {
-            	    logger.debug("Create repository SQL by prefix {" + prefix + "} - path {" + prefix + "/" + resPath + "}");
+            	    log.debug("Create repository SQL by prefix {" + prefix + "} - path {" + prefix + "/" + resPath + "}");
             		Resource resource = (this.isOverride()
             				? resources.get(resources.size() - 1) : resources.get(0));
             		InputStream is = null;
@@ -276,14 +271,14 @@ public class ResourceGreedyCacheSqlFileRepository implements InitializingBean, D
 	                        sql = (this.isOverride() ? this.getContextHelper().searchLastResourceAsString(resourcePath)
 	                                : this.getContextHelper().searchFirstResourceAsString(resourcePath));
 	                        if (StringUtils.hasText(sql)) {
-	                            if (logger.isDebugEnabled()) {
-	                                logger.debug("Found SQL file by pattern [" + resourcePath + "]");
+	                            if (log.isDebugEnabled()) {
+	                                log.debug("Found SQL file by pattern [" + resourcePath + "]");
 	                            }
 	                            sqlMap.put(path, sql);
 	                            break;
 	                        }
-	                        else if (logger.isDebugEnabled()) {
-	                            logger.debug("Not found SQL file by pattern [" + resourcePath + "]");
+	                        else if (log.isDebugEnabled()) {
+	                            log.debug("Not found SQL file by pattern [" + resourcePath + "]");
 	                        }
 	                    }
 	                }
@@ -303,12 +298,12 @@ public class ResourceGreedyCacheSqlFileRepository implements InitializingBean, D
             try {
                 sql = ResourceUtil.getResourceAsString(resPath);
             } catch (Exception e1) {
-                logger.warn(e1.getMessage(), e1);
+                log.warn(e1.getMessage(), e1);
                 // try as current path
                 try {
                     sql = ResourceUtil.getResourceAsString(path);
                 } catch (Exception e2) {
-                    logger.error(e2.getMessage(), e2);
+                    log.error(e2.getMessage(), e2);
                 }
             }
         }
@@ -380,7 +375,7 @@ public class ResourceGreedyCacheSqlFileRepository implements InitializingBean, D
     		    				this.resourceScanner.put(resPath, new LinkedList<Resource>());
     		    			}
     		    			this.resourceScanner.get(resPath).add(resource);
-    		    			logger.debug("Found repository SQL resource path {" + resPath + "}");
+    		    			log.debug("Found repository SQL resource path {" + resPath + "}");
     		    		}
     				}
     			}
