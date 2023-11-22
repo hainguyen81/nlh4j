@@ -4,6 +4,9 @@
  */
 package org.nlh4j.core.annotation;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import org.seasar.doma.AnnotateWith;
 import org.seasar.doma.Annotation;
 import org.seasar.doma.AnnotationTarget;
@@ -17,5 +20,7 @@ import org.springframework.stereotype.Repository;
  */
 @AnnotateWith(annotations = {
 		@Annotation(target = AnnotationTarget.CLASS, type = Repository.class),
-		@Annotation(target = AnnotationTarget.CONSTRUCTOR, type = Autowired.class) })
+		@Annotation(target = AnnotationTarget.CONSTRUCTOR, type = Autowired.class),
+		@Annotation(target = AnnotationTarget.CONSTRUCTOR, type = Inject.class),
+	    @Annotation(target = AnnotationTarget.CONSTRUCTOR_PARAMETER, type = Named.class, elements = "\"config\"") })
 public @interface InjectRepository {}

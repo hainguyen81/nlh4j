@@ -343,6 +343,14 @@
 				<!-- <org.apache.tomcat.version>10.1.15</org.apache.tomcat.version> -->
 				<!-- Tomcat 11.0.x (JDK21+) -->
 				<!-- <org.apache.tomcat.version>11.0.0-M13</org.apache.tomcat.version> -->
+				
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- DATABASE -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- SQL Server -->
+				<sqlserver.groupId>com.microsoft.sqlserver</sqlserver.groupId>
+				<sqlserver.artifactId>mssql-jdbc</sqlserver.artifactId>
+				<sqlserver.version>11.2.3.jre8</sqlserver.version>
 
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- SLF4J -->
@@ -738,6 +746,14 @@
 				<org.apache.tomcat.version>10.1.15</org.apache.tomcat.version>
 				<!-- Tomcat 11.0.x (JDK21+) -->
 				<!-- <org.apache.tomcat.version>11.0.0-M13</org.apache.tomcat.version> -->
+				
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- DATABASE -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- SQL Server -->
+				<sqlserver.groupId>com.microsoft.sqlserver</sqlserver.groupId>
+				<sqlserver.artifactId>mssql-jdbc</sqlserver.artifactId>
+				<sqlserver.version>11.2.3.jre11</sqlserver.version>
 
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- SLF4J -->
@@ -1313,6 +1329,14 @@
 				<org.apache.tomcat.version>10.1.15</org.apache.tomcat.version>
 				<!-- Tomcat 11.0.x (JDK21+) -->
 				<!-- <org.apache.tomcat.version>11.0.0-M13</org.apache.tomcat.version> -->
+				
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- DATABASE -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- SQL Server -->
+				<sqlserver.groupId>com.microsoft.sqlserver</sqlserver.groupId>
+				<sqlserver.artifactId>mssql-jdbc</sqlserver.artifactId>
+				<sqlserver.version>11.2.3.jre17</sqlserver.version>
 
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- SLF4J -->
@@ -2140,10 +2164,6 @@
 		<!-- Tomcat 11.0.x (JDK21+) -->
 		<!-- <org.apache.tomcat.version>11.0.0-M13</org.apache.tomcat.version> -->
 
-		<!-- Quartz -->
-		<quartz.c3p0.version>0.9.1.1</quartz.c3p0.version>
-		<quartz.version>2.2.1</quartz.version>
-
 		<!-- Jackson Json -->
 		<codehaus.jackson-core-asl.version>1.9.13</codehaus.jackson-core-asl.version>
 		<codehaus.jackson-jaxrs.version>1.9.13</codehaus.jackson-jaxrs.version>
@@ -2164,19 +2184,29 @@
 		<jersey.server.version>1.19.2</jersey.server.version>
 		<jersey.spring.version>1.19.2</jersey.spring.version>
 
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- DATABASE -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!-- Datasource -->
-		<com.mchange.c3p0.version>0.9.5.2</com.mchange.c3p0.version>
+		<com.mchange.c3p0.version>0.9.5.5</com.mchange.c3p0.version>
 		<!-- PostgreSQL -->
-		<postgre.version>9.3-1102-jdbc4</postgre.version>
+		<!--<postgre.version>9.3-1102-jdbc4</postgre.version>-->
+		<postgre.version>42.7.0</postgre.version>
 		<!-- SQL Server -->
-		<com.hynnet.sqljdbc4-chs.version>4.0.2206.100</com.hynnet.sqljdbc4-chs.version>
+		<!--<sqlserver.groupId>com.hynnet</sqlserver.groupId>
+		<sqlserver.artifactId></sqlserver.artifactId>
+		<sqlserver.version>sqljdbc4-chs</sqlserver.version>-->
 		<!-- Doma -->
-		<doma.version>1.38.0</doma.version>
+		<!--<doma.version>1.38.0</doma.version>-->
+		<doma.version>2.29.0</doma.version>
 		<javax.inject.version>1</javax.inject.version>
 		<!-- Mongo -->
 		<!-- <mongo.java.driver.version>3.3.0</mongo.java.driver.version> -->
 		<!-- <mongo.java.driver.version>3.6.1</mongo.java.driver.version> -->
 		<mongo.java.driver.version>3.8.0</mongo.java.driver.version>
+
+		<!-- Quartz -->
+		<quartz.version>2.3.2</quartz.version>
 
 		<!-- Hibernate -->
 		<!-- <org.hibernate.version>5.2.10.Final</org.hibernate.version>
@@ -4267,11 +4297,6 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 			</dependency> -->
 
 			<!-- Quartz -->
-			<dependency> <!-- Quartz dependence -->
-				<groupId>c3p0</groupId>
-				<artifactId>c3p0</artifactId>
-				<version>${quartz.c3p0.version}</version>
-			</dependency>
 			<dependency>
 				<groupId>org.quartz-scheduler</groupId>
 				<artifactId>quartz</artifactId>
@@ -4432,9 +4457,9 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 				<version>${postgre.version}</version>
 			</dependency>
 			<dependency> <!-- SQL Server -->
-				<groupId>com.hynnet</groupId>
-				<artifactId>sqljdbc4-chs</artifactId>
-				<version>${com.hynnet.sqljdbc4-chs.version}</version>
+				<groupId>${sqlserver.groupId}</groupId>
+				<artifactId>${sqlserver.artifactId}</artifactId>
+				<version>${sqlserver.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.mongodb</groupId>

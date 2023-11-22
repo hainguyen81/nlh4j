@@ -6,6 +6,7 @@ package jp.doma.config;
 
 import java.io.InputStream;
 import java.io.Serializable;
+import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -195,7 +196,7 @@ public class ResourceGreedyCacheSqlFileRepository implements InitializingBean, D
      * @see org.seasar.doma.jdbc.SqlFileRepository#getSqlFile(java.lang.String, org.seasar.doma.jdbc.dialect.Dialect)
      */
     @Override
-    public final SqlFile getSqlFile(String path, Dialect dialect) {
+    public final SqlFile getSqlFile(Method method, String path, Dialect dialect) {
         // check SQL file
         if (!this.validSqlFile(path)) return null;
         // check valid dialect
@@ -392,6 +393,11 @@ public class ResourceGreedyCacheSqlFileRepository implements InitializingBean, D
 	 */
 	@Override
 	public void destroy() throws Exception {
+		clearCache();
+	}
+	
+	@Override
+	public void clearCache() {
 		this.resourceScanner.clear();
 		this.sqlFileMap.clear();
 		this.sqlMap.clear();

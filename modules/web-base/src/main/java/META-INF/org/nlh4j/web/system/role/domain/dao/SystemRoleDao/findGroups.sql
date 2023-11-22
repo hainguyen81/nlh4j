@@ -67,8 +67,8 @@ AND		(
 /*%end*/
 /*%if conditions != null && @isNotEmpty(conditions.keyword) && conditions.isContain()*/
 AND		(
-				LOWER(rg.code) LIKE LOWER(/* @contain(conditions.keyword) */'abc') escape '$'
-			OR	LOWER(rg.name) LIKE LOWER(/* @contain(conditions.keyword) */'abc') escape '$'
+				LOWER(rg.code) LIKE LOWER(/* @infix(conditions.keyword) */'abc') escape '$'
+			OR	LOWER(rg.name) LIKE LOWER(/* @infix(conditions.keyword) */'abc') escape '$'
 )	
 /*%end*/
 

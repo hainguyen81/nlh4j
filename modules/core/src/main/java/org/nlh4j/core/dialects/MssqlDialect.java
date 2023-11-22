@@ -6,12 +6,11 @@ package org.nlh4j.core.dialects;
 
 import java.io.Serializable;
 
-import org.seasar.doma.expr.ExpressionFunctions;
-import org.seasar.doma.internal.jdbc.sql.PreparedSql;
-import org.seasar.doma.jdbc.JdbcMappingVisitor;
-import org.seasar.doma.jdbc.SqlLogFormattingVisitor;
-
 import org.nlh4j.util.StringUtils;
+import org.seasar.doma.expr.ExpressionFunctions;
+import org.seasar.doma.jdbc.JdbcMappingVisitor;
+import org.seasar.doma.jdbc.PreparedSql;
+import org.seasar.doma.jdbc.SqlLogFormattingVisitor;
 
 /**
  * Custom {@link org.seasar.doma.jdbc.dialect.MssqlDialect}
@@ -52,7 +51,6 @@ public class MssqlDialect extends org.seasar.doma.jdbc.dialect.MssqlDialect impl
     @Override
     public PreparedSql getSequenceNextValSql(String qualifiedSequenceName, long allocationSize) {
         // detect special characters
-        qualifiedSequenceName = StringUtils.refixSqlObjectName(qualifiedSequenceName);
-        return super.getSequenceNextValSql(qualifiedSequenceName, allocationSize);
+        return super.getSequenceNextValSql(StringUtils.refixSqlObjectName(qualifiedSequenceName), allocationSize);
     }
 }
