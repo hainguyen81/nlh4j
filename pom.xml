@@ -261,6 +261,25 @@
 				<!--<spring.springframework.data.mongo.version>4.1.5</spring.springframework.data.mongo.version>-->
 
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring websocket depencencies (javax/jakarta websocket-api) -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- 1.0.x (javax) -->
+				<!--<javax.websocket.groupId>javax.websocket</javax.websocket.groupId>
+				<javax.websocket.artifactId>javax.websocket-api</javax.websocket.artifactId>-->
+				<!--<javax.websocket.version>1.0</javax.websocket.version>-->
+				<!-- 1.1.x (javax) -->
+				<!--<javax.websocket.version>1.1</javax.websocket.version>-->
+				<!-- 1.1.x (jakarta) -->
+				<javax.websocket.groupId>jakarta.websocket</javax.websocket.groupId>
+				<javax.websocket.artifactId>jakarta.websocket-api</javax.websocket.artifactId>
+				<!--<javax.websocket.version>1.1.2</javax.websocket.version>-->
+				<!-- 2.0.x (jakarta - JDK8+) -->
+				<javax.websocket.version>2.0.0</javax.websocket.version>
+				<!-- 2.1.x (jakarta - JDK11+) -->
+				<!--<javax.websocket.version>2.1.0</javax.websocket.version>-->
+				<!--<javax.websocket.version>2.1.1</javax.websocket.version>-->
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Apache HTTP Components (CORE) -->
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- JDK8/11 -->
@@ -309,6 +328,27 @@
 				<!--<http.client.version>5.1.5</http.client.version>-->
 				<!-- 5.2.x -->
 				<!--<http.client.version>5.2.1</http.client.version>-->
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!--
+					 Nimbus - Spring Security JWT Authentication
+					 	Version			JDK
+					 	9.15.x-			8+
+					 	9.20.x+			11+
+			 	-->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- 3.8.x -->
+				<!--<com.nimbusds.jose.jwt.version>3.8</com.nimbusds.jose.jwt.version>-->
+				<!--<com.nimbusds.jose.jwt.version>3.8.2</com.nimbusds.jose.jwt.version>-->
+				<!-- 7.9.x -->
+				<!--<com.nimbusds.jose.jwt.version>7.9</com.nimbusds.jose.jwt.version>-->
+				<!-- 9.15.x (JDK8+) -->
+				<com.nimbusds.jose.jwt.version>9.15.2</com.nimbusds.jose.jwt.version>
+				<!-- 9.31.x (JDK11+) -->
+				<!--<com.nimbusds.jose.jwt.version>9.31</com.nimbusds.jose.jwt.version>-->
+				<!-- 9.37.x (JDK11+) -->
+				<!--<com.nimbusds.jose.jwt.version>9.37</com.nimbusds.jose.jwt.version>-->
+				<!--<com.nimbusds.jose.jwt.version>9.37.1</com.nimbusds.jose.jwt.version>-->
 				
 				<!--
 				Servlet Spec	JSP Spec	EL Spec		WebSocket Spec		Authentication (JASPIC) Spec	Apache Tomcat Version	Latest Released Version		Supported Java Versions
@@ -357,9 +397,9 @@
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- 1.7.x -->
 				<!--<org.slf4j.version>1.7.12</org.slf4j.version>-->
-				<!--<org.slf4j.version>1.7.36</org.slf4j.version>-->
+				<org.slf4j.version>1.7.36</org.slf4j.version>
 				<!-- 2.0.x -->
-				<org.slf4j.version>2.0.9</org.slf4j.version>
+				<!--<org.slf4j.version>2.0.9</org.slf4j.version>-->
 
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!--
@@ -370,11 +410,11 @@
 				<!-- 1.1.x (JDK8) -->
 				<!--<logback.version>1.1.7</logback.version>-->
 				<!-- 1.2.x (JDK8) -->
-				<!--<logback.version>1.2.11</logback.version>-->
+				<logback.version>1.2.11</logback.version>
 				<!--<logback.version>1.2.12</logback.version>-->
-				<!-- 1.3.x (JDK8) -->
-				<logback.version>1.3.11</logback.version>
-				<!-- 1.4.x (JDK11) -->
+				<!-- 1.3.x (JDK11+) -->
+				<!--<logback.version>1.3.11</logback.version>-->
+				<!-- 1.4.x (JDK11+) -->
 				<!--<logback.version>1.4.11</logback.version>-->
 			</properties>
 			<build>
@@ -664,6 +704,25 @@
 				<!--<spring.springframework.data.mongo.version>4.1.5</spring.springframework.data.mongo.version>-->
 
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring websocket depencencies (javax/jakarta websocket-api) -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- 1.0.x (javax) -->
+				<!--<javax.websocket.groupId>javax.websocket</javax.websocket.groupId>
+				<javax.websocket.artifactId>javax.websocket-api</javax.websocket.artifactId>-->
+				<!--<javax.websocket.version>1.0</javax.websocket.version>-->
+				<!-- 1.1.x (javax) -->
+				<!--<javax.websocket.version>1.1</javax.websocket.version>-->
+				<!-- 1.1.x (jakarta) -->
+				<javax.websocket.groupId>jakarta.websocket</javax.websocket.groupId>
+				<javax.websocket.artifactId>jakarta.websocket-api</javax.websocket.artifactId>
+				<!--<javax.websocket.version>1.1.2</javax.websocket.version>-->
+				<!-- 2.0.x (jakarta - JDK8+) -->
+				<!--<javax.websocket.version>2.0.0</javax.websocket.version>-->
+				<!-- 2.1.x (jakarta - JDK11+) -->
+				<!--<javax.websocket.version>2.1.0</javax.websocket.version>-->
+				<javax.websocket.version>2.1.1</javax.websocket.version>
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Apache HTTP Components (CORE) -->
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- JDK8/11 -->
@@ -712,6 +771,27 @@
 				<!--<http.client.version>5.1.5</http.client.version>-->
 				<!-- 5.2.x -->
 				<!--<http.client.version>5.2.1</http.client.version>-->
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!--
+					 Nimbus - Spring Security JWT Authentication
+					 	Version			JDK
+					 	9.15.x-			8+
+					 	9.20.x+			11+
+			 	-->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- 3.8.x -->
+				<!--<com.nimbusds.jose.jwt.version>3.8</com.nimbusds.jose.jwt.version>-->
+				<!--<com.nimbusds.jose.jwt.version>3.8.2</com.nimbusds.jose.jwt.version>-->
+				<!-- 7.9.x -->
+				<!--<com.nimbusds.jose.jwt.version>7.9</com.nimbusds.jose.jwt.version>-->
+				<!-- 9.15.x (JDK8+) -->
+				<!--<com.nimbusds.jose.jwt.version>9.15.2</com.nimbusds.jose.jwt.version>-->
+				<!-- 9.31.x (JDK11+) -->
+				<!--<com.nimbusds.jose.jwt.version>9.31</com.nimbusds.jose.jwt.version>-->
+				<!-- 9.37.x (JDK11+) -->
+				<com.nimbusds.jose.jwt.version>9.37</com.nimbusds.jose.jwt.version>
+				<!--<com.nimbusds.jose.jwt.version>9.37.1</com.nimbusds.jose.jwt.version>-->
 				
 				<!--
 				Servlet Spec	JSP Spec	EL Spec		WebSocket Spec		Authentication (JASPIC) Spec	Apache Tomcat Version	Latest Released Version		Supported Java Versions
@@ -1021,8 +1101,10 @@
 				-->
 				<!-- automatically run annotation processors within the incremental compilation -->
 				<m2e.apt.activation>disabled</m2e.apt.activation>
-				<m2e.apt.processAnnotations>disabled</m2e.apt.processAnnotations>
 				<m2e.apt.aptEnabled>false</m2e.apt.aptEnabled>
+				<org.eclipse.jdt.core.compiler.processAnnotations>disabled</org.eclipse.jdt.core.compiler.processAnnotations>
+				<org.eclipse.jdt.core.compiler.release>disabled</org.eclipse.jdt.core.compiler.release>
+				<org.eclipse.jdt.core.compiler.codegen.useStringConcatFactory>disabled</org.eclipse.jdt.core.compiler.codegen.useStringConcatFactory>
 				
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Maven Plugins -->
@@ -1247,6 +1329,25 @@
 				<spring.springframework.data.mongo.version>4.1.5</spring.springframework.data.mongo.version>
 
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring websocket depencencies (javax/jakarta websocket-api) -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- 1.0.x (javax) -->
+				<!--<javax.websocket.groupId>javax.websocket</javax.websocket.groupId>
+				<javax.websocket.artifactId>javax.websocket-api</javax.websocket.artifactId>-->
+				<!--<javax.websocket.version>1.0</javax.websocket.version>-->
+				<!-- 1.1.x (javax) -->
+				<!--<javax.websocket.version>1.1</javax.websocket.version>-->
+				<!-- 1.1.x (jakarta) -->
+				<javax.websocket.groupId>jakarta.websocket</javax.websocket.groupId>
+				<javax.websocket.artifactId>jakarta.websocket-api</javax.websocket.artifactId>
+				<!--<javax.websocket.version>1.1.2</javax.websocket.version>-->
+				<!-- 2.0.x (jakarta - JDK8+) -->
+				<!--<javax.websocket.version>2.0.0</javax.websocket.version>-->
+				<!-- 2.1.x (jakarta - JDK11+) -->
+				<!--<javax.websocket.version>2.1.0</javax.websocket.version>-->
+				<javax.websocket.version>2.1.1</javax.websocket.version>
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Apache HTTP Components (CORE) -->
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- JDK8/11 -->
@@ -1295,6 +1396,27 @@
 				<!--<http.client.version>5.1.5</http.client.version>-->
 				<!-- 5.2.x -->
 				<http.client.version>5.2.1</http.client.version>
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!--
+					 Nimbus - Spring Security JWT Authentication
+					 	Version			JDK
+					 	9.15.x-			8+
+					 	9.20.x+			11+
+			 	-->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- 3.8.x -->
+				<!--<com.nimbusds.jose.jwt.version>3.8</com.nimbusds.jose.jwt.version>-->
+				<!--<com.nimbusds.jose.jwt.version>3.8.2</com.nimbusds.jose.jwt.version>-->
+				<!-- 7.9.x -->
+				<!--<com.nimbusds.jose.jwt.version>7.9</com.nimbusds.jose.jwt.version>-->
+				<!-- 9.15.x (JDK8+) -->
+				<!--<com.nimbusds.jose.jwt.version>9.15.2</com.nimbusds.jose.jwt.version>-->
+				<!-- 9.31.x (JDK11+) -->
+				<!--<com.nimbusds.jose.jwt.version>9.31</com.nimbusds.jose.jwt.version>-->
+				<!-- 9.37.x (JDK11+) -->
+				<com.nimbusds.jose.jwt.version>9.37</com.nimbusds.jose.jwt.version>
+				<!--<com.nimbusds.jose.jwt.version>9.37.1</com.nimbusds.jose.jwt.version>-->
 				
 				<!--
 				Servlet Spec	JSP Spec	EL Spec		WebSocket Spec		Authentication (JASPIC) Spec	Apache Tomcat Version	Latest Released Version		Supported Java Versions
@@ -1750,8 +1872,10 @@
 
 		<!-- automatically run annotation processors within the incremental compilation -->
 		<m2e.apt.activation>jdt_apt</m2e.apt.activation>
-		<m2e.apt.processAnnotations>enabled</m2e.apt.processAnnotations>
 		<m2e.apt.aptEnabled>true</m2e.apt.aptEnabled>
+		<org.eclipse.jdt.core.compiler.processAnnotations>enabled</org.eclipse.jdt.core.compiler.processAnnotations>
+		<org.eclipse.jdt.core.compiler.codegen.useStringConcatFactory>disabled</org.eclipse.jdt.core.compiler.codegen.useStringConcatFactory>
+		<org.eclipse.jdt.core.compiler.release>disabled</org.eclipse.jdt.core.compiler.release>
 
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!-- Maven Plugins -->
@@ -2050,14 +2174,14 @@
 		<!-- 1.1.x (javax) -->
 		<!--<javax.websocket.version>1.1</javax.websocket.version>-->
 		<!-- 1.1.x (jakarta) -->
-		<javax.websocket.groupId>jakarta.websocket</javax.websocket.groupId>
-		<javax.websocket.artifactId>jakarta.websocket-api</javax.websocket.artifactId>
+		<!--<javax.websocket.groupId>jakarta.websocket</javax.websocket.groupId>
+		<javax.websocket.artifactId>jakarta.websocket-api</javax.websocket.artifactId>-->
 		<!--<javax.websocket.version>1.1.2</javax.websocket.version>-->
 		<!-- 2.0.x (jakarta) -->
 		<!--<javax.websocket.version>2.0.0</javax.websocket.version>-->
 		<!-- 2.1.x (jakarta) -->
 		<!--<javax.websocket.version>2.1.0</javax.websocket.version>-->
-		<javax.websocket.version>2.1.1</javax.websocket.version>
+		<!--<javax.websocket.version>2.1.1</javax.websocket.version>-->
 
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!-- Spring websocket depencencies (Reactor TCP Components - org/io) -->
@@ -2118,17 +2242,24 @@
 		<!--<http.client.version>5.2.3</http.client.version>-->
 
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
-		<!-- Nimbus - Spring Security JWT Authentication -->
+		<!--
+			 Nimbus - Spring Security JWT Authentication
+			 	Version			JDK
+			 	9.15.x-			8+
+			 	9.20.x+			11+
+	 	-->
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!-- 3.8.x -->
 		<!--<com.nimbusds.jose.jwt.version>3.8</com.nimbusds.jose.jwt.version>-->
 		<!--<com.nimbusds.jose.jwt.version>3.8.2</com.nimbusds.jose.jwt.version>-->
 		<!-- 7.9.x -->
 		<!--<com.nimbusds.jose.jwt.version>7.9</com.nimbusds.jose.jwt.version>-->
-		<!-- 9.31.x -->
+		<!-- 9.15.x (JDK8+) -->
+		<!--<com.nimbusds.jose.jwt.version>9.15.2</com.nimbusds.jose.jwt.version>-->
+		<!-- 9.31.x (JDK11+) -->
 		<!--<com.nimbusds.jose.jwt.version>9.31</com.nimbusds.jose.jwt.version>-->
-		<!-- 9.37.x -->
-		<com.nimbusds.jose.jwt.version>9.37</com.nimbusds.jose.jwt.version>
+		<!-- 9.37.x (JDK11+) -->
+		<!--<com.nimbusds.jose.jwt.version>9.37</com.nimbusds.jose.jwt.version>-->
 		<!--<com.nimbusds.jose.jwt.version>9.37.1</com.nimbusds.jose.jwt.version>-->
 
 		<!--
@@ -3109,12 +3240,13 @@ encoding/src/test/java=${project.build.sourceEncoding}
 encoding/src/test/resources=${project.build.sourceEncoding}
 encoding/target/generated-test-sources/test-annotations=${project.build.sourceEncoding}
 org.eclipse.jdt.core.compiler.codegen.targetPlatform=${java.version}
+org.eclipse.jdt.core.compiler.codegen.useStringConcatFactory=${org.eclipse.jdt.core.compiler.codegen.useStringConcatFactory}
 org.eclipse.jdt.core.compiler.compliance=${java.version}
 org.eclipse.jdt.core.compiler.problem.enablePreviewFeatures=disabled
 org.eclipse.jdt.core.compiler.problem.forbiddenReference=warning
 org.eclipse.jdt.core.compiler.problem.reportPreviewFeatures=ignore
-org.eclipse.jdt.core.compiler.processAnnotations=${m2e.apt.processAnnotations}
-org.eclipse.jdt.core.compiler.release=disabled
+org.eclipse.jdt.core.compiler.processAnnotations=${org.eclipse.jdt.core.compiler.processAnnotations}
+org.eclipse.jdt.core.compiler.release=${org.eclipse.jdt.core.compiler.release}
 org.eclipse.jdt.core.compiler.source=${java.version}]]></content>
 							</file>
 							<file>
@@ -3388,7 +3520,8 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 						</execution>
 					</executions>
 					<configuration>
-						<includeDependency>false</includeDependency>
+						<!-- include module dependencies -->
+						<includeDependency>true</includeDependency>
 						<obfuscate>true</obfuscate>
 						<addManifest>true</addManifest>
 						<addMavenDescriptor>true</addMavenDescriptor>
