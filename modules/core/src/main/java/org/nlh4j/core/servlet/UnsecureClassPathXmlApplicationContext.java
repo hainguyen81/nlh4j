@@ -36,6 +36,7 @@ public class UnsecureClassPathXmlApplicationContext
 
 	/** */
 	private static final long serialVersionUID = 1L;
+
 	/** {@link Resource} configuration */
 	private Resource[] configResources;
 	/** {@link ServletContext} */

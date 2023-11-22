@@ -261,7 +261,7 @@ public final class JobSchedulerUtils implements Serializable {
 	public static void schedule(Class<?> jobClass, Date startDt, Map<String, Object> jobData) {
 		Assert.isTrue(BeanUtils.isInstanceOf(jobClass, BaseIntervalJob.class), "Job must be an instance of " + BaseIntervalJob.class.getName());
 		try {
-			BaseIntervalJob job = (BaseIntervalJob) jobClass.newInstance();
+			BaseIntervalJob job = BeanUtils.safeType(BeanUtils.safeNewInstance(jobClass), BaseIntervalJob.class);
 			job.setStartDate(startDt);
 			job.setJobData(jobData);
 			schedule(job);
@@ -281,7 +281,7 @@ public final class JobSchedulerUtils implements Serializable {
     public static void schedule(Class<?> jobClass, Date startDt, String[] jobDataKeys, Object[] jobDataValues) {
 		Assert.isTrue(BeanUtils.isInstanceOf(jobClass, BaseIntervalJob.class), "Job must be an instance of " + BaseIntervalJob.class.getName());
 		try {
-			BaseIntervalJob job = (BaseIntervalJob) jobClass.newInstance();
+			BaseIntervalJob job = BeanUtils.safeType(BeanUtils.safeNewInstance(jobClass), BaseIntervalJob.class);
 			job.setStartDate(startDt);
 			job.setJobData(jobDataKeys, jobDataValues);
 			schedule(job);
@@ -300,7 +300,7 @@ public final class JobSchedulerUtils implements Serializable {
     public static void schedule(Class<?> jobClass, int startTime, Map<String, Object> jobData) {
 		Assert.isTrue(BeanUtils.isInstanceOf(jobClass, BaseIntervalJob.class), "Job must be an instance of " + BaseIntervalJob.class.getName());
 		try {
-			BaseIntervalJob job = (BaseIntervalJob) jobClass.newInstance();
+			BaseIntervalJob job = BeanUtils.safeType(BeanUtils.safeNewInstance(jobClass), BaseIntervalJob.class);
 			job.setStartTime(startTime);
 			job.setJobData(jobData);
 			schedule(job);
@@ -320,7 +320,7 @@ public final class JobSchedulerUtils implements Serializable {
     public static void schedule(Class<?> jobClass, int startTime, String[] jobDataKeys, Object[] jobDataValues) {
 		Assert.isTrue(BeanUtils.isInstanceOf(jobClass, BaseIntervalJob.class), "Job must be an instance of " + BaseIntervalJob.class.getName());
 		try {
-			BaseIntervalJob job = (BaseIntervalJob) jobClass.newInstance();
+			BaseIntervalJob job = BeanUtils.safeType(BeanUtils.safeNewInstance(jobClass), BaseIntervalJob.class);
 			job.setStartTime(startTime);
 			job.setJobData(jobDataKeys, jobDataValues);
 			schedule(job);

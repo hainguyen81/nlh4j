@@ -36,6 +36,7 @@ public final class ApplicationContextProvider implements ApplicationContextAware
 
     /** */
     private static final long serialVersionUID = 1L;
+
 	/** {@link ServletConfig} */
 	private static ServletConfig servletConfig;
 	/** {@link ServletContext} */
