@@ -5,6 +5,7 @@
 package jp.doma.config;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import org.nlh4j.core.servlet.ApplicationContextProvider;
 import org.seasar.doma.SingletonConfig;
@@ -19,7 +20,7 @@ import lombok.Setter;
  *
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  */
-@SingletonConfig
+@Singleton
 public class AppConfig extends DomaConfig {
 
 	/** SQL file repository */

@@ -4,6 +4,7 @@
  */
 package jp.doma.config;
 
+import javax.inject.Singleton;
 import javax.sql.DataSource;
 
 import org.seasar.doma.SingletonConfig;
@@ -17,7 +18,7 @@ import lombok.Setter;
  *
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  */
-@SingletonConfig
+@Singleton
 public class DomaConfig implements Config {
 
 	@Setter
