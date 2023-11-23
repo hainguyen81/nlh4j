@@ -6,6 +6,7 @@ package jp.doma.config;
 
 import javax.sql.DataSource;
 
+import org.seasar.doma.SingletonConfig;
 import org.seasar.doma.jdbc.Config;
 import org.seasar.doma.jdbc.dialect.Dialect;
 
@@ -16,6 +17,7 @@ import lombok.Setter;
  *
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  */
+@SingletonConfig
 public class DomaConfig implements Config {
 
 	@Setter

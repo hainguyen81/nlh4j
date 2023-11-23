@@ -2412,6 +2412,7 @@
 		<avalon-framework-impl.version>4.2.0</avalon-framework-impl.version> -->
 		<avalon-framework-api.version>4.3.1</avalon-framework-api.version>
 		<avalon-framework-impl.version>4.3.1</avalon-framework-impl.version>
+
 		<!-- Barcode4j -->
 		<net.sf.barcode4j.version>2.1</net.sf.barcode4j.version>
 

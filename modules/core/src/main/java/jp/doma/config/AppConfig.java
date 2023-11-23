@@ -7,6 +7,7 @@ package jp.doma.config;
 import javax.inject.Inject;
 
 import org.nlh4j.core.servlet.ApplicationContextProvider;
+import org.seasar.doma.SingletonConfig;
 import org.seasar.doma.jdbc.ConfigSupport;
 import org.seasar.doma.jdbc.SqlFileRepository;
 import org.springframework.context.ApplicationContext;
@@ -18,6 +19,7 @@ import lombok.Setter;
  *
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  */
+@SingletonConfig
 public class AppConfig extends DomaConfig {
 
 	/** SQL file repository */

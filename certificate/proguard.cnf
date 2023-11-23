@@ -139,7 +139,7 @@
 # Turn off this for debugging compiler process --> for making sure all class references should worked well
 #################################################
 # Suppress notes from some packages
-#-dontnote **
+-dontnote **
 
 # Uncomment if you want to have more meaningful backtraces
 # Useful for obfuscation debugging
