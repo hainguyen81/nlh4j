@@ -1819,6 +1819,95 @@
 						- URL: https://github.com/<username>/<repo-name>.git
 					+ For Packages in repository of maven settings.xml:
 						- URL: https://maven.pkg.github.com/<username>
+					+ Maven Settings (settings.xml):
+						+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+						+ GITHUB Packages Respository
+						+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+						- Server for GITHUB Packages Repository:
+							<server>
+								<id>nlh4j_packages_github_repo</id>
+								<username>hainguyen81</username>
+								<password>{{PERSONAL ACCESS TOKEN}}</password>
+								<configuration>
+									<httpConfiguration>
+										<all>
+											<connectionTimeout>360000</connectionTimeout>
+											<readTimeout>360000</readTimeout>
+										</all>
+									</httpConfiguration>
+								</configuration>
+							</server>
+						- Profile for GITHUB Packages repository:
+							<profile>
+								<id>nlh4j.packages.github</id>
+								<repositories>
+									<repository>
+										<id>nlh4j_packages_github_repo</id>
+										<name>NLH4J Packages GitHub Repository</name>
+										<url>https://maven.pkg.github.com/hainguyen81</url>
+									</repository>
+								</repositories>
+								<pluginRepositories>
+									<pluginRepository>
+										<id>nlh4j_packages_github_repo</id>
+										<name>NLH4J Packages GitHub Repository</name>
+										<url>https://maven.pkg.github.com/hainguyen81</url>
+										<layout>default</layout>
+										<snapshots>
+											<enabled>true</enabled>
+										</snapshots>
+										<releases>
+											<updatePolicy>always</updatePolicy>
+										</releases>
+									</pluginRepository>
+								</pluginRepositories>
+						    </profile>
+		
+						+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+						+ GITHUB SITE Respository
+						+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+						- Server for GITHUB SITE Repository:
+							<server>
+								<id>nlh4j_site_github_repo</id>
+								<username>hainguyen81</username>
+								<password>{{PERSONAL ACCESS TOKEN}}</password>
+								<configuration>
+									<httpConfiguration>
+										<all>
+											<connectionTimeout>360000</connectionTimeout>
+											<readTimeout>360000</readTimeout>
+										</all>
+									</httpConfiguration>
+								</configuration>
+							</server>
+						- Profile for GITHUB SITE repository:
+							<profile>
+								<id>nlh4j.site.github</id>
+								<repositories>
+									<repository>
+										<id>nlh4j_site_github_repo</id>
+										<name>NLH4J SITE GitHub Repository</name>
+										<url>https://github.com/hainguyen81/nlh4j-repo.git</url>
+										<snapshots>
+											<enabled>true</enabled>
+											<updatePolicy>always</updatePolicy>
+										</snapshots>
+									</repository>
+								</repositories>
+								<pluginRepositories>
+									<pluginRepository>
+										<id>nlh4j_site_github_repo</id>
+										<name>NLH4J SITE GitHub Packages Repository</name>
+										<url>https://github.com/hainguyen81/nlh4j-repo.git</url>
+										<snapshots>
+											<enabled>true</enabled>
+										</snapshots>
+										<releases>
+											<updatePolicy>always</updatePolicy>
+										</releases>
+									</pluginRepository>
+								</pluginRepositories>
+						    </profile>
 				-->
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- NLH4J GITHUB Repository: Server Configuration -->
@@ -1888,6 +1977,95 @@
 						- URL: https://github.com/<username>/<repo-name>.git
 					+ For Packages in repository of maven settings.xml:
 						- URL: https://maven.pkg.github.com/<username>
+					+ Maven Settings (settings.xml):
+						+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+						+ GITHUB Packages Respository
+						+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+						- Server for GITHUB Packages Repository:
+							<server>
+								<id>nlh4j_packages_github_repo</id>
+								<username>hainguyen81</username>
+								<password>{{PERSONAL ACCESS TOKEN}}</password>
+								<configuration>
+									<httpConfiguration>
+										<all>
+											<connectionTimeout>360000</connectionTimeout>
+											<readTimeout>360000</readTimeout>
+										</all>
+									</httpConfiguration>
+								</configuration>
+							</server>
+						- Profile for GITHUB Packages repository:
+							<profile>
+								<id>nlh4j.packages.github</id>
+								<repositories>
+									<repository>
+										<id>nlh4j_packages_github_repo</id>
+										<name>NLH4J Packages GitHub Repository</name>
+										<url>https://maven.pkg.github.com/hainguyen81</url>
+									</repository>
+								</repositories>
+								<pluginRepositories>
+									<pluginRepository>
+										<id>nlh4j_packages_github_repo</id>
+										<name>NLH4J Packages GitHub Repository</name>
+										<url>https://maven.pkg.github.com/hainguyen81</url>
+										<layout>default</layout>
+										<snapshots>
+											<enabled>true</enabled>
+										</snapshots>
+										<releases>
+											<updatePolicy>always</updatePolicy>
+										</releases>
+									</pluginRepository>
+								</pluginRepositories>
+						    </profile>
+		
+						+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+						+ GITHUB SITE Respository
+						+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+						- Server for GITHUB SITE Repository:
+							<server>
+								<id>nlh4j_site_github_repo</id>
+								<username>hainguyen81</username>
+								<password>{{PERSONAL ACCESS TOKEN}}</password>
+								<configuration>
+									<httpConfiguration>
+										<all>
+											<connectionTimeout>360000</connectionTimeout>
+											<readTimeout>360000</readTimeout>
+										</all>
+									</httpConfiguration>
+								</configuration>
+							</server>
+						- Profile for GITHUB SITE repository:
+							<profile>
+								<id>nlh4j.site.github</id>
+								<repositories>
+									<repository>
+										<id>nlh4j_site_github_repo</id>
+										<name>NLH4J SITE GitHub Repository</name>
+										<url>https://github.com/hainguyen81/nlh4j-repo.git</url>
+										<snapshots>
+											<enabled>true</enabled>
+											<updatePolicy>always</updatePolicy>
+										</snapshots>
+									</repository>
+								</repositories>
+								<pluginRepositories>
+									<pluginRepository>
+										<id>nlh4j_site_github_repo</id>
+										<name>NLH4J SITE GitHub Packages Repository</name>
+										<url>https://github.com/hainguyen81/nlh4j-repo.git</url>
+										<snapshots>
+											<enabled>true</enabled>
+										</snapshots>
+										<releases>
+											<updatePolicy>always</updatePolicy>
+										</releases>
+									</pluginRepository>
+								</pluginRepositories>
+						    </profile>
 				-->
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- NLH4J GITHUB Repository: Server Configuration -->
@@ -2084,6 +2262,95 @@
 				- URL: https://github.com/<username>/<repo-name>.git
 			+ For Packages in repository of maven settings.xml:
 				- URL: https://maven.pkg.github.com/<username>
+			+ Maven Settings (settings.xml):
+				+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+				+ GITHUB Packages Respository
+				+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+				- Server for GITHUB Packages Repository:
+					<server>
+						<id>nlh4j_packages_github_repo</id>
+						<username>hainguyen81</username>
+						<password>{{PERSONAL ACCESS TOKEN}}</password>
+						<configuration>
+							<httpConfiguration>
+								<all>
+									<connectionTimeout>360000</connectionTimeout>
+									<readTimeout>360000</readTimeout>
+								</all>
+							</httpConfiguration>
+						</configuration>
+					</server>
+				- Profile for GITHUB Packages repository:
+					<profile>
+						<id>nlh4j.packages.github</id>
+						<repositories>
+							<repository>
+								<id>nlh4j_packages_github_repo</id>
+								<name>NLH4J Packages GitHub Repository</name>
+								<url>https://maven.pkg.github.com/hainguyen81</url>
+							</repository>
+						</repositories>
+						<pluginRepositories>
+							<pluginRepository>
+								<id>nlh4j_packages_github_repo</id>
+								<name>NLH4J Packages GitHub Repository</name>
+								<url>https://maven.pkg.github.com/hainguyen81</url>
+								<layout>default</layout>
+								<snapshots>
+									<enabled>true</enabled>
+								</snapshots>
+								<releases>
+									<updatePolicy>always</updatePolicy>
+								</releases>
+							</pluginRepository>
+						</pluginRepositories>
+				    </profile>
+
+				+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+				+ GITHUB SITE Respository
+				+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+				- Server for GITHUB SITE Repository:
+					<server>
+						<id>nlh4j_site_github_repo</id>
+						<username>hainguyen81</username>
+						<password>{{PERSONAL ACCESS TOKEN}}</password>
+						<configuration>
+							<httpConfiguration>
+								<all>
+									<connectionTimeout>360000</connectionTimeout>
+									<readTimeout>360000</readTimeout>
+								</all>
+							</httpConfiguration>
+						</configuration>
+					</server>
+				- Profile for GITHUB SITE repository:
+					<profile>
+						<id>nlh4j.site.github</id>
+						<repositories>
+							<repository>
+								<id>nlh4j_site_github_repo</id>
+								<name>NLH4J SITE GitHub Repository</name>
+								<url>https://github.com/hainguyen81/nlh4j-repo.git</url>
+								<snapshots>
+									<enabled>true</enabled>
+									<updatePolicy>always</updatePolicy>
+								</snapshots>
+							</repository>
+						</repositories>
+						<pluginRepositories>
+							<pluginRepository>
+								<id>nlh4j_site_github_repo</id>
+								<name>NLH4J SITE GitHub Packages Repository</name>
+								<url>https://github.com/hainguyen81/nlh4j-repo.git</url>
+								<snapshots>
+									<enabled>true</enabled>
+								</snapshots>
+								<releases>
+									<updatePolicy>always</updatePolicy>
+								</releases>
+							</pluginRepository>
+						</pluginRepositories>
+				    </profile>
 		-->
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!-- NLH4J GITHUB Repository: Server Configuration -->
