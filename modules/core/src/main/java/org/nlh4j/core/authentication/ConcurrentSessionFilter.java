@@ -66,7 +66,7 @@ public class ConcurrentSessionFilter
 	 * Initialize a new instance of {@link ConcurrentSessionFilter}
 	 *
 	 * @param sessionRegistry {@link SessionRegistry}
-	 * @param expiredUrl expired URL
+	 * @param sessionInformationExpiredStrategy {@link SessionInformationExpiredStrategy}
 	 */
     public ConcurrentSessionFilter(SessionRegistry sessionRegistry, SessionInformationExpiredStrategy sessionInformationExpiredStrategy) {
         super(sessionRegistry, sessionInformationExpiredStrategy);

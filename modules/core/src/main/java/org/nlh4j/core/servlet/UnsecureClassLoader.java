@@ -10,11 +10,10 @@ import java.util.AbstractMap;
 import java.util.Collections;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import org.nlh4j.exceptions.ApplicationRuntimeException;
 import org.nlh4j.util.BeanUtils;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * An extended class of {@link ClassLoader} for SecurityException by
@@ -29,14 +28,12 @@ import org.nlh4j.util.BeanUtils;
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  *
  */
+@Slf4j
 public class UnsecureClassLoader extends ClassLoader implements Serializable {
 
 	/** */
 	private static final long serialVersionUID = 1L;
 	protected static final String DECLARE_FIELD_PACKAGE2CERTS = "package2certs";
-
-	/** SLF4J */
-	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	/**
 	 * Initialize a new instance of {@link UnsecureClassLoader}
@@ -79,8 +76,8 @@ public class UnsecureClassLoader extends ClassLoader implements Serializable {
 							 */
 							@Override
 							public Object put(Object key, Object value) {
-								if (logger.isDebugEnabled()) {
-									logger.debug(
+								if (log.isDebugEnabled()) {
+									log.debug(
 											"Attach [" + (value == null ? "NULL" : value.toString())
 											+ "] to check certificate by key ["
 											+ (key == null ? "NULL" : key.toString()) + "]");
@@ -91,7 +88,7 @@ public class UnsecureClassLoader extends ClassLoader implements Serializable {
 	            package2certs.setAccessible(accessible);
         	}
         } catch (Exception e) {
-        	logger.error(e.getMessage(), e);
+        	log.error(e.getMessage(), e);
             throw new ApplicationRuntimeException(e);
         }
     }

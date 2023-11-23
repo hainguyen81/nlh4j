@@ -6,21 +6,18 @@ package org.nlh4j.core.servlet;
 
 import javax.servlet.ServletContextEvent;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import org.nlh4j.core.util.JobSchedulerUtils;
 import org.nlh4j.util.SystemUtils;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @see ServletContextListener
  *
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  */
+@Slf4j
 public class ServletContextListener implements javax.servlet.ServletContextListener {
-
-    /** logger */
-    protected static Logger logger = LoggerFactory.getLogger(ServletContextListener.class);
 
 	/**
 	 * (non-Javadoc)

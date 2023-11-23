@@ -5,24 +5,23 @@
 package jp.doma.config;
 
 import javax.inject.Inject;
-import javax.sql.DataSource;
+import javax.inject.Singleton;
 
-import org.seasar.doma.jdbc.DomaAbstractConfig;
+import org.nlh4j.core.servlet.ApplicationContextProvider;
+import org.seasar.doma.SingletonConfig;
+import org.seasar.doma.jdbc.ConfigSupport;
 import org.seasar.doma.jdbc.SqlFileRepository;
-import org.seasar.doma.jdbc.dialect.Dialect;
 import org.springframework.context.ApplicationContext;
 
 import lombok.Setter;
-import org.nlh4j.core.servlet.ApplicationContextProvider;
 
 /**
  * DOMA application configuration
  *
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  */
-public class AppConfig extends DomaAbstractConfig {
-	protected DataSource dataSource;
-	protected Dialect dialect;
+@Singleton
+public class AppConfig extends DomaConfig {
 
 	/** SQL file repository */
 	@Setter
@@ -65,42 +64,6 @@ public class AppConfig extends DomaAbstractConfig {
 		this.setApplicationContext(applicationContext);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.seasar.doma.jdbc.Config#getDataSource()
-	 */
-	@Override
-	public DataSource getDataSource() {
-		return dataSource;
-	}
-
-	/**
-	 * @param dataSource
-	 *            the dataSource to set
-	 */
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.seasar.doma.jdbc.Config#getDialect()
-	 */
-	@Override
-	public Dialect getDialect() {
-		return dialect;
-	}
-
-	/**
-	 * @param dialect
-	 *            the dialect to set
-	 */
-	public void setDialect(Dialect dialect) {
-		this.dialect = dialect;
-	}
-
 	/* (Non-Javadoc)
 	 * @see org.seasar.doma.jdbc.DomaAbstractConfig#getSqlFileRepository()
 	 */
@@ -110,6 +73,6 @@ public class AppConfig extends DomaAbstractConfig {
 	    if (this.sqlFileRepository == null) {
 	        this.sqlFileRepository = new ResourceGreedyCacheSqlFileRepository(this.getContext());
 	    }
-	    return this.sqlFileRepository;
+	    return ConfigSupport.defaultSqlFileRepository;
 	}
 }
