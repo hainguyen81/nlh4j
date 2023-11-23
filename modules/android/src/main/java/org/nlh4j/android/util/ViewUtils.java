@@ -1,5 +1,5 @@
 /*
- * @(#)ViewUtils.java 1.0 Nov 13, 2016
+ * @(#)ViewUtils.java
  * Copyright 2015 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.android.util;

@@ -1,5 +1,5 @@
 /*
- * @(#)ApplicationContextProvider.java 1.0 Feb 19, 2017
+ * @(#)ApplicationContextProvider.java
  * Copyright 2017 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.core.servlet;
@@ -36,6 +36,7 @@ public final class ApplicationContextProvider implements ApplicationContextAware
 
     /** */
     private static final long serialVersionUID = 1L;
+
 	/** {@link ServletConfig} */
 	private static ServletConfig servletConfig;
 	/** {@link ServletContext} */

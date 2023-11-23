@@ -1,5 +1,5 @@
 /*
- * @(#)LoginAuthenticationFilter.java 1.0 Jun 5, 2015
+ * @(#)LoginAuthenticationFilter.java
  * Copyright 2015 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.core.authentication;

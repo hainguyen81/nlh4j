@@ -1,5 +1,5 @@
 /*
- * @(#)MetricUtils.java 1.0 Oct 28, 2016
+ * @(#)MetricUtils.java
  * Copyright 2016 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.android.util;

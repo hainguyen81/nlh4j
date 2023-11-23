@@ -1,5 +1,5 @@
 /*
- * @(#)BaseUploadParamControllerDto.java 1.0 Feb 13, 2017
+ * @(#)BaseUploadParamControllerDto.java
  * Copyright 2017 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.core.dto;

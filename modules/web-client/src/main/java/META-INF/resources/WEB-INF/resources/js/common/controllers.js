@@ -1530,7 +1530,7 @@ importController(
 
 // controller for date/time picker directive
 importController(
-		'exexDatepickerController',
+		'nlh4jDatepickerController',
 		function($scope, $element, $attrs, $filter) {
 			 var format = $attrs.format || 'dd-MM-yyyy';
 			 $scope.id = $scope.dateId;

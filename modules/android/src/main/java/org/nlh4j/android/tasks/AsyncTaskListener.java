@@ -1,5 +1,5 @@
 /*
- * @(#)AsyncTaskListener.java 1.0 Oct 2, 2016
+ * @(#)AsyncTaskListener.java
  * Copyright 2016 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.android.tasks;

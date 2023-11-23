@@ -1,5 +1,5 @@
 /*
- * @(#)ResponseEntityExceptionHandler.java 1.0 Feb 18, 2017
+ * @(#)ResponseEntityExceptionHandler.java
  * Copyright 2017 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.core.handlers;
@@ -7,6 +7,7 @@ package org.nlh4j.core.handlers;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.inject.Inject;
 
@@ -16,6 +17,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -118,6 +120,7 @@ public class ResponseEntityExceptionHandler
      */
     @Setter
     private String internalServerErrorReason;
+
     /**
      * Get the {@link HttpStatus#INTERNAL_SERVER_ERROR} reason phase
      * @return the {@link HttpStatus#INTERNAL_SERVER_ERROR} reason phase
@@ -194,7 +197,7 @@ public class ResponseEntityExceptionHandler
      * @see org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler#handleExceptionInternal(java.lang.Exception, java.lang.Object, org.springframework.http.HttpHeaders, org.springframework.http.HttpStatus, org.springframework.web.context.request.WebRequest)
      */
     @Override
-    protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    protected ResponseEntity<Object> handleExceptionInternal(Exception ex, @Nullable Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
     	// validation exception
     	if (BeanUtils.isInstanceOf(ex, ApplicationValidationException.class)) {
     		return this.handleValidationException(

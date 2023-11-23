@@ -1,5 +1,5 @@
 /*
- * @(#)ResourceUtils.java 1.0 Oct 25, 2016
+ * @(#)ResourceUtils.java
  * Copyright 2016 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.android.util;

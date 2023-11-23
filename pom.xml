@@ -261,6 +261,25 @@
 				<!--<spring.springframework.data.mongo.version>4.1.5</spring.springframework.data.mongo.version>-->
 
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring websocket depencencies (javax/jakarta websocket-api) -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- 1.0.x (javax) -->
+				<!--<javax.websocket.groupId>javax.websocket</javax.websocket.groupId>
+				<javax.websocket.artifactId>javax.websocket-api</javax.websocket.artifactId>-->
+				<!--<javax.websocket.version>1.0</javax.websocket.version>-->
+				<!-- 1.1.x (javax) -->
+				<!--<javax.websocket.version>1.1</javax.websocket.version>-->
+				<!-- 1.1.x (jakarta) -->
+				<javax.websocket.groupId>jakarta.websocket</javax.websocket.groupId>
+				<javax.websocket.artifactId>jakarta.websocket-api</javax.websocket.artifactId>
+				<!--<javax.websocket.version>1.1.2</javax.websocket.version>-->
+				<!-- 2.0.x (jakarta - JDK8+) -->
+				<javax.websocket.version>2.0.0</javax.websocket.version>
+				<!-- 2.1.x (jakarta - JDK11+) -->
+				<!--<javax.websocket.version>2.1.0</javax.websocket.version>-->
+				<!--<javax.websocket.version>2.1.1</javax.websocket.version>-->
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Apache HTTP Components (CORE) -->
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- JDK8/11 -->
@@ -309,6 +328,27 @@
 				<!--<http.client.version>5.1.5</http.client.version>-->
 				<!-- 5.2.x -->
 				<!--<http.client.version>5.2.1</http.client.version>-->
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!--
+					 Nimbus - Spring Security JWT Authentication
+					 	Version			JDK
+					 	9.15.x-			8+
+					 	9.20.x+			11+
+			 	-->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- 3.8.x -->
+				<!--<com.nimbusds.jose.jwt.version>3.8</com.nimbusds.jose.jwt.version>-->
+				<!--<com.nimbusds.jose.jwt.version>3.8.2</com.nimbusds.jose.jwt.version>-->
+				<!-- 7.9.x -->
+				<!--<com.nimbusds.jose.jwt.version>7.9</com.nimbusds.jose.jwt.version>-->
+				<!-- 9.15.x (JDK8+) -->
+				<com.nimbusds.jose.jwt.version>9.15.2</com.nimbusds.jose.jwt.version>
+				<!-- 9.31.x (JDK11+) -->
+				<!--<com.nimbusds.jose.jwt.version>9.31</com.nimbusds.jose.jwt.version>-->
+				<!-- 9.37.x (JDK11+) -->
+				<!--<com.nimbusds.jose.jwt.version>9.37</com.nimbusds.jose.jwt.version>-->
+				<!--<com.nimbusds.jose.jwt.version>9.37.1</com.nimbusds.jose.jwt.version>-->
 				
 				<!--
 				Servlet Spec	JSP Spec	EL Spec		WebSocket Spec		Authentication (JASPIC) Spec	Apache Tomcat Version	Latest Released Version		Supported Java Versions
@@ -343,6 +383,39 @@
 				<!-- <org.apache.tomcat.version>10.1.15</org.apache.tomcat.version> -->
 				<!-- Tomcat 11.0.x (JDK21+) -->
 				<!-- <org.apache.tomcat.version>11.0.0-M13</org.apache.tomcat.version> -->
+				
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- DATABASE -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- SQL Server -->
+				<sqlserver.groupId>com.microsoft.sqlserver</sqlserver.groupId>
+				<sqlserver.artifactId>mssql-jdbc</sqlserver.artifactId>
+				<sqlserver.version>11.2.3.jre8</sqlserver.version>
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- SLF4J -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- 1.7.x -->
+				<!--<org.slf4j.version>1.7.12</org.slf4j.version>-->
+				<org.slf4j.version>1.7.36</org.slf4j.version>
+				<!-- 2.0.x -->
+				<!--<org.slf4j.version>2.0.9</org.slf4j.version>-->
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!--
+					 LOGBACK
+					 https://logback.qos.ch/dependencies.html
+				-->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- 1.1.x (JDK8) -->
+				<!--<logback.version>1.1.7</logback.version>-->
+				<!-- 1.2.x (JDK8) -->
+				<logback.version>1.2.11</logback.version>
+				<!--<logback.version>1.2.12</logback.version>-->
+				<!-- 1.3.x (JDK11+) -->
+				<!--<logback.version>1.3.11</logback.version>-->
+				<!-- 1.4.x (JDK11+) -->
+				<!--<logback.version>1.4.11</logback.version>-->
 			</properties>
 			<build>
 				<!-- Plugins -->
@@ -631,6 +704,25 @@
 				<!--<spring.springframework.data.mongo.version>4.1.5</spring.springframework.data.mongo.version>-->
 
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring websocket depencencies (javax/jakarta websocket-api) -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- 1.0.x (javax) -->
+				<!--<javax.websocket.groupId>javax.websocket</javax.websocket.groupId>
+				<javax.websocket.artifactId>javax.websocket-api</javax.websocket.artifactId>-->
+				<!--<javax.websocket.version>1.0</javax.websocket.version>-->
+				<!-- 1.1.x (javax) -->
+				<!--<javax.websocket.version>1.1</javax.websocket.version>-->
+				<!-- 1.1.x (jakarta) -->
+				<javax.websocket.groupId>jakarta.websocket</javax.websocket.groupId>
+				<javax.websocket.artifactId>jakarta.websocket-api</javax.websocket.artifactId>
+				<!--<javax.websocket.version>1.1.2</javax.websocket.version>-->
+				<!-- 2.0.x (jakarta - JDK8+) -->
+				<!--<javax.websocket.version>2.0.0</javax.websocket.version>-->
+				<!-- 2.1.x (jakarta - JDK11+) -->
+				<!--<javax.websocket.version>2.1.0</javax.websocket.version>-->
+				<javax.websocket.version>2.1.1</javax.websocket.version>
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Apache HTTP Components (CORE) -->
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- JDK8/11 -->
@@ -679,6 +771,27 @@
 				<!--<http.client.version>5.1.5</http.client.version>-->
 				<!-- 5.2.x -->
 				<!--<http.client.version>5.2.1</http.client.version>-->
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!--
+					 Nimbus - Spring Security JWT Authentication
+					 	Version			JDK
+					 	9.15.x-			8+
+					 	9.20.x+			11+
+			 	-->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- 3.8.x -->
+				<!--<com.nimbusds.jose.jwt.version>3.8</com.nimbusds.jose.jwt.version>-->
+				<!--<com.nimbusds.jose.jwt.version>3.8.2</com.nimbusds.jose.jwt.version>-->
+				<!-- 7.9.x -->
+				<!--<com.nimbusds.jose.jwt.version>7.9</com.nimbusds.jose.jwt.version>-->
+				<!-- 9.15.x (JDK8+) -->
+				<!--<com.nimbusds.jose.jwt.version>9.15.2</com.nimbusds.jose.jwt.version>-->
+				<!-- 9.31.x (JDK11+) -->
+				<!--<com.nimbusds.jose.jwt.version>9.31</com.nimbusds.jose.jwt.version>-->
+				<!-- 9.37.x (JDK11+) -->
+				<com.nimbusds.jose.jwt.version>9.37</com.nimbusds.jose.jwt.version>
+				<!--<com.nimbusds.jose.jwt.version>9.37.1</com.nimbusds.jose.jwt.version>-->
 				
 				<!--
 				Servlet Spec	JSP Spec	EL Spec		WebSocket Spec		Authentication (JASPIC) Spec	Apache Tomcat Version	Latest Released Version		Supported Java Versions
@@ -713,6 +826,39 @@
 				<org.apache.tomcat.version>10.1.15</org.apache.tomcat.version>
 				<!-- Tomcat 11.0.x (JDK21+) -->
 				<!-- <org.apache.tomcat.version>11.0.0-M13</org.apache.tomcat.version> -->
+				
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- DATABASE -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- SQL Server -->
+				<sqlserver.groupId>com.microsoft.sqlserver</sqlserver.groupId>
+				<sqlserver.artifactId>mssql-jdbc</sqlserver.artifactId>
+				<sqlserver.version>11.2.3.jre11</sqlserver.version>
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- SLF4J -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- 1.7.x -->
+				<!--<org.slf4j.version>1.7.12</org.slf4j.version>-->
+				<!--<org.slf4j.version>1.7.36</org.slf4j.version>-->
+				<!-- 2.0.x -->
+				<org.slf4j.version>2.0.9</org.slf4j.version>
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!--
+					 LOGBACK
+					 https://logback.qos.ch/dependencies.html
+				-->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- 1.1.x (JDK8) -->
+				<!--<logback.version>1.1.7</logback.version>-->
+				<!-- 1.2.x (JDK8) -->
+				<!--<logback.version>1.2.11</logback.version>-->
+				<!--<logback.version>1.2.12</logback.version>-->
+				<!-- 1.3.x (JDK8) -->
+				<!--<logback.version>1.3.11</logback.version>-->
+				<!-- 1.4.x (JDK11) -->
+				<logback.version>1.4.11</logback.version>
 			</properties>
 			<build>
 				<!-- Plugins -->
@@ -955,8 +1101,10 @@
 				-->
 				<!-- automatically run annotation processors within the incremental compilation -->
 				<m2e.apt.activation>disabled</m2e.apt.activation>
-				<m2e.apt.processAnnotations>disabled</m2e.apt.processAnnotations>
 				<m2e.apt.aptEnabled>false</m2e.apt.aptEnabled>
+				<org.eclipse.jdt.core.compiler.processAnnotations>disabled</org.eclipse.jdt.core.compiler.processAnnotations>
+				<org.eclipse.jdt.core.compiler.release>disabled</org.eclipse.jdt.core.compiler.release>
+				<org.eclipse.jdt.core.compiler.codegen.useStringConcatFactory>disabled</org.eclipse.jdt.core.compiler.codegen.useStringConcatFactory>
 				
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Maven Plugins -->
@@ -1181,6 +1329,25 @@
 				<spring.springframework.data.mongo.version>4.1.5</spring.springframework.data.mongo.version>
 
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Spring websocket depencencies (javax/jakarta websocket-api) -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- 1.0.x (javax) -->
+				<!--<javax.websocket.groupId>javax.websocket</javax.websocket.groupId>
+				<javax.websocket.artifactId>javax.websocket-api</javax.websocket.artifactId>-->
+				<!--<javax.websocket.version>1.0</javax.websocket.version>-->
+				<!-- 1.1.x (javax) -->
+				<!--<javax.websocket.version>1.1</javax.websocket.version>-->
+				<!-- 1.1.x (jakarta) -->
+				<javax.websocket.groupId>jakarta.websocket</javax.websocket.groupId>
+				<javax.websocket.artifactId>jakarta.websocket-api</javax.websocket.artifactId>
+				<!--<javax.websocket.version>1.1.2</javax.websocket.version>-->
+				<!-- 2.0.x (jakarta - JDK8+) -->
+				<!--<javax.websocket.version>2.0.0</javax.websocket.version>-->
+				<!-- 2.1.x (jakarta - JDK11+) -->
+				<!--<javax.websocket.version>2.1.0</javax.websocket.version>-->
+				<javax.websocket.version>2.1.1</javax.websocket.version>
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Apache HTTP Components (CORE) -->
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- JDK8/11 -->
@@ -1229,6 +1396,27 @@
 				<!--<http.client.version>5.1.5</http.client.version>-->
 				<!-- 5.2.x -->
 				<http.client.version>5.2.1</http.client.version>
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!--
+					 Nimbus - Spring Security JWT Authentication
+					 	Version			JDK
+					 	9.15.x-			8+
+					 	9.20.x+			11+
+			 	-->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- 3.8.x -->
+				<!--<com.nimbusds.jose.jwt.version>3.8</com.nimbusds.jose.jwt.version>-->
+				<!--<com.nimbusds.jose.jwt.version>3.8.2</com.nimbusds.jose.jwt.version>-->
+				<!-- 7.9.x -->
+				<!--<com.nimbusds.jose.jwt.version>7.9</com.nimbusds.jose.jwt.version>-->
+				<!-- 9.15.x (JDK8+) -->
+				<!--<com.nimbusds.jose.jwt.version>9.15.2</com.nimbusds.jose.jwt.version>-->
+				<!-- 9.31.x (JDK11+) -->
+				<!--<com.nimbusds.jose.jwt.version>9.31</com.nimbusds.jose.jwt.version>-->
+				<!-- 9.37.x (JDK11+) -->
+				<com.nimbusds.jose.jwt.version>9.37</com.nimbusds.jose.jwt.version>
+				<!--<com.nimbusds.jose.jwt.version>9.37.1</com.nimbusds.jose.jwt.version>-->
 				
 				<!--
 				Servlet Spec	JSP Spec	EL Spec		WebSocket Spec		Authentication (JASPIC) Spec	Apache Tomcat Version	Latest Released Version		Supported Java Versions
@@ -1263,6 +1451,39 @@
 				<org.apache.tomcat.version>10.1.15</org.apache.tomcat.version>
 				<!-- Tomcat 11.0.x (JDK21+) -->
 				<!-- <org.apache.tomcat.version>11.0.0-M13</org.apache.tomcat.version> -->
+				
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- DATABASE -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- SQL Server -->
+				<sqlserver.groupId>com.microsoft.sqlserver</sqlserver.groupId>
+				<sqlserver.artifactId>mssql-jdbc</sqlserver.artifactId>
+				<sqlserver.version>11.2.3.jre17</sqlserver.version>
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- SLF4J -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- 1.7.x -->
+				<!--<org.slf4j.version>1.7.12</org.slf4j.version>-->
+				<!--<org.slf4j.version>1.7.36</org.slf4j.version>-->
+				<!-- 2.0.x -->
+				<org.slf4j.version>2.0.9</org.slf4j.version>
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!--
+					 LOGBACK
+					 https://logback.qos.ch/dependencies.html
+				-->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- 1.1.x (JDK8) -->
+				<!--<logback.version>1.1.7</logback.version>-->
+				<!-- 1.2.x (JDK8) -->
+				<!--<logback.version>1.2.11</logback.version>-->
+				<!--<logback.version>1.2.12</logback.version>-->
+				<!-- 1.3.x (JDK8) -->
+				<!--<logback.version>1.3.11</logback.version>-->
+				<!-- 1.4.x (JDK11) -->
+				<logback.version>1.4.11</logback.version>
 			</properties>
 			<build>
 				<!-- Plugins -->
@@ -1583,6 +1804,163 @@
             </build>
         </profile>
 
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- To deploy to GITHUB repository -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<profile>
+			<id>github-packages-repository</id>
+			<properties>
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!--
+					NLH4J GITHUB Repository SITE plugin:
+					https://github.com/github/maven-plugins#readme
+					https://stackoverflow.com/questions/14013644/hosting-a-maven-repository-on-github/14013645#14013645
+					+ For Site in repository of maven settings.xml:
+						- URL: https://github.com/<username>/<repo-name>.git
+					+ For Packages in repository of maven settings.xml:
+						- URL: https://maven.pkg.github.com/<username>
+				-->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- NLH4J GITHUB Repository: Server Configuration -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Server configuration from maven settings.xml -->
+				<github.global.server>nlh4j_packages_github_repo</github.global.server>
+				<!--<github.global.repo.name>nlh4j-repo/${revision}</github.global.repo.name>
+				<github.global.repo.owner>hainguyen81</github.global.repo.owner>-->
+				<!-- site plugin -->
+				<!--<maven.github.repo.deployment>${root.basedir}/.github-repo/${revision}</maven.github.repo.deployment>
+				<maven.github.repo.branch>refs/heads/${revision}</maven.github.repo.branch>
+				<maven.github.repo.path>nlh4j/${revision}</maven.github.repo.path>
+				<maven.github.site.force>true</maven.github.site.force>
+				<maven.github.site.merge>true</maven.github.site.merge>-->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- NLH4J GITHUB Repository: Before 2019 (use github site as repository) -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!--<maven.github.site.version>0.12</maven.github.site.version>
+				<maven.github.site.skip>true</maven.github.site.skip>-->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- NLH4J GITHUB Repository: From 2019 (use github packages as repository) -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<maven.deploy.version>3.1.1</maven.deploy.version>
+				<maven.deploy.skip>false</maven.deploy.skip>
+			</properties>
+			<!-- Repositories for deployment: GITHUB repository -->
+			<distributionManagement>
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- NLH4J GITHUB Repository: Before 2019 (use github site as repository) -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!--<repository>
+			        <id>nlh4j.github.repo</id>
+			        <name>NLH4J GITHUB Site Repository</name>
+			        <url>file://${maven.github.repo.deployment}</url>
+			    </repository>-->
+			    <!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- NLH4J GITHUB Repository: From 2019 (use github site as repository) -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+			    <repository>
+					<id>${github.global.server}</id>
+					<name>NLH4J GitHub Repository</name>
+					<url>https://maven.pkg.github.com/${github.global.repo.owner}/${github.global.repo.name}</url>
+				</repository>
+		
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- TODO Deprecated: Nexus Staging Repository -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+			    <!--<snapshotRepository>
+					<id>${maven.nexus.staging.serverId}</id>
+					<url>${maven.nexus.staging.nexusUrl}</url>
+				</snapshotRepository>-->
+			</distributionManagement>
+		</profile>
+
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- To deploy to GITHUB site (using as repository) -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<profile>
+			<id>github-site-repository</id>
+			<properties>
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!--
+					NLH4J GITHUB Repository SITE plugin:
+					https://github.com/github/maven-plugins#readme
+					https://stackoverflow.com/questions/14013644/hosting-a-maven-repository-on-github/14013645#14013645
+					+ For Site in repository of maven settings.xml:
+						- URL: https://github.com/<username>/<repo-name>.git
+					+ For Packages in repository of maven settings.xml:
+						- URL: https://maven.pkg.github.com/<username>
+				-->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- NLH4J GITHUB Repository: Server Configuration -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Server configuration from maven settings.xml -->
+				<github.global.server>nlh4j_site_github_repo</github.global.server>
+				<!--<github.global.repo.name>nlh4j-repo/${revision}</github.global.repo.name>
+				<github.global.repo.owner>hainguyen81</github.global.repo.owner>-->
+				<!-- site plugin -->
+				<!--<maven.github.repo.deployment>${root.basedir}/.github-repo/${revision}</maven.github.repo.deployment>
+				<maven.github.repo.branch>refs/heads/${revision}</maven.github.repo.branch>
+				<maven.github.repo.path>nlh4j/${revision}</maven.github.repo.path>
+				<maven.github.site.force>true</maven.github.site.force>
+				<maven.github.site.merge>true</maven.github.site.merge>-->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- NLH4J GITHUB Repository: Before 2019 (use github site as repository) -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<maven.github.site.version>0.12</maven.github.site.version>
+				<maven.github.site.skip>false</maven.github.site.skip>
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- NLH4J GITHUB Repository: From 2019 (use github packages as repository) -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<maven.deploy.version>3.1.1</maven.deploy.version>
+				<maven.deploy.skip>false</maven.deploy.skip>
+			</properties>
+			<build>
+				<pluginManagement>
+					<plugins>
+						<!-- Deploy to NLH4J GITHUB Repository SITE (From 2019: use github packages as repository) -->
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-deploy-plugin</artifactId>
+							<version>${maven.deploy.version}</version>
+							<configuration>
+								<!--
+									 NLH4J GITHUB Repository: Before 2019 (use github site as repository)
+									 Deploy to local repository before publishing to github site
+								-->
+								<altDeploymentRepository>nlh4j.github.local.repo::default::file://${maven.github.repo.deployment}</altDeploymentRepository>
+							</configuration>
+		    			</plugin>
+					</plugins>
+				</pluginManagement>
+			</build>
+			<!-- Repositories for deployment: GITHUB repository -->
+			<distributionManagement>
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- NLH4J GITHUB Repository: Before 2019 (use github site as repository) -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<repository>
+			        <id>nlh4j.github.local.repo</id>
+			        <name>NLH4J GITHUB Site Local Repository</name>
+			        <url>file://${maven.github.repo.deployment}</url>
+			    </repository>
+			    <!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- NLH4J GITHUB Repository: From 2019 (use github packages as repository) -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+			    <!--<repository>
+					<id>${github.global.server}</id>
+					<name>NLH4J GitHub Repository</name>
+					<url>https://maven.pkg.github.com/${github.global.repo.owner}/${github.global.repo.name}</url>
+				</repository>-->
+		
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- TODO Deprecated: Nexus Staging Repository -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+			    <!--<snapshotRepository>
+					<id>${maven.nexus.staging.serverId}</id>
+					<url>${maven.nexus.staging.nexusUrl}</url>
+				</snapshotRepository>-->
+			</distributionManagement>
+		</profile>
+
 		<!-- The configuration of the development profile -->
 		<profile>
 			<id>dev</id>
@@ -1651,8 +2029,10 @@
 
 		<!-- automatically run annotation processors within the incremental compilation -->
 		<m2e.apt.activation>jdt_apt</m2e.apt.activation>
-		<m2e.apt.processAnnotations>enabled</m2e.apt.processAnnotations>
 		<m2e.apt.aptEnabled>true</m2e.apt.aptEnabled>
+		<org.eclipse.jdt.core.compiler.processAnnotations>enabled</org.eclipse.jdt.core.compiler.processAnnotations>
+		<org.eclipse.jdt.core.compiler.codegen.useStringConcatFactory>disabled</org.eclipse.jdt.core.compiler.codegen.useStringConcatFactory>
+		<org.eclipse.jdt.core.compiler.release>disabled</org.eclipse.jdt.core.compiler.release>
 
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!-- Maven Plugins -->
@@ -1700,34 +2080,41 @@
 			NLH4J GITHUB Repository SITE plugin:
 			https://github.com/github/maven-plugins#readme
 			https://stackoverflow.com/questions/14013644/hosting-a-maven-repository-on-github/14013645#14013645
+			+ For Site in repository of maven settings.xml:
+				- URL: https://github.com/<username>/<repo-name>.git
+			+ For Packages in repository of maven settings.xml:
+				- URL: https://maven.pkg.github.com/<username>
 		-->
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
-		<!-- NLH4J GITHUB Repository: Before 2019 -->
+		<!-- NLH4J GITHUB Repository: Server Configuration -->
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
-		<!-- site plugin -->
-		<!--<maven.github.repo.deployment>${root.basedir}/.github-repo/${revision}</maven.github.repo.deployment>
-		<maven.github.repo.branch>refs/heads/${revision}</maven.github.repo.branch>
-		<maven.github.repo.path>nlh4j/${revision}</maven.github.repo.path>
-		<maven.github.site.force>true</maven.github.site.force>
-		<maven.github.site.merge>true</maven.github.site.merge>-->
-		<!-- configured server in maven settings.xml -->
-		<!--<github.global.server>nlh4j_github_repo</github.global.server>
-		<github.global.repo.name>nlh4j-repo</github.global.repo.name>
-		<github.global.repo.owner>hainguyen81</github.global.repo.owner>
-		<maven.github.site.version>0.12</maven.github.site.version>
-		<maven.deploy.version>3.1.1</maven.deploy.version>-->
-		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
-		<!-- NLH4J GITHUB Repository: From 2019 -->
-		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Server configuration from maven settings.xml -->
 		<github.global.server>nlh4j_github_repo</github.global.server>
 		<github.global.repo.name>nlh4j-repo/${revision}</github.global.repo.name>
 		<github.global.repo.owner>hainguyen81</github.global.repo.owner>
+		<!-- site plugin -->
+		<maven.github.repo.deployment>${root.basedir}/.github-repo/${revision}</maven.github.repo.deployment>
+		<maven.github.repo.branch>refs/heads/${revision}</maven.github.repo.branch>
+		<maven.github.repo.path>nlh4j/${revision}</maven.github.repo.path>
+		<maven.github.site.force>true</maven.github.site.force>
+		<maven.github.site.merge>true</maven.github.site.merge>
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- NLH4J GITHUB Repository: Before 2019 (use github site as repository) -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<maven.github.site.version>0.12</maven.github.site.version>
+		<maven.github.site.skip>true</maven.github.site.skip>
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- NLH4J GITHUB Repository: From 2019 (use github packages as repository) -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<maven.deploy.version>3.1.1</maven.deploy.version>
+		<maven.deploy.skip>true</maven.deploy.skip>
 
-		<!-- Deploy using maven nexus staging plugin -->
-		<maven.nexus.staging.version>1.6.13</maven.nexus.staging.version>
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- TODO Deprecated: Deploy using maven nexus staging plugin -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!--<maven.nexus.staging.version>1.6.13</maven.nexus.staging.version>
 		<maven.nexus.staging.serverId>${maven.github.repo.settings.name}</maven.nexus.staging.serverId>
-		<maven.nexus.staging.nexusUrl>https://github.com/hainguyen81/nlh4j-repo.git</maven.nexus.staging.nexusUrl>
+		<maven.nexus.staging.nexusUrl>https://github.com/hainguyen81/nlh4j-repo.git</maven.nexus.staging.nexusUrl>-->
 
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!-- Servlet -->
@@ -1951,14 +2338,14 @@
 		<!-- 1.1.x (javax) -->
 		<!--<javax.websocket.version>1.1</javax.websocket.version>-->
 		<!-- 1.1.x (jakarta) -->
-		<javax.websocket.groupId>jakarta.websocket</javax.websocket.groupId>
-		<javax.websocket.artifactId>jakarta.websocket-api</javax.websocket.artifactId>
+		<!--<javax.websocket.groupId>jakarta.websocket</javax.websocket.groupId>
+		<javax.websocket.artifactId>jakarta.websocket-api</javax.websocket.artifactId>-->
 		<!--<javax.websocket.version>1.1.2</javax.websocket.version>-->
 		<!-- 2.0.x (jakarta) -->
 		<!--<javax.websocket.version>2.0.0</javax.websocket.version>-->
 		<!-- 2.1.x (jakarta) -->
 		<!--<javax.websocket.version>2.1.0</javax.websocket.version>-->
-		<javax.websocket.version>2.1.1</javax.websocket.version>
+		<!--<javax.websocket.version>2.1.1</javax.websocket.version>-->
 
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!-- Spring websocket depencencies (Reactor TCP Components - org/io) -->
@@ -2019,17 +2406,24 @@
 		<!--<http.client.version>5.2.3</http.client.version>-->
 
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
-		<!-- Nimbus - Spring Security JWT Authentication -->
+		<!--
+			 Nimbus - Spring Security JWT Authentication
+			 	Version			JDK
+			 	9.15.x-			8+
+			 	9.20.x+			11+
+	 	-->
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!-- 3.8.x -->
 		<!--<com.nimbusds.jose.jwt.version>3.8</com.nimbusds.jose.jwt.version>-->
 		<!--<com.nimbusds.jose.jwt.version>3.8.2</com.nimbusds.jose.jwt.version>-->
 		<!-- 7.9.x -->
 		<!--<com.nimbusds.jose.jwt.version>7.9</com.nimbusds.jose.jwt.version>-->
-		<!-- 9.31.x -->
+		<!-- 9.15.x (JDK8+) -->
+		<!--<com.nimbusds.jose.jwt.version>9.15.2</com.nimbusds.jose.jwt.version>-->
+		<!-- 9.31.x (JDK11+) -->
 		<!--<com.nimbusds.jose.jwt.version>9.31</com.nimbusds.jose.jwt.version>-->
-		<!-- 9.37.x -->
-		<com.nimbusds.jose.jwt.version>9.37</com.nimbusds.jose.jwt.version>
+		<!-- 9.37.x (JDK11+) -->
+		<!--<com.nimbusds.jose.jwt.version>9.37</com.nimbusds.jose.jwt.version>-->
 		<!--<com.nimbusds.jose.jwt.version>9.37.1</com.nimbusds.jose.jwt.version>-->
 
 		<!--
@@ -2065,10 +2459,6 @@
 		<!-- Tomcat 11.0.x (JDK21+) -->
 		<!-- <org.apache.tomcat.version>11.0.0-M13</org.apache.tomcat.version> -->
 
-		<!-- Quartz -->
-		<quartz.c3p0.version>0.9.1.1</quartz.c3p0.version>
-		<quartz.version>2.2.1</quartz.version>
-
 		<!-- Jackson Json -->
 		<codehaus.jackson-core-asl.version>1.9.13</codehaus.jackson-core-asl.version>
 		<codehaus.jackson-jaxrs.version>1.9.13</codehaus.jackson-jaxrs.version>
@@ -2089,29 +2479,35 @@
 		<jersey.server.version>1.19.2</jersey.server.version>
 		<jersey.spring.version>1.19.2</jersey.spring.version>
 
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- DATABASE -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!-- Datasource -->
-		<com.mchange.c3p0.version>0.9.5.2</com.mchange.c3p0.version>
+		<com.mchange.c3p0.version>0.9.5.5</com.mchange.c3p0.version>
 		<!-- PostgreSQL -->
-		<postgre.version>9.3-1102-jdbc4</postgre.version>
+		<!--<postgre.version>9.3-1102-jdbc4</postgre.version>-->
+		<postgre.version>42.7.0</postgre.version>
 		<!-- SQL Server -->
-		<com.hynnet.sqljdbc4-chs.version>4.0.2206.100</com.hynnet.sqljdbc4-chs.version>
+		<!--<sqlserver.groupId>com.hynnet</sqlserver.groupId>
+		<sqlserver.artifactId></sqlserver.artifactId>
+		<sqlserver.version>sqljdbc4-chs</sqlserver.version>-->
 		<!-- Doma -->
-		<doma.version>1.38.0</doma.version>
+		<!--<doma.version>1.38.0</doma.version>-->
+		<doma.version>2.29.0</doma.version>
 		<javax.inject.version>1</javax.inject.version>
 		<!-- Mongo -->
 		<!-- <mongo.java.driver.version>3.3.0</mongo.java.driver.version> -->
 		<!-- <mongo.java.driver.version>3.6.1</mongo.java.driver.version> -->
 		<mongo.java.driver.version>3.8.0</mongo.java.driver.version>
 
+		<!-- Quartz -->
+		<quartz.version>2.3.2</quartz.version>
+
 		<!-- Hibernate -->
 		<!-- <org.hibernate.version>5.2.10.Final</org.hibernate.version>
 		<org.hibernate.javax.persistence.version>1.0.0.Final</org.hibernate.javax.persistence.version>
 		<org.hibernate.common-annotations.version>5.0.1.Final</org.hibernate.common-annotations.version> -->
 		<org.hibernate.validator.version>5.1.0.Final</org.hibernate.validator.version>
-
-		<!-- SLF4J -->
-		<org.slf4j.version>1.7.12</org.slf4j.version>
-		<logback.version>1.1.7</logback.version>
 
 		<!-- Mail -->
 		<javax.mail.version>1.4.7</javax.mail.version>
@@ -2180,6 +2576,7 @@
 		<avalon-framework-impl.version>4.2.0</avalon-framework-impl.version> -->
 		<avalon-framework-api.version>4.3.1</avalon-framework-api.version>
 		<avalon-framework-impl.version>4.3.1</avalon-framework-impl.version>
+
 		<!-- Barcode4j -->
 		<net.sf.barcode4j.version>2.1</net.sf.barcode4j.version>
 
@@ -2381,8 +2778,8 @@
 							        <mkdir dir="${project.basedir}/src/main/resources" />
 							        <mkdir dir="${project.basedir}/src/test/java" />
 							        <mkdir dir="${project.basedir}/src/test/resources" />
-							        <!-- NLH4J GITHUB Repository: Before 2019 -->
-							        <!--<mkdir dir="${maven.github.repo.deployment}" />-->
+							        <!-- NLH4J GITHUB Repository: Before 2019 (use github site as repository) -->
+							        <mkdir dir="${maven.github.repo.deployment}" />
 							    </target>
 							    <target name="ensure-dependency-unpack-directories"
 							    unless="${maven.dependency.unpack.skip}">
@@ -3008,12 +3405,13 @@ encoding/src/test/java=${project.build.sourceEncoding}
 encoding/src/test/resources=${project.build.sourceEncoding}
 encoding/target/generated-test-sources/test-annotations=${project.build.sourceEncoding}
 org.eclipse.jdt.core.compiler.codegen.targetPlatform=${java.version}
+org.eclipse.jdt.core.compiler.codegen.useStringConcatFactory=${org.eclipse.jdt.core.compiler.codegen.useStringConcatFactory}
 org.eclipse.jdt.core.compiler.compliance=${java.version}
 org.eclipse.jdt.core.compiler.problem.enablePreviewFeatures=disabled
 org.eclipse.jdt.core.compiler.problem.forbiddenReference=warning
 org.eclipse.jdt.core.compiler.problem.reportPreviewFeatures=ignore
-org.eclipse.jdt.core.compiler.processAnnotations=${m2e.apt.processAnnotations}
-org.eclipse.jdt.core.compiler.release=disabled
+org.eclipse.jdt.core.compiler.processAnnotations=${org.eclipse.jdt.core.compiler.processAnnotations}
+org.eclipse.jdt.core.compiler.release=${org.eclipse.jdt.core.compiler.release}
 org.eclipse.jdt.core.compiler.source=${java.version}]]></content>
 							</file>
 							<file>
@@ -3218,7 +3616,9 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 						<packagingExcludes>*.java,**/*.java</packagingExcludes>
 					</configuration>
 				</plugin>
-				<!-- Nexus staging plugin -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- TODO Deprecated: Nexus staging plugin -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!--<plugin>
 					<groupId>org.sonatype.plugins</groupId>
 					<artifactId>nexus-staging-maven-plugin</artifactId>
@@ -3287,7 +3687,8 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 						</execution>
 					</executions>
 					<configuration>
-						<includeDependency>false</includeDependency>
+						<!-- include module dependencies -->
+						<includeDependency>true</includeDependency>
 						<obfuscate>true</obfuscate>
 						<addManifest>true</addManifest>
 						<addMavenDescriptor>true</addMavenDescriptor>
@@ -3327,32 +3728,33 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 					https://stackoverflow.com/questions/14013644/hosting-a-maven-repository-on-github/14013645#14013645
 				-->
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
-				<!-- Before 2019 -->
+				<!-- Before 2019 (use github site as repository) -->
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- GITHUB site plugin - to push the NLH4J build to NLH4J GITHUB repository -->
-				<!--<plugin>
+				<plugin>
 					<groupId>com.github.github</groupId>
 					<artifactId>site-maven-plugin</artifactId>
 					<version>${maven.github.site.version}</version>
 					<configuration>
+						<skip>${maven.github.site.skip}</skip>
 						<force>${maven.github.site.force}</force>
 						<merge>${maven.github.site.merge}</merge>
-						// disable webpage processing 
+						<!-- disable webpage processing -->
 						<noJekyll>true</noJekyll>
-						// git commit message 
+						<!-- git commit message -->
 						<message>Creating site for ${project.artifactId}-${project.version} (${revision}) on ${timestamp}</message>
 
-						// github repo (server name in maven settings.xml) 
+						<!-- github repo (server name in maven settings.xml) -->
 						<server>${github.global.server}</server>
 						<repositoryName>${github.global.repo.name}</repositoryName>
 						<repositoryOwner>${github.global.repo.owner}</repositoryOwner>
-						// remote branch name 
+						<!-- remote branch name -->
 						<branch>${maven.github.repo.branch}</branch>
 						<path>${maven.github.repo.path}</path>
                 		<includes><include>**/*</include></includes>
-						// disable webpage processing 
+						<!-- disable webpage processing -->
 						<noJekyll>true</noJekyll>
-						// matches distribution management repository url above 
+						<!-- matches distribution management repository url above -->
 						<outputDirectory>${maven.github.repo.deployment}</outputDirectory>
 					</configuration>
 					<executions>
@@ -3363,16 +3765,20 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 							<phase>deploy</phase>
 						</execution>
 					</executions>
-				</plugin>-->
-				<!-- Deploy to NLH4J GITHUB Repository SITE -->
+				</plugin>
+				<!-- Deploy to NLH4J GITHUB Repository SITE (From 2019: use github packages as repository) -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-deploy-plugin</artifactId>
 					<version>${maven.deploy.version}</version>
-					<!-- NLH4J GITHUB Repository: Before 2019 -->
-					<!--<configuration>
-						<altDeploymentRepository>nlh4j.github.repo::default::file://${maven.github.repo.deployment}</altDeploymentRepository>
-					</configuration>-->
+					<configuration>
+						<skip>${maven.deploy.skip}</skip>
+						<!--
+							 NLH4J GITHUB Repository: Before 2019 (use github site as repository)
+							 Deploy to local repository before publishing to github site
+						-->
+						<!--<altDeploymentRepository>nlh4j.github.repo::default::file://${maven.github.repo.deployment}</altDeploymentRepository>-->
+					</configuration>
     			</plugin>
 
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
@@ -3616,7 +4022,9 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 			</plugin>
-			<!-- Nexus staging plugin -->
+			<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+			<!-- TODO Deprecated: Nexus staging plugin -->
+			<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 			<!--<plugin>
 				<groupId>org.sonatype.plugins</groupId>
 				<artifactId>nexus-staging-maven-plugin</artifactId>
@@ -3650,14 +4058,14 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 				https://stackoverflow.com/questions/14013644/hosting-a-maven-repository-on-github/14013645#14013645
 			-->
 			<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
-			<!-- Before 2019 -->
+			<!-- Before 2019 (use github site as repository) -->
 			<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 			<!-- GITHUB site plugin - to push the NLH4J build to NLH4J GITHUB repository -->
-			<!--<plugin>
+			<plugin>
 				<groupId>com.github.github</groupId>
 				<artifactId>site-maven-plugin</artifactId>
-			</plugin>-->
-			<!-- Deploy to NLH4J GITHUB Repository SITE -->
+			</plugin>
+			<!-- Deploy to NLH4J GITHUB Repository SITE (From 2019: use github packages as repository) -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
@@ -3758,7 +4166,9 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 			</plugin>
-			<!-- Nexus staging plugin -->
+			<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+			<!-- TODO Deprecated: Nexus staging plugin -->
+			<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 			<!--<plugin>
 				<groupId>org.sonatype.plugins</groupId>
 				<artifactId>nexus-staging-maven-plugin</artifactId>
@@ -3792,14 +4202,14 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 				https://stackoverflow.com/questions/14013644/hosting-a-maven-repository-on-github/14013645#14013645
 			-->
 			<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
-			<!-- Before 2019 -->
+			<!-- Before 2019 (use github site as repository) -->
 			<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 			<!-- GITHUB site plugin - to push the NLH4J build to NLH4J GITHUB repository -->
-			<!--<plugin>
+			<plugin>
 				<groupId>com.github.github</groupId>
 				<artifactId>site-maven-plugin</artifactId>
-			</plugin>-->
-			<!-- Deploy to NLH4J GITHUB Repository SITE -->
+			</plugin>
+			<!-- Deploy to NLH4J GITHUB Repository SITE (From 2019: use github packages as repository) -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
@@ -3926,7 +4336,7 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 			<url>http://aperture.sourceforge.net/maven</url>
 		</repository> -->
 	    <!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
-		<!-- NLH4J GITHUB Repository: From 2019 -->
+		<!-- NLH4J GITHUB Repository: From 2019 (use github packages as repository) -->
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 	    <!--<repository>
 			<id>${github.global.server}</id>
@@ -4196,11 +4606,6 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 			</dependency> -->
 
 			<!-- Quartz -->
-			<dependency> <!-- Quartz dependence -->
-				<groupId>c3p0</groupId>
-				<artifactId>c3p0</artifactId>
-				<version>${quartz.c3p0.version}</version>
-			</dependency>
 			<dependency>
 				<groupId>org.quartz-scheduler</groupId>
 				<artifactId>quartz</artifactId>
@@ -4361,9 +4766,9 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 				<version>${postgre.version}</version>
 			</dependency>
 			<dependency> <!-- SQL Server -->
-				<groupId>com.hynnet</groupId>
-				<artifactId>sqljdbc4-chs</artifactId>
-				<version>${com.hynnet.sqljdbc4-chs.version}</version>
+				<groupId>${sqlserver.groupId}</groupId>
+				<artifactId>${sqlserver.artifactId}</artifactId>
+				<version>${sqlserver.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.mongodb</groupId>
@@ -4791,27 +5196,29 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 	-->
 	<distributionManagement>
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
-		<!-- NLH4J GITHUB Repository: Before 2019 -->
+		<!-- NLH4J GITHUB Repository: Before 2019 (use github site as repository) -->
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!--<repository>
-	        <id>nlh4j.github.repo</id>
-	        <name>NLH4J GITHUB Site Repository</name>
+	        <id>nlh4j.github.local.repo</id>
+	        <name>NLH4J GITHUB Site Local Repository</name>
 	        <url>file://${maven.github.repo.deployment}</url>
 	    </repository>-->
 	    <!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
-		<!-- NLH4J GITHUB Repository: From 2019 -->
+		<!-- NLH4J GITHUB Repository: From 2019 (use github packages as repository) -->
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
-	    <repository>
+	    <!--<repository>
 			<id>${github.global.server}</id>
 			<name>NLH4J GitHub Repository</name>
 			<url>https://maven.pkg.github.com/${github.global.repo.owner}/${github.global.repo.name}</url>
-		</repository>
+		</repository>-->
 
-		<!-- Nexus Staging Repository -->
-	    <snapshotRepository>
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- TODO Deprecated: Nexus Staging Repository -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+	    <!--<snapshotRepository>
 			<id>${maven.nexus.staging.serverId}</id>
 			<url>${maven.nexus.staging.nexusUrl}</url>
-		</snapshotRepository>
+		</snapshotRepository>-->
 	</distributionManagement>
 
 	<!-- Modules -->

@@ -1,5 +1,5 @@
 /*
- * @(#)JobSchedulerImpl.java 1.0 Aug 28, 2015
+ * @(#)JobSchedulerImpl.java
  * Copyright 2015 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.core.scheduler;
@@ -66,7 +66,7 @@ public class JobSchedulerImpl implements JobScheduler {
 
 	/*
 	 * (non-Javadoc)
-	 * @see vn.com.kpms.scheduler.job.JobScheduler#schedule(vn.com.kpms.scheduler.job.IntervalJob, java.lang.Boolean)
+	 * @see org.nlh4j.core.scheduler.JobScheduler#schedule(org.nlh4j.core.scheduler.IntervalJob, java.lang.Boolean)
 	 */
 	@Override
 	public void schedule(IntervalJob intervalJob, Boolean rescheduledIfExisted) {
@@ -135,7 +135,7 @@ public class JobSchedulerImpl implements JobScheduler {
 
 	/*
 	 * (non-Javadoc)
-	 * @see vn.com.kpms.scheduler.job.JobScheduler#shutdown()
+	 * @see org.nlh4j.core.scheduler.JobScheduler#shutdown()
 	 */
 	@Override
 	public void shutdown() {
@@ -153,7 +153,7 @@ public class JobSchedulerImpl implements JobScheduler {
 
 	/*
 	 * (non-Javadoc)
-	 * @see vn.com.kpms.scheduler.job.JobScheduler#start()
+	 * @see org.nlh4j.core.scheduler.JobScheduler#start()
 	 */
 	@Override
 	public void start(boolean reschedulerJobs) {
@@ -218,7 +218,7 @@ public class JobSchedulerImpl implements JobScheduler {
 
 	/*
 	 * (non-Javadoc)
-	 * @see vn.com.kpms.scheduler.job.JobScheduler#unschedule(vn.com.kpms.scheduler.job.IntervalJob)
+	 * @see org.nlh4j.core.scheduler.JobScheduler#unschedule(org.nlh4j.core.scheduler.IntervalJob)
 	 */
 	@Override
 	public void unschedule(String jobName) {
@@ -242,7 +242,7 @@ public class JobSchedulerImpl implements JobScheduler {
 
 	/*
 	 * (non-Javadoc)
-	 * @see vn.com.kpms.scheduler.job.JobScheduler#pauseTrigger(java.lang.String)
+	 * @see org.nlh4j.core.scheduler.JobScheduler#pauseTrigger(java.lang.String)
 	 */
 	@Override
 	public void pauseTrigger(String jobName) {
@@ -261,7 +261,7 @@ public class JobSchedulerImpl implements JobScheduler {
 
 	/*
 	 * (non-Javadoc)
-	 * @see vn.com.kpms.scheduler.job.JobScheduler#resumeTrigger(java.lang.String)
+	 * @see org.nlh4j.core.scheduler.JobScheduler#resumeTrigger(java.lang.String)
 	 */
 	@Override
 	public void resumeTrigger(String jobName) {
@@ -280,7 +280,7 @@ public class JobSchedulerImpl implements JobScheduler {
 
 	/*
 	 * (non-Javadoc)
-	 * @see vn.com.kpms.scheduler.job.JobScheduler#delete(org.quartz.JobKey)
+	 * @see org.nlh4j.core.scheduler.JobScheduler#delete(org.quartz.JobKey)
 	 */
 	@Override
 	public void delete(JobKey jobKey) {

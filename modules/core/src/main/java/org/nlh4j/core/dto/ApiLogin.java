@@ -1,5 +1,5 @@
 /*
- * @(#)ApiLogin.java 1.0 Mar 22, 2017
+ * @(#)ApiLogin.java
  * Copyright 2017 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.core.dto;

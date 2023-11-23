@@ -1,5 +1,5 @@
 /*
- * @(#)AudioEntity.java 1.0 Nov 15, 2016
+ * @(#)AudioEntity.java
  * Copyright 2016 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.android.entities;

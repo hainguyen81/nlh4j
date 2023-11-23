@@ -1,5 +1,5 @@
 /*
- * @(#)BarcodeUtils.java 1.0 Aug 3, 2017
+ * @(#)BarcodeUtils.java
  * Copyright 2017 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.util;

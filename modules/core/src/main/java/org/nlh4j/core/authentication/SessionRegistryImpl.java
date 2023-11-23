@@ -1,5 +1,5 @@
 /*
- * @(#)SessionRegistryImpl.java 1.0 May 4, 2017
+ * @(#)SessionRegistryImpl.java
  * Copyright 2017 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.core.authentication;

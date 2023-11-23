@@ -1,26 +1,23 @@
 /*
- * @(#)ServletContextListener.java 1.0 Aug 28, 2015
+ * @(#)ServletContextListener.java
  * Copyright 2015 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.core.servlet;
 
 import javax.servlet.ServletContextEvent;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import org.nlh4j.core.util.JobSchedulerUtils;
 import org.nlh4j.util.SystemUtils;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @see ServletContextListener
  *
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  */
+@Slf4j
 public class ServletContextListener implements javax.servlet.ServletContextListener {
-
-    /** logger */
-    protected static Logger logger = LoggerFactory.getLogger(ServletContextListener.class);
 
 	/**
 	 * (non-Javadoc)

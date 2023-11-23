@@ -1,5 +1,5 @@
 /*
- * @(#)ConcurrentSessionFilter.java 1.0 May 13, 2017
+ * @(#)ConcurrentSessionFilter.java
  * Copyright 2017 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.core.authentication;
@@ -66,7 +66,7 @@ public class ConcurrentSessionFilter
 	 * Initialize a new instance of {@link ConcurrentSessionFilter}
 	 *
 	 * @param sessionRegistry {@link SessionRegistry}
-	 * @param expiredUrl expired URL
+	 * @param sessionInformationExpiredStrategy {@link SessionInformationExpiredStrategy}
 	 */
     public ConcurrentSessionFilter(SessionRegistry sessionRegistry, SessionInformationExpiredStrategy sessionInformationExpiredStrategy) {
         super(sessionRegistry, sessionInformationExpiredStrategy);

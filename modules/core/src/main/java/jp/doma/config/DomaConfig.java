@@ -1,25 +1,33 @@
 /*
- * @(#)ClientConfig.java 1.0 Jun 1, 2015
+ * @(#)ClientConfig.java
  * Copyright 2015 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package jp.doma.config;
 
+import javax.inject.Singleton;
 import javax.sql.DataSource;
 
-import org.seasar.doma.jdbc.DomaAbstractConfig;
+import org.seasar.doma.SingletonConfig;
+import org.seasar.doma.jdbc.Config;
 import org.seasar.doma.jdbc.dialect.Dialect;
+
+import lombok.Setter;
 
 /**
  * DOMA client configuration
  *
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  */
-public class ClientConfig extends DomaAbstractConfig {
+@Singleton
+public class DomaConfig implements Config {
+
+	@Setter
 	protected DataSource dataSource;
+	@Setter
 	protected Dialect dialect;
 
 	/** */
-	public ClientConfig() {}
+	public DomaConfig() {}
 
 	/*
 	 * (non-Javadoc)
@@ -31,14 +39,6 @@ public class ClientConfig extends DomaAbstractConfig {
 		return dataSource;
 	}
 
-	/**
-	 * @param dataSource
-	 *            the dataSource to set
-	 */
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 *
@@ -47,13 +47,5 @@ public class ClientConfig extends DomaAbstractConfig {
 	@Override
 	public Dialect getDialect() {
 		return dialect;
-	}
-
-	/**
-	 * @param dialect
-	 *            the dialect to set
-	 */
-	public void setDialect(Dialect dialect) {
-		this.dialect = dialect;
 	}
 }

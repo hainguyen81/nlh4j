@@ -195,7 +195,7 @@
 
 		<!-- Quartz -->
 		<dependency> <!-- Quartz dependence -->
-			<groupId>c3p0</groupId>
+			<groupId>com.mchange</groupId>
 			<artifactId>c3p0</artifactId>
 		</dependency>
 		<dependency>
@@ -282,8 +282,8 @@
 
 		<!-- SQL Server -->
 		<dependency>
-			<groupId>com.hynnet</groupId>
-			<artifactId>sqljdbc4-chs</artifactId>
+			<groupId>${sqlserver.groupId}</groupId>
+			<artifactId>${sqlserver.artifactId}</artifactId>
 		</dependency>
 
 		<!-- Jasperreport Libary -->

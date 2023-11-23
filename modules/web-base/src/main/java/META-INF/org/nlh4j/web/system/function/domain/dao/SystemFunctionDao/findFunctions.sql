@@ -49,8 +49,8 @@ AND		(
 /*%end*/
 /*%if conditions != null && @isNotEmpty(conditions.keyword) && conditions.isContain()*/
 AND		(
-				LOWER( f.code ) LIKE LOWER( /* @contain(conditions.keyword) */'abc' ) escape '$'
-			OR	LOWER( f.name ) LIKE LOWER( /* @contain(conditions.keyword) */'abc' ) escape '$'
+				LOWER( f.code ) LIKE LOWER( /* @infix(conditions.keyword) */'abc' ) escape '$'
+			OR	LOWER( f.name ) LIKE LOWER( /* @infix(conditions.keyword) */'abc' ) escape '$'
 )
 /*%end*/
 /*%if conditions != null && conditions.enabled != null */

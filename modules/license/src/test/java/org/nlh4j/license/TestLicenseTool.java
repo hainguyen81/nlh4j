@@ -1,5 +1,5 @@
 /*
- * @(#)TestLicenseTool.java 1.0 May 29, 2015 Copyright 2015 by GNU Lesser General Public License (LGPL).
+ * @(#)TestLicenseTool.java Copyright 2015 by GNU Lesser General Public License (LGPL).
  * All rights reserved.
  */
 package org.nlh4j.license;
@@ -23,11 +23,11 @@ public final class TestLicenseTool implements Serializable {
     private static final long serialVersionUID = 1L;
 
 	/**
-	 * Generate from resource for SystemEXE
+	 * Generate from resource for NLH4J
 	 */
 	@Test
 	public void generateSysExe() {
-	    String path = "D:\\Working\\2.projects\\isev-exex\\isev-license\\src\\main\\resources\\";
+	    String path = "<path to license folder>";
 	    String[] args = new String[] {
 	            "-f",
 	            path + "licenseIn.lic",
@@ -36,7 +36,7 @@ public final class TestLicenseTool implements Serializable {
                 "-t",
                 "JKS",
                 "-p",
-                "systemexe",
+                "01101981",
                 "-s",
                 "Serial.Key",
                 "-a",

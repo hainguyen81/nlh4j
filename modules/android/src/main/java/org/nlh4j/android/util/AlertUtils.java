@@ -1,5 +1,5 @@
 /*
- * @(#)AlertUtils.java 1.0 Nov 7, 2016
+ * @(#)AlertUtils.java
  * Copyright 2016 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.android.util;

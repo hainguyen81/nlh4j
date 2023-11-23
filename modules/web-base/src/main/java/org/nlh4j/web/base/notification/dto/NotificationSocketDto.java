@@ -1,5 +1,5 @@
 /*
- * @(#)NotificationSocketDto.java 1.0 Mar 6, 2017
+ * @(#)NotificationSocketDto.java
  * Copyright 2017 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.web.base.notification.dto;

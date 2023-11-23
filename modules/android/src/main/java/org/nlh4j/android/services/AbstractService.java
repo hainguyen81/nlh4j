@@ -1,5 +1,5 @@
 /*
- * @(#)AbstractService.java 1.0 Nov 10, 2016
+ * @(#)AbstractService.java
  * Copyright 2015 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.android.services;

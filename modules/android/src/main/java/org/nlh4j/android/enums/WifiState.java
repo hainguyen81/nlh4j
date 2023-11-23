@@ -1,5 +1,5 @@
 /*
- * @(#)WifiState.java 1.0 Nov 14, 2016
+ * @(#)WifiState.java
  * Copyright 2016 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.android.enums;

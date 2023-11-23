@@ -1,5 +1,5 @@
 /*
- * @(#)PropertyPlaceholderConfigurer.java 1.0 Mar 27, 2017
+ * @(#)PropertyPlaceholderConfigurer.java
  * Copyright 2017 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.core.context.properties;

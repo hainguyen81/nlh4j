@@ -10,7 +10,10 @@
 -keepparameternames
 -keepdirectories
 -renamesourcefileattribute SourceFile
--ignorewarnings
+#################################################
+# Turn off this for debugging compiler process --> for making sure all class references should worked well
+#################################################
+#-ignorewarnings
 -forceprocessing
 
 # We need to keep all annotation classes because proguard does not trace annotation attribute
@@ -37,6 +40,7 @@
 -keep @jakarta.annotation.** class *
 -keep @jakarta.persistence.** class *
 -keep @org.nlh4j.** class *
+-keep @org.nlh4j.** interface *
 
 # Keep package/class/method names for importing in reference
 -keeppackagenames org.nlh4j.**
@@ -51,12 +55,16 @@
 	    @javax.annotation.* <fields>;
 	    @jakarta.inject.* <fields>;
 	    @jakarta.annotation.* <fields>;
+	    
+    # slf4j
+	public protected private static final org.slf4j.* *;
+    @org.slf4j.* <fields>;
 
-	    # nlh4j
-	    @org.nlh4j.* <fields>;
+    # nlh4j
+    @org.nlh4j.* <fields>;
 
-	    # Spring3
-	    @org.springframework.beans.factory.annotation.* <fields>;
+    # Spring3
+    @org.springframework.beans.factory.annotation.* <fields>;
 }
 -keepclassmembernames class org.nlh4j.**.**$** {
 	public protected private *;
@@ -66,12 +74,15 @@
 	    @javax.annotation.* <fields>;
 	    @jakarta.inject.* <fields>;
 	    @jakarta.annotation.* <fields>;
+	    
+    # slf4j
+    @org.slf4j.* <fields>;
 
-	    # nlh4j
-	    @org.nlh4j.* <fields>;
+    # nlh4j
+    @org.nlh4j.* <fields>;
 
-	    # Spring3
-	    @org.springframework.beans.factory.annotation.* <fields>;
+    # Spring3
+    @org.springframework.beans.factory.annotation.* <fields>;
 }
 # Seasar DOMA entity/table/database entity
 -keepclassmembernames @org.seasar.doma.* class org.nlh4j.** { *; }
@@ -83,6 +94,9 @@
     @javax.annotation.* *;
 	@jakarta.inject.* *;
     @jakarta.annotation.* *;
+	    
+    # slf4j
+    @org.slf4j.* <fields>;
 
     # nlh4j
     @org.nlh4j.* *;
@@ -115,9 +129,15 @@
 # The option in code below keeps any class with main method.
 -keepclasseswithmembers public class * { public static void main(java.lang.String[]);}
 
+#################################################
+# Turn off this for debugging compiler process --> for making sure all class references should worked well
+#################################################
 # Suppress warnings from some packages
--dontwarn **
+#-dontwarn **
 
+#################################################
+# Turn off this for debugging compiler process --> for making sure all class references should worked well
+#################################################
 # Suppress notes from some packages
 -dontnote **
 

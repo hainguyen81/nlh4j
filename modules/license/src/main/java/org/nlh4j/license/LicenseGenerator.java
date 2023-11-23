@@ -1,5 +1,5 @@
 /*
- * @(#)LicenseGenerator.java 1.0 Feb 24, 2017
+ * @(#)LicenseGenerator.java
  * Copyright 2017 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.license;

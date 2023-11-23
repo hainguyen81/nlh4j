@@ -1,5 +1,5 @@
 /*
- * @(#)TelephonyNetworkType.java 1.0 Nov 11, 2016
+ * @(#)TelephonyNetworkType.java
  * Copyright 2015 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.android.enums;

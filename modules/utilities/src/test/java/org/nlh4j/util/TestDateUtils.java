@@ -1,5 +1,5 @@
 /*
- * @(#)TestDateUtils.java 1.0 Oct 29, 2016
+ * @(#)TestDateUtils.java
  * Copyright 2016 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.util;

@@ -113,6 +113,6 @@
 	<!-- AOP annotation setting -->
 	<aop:aspectj-autoproxy />
 	<context:annotation-config />
-	<context:component-scan base-package="vn.co.exex.*" />
+	<context:component-scan base-package="org.nlh4j.*" />
 
 </beans>

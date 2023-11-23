@@ -1,5 +1,5 @@
 /*
- * @(#)ConditionalBeanNamespaceHandler.java 1.0 Jan 5, 2017
+ * @(#)ConditionalBeanNamespaceHandler.java
  * Copyright 2017 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.core.context.conditions;
@@ -23,7 +23,7 @@ public class ConditionalBeanNamespaceHandler
 
     /**
      * XML conditional bean tag name.<br>
-     * See from resource file: vn/org/nlh4j/core/context/conditionalbean.xsd
+     * See from resource file: org/nlh4j/core/context/conditionalbean.xsd
      */
     public static final String CONTEXT_BEAN_TAG = "if";
 

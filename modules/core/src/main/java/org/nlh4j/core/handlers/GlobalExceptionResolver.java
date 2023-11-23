@@ -1,5 +1,5 @@
 /*
- * @(#)GlobalExceptionResolver.java 1.0 Feb 18, 2017
+ * @(#)GlobalExceptionResolver.java
  * Copyright 2017 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.core.handlers;

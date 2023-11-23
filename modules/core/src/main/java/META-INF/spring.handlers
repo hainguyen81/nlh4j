@@ -1,1 +1,1 @@
-http\://www.nlh4j.org.vn/core/context/conditionalbean=org.nlh4j.core.context.conditions.ConditionalBeanNamespaceHandler
+http\://www.nlh4j.org/core/context/conditionalbean=org.nlh4j.core.context.conditions.ConditionalBeanNamespaceHandler

@@ -1,5 +1,5 @@
 /*
- * @(#)SensorType.java 1.0 Nov 12, 2016
+ * @(#)SensorType.java
  * Copyright 2016 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.android.enums;

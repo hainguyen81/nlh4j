@@ -1,5 +1,5 @@
 /*
- * @(#)EmptyDto.java 1.0 Feb 28, 2017
+ * @(#)EmptyDto.java
  * Copyright 2017 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.core.dto;

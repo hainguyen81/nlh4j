@@ -1,5 +1,5 @@
 /*
- * @(#)ViberBotServiceImpl.java 1.0 Feb 4, 2017
+ * @(#)ViberBotServiceImpl.java
  * Copyright 2017 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.sms.viber.service;

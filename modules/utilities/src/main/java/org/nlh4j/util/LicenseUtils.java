@@ -1,5 +1,5 @@
 /*
- * @(#)LicenseUtils.java 1.0 Oct 17, 2016
+ * @(#)LicenseUtils.java
  * Copyright 2016 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.util;

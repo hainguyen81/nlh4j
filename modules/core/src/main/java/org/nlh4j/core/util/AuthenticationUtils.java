@@ -1,5 +1,5 @@
 /*
- * @(#)AuthenticationUtils.java 1.0 Aug 28, 2015
+ * @(#)AuthenticationUtils.java
  * Copyright 2015 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.core.util;
@@ -24,8 +24,6 @@ import org.nlh4j.util.DateUtils;
 import org.nlh4j.util.JWTUtils;
 import org.nlh4j.util.RequestUtils;
 import org.nlh4j.util.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -36,6 +34,8 @@ import org.springframework.web.util.WebUtils;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.crypto.MACSigner;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Authentication utilities
  *
@@ -43,6 +43,7 @@ import com.nimbusds.jose.crypto.MACSigner;
  *
  */
 @SuppressWarnings("unchecked")
+@Slf4j
 public final class AuthenticationUtils implements Serializable {
 
 	/**
@@ -55,9 +56,6 @@ public final class AuthenticationUtils implements Serializable {
 	 */
 	public static final String HEADER_CSRF_TOKEN = "CSRF-TOKEN";
 	public static final String COOKIE_CSRF_TOKEN = "CSRF-TOKEN-COOKIE";
-
-	/** logger */
-    protected static Logger logger = LoggerFactory.getLogger(AuthenticationUtils.class);
 
     /**
      * Get the safe-type profile from the specified {@link Principal}
@@ -177,14 +175,14 @@ public final class AuthenticationUtils implements Serializable {
     	// check parameters
     	String token = null;
     	if (request == null || response == null || (checkauth && principal == null)) {
-    		logger.warn("Invalid request|response|principal to generate CSRF token!!!");
+    		log.warn("Invalid request|response|principal to generate CSRF token!!!");
     		return token;
     	}
     	// need to check authentication
     	if (checkauth) {
     		UserDetails user = getProfile(principal);
 	    	if (user == null) {
-	    		logger.warn("Invalid authentication to generate CSRF token!!!");
+	    		log.warn("Invalid authentication to generate CSRF token!!!");
 	    		return token;
 	    	}
     	}
@@ -200,7 +198,7 @@ public final class AuthenticationUtils implements Serializable {
 				response.addCookie(cookie);
 			}
 		}
-		logger.warn(">>> GENERATED TOKEN: [" + token + "]");
+		log.warn(">>> GENERATED TOKEN: [" + token + "]");
 		return token;
     }
     /**

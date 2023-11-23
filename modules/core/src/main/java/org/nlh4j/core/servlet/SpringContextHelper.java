@@ -1,5 +1,5 @@
 /*
- * @(#)SpringContextHelper.java 1.0 Aug 28, 2015
+ * @(#)SpringContextHelper.java
  * Copyright 2015 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.core.servlet;
@@ -23,8 +23,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.nlh4j.util.BeanUtils;
 import org.nlh4j.util.CollectionUtils;
 import org.nlh4j.util.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.ApplicationContext;
@@ -38,12 +36,14 @@ import org.springframework.web.servlet.HandlerMapping;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * WEB SPRING context helper.
  *
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  */
+@Slf4j
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 @Singleton
@@ -51,9 +51,6 @@ public final class SpringContextHelper implements Serializable {
 
 	/** */
 	private static final long serialVersionUID = 1L;
-
-	/** SLF4J */
-	private static final Logger logger = LoggerFactory.getLogger(SpringContextHelper.class);
 
 	/**
 	 * WEBコンテクスト
@@ -147,7 +144,7 @@ public final class SpringContextHelper implements Serializable {
         	while(ctx != null) {
 	            try { bean = ctx.getBean(beanRef); }
 	            catch (BeansException e) {
-	            	logger.warn(e.getMessage());
+	            	log.warn(e.getMessage());
 	            } finally {
 	            	if (bean != null) break;
 	            	else ctx = ctx.getParent();
@@ -194,7 +191,7 @@ public final class SpringContextHelper implements Serializable {
         	while(ctx != null) {
 	            try { bean = ctx.getBean(beanRef, requiredType); }
 	            catch (BeansException e) {
-	            	logger.warn(e.getMessage());
+	            	log.warn(e.getMessage());
 	            } finally {
 	            	if (bean != null) break;
 	            	else ctx = ctx.getParent();
@@ -244,7 +241,7 @@ public final class SpringContextHelper implements Serializable {
         	while(ctx != null) {
 	            try { bean = ctx.getBean(beanRef, args); }
 	            catch (BeansException e) {
-	            	logger.warn(e.getMessage());
+	            	log.warn(e.getMessage());
 	            } finally {
 	            	if (bean != null) break;
 	            	else ctx = ctx.getParent();
@@ -339,7 +336,7 @@ public final class SpringContextHelper implements Serializable {
     		while(CollectionUtils.isEmpty(beans) && ctx != null) {
 		    	try { beans = ctx.getBeansOfType(beanClass, Boolean.TRUE, Boolean.FALSE); }
 		    	catch (BeansException e) {
-		    		logger.warn(e.getMessage());
+		    		log.warn(e.getMessage());
 		    		beans = null;
 		    	} finally {
 			    	if (!CollectionUtils.isEmpty(beans)) break;
@@ -397,7 +394,7 @@ public final class SpringContextHelper implements Serializable {
     		while(CollectionUtils.isEmpty(beans) && ctx != null) {
 		    	try { beans = ctx.getBeansOfType(beanClass, Boolean.TRUE, Boolean.FALSE); }
 		    	catch (BeansException e) {
-		    		logger.warn(e.getMessage());
+		    		log.warn(e.getMessage());
 		    		beans = null;
 		    	} finally {
 			    	if (!CollectionUtils.isEmpty(beans)) break;
@@ -474,7 +471,7 @@ public final class SpringContextHelper implements Serializable {
      * @param resource to debug
      */
     private static void debugResource(String originalPath, Resource resource) {
-    	if (logger.isDebugEnabled() && resource != null) {
+    	if (log.isDebugEnabled() && resource != null) {
     		String resPath = null;
     		// URL
     		if (!StringUtils.hasText(resPath)) {
@@ -491,7 +488,7 @@ public final class SpringContextHelper implements Serializable {
     			try { resPath = resource.getFile().getPath(); }
     			catch (Exception e) {}
     		}
-    		logger.debug("Resolved [" + originalPath + "] to [" + resPath + "]");
+    		log.debug("Resolved [" + originalPath + "] to [" + resPath + "]");
     	}
     }
     /**
@@ -526,7 +523,7 @@ public final class SpringContextHelper implements Serializable {
     	                else if (!CollectionUtils.isEmpty(resources)) break;
     	            }
     	            catch (Exception e) {
-    	                logger.error(e.getMessage(), e);
+    	                log.error(e.getMessage(), e);
     	                if (!CollectionUtils.isEmpty(resources)) {
     	                	resources.clear();
     	                }
@@ -563,13 +560,13 @@ public final class SpringContextHelper implements Serializable {
 					// continue with parent context if not found
 					loader = loader.getParent();
 				} catch (Exception e) {
-					logger.error(e.getMessage(), e);
+					log.error(e.getMessage(), e);
 				}
 			}
         }
         // debug
-        if (CollectionUtils.isEmpty(resources) && logger.isDebugEnabled()) {
-        	logger.warn("Not found resource path [" + path + "]");
+        if (CollectionUtils.isEmpty(resources) && log.isDebugEnabled()) {
+        	log.warn("Not found resource path [" + path + "]");
         }
         return resources;
     }
@@ -616,7 +613,7 @@ public final class SpringContextHelper implements Serializable {
     	                if (resource == null) ctx = ctx.getParent();
     	            }
     	            catch (Exception e) {
-    	                logger.error(e.getMessage(), e);
+    	                log.error(e.getMessage(), e);
     	                resources = null;
     	                resource = null;
     	            }
@@ -647,14 +644,14 @@ public final class SpringContextHelper implements Serializable {
 					// continue with parent context if not found
 					if (resource == null) loader = loader.getParent();
 				} catch (Exception e) {
-					logger.error(e.getMessage(), e);
+					log.error(e.getMessage(), e);
 					resource = null;
 				}
 			}
         }
         // debug
-        if (resource == null && logger.isDebugEnabled()) {
-        	logger.warn("Not found resource path [" + path + "]");
+        if (resource == null && log.isDebugEnabled()) {
+        	log.warn("Not found resource path [" + path + "]");
         }
         return resource;
     }
@@ -734,7 +731,7 @@ public final class SpringContextHelper implements Serializable {
     	try {
     		return (resource == null ? null : resource.getInputStream());
     	} catch (Exception e) {
-    		logger.warn(e.getMessage());
+    		log.warn(e.getMessage());
     	}
     	return null;
     }
@@ -751,7 +748,7 @@ public final class SpringContextHelper implements Serializable {
     	try {
     		return (resource == null ? null : resource.getInputStream());
     	} catch (Exception e) {
-    		logger.warn(e.getMessage());
+    		log.warn(e.getMessage());
     	}
     	return null;
     }

@@ -1,5 +1,5 @@
 /*
- * @(#)ClassnameFactoryBean.java 1.0 Jan 11, 2017
+ * @(#)ClassnameFactoryBean.java
  * Copyright 2017 by GNU Lesser General Public License (LGPL). All rights reserved.
  */
 package org.nlh4j.core.factories;
