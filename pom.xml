@@ -1825,7 +1825,7 @@
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Server configuration from maven settings.xml -->
 				<github.global.server>nlh4j_packages_github_repo</github.global.server>
-				<!--<github.global.repo.name>nlh4j-repo/${revision}</github.global.repo.name>
+				<!--<github.global.repo.name>nlh4j-repo</github.global.repo.name>
 				<github.global.repo.owner>hainguyen81</github.global.repo.owner>-->
 				<!-- site plugin -->
 				<!--<maven.github.repo.deployment>${root.basedir}/.github-repo/${revision}</maven.github.repo.deployment>
@@ -1894,7 +1894,7 @@
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Server configuration from maven settings.xml -->
 				<github.global.server>nlh4j_site_github_repo</github.global.server>
-				<!--<github.global.repo.name>nlh4j-repo/${revision}</github.global.repo.name>
+				<!--<github.global.repo.name>nlh4j-repo</github.global.repo.name>
 				<github.global.repo.owner>hainguyen81</github.global.repo.owner>-->
 				<!-- site plugin -->
 				<!--<maven.github.repo.deployment>${root.basedir}/.github-repo/${revision}</maven.github.repo.deployment>
@@ -2090,7 +2090,7 @@
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!-- Server configuration from maven settings.xml -->
 		<github.global.server>nlh4j_github_repo</github.global.server>
-		<github.global.repo.name>nlh4j-repo/${revision}</github.global.repo.name>
+		<github.global.repo.name>nlh4j-repo</github.global.repo.name>
 		<github.global.repo.owner>hainguyen81</github.global.repo.owner>
 		<!-- site plugin -->
 		<maven.github.repo.deployment>${root.basedir}/.github-repo/${revision}</maven.github.repo.deployment>
