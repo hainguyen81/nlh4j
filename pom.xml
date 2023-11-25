@@ -143,6 +143,9 @@
 				<jstl.version>2.0.0</jstl.version>
 				<jstl.version>3.0.0</jstl.version>-->
 
+				<!-- WS-RS -->
+				<javax.ws.rs.version>2.0.1</javax.ws.rs.version>
+
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Springframework -->
 				<!--
@@ -478,6 +481,8 @@
 
 				<!-- Missing module for JDK11+ -->
 				<javax.annotation.version>1.3.2</javax.annotation.version>
+				<!-- WS-RS -->
+				<javax.ws.rs.version>2.1.1</javax.ws.rs.version>
 				
 				<!-- m2e profiles -->
 				<eclipse.maven.project.activated.profiles>dev,jdk11</eclipse.maven.project.activated.profiles>
@@ -521,6 +526,11 @@
 				<maven.aspectj.artifactId>aspectj-maven-plugin</maven.aspectj.artifactId>
 				<maven.aspectj.version>1.12.1</maven.aspectj.version>-->
 
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- jdeps plugin for supporting module-info -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<maven.jdeps.version>3.1.2</maven.jdeps.version>
+
 				<!-- Progurad configuration -->
 				<proguard.configuration>${root.basedir}/certificate/proguard.cnf</proguard.configuration>
 				<proguard.skip>true</proguard.skip>
@@ -553,10 +563,11 @@
 				<!--<servlet-api.groupId>javax.servlet</servlet-api.groupId>
 				<servlet-api.artifactId>javax.servlet-api</servlet-api.artifactId>
 				<servlet-api.version>3.1.0</servlet-api.version>-->
+				<!-- FIXME Due to code still use javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, etc. not jakarta -->
 				<!-- 4.0.x (javax) -->
-				<!--<servlet-api.groupId>javax.servlet</servlet-api.groupId>
+				<servlet-api.groupId>javax.servlet</servlet-api.groupId>
 				<servlet-api.artifactId>javax.servlet-api</servlet-api.artifactId>
-				<servlet-api.version>4.0.1</servlet-api.version>-->
+				<servlet-api.version>4.0.1</servlet-api.version>
 				<!-- 4.0.x (jakarta) -->
 				<!--<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
 				<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
@@ -566,9 +577,9 @@
 				<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
 				<servlet-api.version>5.0.0</servlet-api.version>-->
 				<!-- 6.0.x -->
-				<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
+				<!--<servlet-api.groupId>jakarta.servlet</servlet-api.groupId>
 				<servlet-api.artifactId>jakarta.servlet-api</servlet-api.artifactId>
-				<servlet-api.version>6.0.0</servlet-api.version>
+				<servlet-api.version>6.0.0</servlet-api.version>-->
 
 				<!-- Web API -->
 				<!--<javaee-web-api.version>6.0</javaee-web-api.version>
@@ -1043,9 +1054,61 @@
 								</dependency>-->
 							</dependencies>
 						</plugin>
+
+						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+						<!-- jdeps plugin for supporting module-info -->
+						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+						<!--<plugin>
+						    <groupId>org.moditect</groupId>
+						    <artifactId>moditect-maven-plugin</artifactId>
+						    <version>1.0.0.Final</version>
+						    <executions>
+								<execution>
+						            <id>generate-module-info</id>
+						            <phase>generate-sources</phase>
+						            <goals>
+						                <goal>generate-module-info</goal>
+						            </goals>
+						            <configuration>
+									    <modules>
+									        <module>
+									            <moduleInfo>
+									                <name>${project.groupId}</name>
+									                <exports>
+														*;
+													</exports>
+									            </moduleInfo>
+									        </module>
+									    </modules>
+									</configuration>
+								</execution>
+						    </executions>
+						</plugin>-->
 					</plugins>
 				</pluginManagement>
+				<plugins>
+					<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+					<!-- jdeps plugin for supporting module-info -->
+					<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+					<!--<plugin>
+						<groupId>org.moditect</groupId>
+					    <artifactId>moditect-maven-plugin</artifactId>
+					</plugin>-->
+				</plugins>
 			</build>
+			
+			<!-- reporting pulugins -->
+			<reporting>
+				<plugins>
+					<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+					<!-- jdeps plugin for supporting module-info -->
+					<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+					<!--<plugin>
+						<groupId>org.moditect</groupId>
+					    <artifactId>moditect-maven-plugin</artifactId>
+					</plugin>-->
+				</plugins>
+			</reporting>
 
 			<!-- Dependencies -->
 			<dependencyManagement>
@@ -1087,6 +1150,8 @@
 
 				<!-- Missing module for JDK17+ -->
 				<jakarta.annotation.version>2.1.1</jakarta.annotation.version>
+				<!-- WS-RS -->
+				<javax.ws.rs.version>2.1.1</javax.ws.rs.version>
 				
 				<!-- m2e profiles -->
 				<eclipse.maven.project.activated.profiles>dev,jdk17</eclipse.maven.project.activated.profiles>
@@ -1733,6 +1798,9 @@
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
         <profile>
             <id>qualityCheck</id>
+            <properties>
+				<maven.enforcer.skip>false</maven.enforcer.skip>
+			</properties>
             <build>
                 <plugins>
                 	<!-- Check javadocs -->
@@ -1773,6 +1841,10 @@
                                     <goal>enforce</goal>
                                 </goals>
                                 <configuration>
+									<skip>${maven.enforcer.skip}</skip>
+									<fail>true</fail>
+									<failFast>true</failFast>
+									<ignoreCache>true</ignoreCache>
                                     <rules>
                                         <requireMavenVersion>
                                             <version>3.1</version>
@@ -1787,6 +1859,10 @@
                                 </goals>
                                 <phase>test</phase>
                                 <configuration>
+									<skip>${maven.enforcer.skip}</skip>
+									<fail>true</fail>
+									<failFast>true</failFast>
+									<ignoreCache>true</ignoreCache>
                                     <rules>
                                         <NoPackageCyclesRule implementation="de.andrena.tools.nopackagecycles.NoPackageCyclesRule">
                                             <includeTests>false</includeTests>
@@ -2221,6 +2297,7 @@
 		<maven.findbugs.output.xml>${root.basedir}/fb.report-${revision}.xml</maven.findbugs.output.xml>
 		<maven.groovy.version>2.1.1</maven.groovy.version>
 		<maven.enforcer.version>3.4.1</maven.enforcer.version>
+		<maven.enforcer.skip>true</maven.enforcer.skip>
 		<maven.versions.version>2.16.1</maven.versions.version>
 		<maven.properties.version>1.2.1</maven.properties.version>
 		<maven.release.version>3.0.1</maven.release.version>
@@ -2430,6 +2507,12 @@
 		<taglibs.groupId>org.apache.taglibs</taglibs.groupId>
 		<taglibs.artifactId>taglibs-standard-impl</taglibs.artifactId>
 		<taglibs.version>1.2.5</taglibs.version>
+
+		<!-- Persistence/Inject/JSP -->
+		<javax.inject.version>1</javax.inject.version>
+		<javax.persistence.version>2.2</javax.persistence.version>
+		<javax.servlet.jsp-api.version>2.3.3</javax.servlet.jsp-api.version>
+		<!--<javax.ws.rs.version>2.1.1</javax.ws.rs.version>-->
 		
 		<!-- Response Compression -->
 		<!--<com.github.ziplet.version>2.0.0</com.github.ziplet.version>-->
@@ -2761,7 +2844,6 @@
 		<!-- Doma -->
 		<!--<doma.version>1.38.0</doma.version>-->
 		<doma.version>2.29.0</doma.version>
-		<javax.inject.version>1</javax.inject.version>
 		<!-- Mongo -->
 		<!-- <mongo.java.driver.version>3.3.0</mongo.java.driver.version> -->
 		<!-- <mongo.java.driver.version>3.6.1</mongo.java.driver.version> -->
@@ -2809,10 +2891,13 @@
 		<commons.lang3.version>3.3.2</commons.lang3.version>
 		<commons.collections4.version>4.4</commons.collections4.version>
 		<commons.io.version>1.3.2</commons.io.version>
+		<commons.io.version>2.11.0</commons.io.version>
 		<commons.beanutils.version>1.9.2</commons.beanutils.version>
 		<commons.configuration.version>1.10</commons.configuration.version>
 		<commons.validator.version>1.5.1</commons.validator.version>
 		<commons.codec.version>1.16.0</commons.codec.version>
+		<commons.logging.version>1.2</commons.logging.version>
+		<commons.digester.version>2.1</commons.digester.version>
 
 		<!-- HTML -->
 		<net.sf.htmlcleaner.version>2.16</net.sf.htmlcleaner.version>
@@ -3161,12 +3246,65 @@
 					<artifactId>maven-enforcer-plugin</artifactId>
 					<version>${maven.enforcer.version}</version>
 					<executions>
+						<!-- ensure NOT duplicated classes -->
+						<execution>
+							<id>enforce-duplicated-classes</id>
+							<goals>
+								<goal>enforce</goal>
+							</goals>
+							<configuration>
+								<skip>${maven.enforcer.skip}</skip>
+								<fail>true</fail>
+								<failFast>true</failFast>
+								<ignoreCache>true</ignoreCache>
+								<rules>
+							    	<banDuplicateClasses>
+										<findAllDuplicates>true</findAllDuplicates>
+										<ignoreWhenIdentical>true</ignoreWhenIdentical>
+							    	</banDuplicateClasses>
+								</rules>
+							</configuration>
+						</execution>
+						<!-- ensure NOT duplicated dependencies -->
+						<execution>
+							<id>enforce-duplicated-dependencies</id>
+							<goals>
+								<goal>enforce</goal>
+							</goals>
+							<configuration>
+								<skip>${maven.enforcer.skip}</skip>
+								<fail>true</fail>
+								<failFast>true</failFast>
+								<ignoreCache>true</ignoreCache>
+								<rules>
+							    	<banDuplicatePomDependencyVersions/>
+								</rules>
+							</configuration>
+						</execution>
+						<!-- ensure NOT duplicated dependencies -->
+						<execution>
+							<id>enforce-dependency-covergence</id>
+							<goals>
+								<goal>enforce</goal>
+							</goals>
+							<configuration>
+								<skip>${maven.enforcer.skip}</skip>
+								<fail>true</fail>
+								<failFast>true</failFast>
+								<ignoreCache>true</ignoreCache>
+								<rules>
+							    	<dependencyConvergence/>
+								</rules>
+							</configuration>
+						</execution>
+          				<!-- ensure JDK version -->
 						<execution>
 							<id>enforce-versions</id>
 							<goals>
 								<goal>enforce</goal>
 							</goals>
 							<configuration>
+								<skip>${maven.enforcer.skip}</skip>
 								<fail>true</fail>
 								<failFast>true</failFast>
 								<ignoreCache>true</ignoreCache>
@@ -3905,6 +4043,9 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 					<version>${maven.surefire.version}</version>
 					<configuration>
 						<skipTests>true</skipTests>
+						<argLine>
+							--illegal-access=permit
+						</argLine>
 					</configuration>
 				</plugin>
 				<!-- Obfuscation -->
@@ -4630,11 +4771,59 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 				<scope>provided</scope>
 			</dependency>
 			<dependency>
+				<groupId>javax.inject</groupId>
+				<artifactId>javax.inject</artifactId>
+				<version>${javax.inject.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>javax.persistence</groupId>
+			    <artifactId>javax.persistence-api</artifactId>
+			    <version>${javax.persistence.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>javax.servlet.jsp</groupId>
+			    <artifactId>javax.servlet.jsp-api</artifactId>
+			    <version>${javax.servlet.jsp-api.version}</version>
+			    <scope>provided</scope>
+			</dependency>
+			<dependency>
+			    <groupId>javax.ws.rs</groupId>
+			    <artifactId>javax.ws.rs-api</artifactId>
+			    <version>${javax.ws.rs.version}</version>
+			</dependency>
+			<!--<dependency>
 				<groupId>javax</groupId>
 				<artifactId>javaee-web-api</artifactId>
 				<version>${javaee-web-api.version}</version>
 				<scope>provided</scope>
-			</dependency>
+				<optional>true</optional>
+				<exclusions>
+					<exclusion>
+						<groupId>javax.inject</groupId>
+						<artifactId>javax.inject</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>javax.validation</groupId>
+						<artifactId>validation-api</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>javax.servlet</groupId>
+            			<artifactId>javax.servlet-api</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>${servlet-api.groupId}</groupId>
+						<artifactId>${servlet-api.artifactId}</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>javax.annotation</groupId>
+            			<artifactId>javax.annotation-api</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>javax.websocket</groupId>
+            			<artifactId>javax.websocket-api</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>-->
 			<dependency>
 				<groupId>${jstl.groupId}</groupId>
 				<artifactId>${jstl.artifactId}</artifactId>
@@ -4683,6 +4872,12 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-core</artifactId>
 				<version>${spring.framework.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-jcl</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
@@ -4877,6 +5072,12 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 				<groupId>org.quartz-scheduler</groupId>
 				<artifactId>quartz</artifactId>
 				<version>${quartz.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>com.mchange</groupId>
+						<artifactId>mchange-commons-java</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.quartz-scheduler</groupId>
@@ -5048,6 +5249,12 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 				<groupId>net.sf.jasperreports</groupId>
 				<artifactId>jasperreports</artifactId>
 				<version>${net.sf.jasperreports.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-digester</groupId>
+						<artifactId>commons-digester</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>net.sourceforge.jexcelapi</groupId>
@@ -5088,6 +5295,12 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 				<groupId>commons-fileupload</groupId>
 				<artifactId>commons-fileupload</artifactId>
 				<version>${commons.fileupload.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-io</groupId>
+						<artifactId>commons-io</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 
 			<!-- Apache HTTP Components -->
@@ -5105,6 +5318,10 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 			    		<groupId>commons-codec</groupId>
 						<artifactId>commons-codec</artifactId>
 			    	</exclusion>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
 			    </exclusions>
 			</dependency>
 
@@ -5118,6 +5335,12 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 				<groupId>org.apache.tiles</groupId>
 				<artifactId>tiles-servlet</artifactId>
 				<version>${tiles.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-digester</groupId>
+						<artifactId>commons-digester</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.tiles</groupId>
@@ -5160,7 +5383,7 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 			    <version>${commons.collections4.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.apache.commons</groupId>
+				<groupId>commons-io</groupId>
 				<artifactId>commons-io</artifactId>
 				<version>${commons.io.version}</version>
 			</dependency>
@@ -5168,6 +5391,16 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 				<groupId>commons-beanutils</groupId>
 				<artifactId>commons-beanutils</artifactId>
 				<version>${commons.beanutils.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>commons-collections</groupId>
+						<artifactId>commons-collections</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>commons-configuration</groupId>
@@ -5178,11 +5411,36 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 				<groupId>commons-validator</groupId>
 				<artifactId>commons-validator</artifactId>
 				<version>${commons.validator.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>commons-collections</groupId>
+						<artifactId>commons-collections</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>commons-digester</groupId>
+						<artifactId>commons-digester</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>commons-codec</groupId>
 				<artifactId>commons-codec</artifactId>
 				<version>${commons.codec.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-logging</groupId>
+				<artifactId>commons-logging</artifactId>
+				<version>${commons.logging.version}</version>
+			</dependency>
+			<!-- FIXME Belong to the tiles despendency, it used commons-digester, not commons-digester3 -->
+			<dependency>
+				<groupId>commons-digester</groupId>
+				<artifactId>commons-digester</artifactId>
+				<version>${commons.digester.version}</version>
 			</dependency>
 
 			<!-- HTML -->
@@ -5205,11 +5463,6 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 			</dependency>
 
 			<!-- Doma -->
-			<dependency>
-				<groupId>javax.inject</groupId>
-				<artifactId>javax.inject</artifactId>
-				<version>${javax.inject.version}</version>
-			</dependency>
 			<dependency>
 				<groupId>org.seasar.doma</groupId>
 				<artifactId>doma</artifactId>
@@ -5308,6 +5561,12 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 				<groupId>net.sf.barcode4j</groupId>
 				<artifactId>barcode4j</artifactId>
 				<version>${net.sf.barcode4j.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 
 			<!-- Viber Bot -->
@@ -5360,6 +5619,12 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 				<groupId>com.artofsolving</groupId>
 				<artifactId>jodconverter</artifactId>
 				<version>${com.artofsolving.jodconverter.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-io</groupId>
+						<artifactId>commons-io</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>com.artofsolving</groupId>
