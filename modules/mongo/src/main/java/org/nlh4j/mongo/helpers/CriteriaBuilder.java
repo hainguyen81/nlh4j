@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import org.apache.commons.collections.MapUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.bson.types.ObjectId;
 import org.nlh4j.mongo.helpers.MongoConstants.MongoFields;
 import org.nlh4j.mongo.helpers.MongoConstants.MongoKeywords;

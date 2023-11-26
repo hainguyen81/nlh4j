@@ -32,11 +32,11 @@
 			<artifactId>${servlet-api.artifactId}</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
+		<!--<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-web-api</artifactId>
 			<scope>provided</scope>
-		</dependency>
+		</dependency>-->
 		<dependency>
 			<groupId>${jstl.groupId}</groupId>
 			<artifactId>${jstl.artifactId}</artifactId>
