@@ -112,7 +112,7 @@
 	private static final <fields>;
 	public static final <fields>;
 	protected static final <fields>;
-	private static final **[] <fields>;
+	#private static final **[] <fields>;
 }
 # Process bean classes by keeping setter and getter methods.
 -keep class * {
