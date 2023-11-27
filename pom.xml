@@ -553,7 +553,7 @@
 			<id>jdk11</id>
 			<!-- The development profile is active by default -->
 			<activation>
-				<jdk>[11,)</jdk>
+				<jdk>[11,16)</jdk>
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
