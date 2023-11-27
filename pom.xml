@@ -52,6 +52,10 @@
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<profile>
 			<id>jdk8</id>
+			<!-- The development profile is active by default -->
+			<activation>
+				<jdk>[1.7,1.8)</jdk>
+			</activation>
 			<properties>
 				<!-- General -->
 				<revision>1.0-jre8</revision>
@@ -547,6 +551,11 @@
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<profile>
 			<id>jdk11</id>
+			<!-- The development profile is active by default -->
+			<activation>
+				<jdk>[11,)</jdk>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 			<properties>
 				<!-- General -->
 				<revision>1.0-jre11</revision>
@@ -1287,6 +1296,10 @@
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<profile>
 			<id>jdk17</id>
+			<!-- The development profile is active by default -->
+			<activation>
+				<jdk>[17,)</jdk>
+			</activation>
 			<properties>
 				<!-- General -->
 				<revision>1.0-jre17</revision>
