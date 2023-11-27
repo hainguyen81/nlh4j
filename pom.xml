@@ -54,7 +54,7 @@
 			<id>jdk8</id>
 			<!-- The development profile is active by default -->
 			<activation>
-				<jdk>[1.7,1.8)</jdk>
+				<jdk>[1.6,1.8)</jdk>
 			</activation>
 			<properties>
 				<!-- General -->
