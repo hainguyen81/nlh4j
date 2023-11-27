@@ -26,7 +26,7 @@ import org.nlh4j.core.context.profiles.SpringProfiles;
 public class SessionHandshakeInterceptor extends HttpSessionHandshakeInterceptor {
 
 	/** logger */
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /*
      * (Non-Javadoc)

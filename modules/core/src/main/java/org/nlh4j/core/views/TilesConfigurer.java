@@ -21,6 +21,8 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.web.servlet.view.tiles3.SpringWildcardServletTilesApplicationContext;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.nlh4j.core.servlet.ApplicationContextProvider;
 import org.nlh4j.core.servlet.SpringContextHelper;
 import org.nlh4j.util.CollectionUtils;
@@ -33,17 +35,13 @@ import org.nlh4j.util.StringUtils;
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  *
  */
+@Slf4j
 public class TilesConfigurer extends org.springframework.web.servlet.view.tiles3.TilesConfigurer
 		implements Serializable {
 
     /** */
     private static final long serialVersionUID = 1L;
     private static final String CLASSPATH_PREFIX = "classpath";
-
-	/**
-	 * SLF4J
-	 */
-	private static final Logger logger = LoggerFactory.getLogger(TilesConfigurer.class);
 
 	/** tile definitions */
 	private ServletContext servletContext;
@@ -108,8 +106,8 @@ public class TilesConfigurer extends org.springframework.web.servlet.view.tiles3
     	List<String> validDefinitions = new LinkedList<String>();
     	if (!CollectionUtils.isEmpty(definitions)) {
     		// debug
-    		if (logger.isDebugEnabled()) {
-    			logger.debug("Resolving definitions ["
+    		if (log.isDebugEnabled()) {
+    			log.debug("Resolving definitions ["
     					+ org.springframework.util.StringUtils.arrayToCommaDelimitedString(definitions) + "]");
     		}
     		// check definition
@@ -133,7 +131,7 @@ public class TilesConfigurer extends org.springframework.web.servlet.view.tiles3
 							validDefinitions.add(definition);
 						}
 						// debug
-						if (logger.isTraceEnabled() && valid) {
+						if (log.isTraceEnabled() && valid) {
 							List<String> resolved = new LinkedList<String>();
 							for(ApplicationResource resource : resources) {
 								String path = null;
@@ -148,8 +146,8 @@ public class TilesConfigurer extends org.springframework.web.servlet.view.tiles3
 							if (!CollectionUtils.isEmpty(resources)) {
 
 							}
-							if (logger.isTraceEnabled()) {
-								logger.debug("Resolved resource pattern [" + definition + "] to resource ["
+							if (log.isTraceEnabled()) {
+								log.debug("Resolved resource pattern [" + definition + "] to resource ["
 										+ (CollectionUtils.isEmpty(resolved)
 												? "" : org.springframework.util.StringUtils.collectionToCommaDelimitedString(resolved)));
 							}
@@ -207,8 +205,8 @@ public class TilesConfigurer extends org.springframework.web.servlet.view.tiles3
 								validDefinitions.addAll(resolved);
 							}
 							// debug
-							if (logger.isTraceEnabled()) {
-								logger.debug("Resolved resource pattern [" + definition + "] to resource ["
+							if (log.isTraceEnabled()) {
+								log.debug("Resolved resource pattern [" + definition + "] to resource ["
 										+ (CollectionUtils.isEmpty(resolved)
 												? "" : org.springframework.util.StringUtils.collectionToCommaDelimitedString(resolved)));
 							}
@@ -220,8 +218,8 @@ public class TilesConfigurer extends org.springframework.web.servlet.view.tiles3
 				}
 
 				// if invalid
-				if (!valid && logger.isTraceEnabled()) {
-					logger.error("Could not found resource at location: [" + definition + "]");
+				if (!valid && log.isTraceEnabled()) {
+					log.error("Could not found resource at location: [" + definition + "]");
 				}
 			}
 		}
@@ -230,11 +228,11 @@ public class TilesConfigurer extends org.springframework.web.servlet.view.tiles3
     			? new String[] {} : validDefinitions.toArray(new String[validDefinitions.size()]));
     	super.setDefinitions(this.definitions);
     	if (CollectionUtils.isEmpty(validDefinitions)) {
-    		logger.warn("Could not found any valid definitions"
+    		log.warn("Could not found any valid definitions"
     				+ (CollectionUtils.isEmpty(definitions)
     						? "" : " from [" + org.springframework.util.StringUtils.arrayToCommaDelimitedString(definitions) + "]"));
     	} else {
-    	    logger.info("Resolved [" + validDefinitions.size() + "] valid tiles definitions to ["
+    	    log.info("Resolved [" + validDefinitions.size() + "] valid tiles definitions to ["
                     + org.springframework.util.StringUtils.collectionToCommaDelimitedString(validDefinitions));
     	}
     }

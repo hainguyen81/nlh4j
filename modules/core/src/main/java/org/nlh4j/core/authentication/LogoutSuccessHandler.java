@@ -38,7 +38,7 @@ public class LogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler
     /**
      * SLF4J
      */
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	/**
 	 * {@link UserService}

@@ -47,7 +47,7 @@ public class TokenRememberMeServices extends TokenBasedRememberMeServices implem
     /**
      * SLF4J
      */
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * {@link UserService}

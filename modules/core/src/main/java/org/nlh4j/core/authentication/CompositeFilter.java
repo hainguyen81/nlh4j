@@ -44,7 +44,7 @@ public class CompositeFilter
     /**
      * SLF4J
      */
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     private List<String> filterBeanNames = new ArrayList<String>();
 
     /** {@link ApplicationContext} */

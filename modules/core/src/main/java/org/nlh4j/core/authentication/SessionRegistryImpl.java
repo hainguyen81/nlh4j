@@ -21,5 +21,5 @@ public class SessionRegistryImpl
     /** */
     private static final long serialVersionUID = 1L;
     /** SLF4J */
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 }

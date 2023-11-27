@@ -24,7 +24,7 @@ public class SimpleUrlAuthenticationSuccessHandler
     /**
      * SLF4J
      */
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * Initialize a new instance of {@link SimpleUrlAuthenticationSuccessHandler}

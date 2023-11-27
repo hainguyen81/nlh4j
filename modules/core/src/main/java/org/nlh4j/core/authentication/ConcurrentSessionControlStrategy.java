@@ -27,7 +27,7 @@ public class ConcurrentSessionControlStrategy
     /**
      * SLF4J
      */
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /** {@link SessionRegistry} */
     private final SessionRegistry sessionRegistry;
