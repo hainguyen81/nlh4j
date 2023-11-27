@@ -4411,9 +4411,8 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 						<skip>${proguard.skip}</skip>
 
 						<!-- Filtering -->
-						<inFilter>!module-info.class,!META-INF/maven/**</inFilter>
+						<inFilter>!**.jar,!module-info.class,!META-INF/maven/**</inFilter>
 						<outFilter>!META-INF/maven/**</outFilter>
-						<dependencyFilter>!**.jar,!module-info.class,!META-INF/**</dependencyFilter>
 
 						<!--
 							 TODO For fixing command line too long or too many injars, libraryjars broken command
