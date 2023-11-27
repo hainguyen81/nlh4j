@@ -1,6 +1,7 @@
 -printmapping mapping.txt
 -verbose
 -dontoptimize
+-allowaccessmodification
 # Remove from Jdk 1.8 for avoiding VerifyError
 #-dontpreverify
 -dontshrink
@@ -58,6 +59,7 @@
 	    
     # slf4j
 	public protected private static final org.slf4j.* *;
+	private static final org.slf4j.Logger log*;
     @org.slf4j.* <fields>;
 
     # nlh4j
@@ -65,6 +67,22 @@
 
     # Spring3
     @org.springframework.beans.factory.annotation.* <fields>;
+
+	# Enums
+	public enum *;
+	protected enum *;
+
+	# constants
+	public protected private static final <fields>;
+	#private static final **[] <fields>;
+
+	# serializable
+	private static final long serialVersionUID;
+	private static final java.io.ObjectStreamField[] serialPersistentFields;
+    private void writeObject(java.io.ObjectOutputStream);
+    private void readObject(java.io.ObjectInputStream);
+    java.lang.Object writeReplace();
+    java.lang.Object readResolve();
 }
 -keepclassmembernames class org.nlh4j.**.**$** {
 	public protected private *;
@@ -76,6 +94,7 @@
 	    @jakarta.annotation.* <fields>;
 	    
     # slf4j
+	public protected private static final org.slf4j.* *;
     @org.slf4j.* <fields>;
 
     # nlh4j
@@ -83,6 +102,22 @@
 
     # Spring3
     @org.springframework.beans.factory.annotation.* <fields>;
+
+	# Enums
+	public enum *;
+	protected enum *;
+
+	# constants
+	public protected private static final <fields>;
+	#private static final **[] <fields>;
+
+	# serializable
+	private static final long serialVersionUID;
+	private static final java.io.ObjectStreamField[] serialPersistentFields;
+    private void writeObject(java.io.ObjectOutputStream);
+    private void readObject(java.io.ObjectInputStream);
+    java.lang.Object writeReplace();
+    java.lang.Object readResolve();
 }
 # Seasar DOMA entity/table/database entity
 -keepclassmembernames @org.seasar.doma.* class org.nlh4j.** { *; }
@@ -96,6 +131,7 @@
     @jakarta.annotation.* *;
 	    
     # slf4j
+	public protected private static final org.slf4j.* *;
     @org.slf4j.* <fields>;
 
     # nlh4j
@@ -109,10 +145,16 @@
 	protected enum *;
 
 	# constants
-	private static final <fields>;
-	public static final <fields>;
-	protected static final <fields>;
+	public protected private static final <fields>;
 	#private static final **[] <fields>;
+
+	# serializable
+	private static final long serialVersionUID;
+	private static final java.io.ObjectStreamField[] serialPersistentFields;
+    private void writeObject(java.io.ObjectOutputStream);
+    private void readObject(java.io.ObjectInputStream);
+    java.lang.Object writeReplace();
+    java.lang.Object readResolve();
 }
 # Process bean classes by keeping setter and getter methods.
 -keep class * {
