@@ -59,7 +59,6 @@
 	    
     # slf4j
 	public protected private static final org.slf4j.* *;
-	private static final org.slf4j.Logger log*;
     @org.slf4j.* <fields>;
 
     # nlh4j
