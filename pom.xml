@@ -675,14 +675,14 @@
 				<!--<javaee-web-api.version>8.0.1</javaee-web-api.version>-->
 		
 				<!-- JSTL -->
-				<!--<jstl.groupId>javax.servlet</jstl.groupId>
+				<jstl.groupId>javax.servlet</jstl.groupId>
 				<jstl.artifactId>jstl</jstl.artifactId>
-				<jstl.version>1.2</jstl.version>-->
-				<jstl.groupId>jakarta.servlet.jsp.jstl</jstl.groupId>
-				<jstl.artifactId>jakarta.servlet.jsp.jstl-api</jstl.artifactId>
+				<jstl.version>1.2</jstl.version>
+				<!--<jstl.groupId>jakarta.servlet.jsp.jstl</jstl.groupId>
+				<jstl.artifactId>jakarta.servlet.jsp.jstl-api</jstl.artifactId>-->
 				<!--<jstl.version>1.2.7</jstl.version>
 				<jstl.version>2.0.0</jstl.version>-->
-				<jstl.version>3.0.0</jstl.version>
+				<!--<jstl.version>3.0.0</jstl.version>-->
 
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Springframework -->
