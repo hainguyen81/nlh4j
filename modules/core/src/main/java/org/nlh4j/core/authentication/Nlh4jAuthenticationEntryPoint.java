@@ -40,7 +40,7 @@ public class Nlh4jAuthenticationEntryPoint extends LoginUrlAuthenticationEntryPo
     /**
      * SLF4J
      */
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * {@link MessageService}

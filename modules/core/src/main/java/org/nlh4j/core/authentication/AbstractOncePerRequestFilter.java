@@ -40,7 +40,7 @@ public abstract class AbstractOncePerRequestFilter extends OncePerRequestFilter 
     /**
      * SLF4J
      */
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /** {@link MessageService} */
     @Inject
