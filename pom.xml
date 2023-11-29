@@ -3360,32 +3360,45 @@
 								<source>
 									<![CDATA[
 										import java.io.File;
-										String p = "profiles";
-										File f = null;
-										if ( p != null ) {
-											def _max_child_poms = 0
-											while( _max_child_poms++ < 5 ) {
-												f = new File( p );
-												if( f.exists() && f.isDirectory() ) {
-													break;
-												}
-												p = "../" + p;
+										String p = "./pom.xml";
+										File baseFile = null;
+										if (p != null) {
+											File f = new File(p);
+											if (f.exists()) {
+												do {
+													if (f.getParentFile() != null && f.getParentFile().getParentFile() != null) {
+														File parentFile = f.getParentFile();
+														File grandFile = parentFile.getParentFile();
+														f = new File( grandFile, p );
+														if (!f.exists()) {
+															baseFile = parentFile;
+														}
+
+													} else if (f.getParentFile() != null) {
+														baseFile = f.getParentFile();
+														break;
+													}
+												} while (baseFile == null || f == null || !f.exists());
 											}
 										}
-										if( f != null ) {
-											String basePath = f.getCanonicalPath();
-											basePath = basePath.substring( 0, basePath.lastIndexOf( File.separator ) );
+										if (baseFile != null) {
+											String basePath = baseFile.getCanonicalPath();
+											if (basePath.lastIndexOf(File.separator) >= basePath.length() - 1) {
+												basePath = basePath.substring( 0, basePath.lastIndexOf( File.separator ) );
+											}
 											basePath = basePath.replace( '\\' , '/' );
 											if ( basePath == null || basePath.length() <= 0 ) {
-												log.error( 'Could not find root directory!' );
+												log.error( '(1) Could not find root directory!' );
 												System.stop( 0 );
+
 											} else {
 												log.info( 'Root directory path {' + basePath + '}');
 												project.properties[ 'root.basedir' ] = basePath;
 												project.properties[ 'maven.multiModuleProjectDirectory' ] = basePath;
 											}
+
 										} else {
-											log.error( 'Could not find root directory!' );
+											log.error( '(2) Could not find root directory!' );
 											System.stop( 0 );
 										}
 									]]>
@@ -3400,11 +3413,11 @@
 					<artifactId>maven-antrun-plugin</artifactId>
 					<version>${maven.antrun.version}</version>
 					<configuration>
-					    <exportAntProperties>true</exportAntProperties>
+					    <exportAntProperties>false</exportAntProperties>
 					</configuration>
 					<executions>
 						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
-						<!-- Pre-Clean -->
+						<!-- Pre-Clean (Run Once) -->
 						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 						<execution>
 							<id>clean-folders</id>
@@ -3440,77 +3453,72 @@
 						</execution>
 						
 						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
-						<!-- Initialization -->
+						<!-- Clean (called right after default maven clean phase) -->
 						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
-						<!-- ensure requirement directories -->
+						<!-- ensure root requirement directories -->
 						<execution>
-							<id>ensure-requiment-directories</id>
-							<phase>post-clean</phase>
+							<id>ensure-root-requiment-directories</id>
+							<phase>clean</phase>
 							<goals>
 							    <goal>run</goal>
 							</goals>
 							<configuration>
-								<!-- ensure required directories -->
+								<!-- ensure requiment directories -->
 							    <target>
+							        <!-- ensure copied dependencies directories -->
+							        <mkdir dir="${maven.dependency.copy.directory}" />
+							        <!-- NLH4J GITHUB Repository: Before 2019 (use github site as repository) -->
+							        <mkdir dir="${maven.github.repo.deployment}" />
+							    </target>
+							</configuration>
+						</execution>
+						
+						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+						<!-- Initialization -->
+						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+						<!-- ensure module requirement directories -->
+						<execution>
+							<id>ensure-module-requiment-directories</id>
+							<!-- borrow validate pahase to initialize some requirement directories -->
+							<phase>validate</phase>
+							<goals>
+							    <goal>run</goal>
+							</goals>
+							<configuration>
+								<!-- ensure requiment directories -->
+							    <target name="ensure-requirement-directories">
+									<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.plugin.classpath"/>
+
+									<!-- module source/test directories -->
 							        <mkdir dir="${project.basedir}/src/main/java" />
 							        <mkdir dir="${project.basedir}/src/main/resources" />
 							        <mkdir dir="${project.basedir}/src/test/java" />
 							        <mkdir dir="${project.basedir}/src/test/resources" />
 							        <!-- ensure module profiles directory -->
 							        <mkdir dir="${module.profile.configuration.path}" />
-							        <available  file="${module.profile.configuration.path}" property="moduleConfigDirExists" />
-							        <!-- ensure copied dependencies directories -->
-							        <mkdir dir="${maven.dependency.copy.directory}" />
+							        <copy file="${root.profile.configuration}" tofile="${module.profile.configuration}"/>
 							        <!-- ensure generated lombok directories -->
 							        <mkdir dir="${org.projectlombok.generated.source.directory}" />
 							        <mkdir dir="${org.projectlombok.generated.test-source.directory}" />
-							        <!-- NLH4J GITHUB Repository: Before 2019 (use github site as repository) -->
-							        <mkdir dir="${maven.github.repo.deployment}" />
+
+							        <!-- ensure unpack dependency directories -->
+							        <if>
+										<equals arg1="${maven.dependency.unpack.skip}" arg2="false" />
+										<then>
+											<mkdir dir="${maven.dependency.unpack.source.directory}" />
+											<mkdir dir="${maven.dependency.unpack.resource.directory}" />
+										</then>
+									</if>
+
+							        <!-- ensure delombok directories -->
+							        <if>
+										<equals arg1="${maven.lombok.skip}" arg2="false" />
+										<then>
+											<mkdir dir="${org.projectlombok.delombok.source.directory}" />
+											<mkdir dir="${org.projectlombok.delombok.test-source.directory}" />
+										</then>
+									</if>
 							    </target>
-							</configuration>
-						</execution>
-						<!-- ensure module configuration -->
-						<execution>
-							<id>ensure-module-configuration</id>
-							<phase>initialize</phase>
-							<goals>
-							    <goal>run</goal>
-							</goals>
-							<configuration>
-							    <!-- ensure module profile configuration file -->
-							    <target if="${moduleConfigDirExists}">
-							    	<copy file="${root.profile.configuration}" tofile="${module.profile.configuration}"/>
-							    </target>
-							</configuration>
-						</execution>
-						<!-- ensure unpack dependencies -->
-						<execution>
-							<id>ensure-unpack-dependencies</id>
-							<phase>initialize</phase>
-							<goals>
-							    <goal>run</goal>
-							</goals>
-							<configuration>
-							    <!-- ensure unpack dependency directories -->
-							    <target unless="${maven.dependency.unpack.skip}">
-									<mkdir dir="${maven.dependency.unpack.source.directory}" />
-									<mkdir dir="${maven.dependency.unpack.resource.directory}" />
-								</target>
-							</configuration>
-						</execution>
-						<!-- ensure delombok directories -->
-						<execution>
-							<id>ensure-delombok-directories</id>
-							<phase>initialize</phase>
-							<goals>
-							    <goal>run</goal>
-							</goals>
-							<configuration>
-								<!-- ensure delombok directories -->
-							    <target unless="${maven.lombok.skip}">
-									<mkdir dir="${org.projectlombok.delombok.source.directory}" />
-									<mkdir dir="${org.projectlombok.delombok.test-source.directory}" />
-								</target>
 							</configuration>
 						</execution>
 
@@ -3618,6 +3626,24 @@
 							</configuration>
 						</execution>
 					</executions>
+					<dependencies>
+						<dependency>
+				            <groupId>ant-contrib</groupId>
+				            <artifactId>ant-contrib</artifactId>
+				            <version>1.0b3</version>
+		                    <exclusions>
+		                        <exclusion>
+		                            <groupId>ant</groupId>
+		                            <artifactId>ant</artifactId>
+		                        </exclusion>
+		                    </exclusions>
+				        </dependency>
+						<dependency>
+						    <groupId>org.apache.ant</groupId>
+						    <artifactId>ant</artifactId>
+						    <version>1.10.14</version>
+						</dependency>
+					</dependencies>
 				</plugin>
 				<!-- Enforce JDK version -->
 				<plugin>
