@@ -3274,8 +3274,7 @@
 		<filters>
 			<!-- Ensures that the config.properties file is always loaded from the
 				configuration directory of the active Maven profile. -->
-			<filter>${profile.configuration}</filter>
-			<!-- <filter>${root.basedir}/profiles/${build.profile.id}/config.properties</filter> -->
+			<filter>${module.profile.configuration}</filter>
 		</filters>
 		<pluginManagement>
 			<plugins>
