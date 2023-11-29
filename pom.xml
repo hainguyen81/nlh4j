@@ -3712,8 +3712,7 @@
 							</goals>
 							<configuration>
 								<files>
-									<file>${profile.configuration}</file>
-									<!-- <file>${root.basedir}/profiles/${build.profile.id}/config.properties</file> -->
+									<file>${module.profile.configuration}</file>
 								</files>
 							</configuration>
 						</execution>
