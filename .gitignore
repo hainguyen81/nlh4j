@@ -23,7 +23,10 @@ toolchains.xml
 /.mpt_generated/
 .settings/
 /.settings/
+bin/
+/bin/
 github-repo
 .github-repo
 .gitignore
 .dependencies
+.delombok
