@@ -43,7 +43,7 @@
 		<jdkHome>/path/to/jdk/1.5</jdkHome> </configuration> </toolchain> <toolchain> 
 		<type>jdk</type> <provides> <version>1.6</version> <vendor>sun</vendor> </provides> 
 		<configuration> <jdkHome>/path/to/jdk/1.6</jdkHome> </configuration> </toolchain> -->
-	<!-- <toolchain>
+	<toolchain>
 		<type>jdk</type>
 		<provides>
 			<version>1.6</version>
@@ -52,7 +52,7 @@
 		<configuration>
 			<jdkHome>E:/Java.Working/1.tools/jdk/1.6.0.45.x64</jdkHome>
 		</configuration>
-	</toolchain> -->
+	</toolchain>
 	<toolchain>
 		<type>jdk</type>
 		<provides>
@@ -60,7 +60,7 @@
 			<vendor>sun</vendor>
 		</provides>
 		<configuration>
-			<jdkHome>C:/01.tools/jdk/1.7.0_80_x64</jdkHome>
+			<jdkHome>E:/Java.Working/1.tools/jdk/1.7.0.79.x64</jdkHome>
 		</configuration>
 	</toolchain>
 	<toolchain>
@@ -70,7 +70,7 @@
 			<vendor>sun</vendor>
 		</provides>
 		<configuration>
-			<jdkHome>C:/01.tools/jdk/1.8.0_202</jdkHome>
+			<jdkHome>E:/Java.Working/1.tools/jdk/1.8.0.73.x64</jdkHome>
 		</configuration>
 	</toolchain>
 	<toolchain>
@@ -80,10 +80,10 @@
 			<vendor>sun</vendor>
 		</provides>
 		<configuration>
-			<jdkHome>C:/01.tools/jdk/11.0.13_x64</jdkHome>
+			<jdkHome>E:/Java.Working/1.tools/jdk/11.0.20.x64</jdkHome>
 		</configuration>
 	</toolchain>
-	<!-- <toolchain>
+	<toolchain>
 		<type>jdk</type>
 		<provides>
 			<version>17</version>
@@ -92,6 +92,6 @@
 		<configuration>
 			<jdkHome>E:/Java.Working/1.tools/jdk/17.0.9.x64</jdkHome>
 		</configuration>
-	</toolchain> -->
+	</toolchain>
 
 </toolchains>
