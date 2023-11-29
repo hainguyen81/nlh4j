@@ -2559,9 +2559,13 @@
 		
 		<!-- Certificate -->
 		<certificate.basedir>${root.basedir}/certificate</certificate.basedir>
-
+		
 		<!-- Profile properties file -->
-		<profile.configuration>${root.basedir}/profiles/${build.profile.id}/config.properties</profile.configuration>
+		<profile.configuration>config.properties</profile.configuration>
+		<profile.configuration.path>.profiles/${build.profile.id}</profile.configuration.path>
+		<root.profile.configuration>${root.basedir}/${profile.configuration.path}/${profile.configuration}</root.profile.configuration>
+		<module.profile.configuration.path>${project.basedir}/${profile.configuration.path}</module.profile.configuration.path>
+		<module.profile.configuration>${module.profile.configuration.path}/${profile.configuration}</module.profile.configuration>
 
 		<!-- automatically run annotation processors within the incremental compilation -->
 		<m2e.apt.activation>jdt_apt</m2e.apt.activation>
@@ -3397,10 +3401,12 @@
 					<artifactId>maven-antrun-plugin</artifactId>
 					<version>${maven.antrun.version}</version>
 					<configuration>
-					    <exportAntProperties>false</exportAntProperties>
+					    <exportAntProperties>true</exportAntProperties>
 					</configuration>
 					<executions>
+						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 						<!-- Pre-Clean -->
+						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 						<execution>
 							<id>clean-folders</id>
 							<phase>pre-clean</phase>
@@ -3433,19 +3439,27 @@
 							    </target>
 							</configuration>
 						</execution>
+						
+						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 						<!-- Initialization -->
+						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+						<!-- ensure requirement directories -->
 						<execution>
-							<id>ensure-generated-folders</id>
-							<phase>initialize</phase>
+							<id>ensure-requiment-directories</id>
+							<phase>post-clean</phase>
 							<goals>
 							    <goal>run</goal>
 							</goals>
 							<configuration>
-							    <target name="ensure-directories">
+								<!-- ensure required directories -->
+							    <target>
 							        <mkdir dir="${project.basedir}/src/main/java" />
 							        <mkdir dir="${project.basedir}/src/main/resources" />
 							        <mkdir dir="${project.basedir}/src/test/java" />
 							        <mkdir dir="${project.basedir}/src/test/resources" />
+							        <!-- ensure module profiles directory -->
+							        <mkdir dir="${module.profile.configuration.path}" />
+							        <available  file="${module.profile.configuration.path}" property="moduleConfigDirExists" />
 							        <!-- ensure copied dependencies directories -->
 							        <mkdir dir="${maven.dependency.copy.directory}" />
 							        <!-- ensure generated lombok directories -->
@@ -3454,21 +3468,56 @@
 							        <!-- NLH4J GITHUB Repository: Before 2019 (use github site as repository) -->
 							        <mkdir dir="${maven.github.repo.deployment}" />
 							    </target>
+							</configuration>
+						</execution>
+						<!-- ensure module configuration -->
+						<execution>
+							<id>ensure-module-configuration</id>
+							<phase>initialize</phase>
+							<goals>
+							    <goal>run</goal>
+							</goals>
+							<configuration>
+							    <!-- ensure module profile configuration file -->
+							    <target if="${moduleConfigDirExists}">
+							    	<copy file="${root.profile.configuration}" tofile="${module.profile.configuration}"/>
+							    </target>
+							</configuration>
+						</execution>
+						<!-- ensure unpack dependencies -->
+						<execution>
+							<id>ensure-unpack-dependencies</id>
+							<phase>initialize</phase>
+							<goals>
+							    <goal>run</goal>
+							</goals>
+							<configuration>
 							    <!-- ensure unpack dependency directories -->
-							    <target name="ensure-dependency-unpack-directories"
-							    unless="${maven.dependency.unpack.skip}">
+							    <target unless="${maven.dependency.unpack.skip}">
 									<mkdir dir="${maven.dependency.unpack.source.directory}" />
 									<mkdir dir="${maven.dependency.unpack.resource.directory}" />
 								</target>
+							</configuration>
+						</execution>
+						<!-- ensure delombok directories -->
+						<execution>
+							<id>ensure-delombok-directories</id>
+							<phase>initialize</phase>
+							<goals>
+							    <goal>run</goal>
+							</goals>
+							<configuration>
 								<!-- ensure delombok directories -->
-							    <target name="ensure-delombok-directories"
-							    unless="${maven.lombok.skip}">
+							    <target unless="${maven.lombok.skip}">
 									<mkdir dir="${org.projectlombok.delombok.source.directory}" />
 									<mkdir dir="${org.projectlombok.delombok.test-source.directory}" />
 								</target>
 							</configuration>
 						</execution>
+
+						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 						<!-- Process sources -->
+						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 						<execution>
 							<id>ensure-dependencies-sources</id>
 							<phase>process-sources</phase>
@@ -3517,7 +3566,10 @@
 								</target>
 							</configuration>
 						</execution>
+
+						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 						<!-- Process resources -->
+						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 						<execution>
 							<id>ensure-dependencies-resources</id>
 							<phase>process-resources</phase>
