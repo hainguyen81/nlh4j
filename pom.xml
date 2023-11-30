@@ -2561,6 +2561,7 @@
 		<certificate.basedir>${root.basedir}/certificate</certificate.basedir>
 		
 		<!-- Profile properties file -->
+		<build.profile.id>dev</build.profile.id> <!-- default profile -->
 		<profile.configuration>config.properties</profile.configuration>
 		<profile.configuration.path>.profiles/${build.profile.id}</profile.configuration.path>
 		<root.profile.configuration>${root.basedir}/${profile.configuration.path}/${profile.configuration}</root.profile.configuration>
