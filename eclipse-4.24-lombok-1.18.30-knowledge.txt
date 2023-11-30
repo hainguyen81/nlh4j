@@ -1,0 +1,73 @@
+# -------------------------------------------------
+# config eclipse.ini for lombok
+# -------------------------------------------------
+# these lines have been added to fix eclipse annotation processor
+# java.lang.NoClassDefFoundError: javax/annotation/processing/AbstractProcessor
+--add-opens=java.compiler/javax.annotation.processing=ALL-UNNAMED
+--add-opens=java.base/java.se.ee=ALL-UNNAMED
+--add-opens=java.base/java.lang=ALL-UNNAMED
+--illegal-access=warn
+# -------------------------------------------------
+-javaagent:lombok-1.18.30.jar
+-Xbootclasspath/a:lombok-1.18.30.jar
+
+
+# -------------------------------------------------
+# Eclipse JEE 4.24 (2022-06) (x64)
+# eclipse.ini distribution (example JDK11+)
+# -------------------------------------------------
+-startup
+plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar
+--launcher.library
+plugins/org.eclipse.equinox.launcher.win32.win32.x86_64_1.2.500.v20220509-0833
+-product
+org.eclipse.epp.package.jee.product
+-showsplash
+org.eclipse.epp.package.common
+--launcher.defaultAction
+openFile
+--launcher.defaultAction
+openFile
+--launcher.appendVmargs
+-vm
+#E:/Java.Working/1.tools/jdk/11.0.20.x64/bin/server/jvm.dll
+plugins/org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_17.0.3.v20220515-1416/jre/bin
+-vmargs
+-Dosgi.requiredJavaVersion=11
+-Dosgi.instance.area.default=@user.home/eclipse-workspace
+-Dsun.java.command=Eclipse
+-noverify
+-Xss2M
+-Xms256m
+-Xmx2048m
+-XX:+UseG1GC
+-XX:+UseStringDeduplication
+-XX:PermSize=512M
+-XX:MaxPermSize=1024M
+--add-modules=ALL-SYSTEM
+-Dosgi.requiredJavaVersion=11
+-Dosgi.dataAreaRequiresExplicitInit=true
+-Dorg.eclipse.swt.graphics.Resource.reportNonDisposed=true
+-Xms256m
+-Xmx2048m
+-Declipse.p2.max.threads=10
+-Dorg.eclipse.cdt.core.graceful_exit_time_ms=60000
+--add-modules=ALL-SYSTEM
+--add-opens=java.base/java.io=ALL-UNNAMED
+--add-opens=java.base/sun.nio.ch=ALL-UNNAMED
+--add-opens=java.base/java.net=ALL-UNNAMED
+--add-opens=java.base/sun.security.ssl=ALL-UNNAMED
+--add-opens=java.base/java.security=ALL-UNNAMED
+--add-opens=jdk.internal.jvmstat/sun.jvmstat.monitor=ALL-UNNAMED
+--add-opens=java.base/java.lang=ALL-UNNAMED
+--add-opens=java.base/java.util=ALL-UNNAMED
+# -------------------------------------------------
+# these lines have been added to fix eclipse annotation processor
+# java.lang.NoClassDefFoundError: javax/annotation/processing/AbstractProcessor - java.compiler/javax.annotation.processing
+--add-opens=java.compiler/javax.annotation.processing=ALL-UNNAMED
+--add-opens=java.base/java.se.ee=ALL-UNNAMED
+--add-opens=java.base/java.lang=ALL-UNNAMED
+--illegal-access=warn
+# -------------------------------------------------
+-javaagent:lombok-1.18.30.jar
+-Xbootclasspath/a:lombok-1.18.30.jar
