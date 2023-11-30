@@ -2565,7 +2565,7 @@
 		<profile.configuration>config.properties</profile.configuration>
 		<profile.configuration.path>.profiles/${build.profile.id}</profile.configuration.path>
 		<root.profile.configuration>${root.basedir}/${profile.configuration.path}/${profile.configuration}</root.profile.configuration>
-		<module.profile.configuration.path>${project.basedir}/${profile.configuration.path}</module.profile.configuration.path>
+		<module.profile.configuration.path>${project.build.directory}/${profile.configuration.path}</module.profile.configuration.path>
 		<module.profile.configuration>${module.profile.configuration.path}/${profile.configuration}</module.profile.configuration>
 
 		<!-- automatically run annotation processors within the incremental compilation -->
