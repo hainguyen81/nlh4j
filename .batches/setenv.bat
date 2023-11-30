@@ -1,0 +1,21 @@
+@echo off
+
+SET BATCHES_DIR=%~dp0
+SET PROJ_DIR=%BATCHES_DIR%\..
+
+SET JAVA_HOME=E:\Java.Working\1.tools\jdk\11.0.20.x64
+SET JRE_HOME=%JAVA_HOME%
+
+SET MAVEN_HOME=E:\Java.Working\1.tools\maven\apache-maven-3.8.4
+SET MAVEN=%MAVEN_HOME%\bin
+SET MAVEN_SETTINGS=%MAVEN_HOME%\conf\settings.xml
+SET MAVEN_REPO=E:\Java.Working\1.tools\maven\.m2\repository
+SET MAVEN_OPTS=-Xms256m -Xmx2048m
+SET MAVEN_PROFILES=dev,jdk11
+
+SET SKIP_TESTS=true
+
+SET DEBUG=true
+
+SET PREV_PATH=%PATH%
+SET PATH=%JAVA_HOME%;%JAVA_HOME%\bin;%MAVEN_HOME%;%MAVEN%;%MAVEN_HOME%\bin;%MW_HOME%;%PATH%

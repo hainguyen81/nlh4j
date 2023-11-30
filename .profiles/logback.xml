@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{yyyy/MM/dd HH:mm:ss.SSS} %logger{0} [%-5level] %msg%n</pattern>
+			<immediateFlush>true</immediateFlush>
+		</encoder>
+	</appender>
+
+	<!--Daily rolling file appender -->
+	<!--
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>log/batch/fukoku_batch.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>log/batch/fukoku_batch.%d{yyyy-ww}.log</FileNamePattern>
+			<cleanHistoryOnStart>true</cleanHistoryOnStart>
+			<TimeBasedFileNamingAndTriggeringPolicy class="jp.co.shanon.ffc.common.smp.api.util.log.StartupTimeBasedTriggeringPolicy" />
+		</rollingPolicy>
+		<encoder>
+			<layout>
+				<Pattern>%d{yyyy/MM/dd HH:mm:ss.SSS} %logger{0} [%-5level] %msg%n</Pattern>
+			</layout>
+		</encoder>
+	</appender>
+	-->
+
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- Support multiple-JVM writing to the same log file -->
+		<!-- <file>${log.dir}/${log.filename}.log</file> -->
+    	<prudent>true</prudent>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>${log.dir}/%d{yyyy-MM-dd}/${log.filename}.%i.log</fileNamePattern>
+
+			<!-- keep number days' worth of history capped at number total size -->
+			<maxFileSize>${log.maxFileSize}</maxFileSize>
+			<maxHistory>${log.maxHistory}</maxHistory>
+			<totalSizeCap>${log.totalSizeCap}</totalSizeCap>
+			<cleanHistoryOnStart>${log.cleanHistoryOnStart}</cleanHistoryOnStart>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy/MM/dd HH:mm:ss.SSS} %logger{0} [%-5level] %msg%n</pattern>
+			<immediateFlush>true</immediateFlush>
+		</encoder>
+	</appender>
+
+	<!--
+	<logger name="org.springframework" level="INFO" />
+	<logger name="org.quartz" level="INFO" />
+	<logger name="org.jdbcdslog.ConnectionLogger" level="WARN"/>
+	-->
+	<logger name="org.springframework" level="INFO" />
+	<logger name="com.github.ziplet" level="OFF" />
+	<logger name="org.nlh4j" level="${log.mode}" />
+	<!--
+	<logger name="org.springframework.web.socket" level="INFO" />
+	-->
+
+	<root level="${log.mode}">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</root>
+
+</configuration>

@@ -52,7 +52,7 @@ public class Nlh4jAuthenticationProvider implements AuthenticationProvider, Seri
     /**
      * SLF4J
      */
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * {@link HttpServletRequest}

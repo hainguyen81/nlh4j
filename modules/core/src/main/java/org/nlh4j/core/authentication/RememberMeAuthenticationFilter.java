@@ -26,7 +26,7 @@ public class RememberMeAuthenticationFilter
     /**
      * SLF4J
      */
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * Initialize a new instance of {@link RememberMeAuthenticationFilter}

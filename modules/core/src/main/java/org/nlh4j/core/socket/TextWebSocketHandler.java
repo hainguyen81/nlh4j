@@ -29,7 +29,7 @@ import org.nlh4j.core.service.ChatService;
 public class TextWebSocketHandler extends org.springframework.web.socket.handler.TextWebSocketHandler {
 
 	/** logger */
-    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * @see ChatService
