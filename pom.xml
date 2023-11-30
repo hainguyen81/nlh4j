@@ -52,6 +52,10 @@
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<profile>
 			<id>jdk8</id>
+			<!-- The development profile is active by default -->
+			<activation>
+				<jdk>[1.6,1.8)</jdk>
+			</activation>
 			<properties>
 				<!-- General -->
 				<revision>1.0-jre8</revision>
@@ -534,6 +538,19 @@
 				</plugins>
 			</reporting>
 
+			<!-- Included Dependencies -->
+			<dependencies>
+				<!--
+					 XML API
+					 Due to Eclipse using jdk (java.xml) as module-path, it conflicts with this dependency;
+					 so just including it in here profile `jdk8`
+				-->
+				<dependency>
+					<groupId>xml-apis</groupId>
+					<artifactId>xml-apis</artifactId>
+				</dependency>
+			</dependencies>
+
 			<!-- Modules -->
 			<modules>
 				<!-- Base -->
@@ -547,6 +564,11 @@
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<profile>
 			<id>jdk11</id>
+			<!-- The development profile is active by default -->
+			<activation>
+				<jdk>[1.9,16)</jdk>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 			<properties>
 				<!-- General -->
 				<revision>1.0-jre11</revision>
@@ -1287,6 +1309,10 @@
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<profile>
 			<id>jdk17</id>
+			<!-- The development profile is active by default -->
+			<activation>
+				<jdk>[17,)</jdk>
+			</activation>
 			<properties>
 				<!-- General -->
 				<revision>1.0-jre17</revision>
@@ -2533,9 +2559,13 @@
 		
 		<!-- Certificate -->
 		<certificate.basedir>${root.basedir}/certificate</certificate.basedir>
-
+		
 		<!-- Profile properties file -->
-		<profile.configuration>${root.basedir}/profiles/${build.profile.id}/config.properties</profile.configuration>
+		<profile.configuration>config.properties</profile.configuration>
+		<profile.configuration.path>.profiles/${build.profile.id}</profile.configuration.path>
+		<root.profile.configuration>${root.basedir}/${profile.configuration.path}/${profile.configuration}</root.profile.configuration>
+		<module.profile.configuration.path>${project.basedir}/${profile.configuration.path}</module.profile.configuration.path>
+		<module.profile.configuration>${module.profile.configuration.path}/${profile.configuration}</module.profile.configuration>
 
 		<!-- automatically run annotation processors within the incremental compilation -->
 		<m2e.apt.activation>jdt_apt</m2e.apt.activation>
@@ -2719,6 +2749,22 @@
 		<!--<maven.nexus.staging.version>1.6.13</maven.nexus.staging.version>
 		<maven.nexus.staging.serverId>${maven.github.repo.settings.name}</maven.nexus.staging.serverId>
 		<maven.nexus.staging.nexusUrl>https://github.com/hainguyen81/nlh4j-repo.git</maven.nexus.staging.nexusUrl>-->
+		
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Lombok -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<maven.lombok.version>${org.projectlombok.version}.0</maven.lombok.version>
+		<maven.lombok.skip>true</maven.lombok.skip>
+		<org.projectlombok.delombok>.delombok</org.projectlombok.delombok>
+		<org.projectlombok.delombok.directory>${project.basedir}/${org.projectlombok.delombok}</org.projectlombok.delombok.directory>
+		<org.projectlombok.delombok.source>src</org.projectlombok.delombok.source>
+		<org.projectlombok.delombok.test-source>test</org.projectlombok.delombok.test-source>
+		<org.projectlombok.delombok.source.directory>${org.projectlombok.delombok.directory}/${org.projectlombok.delombok.source}</org.projectlombok.delombok.source.directory>
+		<org.projectlombok.delombok.test-source.directory>${org.projectlombok.delombok.directory}/${org.projectlombok.delombok.test-source}</org.projectlombok.delombok.test-source.directory>
+		<org.projectlombok.generated.source>.apt_generated</org.projectlombok.generated.source>
+		<org.projectlombok.generated.test-source>.apt_generated_tests</org.projectlombok.generated.test-source>
+		<org.projectlombok.generated.source.directory>${project.basedir}/${org.projectlombok.generated.source}</org.projectlombok.generated.source.directory>
+		<org.projectlombok.generated.test-source.directory>${project.basedir}/${org.projectlombok.generated.test-source}</org.projectlombok.generated.test-source.directory>
 
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!-- Servlet -->
@@ -3158,6 +3204,9 @@
 		<commons.codec.version>1.16.0</commons.codec.version>
 		<commons.logging.version>1.2</commons.logging.version>
 		<commons.digester.version>2.1</commons.digester.version>
+		
+		<!-- XML API -->
+		<xml-apis.version>2.0.2</xml-apis.version>
 
 		<!-- HTML -->
 		<net.sf.htmlcleaner.version>2.16</net.sf.htmlcleaner.version>
@@ -3225,8 +3274,7 @@
 		<filters>
 			<!-- Ensures that the config.properties file is always loaded from the
 				configuration directory of the active Maven profile. -->
-			<filter>${profile.configuration}</filter>
-			<!-- <filter>${root.basedir}/profiles/${build.profile.id}/config.properties</filter> -->
+			<filter>${module.profile.configuration}</filter>
 		</filters>
 		<pluginManagement>
 			<plugins>
@@ -3312,32 +3360,45 @@
 								<source>
 									<![CDATA[
 										import java.io.File;
-										String p = "profiles";
-										File f = null;
-										if ( p != null ) {
-											def _max_child_poms = 0
-											while( _max_child_poms++ < 5 ) {
-												f = new File( p );
-												if( f.exists() && f.isDirectory() ) {
-													break;
-												}
-												p = "../" + p;
+										String p = "./pom.xml";
+										File baseFile = null;
+										if (p != null) {
+											File f = new File(p);
+											if (f.exists()) {
+												do {
+													if (f.getParentFile() != null && f.getParentFile().getParentFile() != null) {
+														File parentFile = f.getParentFile();
+														File grandFile = parentFile.getParentFile();
+														f = new File( grandFile, p );
+														if (!f.exists()) {
+															baseFile = parentFile;
+														}
+
+													} else if (f.getParentFile() != null) {
+														baseFile = f.getParentFile();
+														break;
+													}
+												} while (baseFile == null || f == null || !f.exists());
 											}
 										}
-										if( f != null ) {
-											String basePath = f.getCanonicalPath();
-											basePath = basePath.substring( 0, basePath.lastIndexOf( File.separator ) );
+										if (baseFile != null) {
+											String basePath = baseFile.getCanonicalPath();
+											if (basePath.lastIndexOf(File.separator) >= basePath.length() - 1) {
+												basePath = basePath.substring( 0, basePath.lastIndexOf( File.separator ) );
+											}
 											basePath = basePath.replace( '\\' , '/' );
 											if ( basePath == null || basePath.length() <= 0 ) {
-												log.error( 'Could not find root directory!' );
+												log.error( '(1) Could not find root directory!' );
 												System.stop( 0 );
+
 											} else {
 												log.info( 'Root directory path {' + basePath + '}');
 												project.properties[ 'root.basedir' ] = basePath;
 												project.properties[ 'maven.multiModuleProjectDirectory' ] = basePath;
 											}
+
 										} else {
-											log.error( 'Could not find root directory!' );
+											log.error( '(2) Could not find root directory!' );
 											System.stop( 0 );
 										}
 									]]>
@@ -3355,7 +3416,9 @@
 					    <exportAntProperties>false</exportAntProperties>
 					</configuration>
 					<executions>
-						<!-- Pre-Clean -->
+						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+						<!-- Pre-Clean (Run Once) -->
+						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 						<execution>
 							<id>clean-folders</id>
 							<phase>pre-clean</phase>
@@ -3364,46 +3427,104 @@
 							</goals>
 							<configuration>
 							    <target>
+							    	<!-- delete copied dependencies directory -->
 									<delete includeEmptyDirs="true" verbose="false" quiet="true"
 							        failonerror="false" performGCOnFailedDelete="false">
 										<fileset dir="${maven.dependency.copy.directory}" includes="**/*"/>
 									</delete>
+									<!-- delete project target directory -->
 							        <delete includeEmptyDirs="true" verbose="false" quiet="true"
 							        failonerror="false" performGCOnFailedDelete="false">
-										<fileset dir="${project.basedir}" includes="**/target/"/>
+										<fileset dir="${project.build.directory}" includes="**/*"/>
 									</delete>
+									<!-- delete lombok generated directories -->
 							        <delete includeEmptyDirs="true" verbose="false" quiet="true"
 							        failonerror="false" performGCOnFailedDelete="false">
-										<fileset dir="${project.basedir}" includes="**/.apt_generated/"/>
+										<fileset dir="${org.projectlombok.generated.source.directory}" includes="**/*"/>
+										<fileset dir="${org.projectlombok.generated.test-source.directory}" includes="**/*"/>
+									</delete>
+									<!-- delete delombok directories -->
+							        <delete includeEmptyDirs="true" verbose="false" quiet="true"
+							        failonerror="false" performGCOnFailedDelete="false">
+										<fileset dir="${org.projectlombok.delombok.directory}" includes="**/*"/>
 									</delete>
 							    </target>
 							</configuration>
 						</execution>
-						<!-- Initialization -->
+						
+						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+						<!-- Clean (called right after default maven clean phase) -->
+						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+						<!-- ensure root requirement directories -->
 						<execution>
-							<id>ensure-generated-folders</id>
-							<phase>initialize</phase>
+							<id>ensure-root-requiment-directories</id>
+							<phase>clean</phase>
 							<goals>
 							    <goal>run</goal>
 							</goals>
 							<configuration>
-							    <target name="ensure-directories">
-							        <mkdir dir="${project.basedir}/src/main/java" />
-							        <mkdir dir="${project.basedir}/src/main/resources" />
-							        <mkdir dir="${project.basedir}/src/test/java" />
-							        <mkdir dir="${project.basedir}/src/test/resources" />
+								<!-- ensure requiment directories -->
+							    <target>
+							        <!-- ensure copied dependencies directories -->
 							        <mkdir dir="${maven.dependency.copy.directory}" />
 							        <!-- NLH4J GITHUB Repository: Before 2019 (use github site as repository) -->
 							        <mkdir dir="${maven.github.repo.deployment}" />
 							    </target>
-							    <target name="ensure-dependency-unpack-directories"
-							    unless="${maven.dependency.unpack.skip}">
-									<mkdir dir="${maven.dependency.unpack.source.directory}" />
-									<mkdir dir="${maven.dependency.unpack.resource.directory}" />
-								</target>
 							</configuration>
 						</execution>
+						
+						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+						<!-- Initialization -->
+						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+						<!-- ensure module requirement directories -->
+						<execution>
+							<id>ensure-module-requiment-directories</id>
+							<!-- borrow validate pahase to initialize some requirement directories -->
+							<phase>validate</phase>
+							<goals>
+							    <goal>run</goal>
+							</goals>
+							<configuration>
+								<!-- ensure requiment directories -->
+							    <target name="ensure-requirement-directories">
+									<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.plugin.classpath"/>
+
+									<!-- module source/test directories -->
+							        <mkdir dir="${project.basedir}/src/main/java" />
+							        <mkdir dir="${project.basedir}/src/main/resources" />
+							        <mkdir dir="${project.basedir}/src/test/java" />
+							        <mkdir dir="${project.basedir}/src/test/resources" />
+							        <!-- ensure module profiles directory -->
+							        <mkdir dir="${module.profile.configuration.path}" />
+							        <copy file="${root.profile.configuration}" tofile="${module.profile.configuration}"/>
+							        <!-- ensure generated lombok directories -->
+							        <mkdir dir="${org.projectlombok.generated.source.directory}" />
+							        <mkdir dir="${org.projectlombok.generated.test-source.directory}" />
+
+							        <!-- ensure unpack dependency directories -->
+							        <if>
+										<equals arg1="${maven.dependency.unpack.skip}" arg2="false" />
+										<then>
+											<mkdir dir="${maven.dependency.unpack.source.directory}" />
+											<mkdir dir="${maven.dependency.unpack.resource.directory}" />
+										</then>
+									</if>
+
+							        <!-- ensure delombok directories -->
+							        <if>
+										<equals arg1="${maven.lombok.skip}" arg2="false" />
+										<then>
+											<mkdir dir="${org.projectlombok.delombok.source.directory}" />
+											<mkdir dir="${org.projectlombok.delombok.test-source.directory}" />
+										</then>
+									</if>
+							    </target>
+							</configuration>
+						</execution>
+
+						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 						<!-- Process sources -->
+						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 						<execution>
 							<id>ensure-dependencies-sources</id>
 							<phase>process-sources</phase>
@@ -3452,7 +3573,10 @@
 								</target>
 							</configuration>
 						</execution>
+
+						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 						<!-- Process resources -->
+						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 						<execution>
 							<id>ensure-dependencies-resources</id>
 							<phase>process-resources</phase>
@@ -3502,6 +3626,24 @@
 							</configuration>
 						</execution>
 					</executions>
+					<dependencies>
+						<dependency>
+				            <groupId>ant-contrib</groupId>
+				            <artifactId>ant-contrib</artifactId>
+				            <version>1.0b3</version>
+		                    <exclusions>
+		                        <exclusion>
+		                            <groupId>ant</groupId>
+		                            <artifactId>ant</artifactId>
+		                        </exclusion>
+		                    </exclusions>
+				        </dependency>
+						<dependency>
+						    <groupId>org.apache.ant</groupId>
+						    <artifactId>ant</artifactId>
+						    <version>1.10.14</version>
+						</dependency>
+					</dependencies>
 				</plugin>
 				<!-- Enforce JDK version -->
 				<plugin>
@@ -3596,8 +3738,7 @@
 							</goals>
 							<configuration>
 								<files>
-									<file>${profile.configuration}</file>
-									<!-- <file>${root.basedir}/profiles/${build.profile.id}/config.properties</file> -->
+									<file>${module.profile.configuration}</file>
 								</files>
 							</configuration>
 						</execution>
@@ -3715,12 +3856,14 @@
 					<artifactId>build-helper-maven-plugin</artifactId>
 					<version>${maven.build.helper.version}</version>
 					<executions>
+						<!-- add maven version -->
 						<execution>
 							<id>maven-version</id>
 							<goals>
 								<goal>maven-version</goal>
 							</goals>
 						</execution>
+						<!-- add lombok generated source folder -->
 						<execution>
 							<id>add-source</id>
 							<phase>generate-sources</phase>
@@ -3729,7 +3872,20 @@
 							</goals>
 							<configuration>
 								<sources>
-									<source>${project.basedir}/.apt_generated</source>
+									<source>${org.projectlombok.generated.source.directory}</source>
+								</sources>
+							</configuration>
+						</execution>
+						<!-- add lombok generated test source folder -->
+						<execution>
+							<id>add-test-source</id>
+							<phase>generate-test-sources</phase>
+							<goals>
+								<goal>add-test-source</goal>
+							</goals>
+							<configuration>
+								<sources>
+									<source>${org.projectlombok.generated.test-source.directory}</source>
 								</sources>
 							</configuration>
 						</execution>
@@ -4079,7 +4235,8 @@ version=1]]></content>
 							<file>
 								<name>.settings/org.eclipse.jdt.core.prefs</name>
 								<content><![CDATA[eclipse.preferences.version=1
-encoding/.apt_generated=${project.build.sourceEncoding}
+encoding/${org.projectlombok.generated.source}=${project.build.sourceEncoding}
+encoding/${org.projectlombok.generated.test-source}=${project.build.sourceEncoding}
 encoding/src/main/java=${project.build.sourceEncoding}
 encoding/src/main/resources=${project.build.sourceEncoding}
 encoding/src/test/java=${project.build.sourceEncoding}
@@ -4099,8 +4256,8 @@ org.eclipse.jdt.core.compiler.source=${java.version}]]></content>
 								<name>.settings/org.eclipse.jdt.apt.core.prefs</name>
 								<content><![CDATA[eclipse.preferences.version=1
 org.eclipse.jdt.apt.aptEnabled=${m2e.apt.aptEnabled}
-org.eclipse.jdt.apt.genSrcDir=.apt_generated
-org.eclipse.jdt.apt.genTestSrcDir=.apt_generated_tests
+org.eclipse.jdt.apt.genSrcDir=${org.projectlombok.generated.source}
+org.eclipse.jdt.apt.genTestSrcDir=${org.projectlombok.generated.test-source}
 org.eclipse.jdt.apt.processorOptions/sql.validation=true
 org.eclipse.jdt.apt.reconcileEnabled=true]]></content>
 							</file>
@@ -4151,6 +4308,42 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 						</additionalConfig>
 	                </configuration>
 	            </plugin>
+	            <!-- Delombok -->
+	            <plugin>
+					<groupId>org.projectlombok</groupId>
+					<artifactId>lombok-maven-plugin</artifactId>
+					<version>${maven.lombok.version}</version>
+					<executions>
+						<execution>
+							<id>delombok-sources</id>
+							<phase>generate-sources</phase>
+							<goals>
+								<goal>delombok</goal>
+							</goals>
+							<configuration>
+								<skip>${maven.lombok.skip}</skip>
+								<sourceDirectory>src/main/java</sourceDirectory>
+								<outputDirectory>${org.projectlombok.delombok.source.directory}</outputDirectory>
+								<addOutputDirectory>false</addOutputDirectory>
+								<encoding>${project.build.sourceEncoding}</encoding>
+							</configuration>
+						</execution>
+						<execution>
+							<id>delombok-test-sources</id>
+							<phase>generate-test-sources</phase>
+							<goals>
+								<goal>testDelombok</goal>
+							</goals>
+							<configuration>
+								<skip>${maven.lombok.skip}</skip>
+								<sourceDirectory>src/main/java</sourceDirectory>
+								<outputDirectory>${org.projectlombok.delombok.test-source.directory}</outputDirectory>
+								<addOutputDirectory>false</addOutputDirectory>
+								<encoding>${project.build.sourceEncoding}</encoding>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
 				<!-- Compiler -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -4168,7 +4361,8 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 						<useIncrementalCompilation>true</useIncrementalCompilation>
 						<verbose>true</verbose>
 						<encoding>${project.build.sourceEncoding}</encoding>
-						<generatedSourcesDirectory>${project.basedir}/.apt_generated</generatedSourcesDirectory>
+						<generatedSourcesDirectory>${org.projectlombok.generated.source.directory}</generatedSourcesDirectory>
+						<generatedTestSourcesDirectory>${org.projectlombok.generated.test-source.directory}</generatedTestSourcesDirectory>
 						<compilerArgs>
 							<arg>-Xlint:all</arg>
 							<arg>-verbose</arg>
@@ -4411,9 +4605,8 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 						<skip>${proguard.skip}</skip>
 
 						<!-- Filtering -->
-						<inFilter>!module-info.class,!META-INF/maven/**</inFilter>
+						<inFilter>!**.jar,!module-info.class,!META-INF/maven/**</inFilter>
 						<outFilter>!META-INF/maven/**</outFilter>
-						<dependencyFilter>!**.jar,!module-info.class,!META-INF/**</dependencyFilter>
 
 						<!--
 							 TODO For fixing command line too long or too many injars, libraryjars broken command
@@ -4565,9 +4758,7 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 											<goal>obfuscate-main-classes</goal>
 										</goals>
 									</pluginExecutionFilter>
-									<action>
-										<ignore>false</ignore>
-									</action>
+									<action><ignore /></action>
 								</pluginExecution>
 								<pluginExecution>
 									<pluginExecutionFilter>
@@ -4579,9 +4770,7 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 											<goal>obfuscate-main-classes</goal>
 										</goals>
 									</pluginExecutionFilter>
-									<action>
-										<ignore>false</ignore>
-									</action>
+									<action><ignore /></action>
 								</pluginExecution>
 								<pluginExecution>
 									<pluginExecutionFilter>
@@ -4592,9 +4781,7 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 											<goal>compile</goal>
 										</goals>
 									</pluginExecutionFilter>
-									<action>
-										<ignore>false</ignore>
-									</action>
+									<action><ignore /></action>
 								</pluginExecution>
 								<pluginExecution>
 									<pluginExecutionFilter>
@@ -4605,9 +4792,7 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 											<goal>eclipse</goal>
 										</goals>
 									</pluginExecutionFilter>
-									<action>
-										<ignore>false</ignore>
-									</action>
+									<action><ignore /></action>
 								</pluginExecution>
 								<pluginExecution>
 									<pluginExecutionFilter>
@@ -4620,9 +4805,7 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 											<goal>testResources</goal>
 										</goals>
 									</pluginExecutionFilter>
-									<action>
-										<ignore>false</ignore>
-									</action>
+									<action><ignore /></action>
 								</pluginExecution>
 								<pluginExecution>
 									<pluginExecutionFilter>
@@ -4633,9 +4816,7 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 											<goal>read-project-properties</goal>
 										</goals>
 									</pluginExecutionFilter>
-									<action>
-										<ignore>false</ignore>
-									</action>
+									<action><ignore /></action>
 								</pluginExecution>
 								<pluginExecution>
 									<pluginExecutionFilter>
@@ -4646,9 +4827,74 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 											<goal>unpack</goal>
 										</goals>
 									</pluginExecutionFilter>
-									<action>
-										<ignore>false</ignore>
-									</action>
+									<action><ignore /></action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.maven.plugins</groupId>
+										<artifactId>maven-antrun-plugin</artifactId>
+										<versionRange>[1.+,)</versionRange>
+										<goals>
+											<goal>run</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action><ignore /></action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.maven.plugins</groupId>
+										<artifactId>maven-toolchains-plugin</artifactId>
+										<versionRange>[1.+,)</versionRange>
+										<goals>
+											<goal>toolchain</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action><ignore /></action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.codehaus.gmaven</groupId>
+										<artifactId>groovy-maven-plugin</artifactId>
+										<versionRange>[1.+,)</versionRange>
+										<goals>
+											<goal>execute</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action><ignore /></action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.codehaus.mojo</groupId>
+										<artifactId>findbugs-maven-plugin</artifactId>
+										<versionRange>[1.+,)</versionRange>
+										<goals>
+											<goal>check</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action><ignore /></action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.commonjava.maven.plugins</groupId>
+										<artifactId>directory-maven-plugin</artifactId>
+										<versionRange>[0.+,)</versionRange>
+										<goals>
+											<goal>highest-basedir</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action><ignore /></action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.projectlombok</groupId>
+										<artifactId>lombok-maven-plugin</artifactId>
+										<versionRange>[1.+,)</versionRange>
+										<goals>
+											<goal>delombok</goal>
+											<goal>testDelombok</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action><ignore /></action>
 								</pluginExecution>
 							</pluginExecutions>
 						</lifecycleMappingMetadata>
@@ -4718,6 +4964,11 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-eclipse-plugin</artifactId>
+            </plugin>
+            <!-- Delombok -->
+            <plugin>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok-maven-plugin</artifactId>
             </plugin>
 			<!-- Compiler -->
 			<plugin>
@@ -4883,6 +5134,11 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-eclipse-plugin</artifactId>
+            </plugin>
+            <!-- Delombok -->
+            <plugin>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok-maven-plugin</artifactId>
             </plugin>
 			<!-- Compiler -->
 			<plugin>
@@ -5626,6 +5882,10 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 						<groupId>javax.xml.stream</groupId>
 						<artifactId>stax-api</artifactId>
 					</exclusion>
+					<exclusion>
+						<groupId>xml-apis</groupId>
+						<artifactId>xml-apis</artifactId>
+					</exclusion>
 				</exclusions>
 			</dependency>
 			<dependency>
@@ -5837,6 +6097,17 @@ encoding/<project>=${project.build.sourceEncoding}]]></content>
 				<groupId>org.jsoup</groupId>
 				<artifactId>jsoup</artifactId>
 				<version>${org.jsoup.version}</version>
+			</dependency>
+
+			<!--
+				 XML API
+				 Due to Eclipse using jdk (java.xml) as module-path, it conflicts with this dependency;
+				 so just including it in here profile `jdk8`
+			-->
+			<dependency>
+				<groupId>xml-apis</groupId>
+				<artifactId>xml-apis</artifactId>
+				<version>${xml-apis.version}</version>
 			</dependency>
 
 			<!-- Browser Utils -->
