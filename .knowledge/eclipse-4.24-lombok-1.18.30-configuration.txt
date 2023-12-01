@@ -9,7 +9,6 @@
 --illegal-access=warn
 # -------------------------------------------------
 -javaagent:lombok-1.18.30.jar
--Xbootclasspath/a:lombok-1.18.30.jar
 
 
 # -------------------------------------------------
@@ -70,4 +69,5 @@ plugins/org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_17.0.3.v20220515
 --illegal-access=warn
 # -------------------------------------------------
 -javaagent:lombok-1.18.30.jar
--Xbootclasspath/a:lombok-1.18.30.jar
+# remove this line due to java.lang.NoClassDefFoundError: javax/annotation/processing/AbstractProcessor on JDK9+
+#-Xbootclasspath/a:lombok-1.18.30.jar
