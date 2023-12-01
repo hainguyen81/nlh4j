@@ -58,7 +58,7 @@
 	<logger name="org.springframework.web.socket" level="INFO" />
 	-->
 
-	<root level="${log.mode}">
+	<root level="${log.mode:DEBUG}">
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="FILE" />
 	</root>
