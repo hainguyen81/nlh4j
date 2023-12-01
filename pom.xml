@@ -3480,7 +3480,7 @@
 						<!-- ensure module requirement directories -->
 						<execution>
 							<id>ensure-module-requiment-directories</id>
-							<!-- borrow validate pahase to initialize some requirement directories -->
+							<!-- borrow validate phase to initialize some requirement directories -->
 							<phase>validate</phase>
 							<goals>
 							    <goal>run</goal>
