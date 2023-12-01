@@ -27,20 +27,20 @@
 	</appender>
 	-->
 
-	<!-- ROlling file appender definition -->
+	<!-- Rolling file appender definition -->
 	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<!-- Support multiple-JVM writing to the same log file -->
 		<!-- <file>${log.dir}/${log.filename}.log</file> -->
     	<prudent>true</prudent>
 		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
 			<!-- daily rollover -->
-			<fileNamePattern>${log.dir}/%d{yyyy-MM-dd}/${log.filename}.%i.log</fileNamePattern>
+			<fileNamePattern>${log.dir:-logs}/%d{yyyy-MM-dd}/${log.filename:-nlh4j}.%i.log</fileNamePattern>
 
 			<!-- keep number days' worth of history capped at number total size -->
-			<maxFileSize>${log.maxFileSize}</maxFileSize>
-			<maxHistory>${log.maxHistory}</maxHistory>
-			<totalSizeCap>${log.totalSizeCap}</totalSizeCap>
-			<cleanHistoryOnStart>${log.cleanHistoryOnStart}</cleanHistoryOnStart>
+			<maxFileSize>${log.maxFileSize:-10MB}</maxFileSize>
+			<maxHistory>${log.maxHistory:-5}</maxHistory>
+			<totalSizeCap>${log.totalSizeCap:-1GB}</totalSizeCap>
+			<cleanHistoryOnStart>${log.cleanHistoryOnStart:-true}</cleanHistoryOnStart>
 		</rollingPolicy>
 		<encoder>
 			<pattern>%d{yyyy/MM/dd HH:mm:ss.SSS} %logger{0} [%-5level] %msg%n</pattern>
@@ -53,10 +53,10 @@
 	<logger name="org.apache.commons.digester" level="OFF" />
 	<logger name="org.quartz" level="OFF" />
 	<logger name="org.springframework" level="ERROR" />
-	<logger name="org.nlh4j" level="${log.mode}" />
+	<logger name="org.nlh4j" level="${log.mode:-DEBUG}" />
 
 	<!-- Log appenders configuration -->
-	<root level="${log.mode}">
+	<root level="${log.mode:-DEBUG}">
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="FILE" />
 	</root>
