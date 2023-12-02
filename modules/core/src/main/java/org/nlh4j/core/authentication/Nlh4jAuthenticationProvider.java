@@ -11,6 +11,18 @@ import java.util.Objects;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import com.nimbusds.jwt.JWT;
+import com.nimbusds.jwt.JWTClaimsSet;
+
+import org.apache.commons.lang3.StringUtils;
+import org.nlh4j.core.dto.AbstractJWTToken;
+import org.nlh4j.core.dto.UserDetails;
+import org.nlh4j.core.service.MessageService;
+import org.nlh4j.core.service.UserService;
+import org.nlh4j.core.util.AuthenticationUtils;
+import org.nlh4j.util.BeanUtils;
+import org.nlh4j.util.DateUtils;
+import org.nlh4j.util.RequestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -23,20 +35,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
-import com.nimbusds.jwt.JWT;
-import com.nimbusds.jwt.JWTClaimsSet;
-
 import lombok.Getter;
 import lombok.Setter;
-
-import org.apache.commons.lang3.StringUtils;
-import org.nlh4j.core.dto.AbstractJWTToken;
-import org.nlh4j.core.dto.UserDetails;
-import org.nlh4j.core.service.MessageService;
-import org.nlh4j.core.service.UserService;
-import org.nlh4j.core.util.AuthenticationUtils;
-import org.nlh4j.util.BeanUtils;
-import org.nlh4j.util.RequestUtils;
 
 /**
  * Authentication Provider
@@ -59,6 +59,7 @@ public class Nlh4jAuthenticationProvider implements AuthenticationProvider, Seri
      */
 	@Inject
     private HttpServletRequest request;
+
 	/**
 	 * Get the request
 	 *
@@ -103,26 +104,35 @@ public class Nlh4jAuthenticationProvider implements AuthenticationProvider, Seri
 	public final Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		Authentication token = null;
 		// perform before authenticating
+		logger.debug("1. Before authentication [{}]", authentication);
 		this.beforeAuthenticate();
 		// normal token
 		if (BeanUtils.isInstanceOf(authentication, UsernamePasswordAuthenticationToken.class)) {
 		    // parse authentication token
+			logger.debug("2. Authenticate by {} [{}]", UsernamePasswordAuthenticationToken.class.getName(), authentication);
 			token = this.internalAuthenticate(
 					BeanUtils.safeType(authentication, UsernamePasswordAuthenticationToken.class));
 
 		}
 		// remember token
 		else if (BeanUtils.isInstanceOf(authentication, RememberMeAuthenticationToken.class)) {
+			logger.debug("3. Authenticate by {} [{}]", RememberMeAuthenticationToken.class.getName(), authentication);
 			token = this.internalRememberAuthenticate(
 					BeanUtils.safeType(authentication, RememberMeAuthenticationToken.class));
 		}
 		// JWT token
 		else if (BeanUtils.isInstanceOf(authentication, AbstractJWTToken.class)) {
+			logger.debug("4. Authenticate by {} [{}]", AbstractJWTToken.class.getName(), authentication);
 			token = this.internalJWTAuthenticate(
 					BeanUtils.safeType(authentication, AbstractJWTToken.class));
 		}
 		// perform action after authenticating.
-		if (token != null) this.afterAuthenticate(token);
+		if (token != null) {
+			logger.debug("5. After authentication [{}], Token [{}]", authentication, token);
+			this.afterAuthenticate(token);
+		} else {
+			logger.warn("5. After authentication [{}], Token NULL", authentication);
+		}
 		// return authentication token
 		return token;
 	}
@@ -157,6 +167,7 @@ public class Nlh4jAuthenticationProvider implements AuthenticationProvider, Seri
 		// login
 		UserDetails user = userService.login(username, cridenticals, encrypted);
 		if (user == null) {
+			logger.error("Not found UserDetails by credenticals [{}]", cridenticals);
 			throw new BadCredentialsException(this.getUnAuthorizedReason());
 		}
 
@@ -198,6 +209,7 @@ public class Nlh4jAuthenticationProvider implements AuthenticationProvider, Seri
 		// Return an authenticated token, containing user data and authorities
 		UserDetails user = AuthenticationUtils.getProfile(auth.getPrincipal());
 		if (user == null) {
+			logger.error("Not found UserDetails by credenticals [{}]", auth.getPrincipal());
 			throw new BadCredentialsException(this.getUnAuthorizedReason());
 		}
 
@@ -225,16 +237,18 @@ public class Nlh4jAuthenticationProvider implements AuthenticationProvider, Seri
 		this.handleJWTToken(jwt);
 
 		// check token expiration
-        Date referenceTime = new Date();
+        Date referenceTime = DateUtils.currentTimestamp();
         JWTClaimsSet claims = auth.getClaims();
         Date expirationTime = (claims == null ? null : claims.getExpirationTime());
         if (expirationTime == null || expirationTime.before(referenceTime)) {
+			logger.error("Token has been EXPIRED! Expiration Time [{}]", expirationTime);
             throw new BadCredentialsException("The token has expired!!!");
         }
 
         // check token whether is before server date/time
         Date notBeforeTime = (claims == null ? null : claims.getNotBeforeTime());
         if (notBeforeTime == null || notBeforeTime.after(referenceTime)) {
+			logger.error("Token has been EXPIRED! NOT_BEFORE [{}]", notBeforeTime);
             throw new BadCredentialsException("Not before is after system date!!!");
         }
 
