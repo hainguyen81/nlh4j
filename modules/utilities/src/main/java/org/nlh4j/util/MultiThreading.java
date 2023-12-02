@@ -20,7 +20,7 @@ import org.springframework.util.Assert;
  * @author Hai Nguyen
  *
  */
-public abstract class MultiThreading extends Thread implements Serializable {
+public abstract class MultiThreading extends Thread implements AutoCloseable, Serializable {
 
     /** */
     private static final long serialVersionUID = 1L;
@@ -411,19 +411,35 @@ public abstract class MultiThreading extends Thread implements Serializable {
         // interupt by super
         super.interrupt();
     }
+    
+    @Override
+    public final void close() throws Exception {
+    	doFinalize();
+    }
 
     /* (非 Javadoc)
      * @see java.lang.Thread#finalize
      */
     @Override
     protected final void finalize() throws Throwable {
-        // interrupt child tasks
+    	// perform finalizing
+        doFinalize();
+        // FIXME deprecated from JDK9+
+        // finalize by super
+        // super.finalize();
+    }
+    
+    /**
+     * Interrupt and finalize
+     * 
+     * @throws {@link Throwable} thrown if failed
+     */
+    protected final void doFinalize() throws Exception {
+    	// interrupt child tasks
         try { this.interrupt(); }
         catch (Exception e) {}
         // release
         this.release();
-        // finalize by super
-        super.finalize();
     }
 
     /**

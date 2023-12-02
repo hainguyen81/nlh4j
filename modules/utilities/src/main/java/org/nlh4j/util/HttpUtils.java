@@ -177,7 +177,7 @@ public final class HttpUtils implements Serializable {
      */
      @SuppressWarnings("unchecked")
      public static class MultivaluedParameter<T, K> extends LinkedHashMap<T, List<K>>
-            implements MultivaluedMap<T, K>, Serializable {
+            implements MultivaluedMap<T, K> {
 
         /**
          * serialVersionUID

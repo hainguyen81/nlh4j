@@ -10,6 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -28,6 +29,8 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.beanutils.ConvertUtilsBean;
@@ -35,6 +38,7 @@ import org.apache.commons.beanutils.converters.BigDecimalConverter;
 import org.apache.commons.beanutils.converters.DateConverter;
 import org.apache.commons.beanutils.converters.SqlDateConverter;
 import org.apache.commons.beanutils.converters.SqlTimeConverter;
+import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 
@@ -55,6 +59,8 @@ public final class BeanUtils implements Serializable {
 	private static final String PREFIX_IS_GETTER_PROPERTY = "is";
 	private static final String PREFIX_GET_GETTER_PROPERTY = "get";
 	private static final String PREFIX_SET_SETTER_PROPERTY = "set";
+	private static final String JDK8_IS_ACCESSIBLE_METHOD = "isAccessible";
+	private static final String JDK8_NEW_INSTANCE_METHOD = "newInstance";
 
     /**
      * The JAVA primitive types array<br>
@@ -288,10 +294,9 @@ public final class BeanUtils implements Serializable {
 		T dest = null;
 		if (src != null) {
 			try {
-				dest = clazz.newInstance();
+				dest = safeType(reflectNewInstance(clazz), clazz);
 				org.springframework.beans.BeanUtils.copyProperties(src, dest, ignorePoperties);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 			    LogUtils.logError(BeanUtils.class, e.getMessage(), e);
 				throw e;
 			}
@@ -329,10 +334,9 @@ public final class BeanUtils implements Serializable {
         T dest = null;
         if (src != null) {
             try {
-                dest = clazz.newInstance();
+                dest = safeType(reflectNewInstance(clazz), clazz);
                 copyFields(src, dest, ignoreFields);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 LogUtils.logError(BeanUtils.class, e.getMessage(), e);
                 throw e;
             }
@@ -360,13 +364,13 @@ public final class BeanUtils implements Serializable {
 
                 int srcModifiers = srcFd.getModifiers();
                 if (Modifier.isFinal(srcModifiers)) continue;
-                boolean srcAccessible = srcFd.isAccessible();
+                boolean srcAccessible = isAccessible(src, srcFd);
                 if (!Modifier.isPublic(srcModifiers) && !Modifier.isStatic(srcModifiers)) srcFd.setAccessible(true);
 
                 Field destFd = getField(dest, srcFd.getName());
                 if (destFd == null) continue;
                 int destModifiers = destFd.getModifiers();
-                boolean destAccessible = destFd.isAccessible();
+                boolean destAccessible = isAccessible(dest, destFd);
                 if (!Modifier.isPublic(destModifiers) && !Modifier.isStatic(destModifiers)) destFd.setAccessible(true);
 
                 destFd.set(dest, srcFd.get(src));
@@ -569,7 +573,7 @@ public final class BeanUtils implements Serializable {
     public static <T, K> void copyBeans(List<T> dest, List<K> orig, Class<T> destClzz) throws Exception {
 		if (dest != null && orig != null) {
     		for(K beanOrig : orig) {
-    			T beanDest = destClzz.newInstance();
+    			T beanDest = safeType(reflectNewInstance(destClzz), destClzz);
     			copyProperties(beanDest, beanOrig);
     			dest.add(beanDest);
     		}
@@ -675,6 +679,40 @@ public final class BeanUtils implements Serializable {
     	return newInstance(safeClass(beanClassName), args);
     }
     /**
+     * Try to create new instance due to reflective
+     * 
+     * @param beanClass class to check
+     * 
+     * @return new instance of specified class
+     */
+    private static Object reflectNewInstance(Class<?> beanClass) {
+    	// detect method deprecated by JDK - check the `newInstance` method
+    	Method newInstanceMed = null;
+    	try {
+    		newInstanceMed = beanClass.getClass().getDeclaredMethod(JDK8_NEW_INSTANCE_METHOD);
+    	} catch (Exception e) {
+    		// not found `newInstance` method, it means this method has been deprecated
+    		LogUtils.logWarn(BeanUtils.class, "`" + JDK8_NEW_INSTANCE_METHOD + "` has been deprecated from JDK9+: " + e.getMessage());
+    	}
+
+    	// invoke
+    	try {
+    		// JDK8--
+    		if (newInstanceMed != null) {
+    			return newInstanceMed.invoke(beanClass);
+
+    			// JDK9+
+    		} else {
+    			return beanClass.getDeclaredConstructor().newInstance();
+    		}
+    	} catch (Exception e) {
+    		LogUtils.logWarn(BeanUtils.class, "Could not create new instance of ["
+    				+ Optional.ofNullable(beanClass).map(Class::getName).orElse(null)
+    				+ "]: " + e.getMessage());
+    		return null;
+    	}
+    }
+    /**
      * Create a new instance of specified class
      *
      * @param beanClass class to check
@@ -696,7 +734,7 @@ public final class BeanUtils implements Serializable {
         }
         if (beanClass != null) {
             // try creating default instance
-            try { inst = beanClass.newInstance(); }
+            try { inst = reflectNewInstance(beanClass); }
             catch (Exception e) { inst = null; }
             // try creating new instance using arguments
             if (inst == null) {
@@ -712,7 +750,7 @@ public final class BeanUtils implements Serializable {
                             int cstrArgsSize = CollectionUtils.getSize(paramTypes);
                             if (cstrArgsSize != argsSize) continue;
                             // apply accessible flag
-                            boolean accessible = cstr.isAccessible();
+                            boolean accessible = isAccessible(null, cstr);
                             cstr.setAccessible(true);
                             // try creating instance
                             try { inst = cstr.newInstance(args); }
@@ -1175,7 +1213,7 @@ public final class BeanUtils implements Serializable {
     public static Object invokeMethod(Object target, Method method, Object...args) {
         Object value = null;
         if (method != null) {
-            boolean accessible = method.isAccessible();
+            boolean accessible = isAccessible(target, method);
             try {
                 method.setAccessible(true);
                 value = method.invoke(target, args);
@@ -1623,7 +1661,7 @@ public final class BeanUtils implements Serializable {
     public static Object getFieldValue(Object target, Field field) {
         Object value = null;
         if (target != null && field != null) {
-            boolean accessible = field.isAccessible();
+            boolean accessible = isAccessible(target, field);
             // parse field value
             boolean valid = false;
             if (Modifier.isPublic(field.getModifiers())
@@ -1702,7 +1740,7 @@ public final class BeanUtils implements Serializable {
     public static boolean setFieldValue(Object target, Field field, Object value) {
         boolean valid = false;
         if (target != null && field != null) {
-            boolean accessible = field.isAccessible();
+            boolean accessible = isAccessible(target, field);
             Class<?> fClazz = field.getDeclaringClass();
             boolean applied = true;
             // parse field value
@@ -2166,7 +2204,7 @@ public final class BeanUtils implements Serializable {
             try {
                 Method med = property.getWriteMethod();
                 if (med != null) {
-                    boolean accessible = med.isAccessible();
+                    boolean accessible = isAccessible(bean, med);
                     med.setAccessible(true);
                     med.invoke(bean, values);
                     med.setAccessible(accessible);
@@ -2641,5 +2679,56 @@ public final class BeanUtils implements Serializable {
             }
         }
         return val;
+    }
+    
+    /**
+     * Get a boolean value indicating that the specified {@link Method}
+     * whether can be accessed by the specified object.<br>
+     * This's work-around for reflective with JDK8/9+ when the `isAccessible` method has been deprecated
+     * 
+     * @param target to check
+     * @param method to check
+     * 
+     * @return true for can be accessed; else false
+     */
+    public static boolean isAccessible(Object target, Object methodOrField) {
+    	// check for valid
+    	AccessibleObject accessibleInstance = safeType(methodOrField, AccessibleObject.class);
+    	if (accessibleInstance == null) {
+    		LogUtils.logWarn(BeanUtils.class,
+    				"Object is not an instance of java.lang.reflect.AccessibleObject "
+    				+ "such as java.lang.reflect.Method or java.lang.reflect.Field to check!");
+    		return false;
+    	}
+
+    	// detect method deprecated by JDK - check the `isAccessible` method
+    	Method isAccessibleMed = null;
+    	try {
+			isAccessibleMed = AccessibleObject.class.getDeclaredMethod(JDK8_IS_ACCESSIBLE_METHOD);
+    	} catch (Exception e) {
+    		// not found `isAccessible` method, it means this method has been deprecated
+    		LogUtils.logWarn(BeanUtils.class, "`" + JDK8_IS_ACCESSIBLE_METHOD + "` has been deprecated from JDK9+: " + e.getMessage());
+    	}
+
+    	// invoke
+    	try {
+    		// JDK8--
+	    	if (isAccessibleMed != null) {
+	    		return BooleanUtils.toBoolean(Objects.toString(isAccessibleMed.invoke(methodOrField), null));
+
+	    		// JDK9++
+	    	} else if (target != null) {
+	    		return accessibleInstance.canAccess(target);
+
+	    	} else {
+	    		LogUtils.logWarn(BeanUtils.class, "Could not detect the accessible flag "
+	    				+ "due to target is NULL or not found `" + JDK8_IS_ACCESSIBLE_METHOD + "` method!");
+	    		return false;
+	    	}
+
+    	} catch (Exception e) {
+    		LogUtils.logWarn(BeanUtils.class, "Illegal access the specified Method/Field via reflection: " + e.getMessage(), e);
+    		return false;
+    	}
     }
 }

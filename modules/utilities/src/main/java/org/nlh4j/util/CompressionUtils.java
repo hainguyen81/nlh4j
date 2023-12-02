@@ -88,7 +88,7 @@ public final class CompressionUtils implements Serializable {
 				String safeFileName = StringUtils.refixWinFileName(FileUtils.getBaseFileName(f.getName()));
 				String safeFileExt = FileUtils.getFileExtension(f.getName());
 				if (!dupFiles.containsKey(f.getName())) {
-					dupFiles.put(f.getName(), new Integer(0));
+					dupFiles.put(f.getName(), 0);
 					out.putNextEntry(new ZipEntry(
 							MessageFormat.format("{0}.{1}", safeFileName, safeFileExt)));
 				}

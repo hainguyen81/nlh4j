@@ -125,17 +125,18 @@ public final class SystemUtils implements Serializable {
     	Object table = null;
     	Field referentField = null;
     	ThreadLocal<?> threadLocal = null;
-    	boolean accessible = false;
         try {
         	LogUtils.logInfo(SystemUtils.class, "Clearing ThreadLocals");
             // Get a reference to the thread locals table of the current thread
             thread = Thread.currentThread();
             threadLocalsField = BeanUtils.getField(Thread.class, FIELD_NAME_THREAD_LOCALS);
             if (threadLocalsField != null) {
-            	accessible = threadLocalsField.isAccessible();
-            	threadLocalsField.setAccessible(true);
-            	threadLocalTable = threadLocalsField.get(thread);
-            	threadLocalsField.setAccessible(accessible);
+            	if (threadLocalsField.trySetAccessible()) {
+	            	threadLocalTable = threadLocalsField.get(thread);
+
+            	} else {
+            		LogUtils.logWarn(SystemUtils.class, "Illegal access Thread to fetch threadLocals field!");
+            	}
             }
 
             // Get a reference to the array holding the thread local variables inside the
@@ -144,10 +145,12 @@ public final class SystemUtils implements Serializable {
             	threadLocalMapClass = Class.forName(CLASS_NAME_THREAD_LOCALS_MAP);
             	tableField = BeanUtils.getField(threadLocalMapClass, FIELD_NAME_THREAD_LOCALS_MAP_TABLE);
             	if (tableField != null) {
-            		accessible = tableField.isAccessible();
-            		tableField.setAccessible(true);
-            		table = tableField.get(threadLocalTable);
-            		tableField.setAccessible(accessible);
+            		if (tableField.trySetAccessible()) {
+	            		table = tableField.get(threadLocalTable);
+
+            		} else {
+                		LogUtils.logWarn(SystemUtils.class, "Illegal access ThreadLocal to fetch ThreadLocalMap field!");
+                	}
             	}
             }
 
@@ -157,20 +160,22 @@ public final class SystemUtils implements Serializable {
 	            referentField = BeanUtils.getField(Reference.class, FIELD_NAME_REFERENCE_REFERENT);
 	            int size = CollectionUtils.getSize(table);
 	            if (referentField != null && size > 0) {
-	            	accessible = referentField.isAccessible();
-		            referentField.setAccessible(true);
-		            for (int i = 0; i < size; i++) {
-		                // Each entry in the table array of ThreadLocalMap is an Entry object
-		                // representing the thread local reference and its value
-		                Object entry = CollectionUtils.get(table, i);
-		                if (entry != null) {
-		                    // Get a reference to the thread local object and remove it from the table
-		                    threadLocal = BeanUtils.safeType(
-		                    		referentField.get(entry), ThreadLocal.class);
-		                    if (threadLocal != null) threadLocal.remove();
-		                }
-		            }
-		            referentField.setAccessible(accessible);
+		            if (referentField.trySetAccessible()) {
+			            for (int i = 0; i < size; i++) {
+			                // Each entry in the table array of ThreadLocalMap is an Entry object
+			                // representing the thread local reference and its value
+			                Object entry = CollectionUtils.get(table, i);
+			                if (entry != null) {
+			                    // Get a reference to the thread local object and remove it from the table
+			                    threadLocal = BeanUtils.safeType(
+			                    		referentField.get(entry), ThreadLocal.class);
+			                    if (threadLocal != null) threadLocal.remove();
+			                }
+			            }
+
+		            } else {
+                		LogUtils.logWarn(SystemUtils.class, "Illegal access ThreadLocal to remove stuck threads!");
+                	}
 	            }
             }
         } catch(Exception e) {
