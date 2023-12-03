@@ -584,6 +584,12 @@
 				
 				<!-- m2e profiles -->
 				<eclipse.maven.project.activated.profiles>dev,jdk11</eclipse.maven.project.activated.profiles>
+
+				<!--
+					FIXME Not using project reference due to
+					Classpath entry xxxxxx will not be exported or published. Runtime ClassNotFoundExceptions may result.
+				-->
+				<maven.eclipse.use.project.references>false</maven.eclipse.use.project.references>
 				
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Maven Plugins -->
@@ -1007,6 +1013,7 @@
 							<artifactId>maven-eclipse-plugin</artifactId>
 							<version>${maven.eclipse.version}</version>
 							<configuration>
+								<useProjectReferences>${maven.eclipse.use.project.references}</useProjectReferences>
 								<jeeversion>6.0</jeeversion>
 								<downloadSources>true</downloadSources>
 								<downloadJavadocs>true</downloadJavadocs>
@@ -1487,6 +1494,12 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 				<eclipse.maven.project.activated.profiles>dev,jdk17</eclipse.maven.project.activated.profiles>
 
 				<!--
+					FIXME Not using project reference due to
+					Classpath entry xxxxxx will not be exported or published. Runtime ClassNotFoundExceptions may result.
+				-->
+				<maven.eclipse.use.project.references>false</maven.eclipse.use.project.references>
+
+				<!--
 					FIXME Trouble with APT Annotation Processor:
 					https://github.com/redhat-developer/vscode-java/issues/580#issuecomment-443302372
 					- add <m2e.apt.activation>disabled</m2e.apt.activation> to your pom <properties> section
@@ -1923,6 +1936,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 							<artifactId>maven-eclipse-plugin</artifactId>
 							<version>${maven.eclipse.version}</version>
 							<configuration>
+								<useProjectReferences>${maven.eclipse.use.project.references}</useProjectReferences>
 								<jeeversion>6.0</jeeversion>
 								<downloadSources>true</downloadSources>
 								<downloadJavadocs>true</downloadJavadocs>
@@ -2825,6 +2839,12 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 				<!-- Project settings -->
 				<project.facet.jst.web.version>3.0</project.facet.jst.web.version>
 				<project.facet.jst.jaxrs.version>1.1</project.facet.jst.jaxrs.version>
+
+				<!--
+					FIXME Not using project reference due to
+					Classpath entry xxxxxx will not be exported or published. Runtime ClassNotFoundExceptions may result.
+				-->
+				<maven.eclipse.use.project.references>false</maven.eclipse.use.project.references>
 			</properties>
 			<build>
 				<pluginManagement>
@@ -2835,6 +2855,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 							<artifactId>maven-eclipse-plugin</artifactId>
 							<version>${maven.eclipse.version}</version>
 							<configuration>
+								<useProjectReferences>${maven.eclipse.use.project.references}</useProjectReferences>
 								<wtpContextName>ROOT</wtpContextName>
 			                    <wtpversion>2.0</wtpversion>
 								<jeeversion>6.0</jeeversion>
@@ -3174,6 +3195,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 		<maven.directory.version>0.1</maven.directory.version>
 		<maven.antrun.version>3.1.0</maven.antrun.version>
 		<maven.eclipse.version>2.10</maven.eclipse.version>
+		<maven.eclipse.use.project.references>true</maven.eclipse.use.project.references>
 		<maven.yuicompressor.version>1.5.1</maven.yuicompressor.version>
 		<maven.yuicompressor.skip>false</maven.yuicompressor.skip>
 		
@@ -4797,6 +4819,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 					<artifactId>maven-eclipse-plugin</artifactId>
 					<version>${maven.eclipse.version}</version>
 					<configuration>
+						<useProjectReferences>${maven.eclipse.use.project.references}</useProjectReferences>
 						<jeeversion>6.0</jeeversion>
 						<downloadSources>true</downloadSources>
 						<downloadJavadocs>true</downloadJavadocs>
