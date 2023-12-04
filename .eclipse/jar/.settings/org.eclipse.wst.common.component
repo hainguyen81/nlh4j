@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="@project.build.sourceEncoding@"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="@project.artifactId@-@project.version@">
+        <wb-resource deploy-path="/" source-path="/src/test/java"/>
+        <wb-resource deploy-path="/" source-path="/src/test/resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/" source-path="/src/main/resources"/>
+        <wb-resource deploy-path="/" source-path="/@org.projectlombok.generated.source@"/>
+        <wb-resource deploy-path="/" source-path="/@org.projectlombok.generated.test-source@"/>
+        <wb-resource deploy-path="/" source-path="/@maven.dependency.unpack.source.directory@"/>
+        <wb-resource deploy-path="/" source-path="/@maven.dependency.unpack.resource.directory@"/>
+
+		<property name="component.exclusion.patterns" value="*.java,**/*.java"/>
+    </wb-module>
+</project-modules>

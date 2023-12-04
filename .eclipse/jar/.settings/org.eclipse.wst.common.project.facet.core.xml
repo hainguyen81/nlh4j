@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="@project.build.sourceEncoding@"?>
+<faceted-project>
+	<fixed facet="jst.java"/>
+	<fixed facet="jst.utility"/>
+	<installed facet="jst.java" version="@java.version@"/>
+	<installed facet="jst.utility" version="@project.facet.java.utility.version@"/>
+</faceted-project>

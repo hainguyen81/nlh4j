@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+org.eclipse.jdt.apt.aptEnabled=@m2e.apt.aptEnabled@
+org.eclipse.jdt.apt.genSrcDir=@org.projectlombok.generated.source@
+org.eclipse.jdt.apt.genTestSrcDir=@org.projectlombok.generated.test-source@
+org.eclipse.jdt.apt.processorOptions/sql.validation=true
+org.eclipse.jdt.apt.reconcileEnabled=true

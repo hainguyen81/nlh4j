@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="@project.build.sourceEncoding@"?>
+<faceted-project>
+	<fixed facet="jst.java"/>
+	<fixed facet="jst.web"/>
+	<fixed facet="jst.jaxrs"/>
+	<installed facet="jst.java" version="@java.version@"/>
+	<installed facet="jst.web" version="@project.facet.jst.web.version@"/>
+	<installed facet="jst.jaxrs" version="@project.facet.jst.jaxrs.version@"/>
+</faceted-project>

@@ -44,3 +44,9 @@ github-repo
 /.delombok/
 .knowledge
 /.knowledge/
+
+.metadata
+/.metadata/
+
+.eclipse
+/.eclipse/

@@ -1,0 +1,10 @@
+eclipse.preferences.version=1
+encoding//@org.projectlombok.generated.source@=@project.build.sourceEncoding@
+encoding//@org.projectlombok.generated.test-source@=@project.build.sourceEncoding@
+encoding//@maven.dependency.unpack.source.directory@=@project.build.sourceEncoding@
+encoding//@maven.dependency.unpack.resource.directory@=@project.build.sourceEncoding@
+encoding//src/main/java=@project.build.sourceEncoding@
+encoding//src/main/resources=@project.build.sourceEncoding@
+encoding//src/test/java=@project.build.sourceEncoding@
+encoding//src/test/resources=@project.build.sourceEncoding@
+encoding/<project>=@project.build.sourceEncoding@
