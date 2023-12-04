@@ -71,7 +71,7 @@
 				<!-- Maven Plugins -->
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Eclipse project setup -->
-				<eclipse.setup.skip>false</eclipse.setup.skip>
+				<eclipse.setup.skip>true</eclipse.setup.skip>
 
 				<!--
 					 FIXME TrueLicense Obfuscation for obfuscating constants via sniplet `static final`:
@@ -598,7 +598,7 @@
 				<!-- Maven Plugins -->
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Eclipse project setup -->
-				<eclipse.setup.skip>false</eclipse.setup.skip>
+				<eclipse.setup.skip>true</eclipse.setup.skip>
 
 				<!--
 					 FIXME TrueLicense Obfuscation for obfuscating constants via sniplet `static final`:
@@ -1538,7 +1538,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 				<!-- Maven Plugins -->
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Eclipse project setup -->
-				<eclipse.setup.skip>false</eclipse.setup.skip>
+				<eclipse.setup.skip>true</eclipse.setup.skip>
 				<!--
 					FIXME Not using project reference due to
 					Classpath entry xxxxxx will not be exported or published. Runtime ClassNotFoundExceptions may result.
