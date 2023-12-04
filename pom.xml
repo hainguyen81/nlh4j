@@ -70,6 +70,9 @@
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Maven Plugins -->
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Eclipse project setup -->
+				<eclipse.setup.skip>false</eclipse.setup.skip>
+
 				<!--
 					 FIXME TrueLicense Obfuscation for obfuscating constants via sniplet `static final`:
 					 + Only working on JDK8, from JDK9+, JDK11+, IllegalAccessError will be thrown
@@ -594,6 +597,9 @@
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Maven Plugins -->
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Eclipse project setup -->
+				<eclipse.setup.skip>false</eclipse.setup.skip>
+
 				<!--
 					 FIXME TrueLicense Obfuscation for obfuscating constants via sniplet `static final`:
 					 + Only working on JDK8, from JDK9+, JDK11+, IllegalAccessError will be thrown
@@ -1013,6 +1019,7 @@
 							<artifactId>maven-eclipse-plugin</artifactId>
 							<version>${maven.eclipse.version}</version>
 							<configuration>
+								<skip>${eclipse.setup.skip}</skip>
 								<useProjectReferences>${maven.eclipse.use.project.references}</useProjectReferences>
 								<jeeversion>6.0</jeeversion>
 								<downloadSources>true</downloadSources>
@@ -1111,10 +1118,10 @@ hibernate3.enabled=true]]>
 										<content>
 <![CDATA[<?xml version="1.0" encoding="${project.build.sourceEncoding}"?>
 <faceted-project>
-<fixed facet="jst.java"/>
-<fixed facet="jst.utility"/>
-<installed facet="jst.java" version="${java.version}"/>
-<installed facet="jst.utility" version="${project.facet.java.utility.version}"/>
+	<fixed facet="jst.java"/>
+	<fixed facet="jst.utility"/>
+	<installed facet="jst.java" version="${java.version}"/>
+	<installed facet="jst.utility" version="${project.facet.java.utility.version}"/>
 </faceted-project>]]>
 										</content>
 									</file>
@@ -1149,38 +1156,57 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 										<content>
 <![CDATA[<?xml version="1.0" encoding="${project.build.sourceEncoding}"?>
 <projectDescription>
-<name>${project.artifactId}-${project.version}</name>
-<comment>${project.description}</comment>
-<projects/>
-<buildSpec>
-<buildCommand>
-	<name>org.eclipse.jdt.core.javabuilder</name>
-	<arguments>
-	</arguments>
-</buildCommand>
-<buildCommand>
-	<name>org.eclipse.wst.common.project.facet.core.builder</name>
-	<arguments>
-	</arguments>
-</buildCommand>
-<buildCommand>
-	<name>org.eclipse.m2e.core.maven2Builder</name>
-	<arguments>
-	</arguments>
-</buildCommand>
-<buildCommand>
-	<name>org.eclipse.wst.validation.validationbuilder</name>
-	<arguments>
-	</arguments>
-</buildCommand>
-</buildSpec>
-<natures>
-<nature>org.eclipse.m2e.core.maven2Nature</nature>
-<nature>org.eclipse.jdt.core.javanature</nature>
-<nature>org.eclipse.wst.common.modulecore.ModuleCoreNature</nature>
-<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
-</natures>
+	<name>${project.artifactId}-${project.version}</name>
+	<comment>${project.description}</comment>
+	<projects/>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.wst.common.project.facet.core.builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.m2e.core.maven2Builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.wst.validation.validationbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.m2e.core.maven2Nature</nature>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>org.eclipse.wst.common.modulecore.ModuleCoreNature</nature>
+		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
+	</natures>
 </projectDescription>]]>
+										</content>
+									</file>
+									<!-- deployment assembly component -->
+									<file>
+										<name>.settings/org.eclipse.wst.common.component</name>
+										<content>
+<![CDATA[<?xml version="1.0" encoding="${project.build.sourceEncoding}"?>
+	<project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="${project.artifactId}-${project.version}">
+        <wb-resource deploy-path="/" source-path="/src/test/java"/>
+        <wb-resource deploy-path="/" source-path="/src/test/resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/" source-path="/src/main/resources"/>
+        <wb-resource deploy-path="/" source-path="/${org.projectlombok.generated.source}"/>
+        <wb-resource deploy-path="/" source-path="/${org.projectlombok.generated.test-source}"/>
+        <wb-resource deploy-path="/" source-path="/${maven.dependency.unpack.source.directory}"/>
+        <wb-resource deploy-path="/" source-path="/${maven.dependency.unpack.resource.directory}"/>
+    </wb-module>
+</project-modules>]]>
 										</content>
 									</file>
 								</additionalConfig>
@@ -1494,12 +1520,6 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 				<eclipse.maven.project.activated.profiles>dev,jdk17</eclipse.maven.project.activated.profiles>
 
 				<!--
-					FIXME Not using project reference due to
-					Classpath entry xxxxxx will not be exported or published. Runtime ClassNotFoundExceptions may result.
-				-->
-				<maven.eclipse.use.project.references>false</maven.eclipse.use.project.references>
-
-				<!--
 					FIXME Trouble with APT Annotation Processor:
 					https://github.com/redhat-developer/vscode-java/issues/580#issuecomment-443302372
 					- add <m2e.apt.activation>disabled</m2e.apt.activation> to your pom <properties> section
@@ -1517,6 +1537,14 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Maven Plugins -->
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Eclipse project setup -->
+				<eclipse.setup.skip>false</eclipse.setup.skip>
+				<!--
+					FIXME Not using project reference due to
+					Classpath entry xxxxxx will not be exported or published. Runtime ClassNotFoundExceptions may result.
+				-->
+				<maven.eclipse.use.project.references>false</maven.eclipse.use.project.references>
+
 				<!--
 					 FIXME TrueLicense Obfuscation for obfuscating constants via sniplet `static final`:
 					 + Only working on JDK8, from JDK9+, JDK11+, IllegalAccessError will be thrown
@@ -1936,6 +1964,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 							<artifactId>maven-eclipse-plugin</artifactId>
 							<version>${maven.eclipse.version}</version>
 							<configuration>
+								<skip>${eclipse.setup.skip}</skip>
 								<useProjectReferences>${maven.eclipse.use.project.references}</useProjectReferences>
 								<jeeversion>6.0</jeeversion>
 								<downloadSources>true</downloadSources>
@@ -2034,10 +2063,10 @@ hibernate3.enabled=true]]>
 										<content>
 <![CDATA[<?xml version="1.0" encoding="${project.build.sourceEncoding}"?>
 <faceted-project>
-<fixed facet="jst.java"/>
-<fixed facet="jst.utility"/>
-<installed facet="jst.java" version="${java.version}"/>
-<installed facet="jst.utility" version="${project.facet.java.utility.version}"/>
+	<fixed facet="jst.java"/>
+	<fixed facet="jst.utility"/>
+	<installed facet="jst.java" version="${java.version}"/>
+	<installed facet="jst.utility" version="${project.facet.java.utility.version}"/>
 </faceted-project>]]>
 										</content>
 									</file>
@@ -2072,38 +2101,57 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 										<content>
 <![CDATA[<?xml version="1.0" encoding="${project.build.sourceEncoding}"?>
 <projectDescription>
-<name>${project.artifactId}-${project.version}</name>
-<comment>${project.description}</comment>
-<projects/>
-<buildSpec>
-<buildCommand>
-	<name>org.eclipse.jdt.core.javabuilder</name>
-	<arguments>
-	</arguments>
-</buildCommand>
-<buildCommand>
-	<name>org.eclipse.wst.common.project.facet.core.builder</name>
-	<arguments>
-	</arguments>
-</buildCommand>
-<buildCommand>
-	<name>org.eclipse.m2e.core.maven2Builder</name>
-	<arguments>
-	</arguments>
-</buildCommand>
-<buildCommand>
-	<name>org.eclipse.wst.validation.validationbuilder</name>
-	<arguments>
-	</arguments>
-</buildCommand>
-</buildSpec>
-<natures>
-<nature>org.eclipse.m2e.core.maven2Nature</nature>
-<nature>org.eclipse.jdt.core.javanature</nature>
-<nature>org.eclipse.wst.common.modulecore.ModuleCoreNature</nature>
-<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
-</natures>
+	<name>${project.artifactId}-${project.version}</name>
+	<comment>${project.description}</comment>
+	<projects/>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.wst.common.project.facet.core.builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.m2e.core.maven2Builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.wst.validation.validationbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.m2e.core.maven2Nature</nature>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>org.eclipse.wst.common.modulecore.ModuleCoreNature</nature>
+		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
+	</natures>
 </projectDescription>]]>
+										</content>
+									</file>
+									<!-- deployment assembly component -->
+									<file>
+										<name>.settings/org.eclipse.wst.common.component</name>
+										<content>
+<![CDATA[<?xml version="1.0" encoding="${project.build.sourceEncoding}"?>
+	<project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="${project.artifactId}-${project.version}">
+        <wb-resource deploy-path="/" source-path="/src/test/java"/>
+        <wb-resource deploy-path="/" source-path="/src/test/resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/" source-path="/src/main/resources"/>
+        <wb-resource deploy-path="/" source-path="/${org.projectlombok.generated.source}"/>
+        <wb-resource deploy-path="/" source-path="/${org.projectlombok.generated.test-source}"/>
+        <wb-resource deploy-path="/" source-path="/${maven.dependency.unpack.source.directory}"/>
+        <wb-resource deploy-path="/" source-path="/${maven.dependency.unpack.resource.directory}"/>
+    </wb-module>
+</project-modules>]]>
 										</content>
 									</file>
 								</additionalConfig>
@@ -2840,6 +2888,8 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 				<project.facet.jst.web.version>3.0</project.facet.jst.web.version>
 				<project.facet.jst.jaxrs.version>1.1</project.facet.jst.jaxrs.version>
 
+				<!-- Eclipse project setup -->
+				<eclipse.setup.skip>false</eclipse.setup.skip>
 				<!--
 					FIXME Not using project reference due to
 					Classpath entry xxxxxx will not be exported or published. Runtime ClassNotFoundExceptions may result.
@@ -2855,6 +2905,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 							<artifactId>maven-eclipse-plugin</artifactId>
 							<version>${maven.eclipse.version}</version>
 							<configuration>
+								<skip>${eclipse.setup.skip}</skip>
 								<useProjectReferences>${maven.eclipse.use.project.references}</useProjectReferences>
 								<wtpContextName>ROOT</wtpContextName>
 			                    <wtpversion>2.0</wtpversion>
@@ -2970,15 +3021,13 @@ hibernate3.enabled=true]]>
 										<content>
 <![CDATA[<?xml version="1.0" encoding="${project.build.sourceEncoding}"?>
 <faceted-project>
-  <fixed facet="jst.java"/>
-  <fixed facet="jst.utility"/>
-  <fixed facet="jst.web"/>
-  <installed facet="jst.java" version="${java.version}"/>
-  <installed facet="jst.utility" version="${project.facet.java.utility.version}"/>
-  <installed facet="jst.web" version="${project.facet.jst.web.version}"/>
-  <installed facet="jst.jaxrs" version="${project.facet.jst.jaxrs.version}"/>
-</faceted-project>
-]]>
+	<fixed facet="jst.java"/>
+	<fixed facet="jst.web"/>
+	<fixed facet="jst.jaxrs"/>
+	<installed facet="jst.java" version="${java.version}"/>
+	<installed facet="jst.web" version="${project.facet.jst.web.version}"/>
+	<installed facet="jst.jaxrs" version="${project.facet.jst.jaxrs.version}"/>
+</faceted-project>]]>
 										</content>
 									</file>
 									<file>
@@ -3062,19 +3111,18 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 										<name>.settings/org.eclipse.wst.common.component</name>
 										<content>
 <![CDATA[<?xml version="1.0" encoding="${project.build.sourceEncoding}"?>
-	<project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="${project.artifactId}">
-        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/resources"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/${org.projectlombok.generated.source}"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/${org.projectlombok.generated.test-source}"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/${maven.dependency.unpack.source.directory}"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/${maven.dependency.unpack.resource.directory}"/>
-        <property name="context-root" value="${project.artifactId}"/>
-    </wb-module>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+	<wb-module deploy-name="${project.artifactId}-${project.version}">
+	    <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+	    <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
+	    <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/resources"/>
+	    <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+	    <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+	    <wb-resource deploy-path="/WEB-INF/classes" source-path="/${org.projectlombok.generated.source}"/>
+	    <wb-resource deploy-path="/WEB-INF/classes" source-path="/${org.projectlombok.generated.test-source}"/>
+	    <wb-resource deploy-path="/WEB-INF/classes" source-path="/${maven.dependency.unpack.source.directory}"/>
+	    <wb-resource deploy-path="/WEB-INF/classes" source-path="/${maven.dependency.unpack.resource.directory}"/>
+	</wb-module>
 </project-modules>]]>
 										</content>
 									</file>
@@ -3084,6 +3132,17 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 					</plugins>
 				</pluginManagement>
 			</build>
+		</profile>
+		
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Eclipse Project Setup -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<profile>
+			<id>eclipseSetup</id>
+			<properties>
+				<!-- Eclipse project setup -->
+				<eclipse.setup.skip>false</eclipse.setup.skip>
+			</properties>
 		</profile>
 
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
@@ -3194,10 +3253,17 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 		<maven.surefire.version>3.2.2</maven.surefire.version>
 		<maven.directory.version>0.1</maven.directory.version>
 		<maven.antrun.version>3.1.0</maven.antrun.version>
-		<maven.eclipse.version>2.10</maven.eclipse.version>
-		<maven.eclipse.use.project.references>true</maven.eclipse.use.project.references>
 		<maven.yuicompressor.version>1.5.1</maven.yuicompressor.version>
 		<maven.yuicompressor.skip>false</maven.yuicompressor.skip>
+
+		<!-- Eclipse project setup -->
+		<maven.eclipse.version>2.10</maven.eclipse.version>
+		<maven.eclipse.use.project.references>true</maven.eclipse.use.project.references>
+		<eclipse.setup.skip>true</eclipse.setup.skip>
+		<eclipse.template.directory>.eclipse</eclipse.template.directory>
+		<eclipse.template.directory.path>${root.basedir}/${eclipse.template.directory}</eclipse.template.directory.path>
+		<eclipse.template.packaging.directory.path>${eclipse.template.directory.path}/${project.packaging}</eclipse.template.packaging.directory.path>
+		<project.eclipse.template.directory.path>${project.basedir}/${eclipse.template.directory}</project.eclipse.template.directory.path>
 		
 		<!-- Maven Dependency Plugin for customizing -->
 		<maven.dependency.version>3.6.1</maven.dependency.version>
@@ -4026,28 +4092,58 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 							    <goal>run</goal>
 							</goals>
 							<configuration>
-							    <target>
+							    <target name="clean-folders">
+									<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.plugin.classpath"/>
+
 							    	<!-- delete copied dependencies directory -->
 									<delete includeEmptyDirs="true" verbose="false" quiet="true"
 							        failonerror="false" performGCOnFailedDelete="false">
 										<fileset dir="${maven.dependency.copy.directory}" includes="**/*"/>
 									</delete>
+
 									<!-- delete project target directory -->
 							        <delete includeEmptyDirs="true" verbose="false" quiet="true"
 							        failonerror="false" performGCOnFailedDelete="false">
 										<fileset dir="${project.build.directory}" includes="**/*"/>
 									</delete>
+
 									<!-- delete lombok generated directories -->
 							        <delete includeEmptyDirs="true" verbose="false" quiet="true"
 							        failonerror="false" performGCOnFailedDelete="false">
 										<fileset dir="${org.projectlombok.generated.source.directory}" includes="**/*"/>
 										<fileset dir="${org.projectlombok.generated.test-source.directory}" includes="**/*"/>
 									</delete>
+
 									<!-- delete delombok directories -->
 							        <delete includeEmptyDirs="true" verbose="false" quiet="true"
 							        failonerror="false" performGCOnFailedDelete="false">
 										<fileset dir="${org.projectlombok.delombok.directory}" includes="**/*"/>
 									</delete>
+
+									<!-- Eclipse Setup: delete .settings/.project/.classpath/.log directories -->
+									<if>
+										<equals arg1="${eclipse.setup.skip}" arg2="false" />
+										<then>
+											<if>
+												<not>
+													<equals arg1="${project.basedir}" arg2="${root.basedir}" />
+												</not>
+												<then>
+													<delete includeEmptyDirs="true" verbose="false" quiet="true"
+													failonerror="false" performGCOnFailedDelete="false">
+														<fileset dir="${project.basedir}" includes="**/${eclipse.template.directory}/*"/>
+														<fileset dir="${project.basedir}" includes="**/.settings/*"/>
+														<fileset dir="${project.basedir}" includes="**/.project"/>
+														<fileset dir="${project.basedir}" includes="**/.classpath"/>
+														<fileset dir="${project.basedir}" includes="**/.log"/>
+													</delete>
+													<delete dir="${project.basedir}/.settings"
+													includeEmptyDirs="true" verbose="false" quiet="true"
+													failonerror="false" performGCOnFailedDelete="false"/>
+												</then>
+											</if>
+										</then>
+									</if>
 							    </target>
 							</configuration>
 						</execution>
@@ -4064,7 +4160,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 							</goals>
 							<configuration>
 								<!-- ensure requiment directories -->
-							    <target>
+							    <target name="ensure-root-requiment-directories">
 							        <!-- ensure copied dependencies directories -->
 							        <mkdir dir="${maven.dependency.copy.directory}" />
 							        <!-- NLH4J GITHUB Repository: Before 2019 (use github site as repository) -->
@@ -4118,6 +4214,34 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 											<mkdir dir="${org.projectlombok.delombok.test-source.directory}" />
 										</then>
 									</if>
+
+									<!-- Eclipse Setup: copy all eclipse files/directories template -->
+									<if>
+										<equals arg1="${eclipse.setup.skip}" arg2="false" />
+										<then>
+											<if>
+												<not>
+													<equals arg1="${project.basedir}" arg2="${root.basedir}" />
+												</not>
+												<then>
+													<if>
+														<available file="${eclipse.template.packaging.directory.path}" type="dir"/>
+														<then>
+															<!-- copy all eclipse files/directories template -->
+															<mkdir dir="${project.eclipse.template.directory.path}" />
+															<copy todir="${project.eclipse.template.directory.path}"
+															encoding="${project.build.sourceEncoding}" outputencoding="${project.build.sourceEncoding}"
+															enablemultiplemappings="true"
+															overwrite="true" includeEmptyDirs="true" force="true"
+															quiet="false" verbose="true">  
+																<fileset dir="${eclipse.template.packaging.directory.path}" includes="**/*" />  
+															</copy>
+														</then>
+													</if>
+												</then>
+											</if>
+										</then>
+									</if>
 							    </target>
 							</configuration>
 						</execution>
@@ -4125,6 +4249,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 						<!-- Process sources -->
 						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+						<!-- Process unpack sources -->
 						<execution>
 							<id>ensure-dependencies-sources</id>
 							<phase>process-sources</phase>
@@ -4143,6 +4268,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 											</and>
 										</fileset>
 									</delete>
+
 									<!-- remove empty source/resource directories from unpacked dependencies -->
 									<delete quiet="true" includeEmptyDirs="true" failonerror="false" verbose="true">
 										<fileset dir="${maven.dependency.unpack.resource.directory.path}">
@@ -4152,6 +4278,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 											</and>
 										</fileset>
 									</delete>
+
 									<!-- remove duplicate sources/resources from unpacked dependencies -->
 									<delete quiet="true" includeEmptyDirs="true" failonerror="false" verbose="true">
 										<fileset dir="${maven.dependency.unpack.source.directory.path}">
@@ -4161,6 +4288,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 											</or>
 										</fileset>
 									</delete>
+
 									<!-- remove duplicate sources/resources from unpacked dependencies -->
 									<delete quiet="true" includeEmptyDirs="true" failonerror="false" verbose="true">
 										<fileset dir="${maven.dependency.unpack.resource.directory.path}">
@@ -4174,9 +4302,77 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 							</configuration>
 						</execution>
 
+						<!-- Eclipse Setup: Process eclipse project files template -->
+						<execution>
+							<id>process-eclipse-template</id>
+							<phase>process-sources</phase>
+							<goals>
+								<goal>run</goal>
+							</goals>
+							<configuration>
+								<target name="process-eclipse-template-files"
+								unless="${eclipse.setup.skip}">
+									<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.plugin.classpath"/>
+
+									<!--
+										 1. replace token holder by maven properties
+										 2. copy replaced eclipse template to project basedir
+									-->
+									<if>
+										<not>
+											<equals arg1="${project.basedir}" arg2="${root.basedir}" />
+										</not>
+										<then>
+											<if>
+												<available file="${project.eclipse.template.directory.path}" type="dir"/>
+												<then>
+													<!-- 1. replace token holder by maven properties -->
+													<replace dir="${project.eclipse.template.directory.path}"
+													encoding="${project.build.sourceEncoding}">
+														<include name="**"/>
+
+														<!-- common tokens -->
+														<replacefilter token="@java.version@" value="${java.version}" />
+														<replacefilter token="@project.build.sourceEncoding@" value="${project.build.sourceEncoding}" />
+														<replacefilter token="@org.eclipse.jdt.core.compiler.codegen.useStringConcatFactory@" value="${org.eclipse.jdt.core.compiler.codegen.useStringConcatFactory}" />
+														<replacefilter token="@org.eclipse.jdt.core.compiler.processAnnotations@" value="${org.eclipse.jdt.core.compiler.processAnnotations}" />
+														<replacefilter token="@org.eclipse.jdt.core.compiler.release@" value="${org.eclipse.jdt.core.compiler.release}" />
+														<replacefilter token="@eclipse.maven.project.activated.profiles@" value="${eclipse.maven.project.activated.profiles}" />
+
+														<!-- project tokens -->
+														<replacefilter token="@project.artifactId@" value="${project.artifactId}" />
+														<replacefilter token="@project.version@" value="${project.version}" />
+														<replacefilter token="@project.description@" value="${project.description}" />
+														<replacefilter token="@project.facet.java.utility.version@" value="${project.facet.java.utility.version}" />
+														<replacefilter token="@project.facet.jst.jaxrs.version@" value="${project.facet.jst.jaxrs.version}" />
+
+														<!-- source tokens -->
+														<replacefilter token="@org.projectlombok.generated.source@" value="${org.projectlombok.generated.source}" />
+														<replacefilter token="@org.projectlombok.generated.test-source@" value="${org.projectlombok.generated.test-source}" />
+														<replacefilter token="@maven.dependency.unpack.source.directory@" value="${maven.dependency.unpack.source.directory}" />
+														<replacefilter token="@maven.dependency.unpack.resource.directory@" value="${maven.dependency.unpack.resource.directory}" />
+													</replace>
+
+													<!-- 2. copy replaced eclipse template to project basedir -->
+													<copy todir="${project.basedir}"
+													encoding="${project.build.sourceEncoding}" outputencoding="${project.build.sourceEncoding}"
+													enablemultiplemappings="true"
+													overwrite="true" includeEmptyDirs="true" force="true"
+													quiet="false" verbose="true">  
+														<fileset dir="${project.eclipse.template.directory.path}" includes="**" />  
+													</copy>
+												</then>
+											</if>
+										</then>
+									</if>
+								</target>
+							</configuration>
+						</execution>
+
 						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 						<!-- Process resources -->
 						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+						<!-- Process unpack resources -->
 						<execution>
 							<id>ensure-dependencies-resources</id>
 							<phase>process-resources</phase>
@@ -4195,6 +4391,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 											</and>
 										</fileset>
 									</delete>
+
 									<!-- remove empty source/resource directories from unpacked dependencies -->
 									<delete quiet="true" includeEmptyDirs="true" failonerror="false" verbose="true">
 										<fileset dir="${maven.dependency.unpack.resource.directory.path}">
@@ -4204,6 +4401,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 											</and>
 										</fileset>
 									</delete>
+
 									<!-- remove duplicate sources/resources from unpacked dependencies -->
 									<delete quiet="true" includeEmptyDirs="true" failonerror="false" verbose="true">
 										<fileset dir="${maven.dependency.unpack.source.directory.path}">
@@ -4213,6 +4411,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 											</or>
 										</fileset>
 									</delete>
+
 									<!-- remove duplicate sources/resources from unpacked dependencies -->
 									<delete quiet="true" includeEmptyDirs="true" failonerror="false" verbose="true">
 										<fileset dir="${maven.dependency.unpack.resource.directory.path}">
@@ -4819,6 +5018,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 					<artifactId>maven-eclipse-plugin</artifactId>
 					<version>${maven.eclipse.version}</version>
 					<configuration>
+						<skip>${eclipse.setup.skip}</skip>
 						<useProjectReferences>${maven.eclipse.use.project.references}</useProjectReferences>
 						<jeeversion>6.0</jeeversion>
 						<downloadSources>true</downloadSources>
@@ -4917,10 +5117,10 @@ hibernate3.enabled=true]]>
 								<content>
 <![CDATA[<?xml version="1.0" encoding="${project.build.sourceEncoding}"?>
 <faceted-project>
-<fixed facet="jst.java"/>
-<fixed facet="jst.utility"/>
-<installed facet="jst.java" version="${java.version}"/>
-<installed facet="jst.utility" version="${project.facet.java.utility.version}"/>
+	<fixed facet="jst.java"/>
+	<fixed facet="jst.utility"/>
+	<installed facet="jst.java" version="${java.version}"/>
+	<installed facet="jst.utility" version="${project.facet.java.utility.version}"/>
 </faceted-project>]]>
 								</content>
 							</file>
@@ -4943,9 +5143,9 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 								<name>.factorypath</name>
 								<content>
 <![CDATA[<factorypath>
-<factorypathentry kind="PLUGIN" id="org.eclipse.jst.ws.annotations.core" enabled="true" runInBatchMode="false"/>
-<factorypathentry kind="VARJAR" id="M2_REPO/org/projectlombok/lombok/${org.projectlombok.version}/lombok-${org.projectlombok.version}.jar" enabled="true" runInBatchMode="false"/>
-<factorypathentry kind="VARJAR" id="M2_REPO/org/seasar/doma/doma/${doma.version}/doma-${doma.version}.jar" enabled="true" runInBatchMode="false"/>
+	<factorypathentry kind="PLUGIN" id="org.eclipse.jst.ws.annotations.core" enabled="true" runInBatchMode="false"/>
+	<factorypathentry kind="VARJAR" id="M2_REPO/org/projectlombok/lombok/${org.projectlombok.version}/lombok-${org.projectlombok.version}.jar" enabled="true" runInBatchMode="false"/>
+	<factorypathentry kind="VARJAR" id="M2_REPO/org/seasar/doma/doma/${doma.version}/doma-${doma.version}.jar" enabled="true" runInBatchMode="false"/>
 </factorypath>]]>
 								</content>
 							</file>
@@ -4954,38 +5154,57 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 								<content>
 <![CDATA[<?xml version="1.0" encoding="${project.build.sourceEncoding}"?>
 <projectDescription>
-<name>${project.artifactId}-${project.version}</name>
-<comment>${project.description}</comment>
-<projects/>
-<buildSpec>
-<buildCommand>
-	<name>org.eclipse.jdt.core.javabuilder</name>
-	<arguments>
-	</arguments>
-</buildCommand>
-<buildCommand>
-	<name>org.eclipse.wst.common.project.facet.core.builder</name>
-	<arguments>
-	</arguments>
-</buildCommand>
-<buildCommand>
-	<name>org.eclipse.m2e.core.maven2Builder</name>
-	<arguments>
-	</arguments>
-</buildCommand>
-<buildCommand>
-	<name>org.eclipse.wst.validation.validationbuilder</name>
-	<arguments>
-	</arguments>
-</buildCommand>
-</buildSpec>
-<natures>
-<nature>org.eclipse.m2e.core.maven2Nature</nature>
-<nature>org.eclipse.jdt.core.javanature</nature>
-<nature>org.eclipse.wst.common.modulecore.ModuleCoreNature</nature>
-<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
-</natures>
+	<name>${project.artifactId}-${project.version}</name>
+	<comment>${project.description}</comment>
+	<projects/>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.wst.common.project.facet.core.builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.m2e.core.maven2Builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.wst.validation.validationbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.m2e.core.maven2Nature</nature>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>org.eclipse.wst.common.modulecore.ModuleCoreNature</nature>
+		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
+	</natures>
 </projectDescription>]]>
+								</content>
+							</file>
+							<!-- deployment assembly component -->
+							<file>
+								<name>.settings/org.eclipse.wst.common.component</name>
+								<content>
+<![CDATA[<?xml version="1.0" encoding="${project.build.sourceEncoding}"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="${project.artifactId}-${project.version}">
+        <wb-resource deploy-path="/" source-path="/src/test/java"/>
+        <wb-resource deploy-path="/" source-path="/src/test/resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/" source-path="/src/main/resources"/>
+        <wb-resource deploy-path="/" source-path="/${org.projectlombok.generated.source}"/>
+        <wb-resource deploy-path="/" source-path="/${org.projectlombok.generated.test-source}"/>
+        <wb-resource deploy-path="/" source-path="/${maven.dependency.unpack.source.directory}"/>
+        <wb-resource deploy-path="/" source-path="/${maven.dependency.unpack.resource.directory}"/>
+    </wb-module>
+</project-modules>]]>
 								</content>
 							</file>
 						</additionalConfig>

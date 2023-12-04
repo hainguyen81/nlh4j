@@ -2,20 +2,16 @@
 
 call "./setEnv.bat" /wait
 
-echo Remove bin directories
-FOR /d /r %PROJ_DIR% %%d IN (bin) DO @IF EXIST "%%d" rd /s /q "%%d"
+SET %MAVEN_PROFILES%=%MAVEN_PROFILES%,eclipseSetup
 
-echo Remove target directories
-FOR /d /r %PROJ_DIR% %%d IN (target) DO @IF EXIST "%%d" rd /s /q "%%d"
+CD /D %PROJ_DIR%
 
-echo Remove .settings directories
-FOR /d /r %PROJ_DIR% %%d IN (.settings) DO @IF EXIST "%%d" rd /s /q "%%d"
+if "%DEBUG%" == "true" (
+	mvn --settings %MAVEN_SETTINGS% clean -P %MAVEN_PROFILES% -T 5 -X -DskipTests=%SKIP_TESTS% -Dmaven.test.skip=%SKIP_TESTS% -Dmaven.repo.local=%MAVEN_REPO%
+) else (
+	mvn --settings %MAVEN_SETTINGS% clean -P %MAVEN_PROFILES% -T 5 -X -DskipTests=%SKIP_TESTS% -Dmaven.test.skip=%SKIP_TESTS% -Dmaven.repo.local=%MAVEN_REPO% 1> build.log 2>&1
+)
 
-echo Remove .classpath files
-FOR /d /r %PROJ_DIR% %%d IN (.classpath) DO @IF EXIST "%%d" del /s /q "%%d"
+CD /D %BATCHES_DIR%
 
-echo Remove .project files
-FOR /d /r %PROJ_DIR% %%d IN (.project) DO @IF EXIST "%%d" del /s /q "%%d"
-
-echo Remove .log files
-FOR /d /r %PROJ_DIR% %%d IN (.log) DO @IF EXIST "%%d" del /s /q "%%d"
+SET PATH=%PREV_PATH%
