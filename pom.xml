@@ -4135,6 +4135,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 														<fileset dir="${project.basedir}" includes="**/.settings/*"/>
 														<fileset dir="${project.basedir}" includes="**/.project"/>
 														<fileset dir="${project.basedir}" includes="**/.classpath"/>
+														<fileset dir="${project.basedir}" includes="**/.factorypath"/>
 														<fileset dir="${project.basedir}" includes="**/.log"/>
 													</delete>
 													<delete dir="${project.basedir}/.settings"
@@ -4338,6 +4339,11 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 														<replacefilter token="@org.eclipse.jdt.core.compiler.processAnnotations@" value="${org.eclipse.jdt.core.compiler.processAnnotations}" />
 														<replacefilter token="@org.eclipse.jdt.core.compiler.release@" value="${org.eclipse.jdt.core.compiler.release}" />
 														<replacefilter token="@eclipse.maven.project.activated.profiles@" value="${eclipse.maven.project.activated.profiles}" />
+
+														<!-- annotation processing tokens -->
+														<replacefilter token="@m2e.apt.aptEnabled@" value="${m2e.apt.aptEnabled}" />
+														<replacefilter token="@org.projectlombok.version@" value="${org.projectlombok.version}" />
+														<replacefilter token="@doma.version@" value="${doma.version}" />
 
 														<!-- project tokens -->
 														<replacefilter token="@project.artifactId@" value="${project.artifactId}" />
