@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="@project.build.sourceEncoding@"?>
 <projectDescription>
-	<name>nlh4j-1.0</name>
+	<name>@project.artifactId@-@project.version@</name>
 	<comment>@project.description@</comment>
 	<projects/>
 	<buildSpec>

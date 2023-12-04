@@ -1,4 +1,4 @@
-activeProfiles=dev,jdk11
+activeProfiles=@eclipse.maven.project.activated.profiles@
 eclipse.perferences.version=1
 resolveWorkspaceProjects=true
 version=1

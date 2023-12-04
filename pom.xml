@@ -4344,6 +4344,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 														<replacefilter token="@project.version@" value="${project.version}" />
 														<replacefilter token="@project.description@" value="${project.description}" />
 														<replacefilter token="@project.facet.java.utility.version@" value="${project.facet.java.utility.version}" />
+														<replacefilter token="@project.facet.jst.web.version@" value="${project.facet.jst.web.version}" />
 														<replacefilter token="@project.facet.jst.jaxrs.version@" value="${project.facet.jst.jaxrs.version}" />
 
 														<!-- source tokens -->
