@@ -36,8 +36,10 @@
 	            -->
 	            <value>classpath*:**/properties/*.properties</value>
 	            <value>classpath*:/properties/*.properties</value>
+	            <value>classpath*:properties/*.properties</value>
 	            <value>classpath:**/properties/*.properties</value>
 	            <value>classpath:/properties/*.properties</value>
+	            <value>classpath:properties/*.properties</value>
 	            <value>classpath*:**/*.properties</value>
 	            <value>classpath:**/*.properties</value>
 	            <value>classpath*:*.properties</value>
@@ -79,40 +81,54 @@
 	    properties-ref="properties"
 	    order="2" />
 	<context:property-placeholder
-	    location="classpath:**/properties/*.properties"
+	    location="classpath:properties/*.properties"
 	    ignore-resource-not-found="true"
 	    ignore-unresolvable="true"
 	    file-encoding="UTF-8"
 	    properties-ref="properties"
 	    order="3" />
 	<context:property-placeholder
-	    location="classpath*:*.properties"
+	    location="classpath:**/properties/*.properties"
 	    ignore-resource-not-found="true"
 	    ignore-unresolvable="true"
 	    file-encoding="UTF-8"
 	    properties-ref="properties"
 	    order="4" />
 	<context:property-placeholder
-	    location="classpath*:**/*.properties"
+	    location="classpath*:*.properties"
 	    ignore-resource-not-found="true"
 	    ignore-unresolvable="true"
 	    file-encoding="UTF-8"
 	    properties-ref="properties"
 	    order="5" />
 	<context:property-placeholder
-	    location="classpath*:/properties/*.properties"
+	    location="classpath*:**/*.properties"
 	    ignore-resource-not-found="true"
 	    ignore-unresolvable="true"
 	    file-encoding="UTF-8"
 	    properties-ref="properties"
 	    order="6" />
 	<context:property-placeholder
-	    location="classpath*:**/properties/*.properties"
+	    location="classpath*:/properties/*.properties"
 	    ignore-resource-not-found="true"
 	    ignore-unresolvable="true"
 	    file-encoding="UTF-8"
 	    properties-ref="properties"
 	    order="7" />
+	<context:property-placeholder
+	    location="classpath*:properties/*.properties"
+	    ignore-resource-not-found="true"
+	    ignore-unresolvable="true"
+	    file-encoding="UTF-8"
+	    properties-ref="properties"
+	    order="8" />
+	<context:property-placeholder
+	    location="classpath*:**/properties/*.properties"
+	    ignore-resource-not-found="true"
+	    ignore-unresolvable="true"
+	    file-encoding="UTF-8"
+	    properties-ref="properties"
+	    order="9" />
 
 	<!-- Setup a simple strategy:
 		1. Take all the defaults.
