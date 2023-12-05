@@ -17,5 +17,6 @@ import org.springframework.stereotype.Repository;
  */
 @AnnotateWith(annotations = {
 		@Annotation(target = AnnotationTarget.CLASS, type = Repository.class),
-		@Annotation(target = AnnotationTarget.CONSTRUCTOR, type = Autowired.class) })
+		@Annotation(target = AnnotationTarget.CONSTRUCTOR, type = Autowired.class),
+		@Annotation(target = AnnotationTarget.CONSTRUCTOR_PARAMETER, type = javax.inject.Named.class, elements = "\"config\"") })
 public @interface InjectRepository {}

@@ -18,6 +18,19 @@
 	<version>${revision}</version>
 	<description>Base License Generation for Java Web/Mobile</description>
 
+	<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+	<!-- Generate LicenseTool -->
+	<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+	<profiles>
+		<profile>
+			<id>licenseTool</id>
+			<properties>
+				<!-- Maven Assembly for building license tool -->
+				<maven.assembly.skip>false</maven.assembly.skip>
+			</properties>
+		</profile>
+	</profiles>
+
 	<!-- Dependencies -->
 	<dependencies>
 		<!-- NLH4J -->

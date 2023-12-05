@@ -50,3 +50,6 @@ github-repo
 
 .eclipse
 /.eclipse/
+.certificate
+/.certificate/
+
