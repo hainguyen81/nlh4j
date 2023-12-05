@@ -73,6 +73,6 @@ public class AppConfig extends DomaConfig {
 	    if (this.sqlFileRepository == null) {
 	        this.sqlFileRepository = new ResourceGreedyCacheSqlFileRepository(this.getContext());
 	    }
-	    return ConfigSupport.defaultSqlFileRepository;
+	    return this.sqlFileRepository;
 	}
 }
