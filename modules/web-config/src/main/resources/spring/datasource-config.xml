@@ -78,7 +78,7 @@
 	    scope="singleton">
 		<property name="prefix" value="${doma.repository.prefix}" />
 	</bean>
-	<bean id="appConfig" class="jp.doma.config.AppConfig" scope="singleton">
+	<bean id="config" class="jp.doma.config.AppConfig" scope="singleton">
 		<property name="dataSource" ref="dataSource" />
 		<property name="dialect" ref="dialect" />
 		<property name="sqlFileRepository" ref="repository" />

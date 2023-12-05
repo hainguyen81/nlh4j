@@ -19,7 +19,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.web.authentication.RememberMeServices;
-import org.springframework.security.web.session.SessionInformationExpiredStrategy;
+//FIXME Spring Security 5.8.8
+//import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 import org.nlh4j.util.BeanUtils;
 
 /**
@@ -40,7 +41,8 @@ public class ConcurrentSessionFilter
     @Inject
     private RememberMeServices rememberMeServices;
     private SessionRegistry sessionRegistry;
-    private SessionInformationExpiredStrategy sessionInformationExpiredStrategy;
+    //FIXME Spring Security 5.8.8
+    //private SessionInformationExpiredStrategy sessionInformationExpiredStrategy;
 
 	/**
 	 * Initialize a new instance of {@link ConcurrentSessionFilter}
@@ -62,17 +64,18 @@ public class ConcurrentSessionFilter
         super(sessionRegistry, expiredUrl);
         this.sessionRegistry = sessionRegistry;
     }
-	/**
-	 * Initialize a new instance of {@link ConcurrentSessionFilter}
-	 *
-	 * @param sessionRegistry {@link SessionRegistry}
-	 * @param sessionInformationExpiredStrategy {@link SessionInformationExpiredStrategy}
-	 */
-    public ConcurrentSessionFilter(SessionRegistry sessionRegistry, SessionInformationExpiredStrategy sessionInformationExpiredStrategy) {
-        super(sessionRegistry, sessionInformationExpiredStrategy);
-        this.sessionRegistry = sessionRegistry;
-        this.sessionInformationExpiredStrategy = sessionInformationExpiredStrategy;
-    }
+	//	/**
+	//	 * FIXME Spring Security 5.8.8
+	//	 * Initialize a new instance of {@link ConcurrentSessionFilter}
+	//	 *
+	//	 * @param sessionRegistry {@link SessionRegistry}
+	//	 * @param sessionInformationExpiredStrategy {@link SessionInformationExpiredStrategy}
+	//	 */
+	//    public ConcurrentSessionFilter(SessionRegistry sessionRegistry, SessionInformationExpiredStrategy sessionInformationExpiredStrategy) {
+	//        super(sessionRegistry, sessionInformationExpiredStrategy);
+	//        this.sessionRegistry = sessionRegistry;
+	//        this.sessionInformationExpiredStrategy = sessionInformationExpiredStrategy;
+	//    }
 
     /**
 	 * Get the sessionRegistry
@@ -83,14 +86,15 @@ public class ConcurrentSessionFilter
 		return this.sessionRegistry;
 	}
 
-    /**
-	 * Get the sessionInformationExpiredStrategy
-	 *
-	 * @return the sessionInformationExpiredStrategy
-	 */
-	protected final SessionInformationExpiredStrategy getSessionInformationExpiredStrategy() {
-		return this.sessionInformationExpiredStrategy;
-	}
+	//    /**
+	//     * FIXME Spring Security 5.8.8
+	//	 * Get the sessionInformationExpiredStrategy
+	//	 *
+	//	 * @return the sessionInformationExpiredStrategy
+	//	 */
+	//	protected final SessionInformationExpiredStrategy getSessionInformationExpiredStrategy() {
+	//		return this.sessionInformationExpiredStrategy;
+	//	}
 
 	/**
 	 * Get the rememberMeServices

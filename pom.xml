@@ -71,7 +71,7 @@
 				<!-- Maven Plugins -->
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Eclipse project setup -->
-				<eclipse.setup.skip>false</eclipse.setup.skip>
+				<eclipse.setup.skip>true</eclipse.setup.skip>
 
 				<!--
 					 FIXME TrueLicense Obfuscation for obfuscating constants via sniplet `static final`:
@@ -97,7 +97,6 @@
 				<org.aspectj.skip>false</org.aspectj.skip>
 
 				<!-- Progurad configuration -->
-				<proguard.configuration>${root.basedir}/certificate/proguard.cnf</proguard.configuration>
 				<proguard.skip>false</proguard.skip>
 
 				<!-- License password -->
@@ -598,7 +597,7 @@
 				<!-- Maven Plugins -->
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Eclipse project setup -->
-				<eclipse.setup.skip>false</eclipse.setup.skip>
+				<eclipse.setup.skip>true</eclipse.setup.skip>
 
 				<!--
 					 FIXME TrueLicense Obfuscation for obfuscating constants via sniplet `static final`:
@@ -659,7 +658,6 @@
 				<maven.moditect.version>1.0.0.Final</maven.moditect.version>
 
 				<!-- Progurad configuration -->
-				<proguard.configuration>${root.basedir}/certificate/proguard.cnf</proguard.configuration>
 				<proguard.skip>false</proguard.skip>
 
 				<!-- License password -->
@@ -786,7 +784,7 @@
 				<!-- Spring Security -->
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Spring Security 3.2.x -->
-				<!--<spring.security.version>3.2.9.RELEASE</spring.security.version>-->
+				<spring.security.version>3.2.9.RELEASE</spring.security.version>
 				<!-- Spring Security 5.5.x -->
 				<!--<spring.security.version>5.5.8</spring.security.version>-->
 				<!-- Spring Security 5.6.x -->
@@ -794,7 +792,7 @@
 				<!-- Spring Security 5.7.x -->
 				<!--<spring.security.version>5.7.11</spring.security.version>-->
 				<!-- Spring Security 5.8.x -->
-				<spring.security.version>5.8.8</spring.security.version>
+				<!--<spring.security.version>5.8.8</spring.security.version>-->
 				<!-- Spring Security 6.0.x -->
 				<!--<spring.security.version>6.0.8</spring.security.version>-->
 				<!-- Spring Security 6.1.x -->
@@ -1538,7 +1536,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 				<!-- Maven Plugins -->
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<!-- Eclipse project setup -->
-				<eclipse.setup.skip>false</eclipse.setup.skip>
+				<eclipse.setup.skip>true</eclipse.setup.skip>
 				<!--
 					FIXME Not using project reference due to
 					Classpath entry xxxxxx will not be exported or published. Runtime ClassNotFoundExceptions may result.
@@ -1604,7 +1602,6 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 				<maven.jdeps.version>3.1.2</maven.jdeps.version>
 
 				<!-- Progurad configuration -->
-				<proguard.configuration>${root.basedir}/certificate/proguard.cnf</proguard.configuration>
 				<proguard.skip>false</proguard.skip>
 
 				<!-- License password -->
@@ -3148,7 +3145,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 				<eclipse.setup.skip>false</eclipse.setup.skip>
 			</properties>
 		</profile>
-
+		
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!-- Profiles -->
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
@@ -3214,8 +3211,10 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 		<project.facet.java.utility.version>1.0</project.facet.java.utility.version>
 		
 		<!-- Certificate -->
-		<certificate.basedir>${root.basedir}/certificate</certificate.basedir>
-		
+		<certificate.basedir.name>.certificate</certificate.basedir.name>
+		<certificate.basedir>${root.basedir}/${certificate.basedir.name}</certificate.basedir>
+		<certificate.proguard.configuration>${certificate.basedir}/proguard.cnf</certificate.proguard.configuration>
+
 		<!-- Profile properties file -->
 		<build.profile.id>dev</build.profile.id> <!-- default profile -->
 		<profile.configuration>config.properties</profile.configuration>
@@ -3259,6 +3258,13 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 		<maven.antrun.version>3.1.0</maven.antrun.version>
 		<maven.yuicompressor.version>1.5.1</maven.yuicompressor.version>
 		<maven.yuicompressor.skip>false</maven.yuicompressor.skip>
+
+		<!-- Maven Assembly for building license tool -->
+		<maven.assembly.version>3.6.0</maven.assembly.version>
+		<maven.assembly.skip>true</maven.assembly.skip>
+		<license.tool.name>LicenseTool</license.tool.name>
+		<license.tool.main.class>org.nlh4j.license.LicenseTool</license.tool.main.class>
+		<license.tool.descriptor.ref>jar-with-dependencies</license.tool.descriptor.ref>
 
 		<!-- Eclipse project setup -->
 		<maven.eclipse.version>2.10</maven.eclipse.version>
@@ -5532,7 +5538,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 						<maxMemory>1024m</maxMemory>
 
 						<!-- File with proguard configuration -->
-						<proguardInclude>${proguard.configuration}</proguardInclude>
+						<proguardInclude>${certificate.proguard.configuration}</proguardInclude>
 						<!-- <proguardInclude>${root.basedir}/proguard.cnf</proguardInclude> -->
 
 						<!-- Now exclude all modules that are embedded in the jar, so that
@@ -5644,6 +5650,37 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 								<verbose>true</verbose>
 								<certs>true</certs>
 							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Maven Assembly for building license tool -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>${maven.assembly.version}</version>
+					<configuration>
+						<skipAssembly>${maven.assembly.skip}</skipAssembly>
+						<finalName>${license.tool.name}</finalName>
+						<encoding>${project.build.sourceEncoding}</encoding>
+						<archive>
+							<manifest>
+								<mainClass>${license.tool.main.class}</mainClass>
+							</manifest>
+						</archive>
+						<descriptorRefs>
+							<descriptorRef>${license.tool.descriptor.ref}</descriptorRef>
+						</descriptorRefs>
+					</configuration>
+					<executions>
+						<execution>
+							<id>make-license-tool</id>
+							<phase>package</phase>
+							<goals>
+								<goal>single</goal>
+							</goals>
 						</execution>
 					</executions>
 				</plugin>
@@ -5985,6 +6022,14 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
 			</plugin>
+			
+			<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+			<!-- Maven Assembly for building license tool -->
+			<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+			</plugin>
 
 			<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 			<!--
@@ -6154,6 +6199,14 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
+			</plugin>
+			
+			<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+			<!-- Maven Assembly for building license tool -->
+			<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
 			</plugin>
 
 			<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
