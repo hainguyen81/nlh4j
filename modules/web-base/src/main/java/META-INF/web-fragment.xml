@@ -18,8 +18,40 @@
 			<others />
 		</before>
 	</ordering>
+	
+	<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+	<!--  load properties source on start-up -->
+	<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+	<context-param>
+		<!-- use global to apply for all context(s) -->
+		<param-name>globalInitializerClasses</param-name>
+		<!-- <param-name>contextInitializerClasses</param-name> -->
+		<param-value>org.nlh4j.core.context.Nlh4jApplicationContextInitializer</param-value>
+	</context-param>
+	<context-param>
+		<param-name>propertiesLocations</param-name>
+		<param-value>
+			classpath*:**/properties/*.properties
+			classpath*:/properties/*.properties
+			classpath*:properties/*.properties
+			classpath:**/properties/*.properties
+			classpath:/properties/*.properties
+			classpath:properties/*.properties
+			classpath*:**/*.properties
+			classpath:**/*.properties
+			classpath*:*.properties
+			classpath:*.properties
+		</param-value>
+	</context-param>
+	<!-- FIRST|LAST -->
+	<!-- <context-param>
+		<param-name>propertiesLoadOrder</param-name>
+		<param-value>FIRST</param-value>
+	</context-param> -->
 
-	<!-- profile configuration:
+	<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+	<!--
+		+ Profile configuration:
 		1. default (or simple or null)
 		2. quartz
 		3. mail
@@ -27,22 +59,29 @@
 		5. socket
 		6. socket-chat (require socket profile)
 		7. socket-notification (require socket profile)
-		8. socket-online (require socket profile)
-		9. socket-queue (require socket profile)
+	    8. socket-online (require socket profile)
+	    9. socket-queue (require socket profile)
 	   10. full (all profiles)
+
+	    + Special profiles (almost required profiles):
+	    1. security3 - spring security 3.x
+	    2. security5 - spring security 5.8.x
 	-->
+	<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 	<context-param>
 		<param-name>spring.profiles.default</param-name>
 		<!-- <param-value>socket,socket-notification</param-value> -->
-		<param-value>quartz</param-value>
+		<param-value>${sec.profile},quartz</param-value>
 	</context-param>
 	<context-param>
 		<param-name>spring.profiles.active</param-name>
 		<!-- <param-value>socket,socket-notification</param-value> -->
-		<param-value>quartz</param-value>
+		<param-value>${sec.profile},quartz</param-value>
 	</context-param>
 
-	<!-- servlet context configuration -->
+	<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+	<!-- Servlet context configuration -->
+	<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
     <context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath*:spring/root-context.xml</param-value>

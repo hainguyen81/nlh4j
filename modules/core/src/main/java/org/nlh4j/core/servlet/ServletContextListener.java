@@ -34,6 +34,7 @@ public class ServletContextListener implements javax.servlet.ServletContextListe
         //            });
 
 	    // start core jobs
+		log.info("Context Initialized!");
 		JobSchedulerUtils.startCoreJobs();
 	}
 
@@ -54,5 +55,8 @@ public class ServletContextListener implements javax.servlet.ServletContextListe
 
 		// TODO Always at lastest position for turning logger
 		SystemUtils.turnOffLogger();
+		
+		// debug
+		log.info("Context Destroyed!");
 	}
 }

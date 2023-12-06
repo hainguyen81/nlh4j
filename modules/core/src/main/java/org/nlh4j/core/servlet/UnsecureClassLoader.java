@@ -55,8 +55,7 @@ public class UnsecureClassLoader extends ClassLoader implements Serializable {
              * Changing map with certificates from real one to map without elements.
              * All system's attempts to add certificates to the map do nothing.
              */
-        	Field package2certs = BeanUtils.getField(
-        			ClassLoader.class, DECLARE_FIELD_PACKAGE2CERTS);
+        	Field package2certs = BeanUtils.getField(ClassLoader.class, DECLARE_FIELD_PACKAGE2CERTS);
         	if(package2certs != null) {
         		boolean accessible = package2certs.isAccessible();
 	            package2certs.setAccessible(true);

@@ -5,17 +5,16 @@
 package org.nlh4j.core.dto.bindeditor.json;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
-
-import org.springframework.context.i18n.LocaleContextHolder;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
+
+import org.springframework.context.i18n.LocaleContextHolder;
 
 /**
  * JSON {@link BigDecimal} JSON data type deserializer
@@ -24,8 +23,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
  *
  */
 public class BigDecimalJsonDeserializer
-	extends com.fasterxml.jackson.databind.deser.std.NumberDeserializers.BigDecimalDeserializer
-	implements Serializable {
+	extends com.fasterxml.jackson.databind.deser.std.NumberDeserializers.BigDecimalDeserializer {
 
     /**
      * default serial version id

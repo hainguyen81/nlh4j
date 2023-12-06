@@ -38,8 +38,22 @@
 					</div>
 
 					<div class="modal-body">
-						<form role="form" class="form col-md-12 center-block"
-						action="<c:url value='j_spring_security_check' />" method="POST">
+						<%--
+							// GET /login (spring 5++) renders the login page instead of /spring_security_login (spring 5--)
+							// POST /login (spring 5++) authenticates the user instead of /j_spring_security_check (spring 5--)
+							// The username (spring 5++) parameter defaults to username instead of j_username (spring 5--)
+							// The password (spring 5++) parameter defaults to password instead of j_password (spring 5--)
+						--%>
+						<%-- <form role="form" class="form col-md-12 center-block"
+						action="<c:url value='j_spring_security_check' />" method="POST"> --%>
+						<c:choose>
+							<c:when test="${not empty loginAction}">
+								<form role="form" class="form col-md-12 center-block" action="<c:url value='${loginAction}' />" method="POST">
+							</c:when>
+							<c:otherwise>
+								<form role="form" class="form col-md-12 center-block" action="<c:url value='j_spring_security_check' />" method="POST">
+							</c:otherwise>
+						</c:choose>
 							<!-- token -->
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
@@ -58,10 +72,12 @@
 									style="width: 35px; background-color: #417aab; border-color: #417aab; color: #ffffff">
 										<i class="fa fa-user"></i>
 									</span>
-									<input id="login-username" type="text"
+									<input id="${not empty loginUser ? loginUser : 'j_username'}"
+									name="${not empty loginUser ? loginUser : 'j_username'}"
+									type="text"
 									autocomplete="off" style="margin-bottom: 0; margin-top: 0"
-									class="form-control border-radius-3 border-radius-right" name="username"
-									placeholder='<nlh4j:message code="C001.user_name"/>'>
+									class="form-control login-username border-radius-3 border-radius-right"
+									placeholder='<nlh4j:message code="C001.user_name"/>' tabindex="0">
 								</div>
 							</div>
 							<div class="form-group">
@@ -70,15 +86,19 @@
 									style="width: 35px; background-color: #417aab; border-color: #417aab; color: #ffffff">
 										<i class="fa fa-lock"></i>
 									</span>
-									<input class="form-control border-radius-3 border-radius-right"
+									<input class="form-control login-password border-radius-3 border-radius-right"
 									autocomplete="off"
 									placeholder='<nlh4j:message code="C001.password"/>'
-									name="password" type="password">
+									id="${not empty loginPwd ? loginPwd : 'j_password'}"
+									name="${not empty loginPwd ? loginPwd : 'j_password'}"
+									type="password" tabindex="1">
 								</div>
 							</div>
 							<div class="form-group" style="height: 15px">
 								<div style="float: left; width: auto;">
-									<input id="j_remember" name="rememberMe" type="checkbox">
+									<input id="${not empty loginRemember ? loginRemember : 'j_remember'}"
+									name="${not empty loginRemember ? loginRemember : 'j_remember'}"
+									class="form-control login-remember" type="checkbox">
 								</div>
 								<div style="float: left; width: auto; margin-left: 5px;">
 									<label for="j_remember">
@@ -87,7 +107,7 @@
 								</div>
 							</div>
 							<div class="form-group" style="text-align: center;">
-								<button type="submit" class="btn btn-login" style="width: 50%">
+								<button type="submit" class="btn btn-login" style="width: 50%" tabindex="2">
 									<nlh4j:message code="button.login" />
 								</button>
 							</div>

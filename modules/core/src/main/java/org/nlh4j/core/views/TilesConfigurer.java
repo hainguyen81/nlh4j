@@ -15,18 +15,15 @@ import javax.servlet.ServletContext;
 import org.apache.tiles.TilesException;
 import org.apache.tiles.request.ApplicationContext;
 import org.apache.tiles.request.ApplicationResource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.nlh4j.core.servlet.ApplicationContextProvider;
+import org.nlh4j.core.servlet.SpringContextHelper;
+import org.nlh4j.util.CollectionUtils;
+import org.nlh4j.util.StringUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.web.servlet.view.tiles3.SpringWildcardServletTilesApplicationContext;
 
 import lombok.extern.slf4j.Slf4j;
-
-import org.nlh4j.core.servlet.ApplicationContextProvider;
-import org.nlh4j.core.servlet.SpringContextHelper;
-import org.nlh4j.util.CollectionUtils;
-import org.nlh4j.util.StringUtils;
 
 /**
  * An extended class of {@link org.springframework.web.servlet.view.tiles3.TilesConfigurer}

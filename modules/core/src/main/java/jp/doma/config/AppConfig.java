@@ -8,8 +8,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import org.nlh4j.core.servlet.ApplicationContextProvider;
-import org.seasar.doma.SingletonConfig;
-import org.seasar.doma.jdbc.ConfigSupport;
 import org.seasar.doma.jdbc.SqlFileRepository;
 import org.springframework.context.ApplicationContext;
 

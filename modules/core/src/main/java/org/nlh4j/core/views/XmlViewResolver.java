@@ -7,15 +7,15 @@ package org.nlh4j.core.views;
 import java.io.Serializable;
 import java.util.Locale;
 
+import org.nlh4j.exceptions.ApplicationRuntimeException;
+import org.nlh4j.util.CollectionUtils;
+import org.nlh4j.util.StringUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.web.servlet.View;
 
 import lombok.Setter;
-import org.nlh4j.exceptions.ApplicationRuntimeException;
-import org.nlh4j.util.CollectionUtils;
-import org.nlh4j.util.StringUtils;
 
 /**
  * Custom {@link org.springframework.web.servlet.view.XmlViewResolver} for location classpath

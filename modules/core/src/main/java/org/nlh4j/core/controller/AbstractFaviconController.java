@@ -47,7 +47,7 @@ public abstract class AbstractFaviconController extends AbstractController {
         String data = (!StringUtils.hasText(path) ? DEFAULT_FAVICON_RESOURCE : path);
         if (super.getContextHelper() != null) {
             // search resource stream
-            InputStream is = super.getContextHelper().searchFirstResourceAsStream(path);
+            InputStream is = super.getContextHelper().searchResourceAsStream(path);
             if (is != null) {
                 // convert resource stream to base64
                 byte[] dataBytes = StreamUtils.toByteArray(is);

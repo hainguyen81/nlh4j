@@ -469,6 +469,16 @@
 			<artifactId>jersey-multipart</artifactId>
 		</dependency>
 
+		<!-- NoException -->
+		<dependency>
+		    <groupId>com.machinezoo.noexception</groupId>
+		    <artifactId>noexception</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>com.machinezoo.noexception</groupId>
+		    <artifactId>noexception-slf4j</artifactId>
+		</dependency>
+
 		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>
