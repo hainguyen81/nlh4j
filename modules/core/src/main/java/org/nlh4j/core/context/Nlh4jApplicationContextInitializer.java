@@ -20,6 +20,7 @@ import java.util.stream.Stream;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.nlh4j.util.ExceptionUtils;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
@@ -135,42 +136,34 @@ public class Nlh4jApplicationContextInitializer extends AbstractApplicationConte
 						.flatMap(List<Resource>::stream).filter(Resource::exists)
 						.collect(Collectors.toCollection(LinkedHashSet::new));
 				return resources.parallelStream().map(res -> {
-							PropertySource<?> propertySource = null;
-							try {
-								propertySource = new ResourcePropertySource(res);
-							} catch (IOException e) {
-								// for tracing
-								if (log.isDebugEnabled() || log.isTraceEnabled()) {
-									log.warn("Could not load resource [{}]: {}", res, e.getMessage(), e);
+					ResourcePropertySource propertySource = null;
+					try {
+						propertySource = new ResourcePropertySource(res);
+					} catch (IOException e) {
+						// for tracing
+						log.warn("Could not load resource [{}]: {}", res, e.getMessage());
+						ExceptionUtils.traceException(log, e);
 
-								} else {
-									log.warn("Could not load resource [{}]: {}", res, e.getMessage());
-								}
-
-							} finally {
-								if (log.isDebugEnabled() && propertySource != null) {
-									log.debug("Load properties from [{}]", res.toString());
-								}
-							}
-							return tracePropertiesSource(propertySource);
-						}).filter(Objects::nonNull)
-						.collect(Collectors.toCollection(LinkedList::new));
+					} finally {
+						if (log.isDebugEnabled() && propertySource != null) {
+							log.debug("Loaded [{}] properties from [{}]", res.toString(), propertySource.getSource().size());
+						}
+					}
+					return tracePropertiesSource(propertySource);
+				}).filter(Objects::nonNull)
+				.collect(Collectors.toCollection(LinkedList::new));
 
 				// non-classpath
 			} {
 				if (log.isDebugEnabled()) {
-					log.debug("Load properties from [{}]", propertiesLocation);
+					log.debug("Loaded properties from [{}]", propertiesLocation);
 				}
 				return Arrays.asList(tracePropertiesSource(new ResourcePropertySource(propertiesLocation)));
 			}
 		} catch (IOException e) {
 			// for tracing
-			if (log.isDebugEnabled() || log.isTraceEnabled()) {
-				log.warn("Could not load properties [{}]: {}", propertiesLocation, e.getMessage(), e);
-
-			} else {
-				log.warn("Could not load properties [{}]: {}", propertiesLocation, e.getMessage());
-			}
+			log.warn("Could not load properties [{}]: {}", propertiesLocation, e.getMessage());
+			ExceptionUtils.traceException(log, e);
 			return Collections.emptyList();
 		}
 	}

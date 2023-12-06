@@ -24,8 +24,8 @@
 	<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 	<context-param>
 		<!-- use global to apply for all context(s) -->
-		<param-name>globalInitializerClasses</param-name>
-		<!-- <param-name>contextInitializerClasses</param-name> -->
+		<!--<param-name>globalInitializerClasses</param-name>-->
+		<param-name>contextInitializerClasses</param-name>
 		<param-value>org.nlh4j.core.context.Nlh4jApplicationContextInitializer</param-value>
 	</context-param>
 	<context-param>
