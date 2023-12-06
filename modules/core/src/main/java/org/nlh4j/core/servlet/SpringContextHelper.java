@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
@@ -584,7 +585,7 @@ public final class SpringContextHelper implements Serializable {
      */
 	public static Map<String, List<Resource>> findResourcesByApplicationContext(ApplicationContext applicationContext, String path) {
 		Map<String, List<Resource>> resources = new LinkedHashMap<String, List<Resource>>();
-		List<String> resourcePaths = StringUtils.resolveResourceNames(path);
+		Set<String> resourcePaths = StringUtils.resolveResourceNames(path);
 		if (applicationContext != null && !CollectionUtils.isEmpty(resourcePaths)) {
 		    ApplicationContext ctx = applicationContext;
 		    while(ctx != null) {
@@ -716,7 +717,7 @@ public final class SpringContextHelper implements Serializable {
      * @return {@link Resource} or null if failed
      */
     public static Resource findResourceByApplicationContext(ApplicationContext applicationContext, String path, boolean firstOccurs) {
-		List<String> resourcePaths = StringUtils.resolveResourceNames(path);
+    	Set<String> resourcePaths = StringUtils.resolveResourceNames(path);
 		Resource[] resources = null;
 		Resource resource = null;
 		if (!CollectionUtils.isEmpty(resourcePaths)) {

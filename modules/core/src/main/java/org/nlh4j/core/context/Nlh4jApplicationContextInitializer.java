@@ -123,7 +123,7 @@ public class Nlh4jApplicationContextInitializer extends AbstractApplicationConte
 			// check for resource from classpath
 			if (StringUtils.startsWithIgnoreCase(propertiesLocation, PROPERTIES_CLASSPATH_PATTERN)
 					|| StringUtils.startsWithIgnoreCase(propertiesLocation, PROPERTIES_CLASSPATH_WILDCARD_PATTERN)) {
-				List<String> resolvableResourcePaths = org.nlh4j.util.StringUtils.resolveResourceNames(null, propertiesLocation);
+				Set<String> resolvableResourcePaths = org.nlh4j.util.StringUtils.resolveResourceNames(propertiesLocation);
 				if (log.isDebugEnabled() || log.isTraceEnabled()) {
 					log.debug("Resolvable resource paths [{}] from [{}]", StringUtils.join(resolvableResourcePaths, ", "), propertiesLocation);
 				}

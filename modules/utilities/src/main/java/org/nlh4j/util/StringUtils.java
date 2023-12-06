@@ -13,6 +13,7 @@ import java.lang.reflect.Array;
 import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -1059,9 +1060,9 @@ public final class StringUtils implements Serializable {
      *
      * @return the possible resource names list
      */
-    public static List<String> resolveResourceNames(String prefix, String resource) {
+    public static Set<String> resolveResourceNames(String prefix, String resource) {
         // resolve resource path
-        List<String> resourcePaths = new LinkedList<String>();
+    	Set<String> resourcePaths = new LinkedHashSet<String>();
         if (hasText(prefix) && prefix.startsWith("/")) prefix = prefix.substring(1);
         if (hasText(prefix) && prefix.endsWith("/")) prefix = prefix.substring(0, prefix.length() - 1);
         prefix = (hasText(prefix) ? prefix + "/" : "");
@@ -1095,7 +1096,7 @@ public final class StringUtils implements Serializable {
      *
      * @return the possible resource names list
      */
-    public static List<String> resolveResourceNames(String resource) {
+    public static Set<String> resolveResourceNames(String resource) {
         return resolveResourceNames(null, resource);
     }
 }
