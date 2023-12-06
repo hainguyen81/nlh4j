@@ -282,8 +282,8 @@ public class ResourceGreedyCacheSqlFileRepository implements InitializingBean, D
 	                				Resource sqlResource = null;
 	                				if (!CollectionUtils.isEmpty(resourcesByPath)) {
 	                					if (log.isDebugEnabled()) log.debug("Found SQL file by pattern [" + resourcePath + "]");
-	                					sqlResource = this.isOverride() ? resourcesByPath.get(0)
-	                							: resourcesByPath.get(resourcesByPath.size() - 1);
+	                					sqlResource = this.isOverride() ? resourcesByPath.get(resourcesByPath.size() - 1)
+	                							: resourcesByPath.get(0);
 
 	                				} else if (log.isDebugEnabled()) log.debug("Not found SQL file by pattern [" + resourcePath + "]");
 	                				return (sqlResource == null ? null : StringUtils.toString(sqlResource.getInputStream()));
