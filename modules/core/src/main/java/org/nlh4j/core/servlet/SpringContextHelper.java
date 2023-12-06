@@ -775,6 +775,46 @@ public final class SpringContextHelper implements Serializable {
     public Resource searchResource(String path, boolean firstOccurs) {
     	return findResource(this.getContext(), path, firstOccurs);
     }
+    /**
+     * Get the last ocurred resource as {@link Resource} of the specified resource path
+     *
+     * @param path resource path
+     *
+     * @return {@link Resource} or null if failed
+     */
+    public static Resource findLastResource(String path) {
+        return findResource(path, false);
+    }
+    /**
+     * Get the last ocurred resource as {@link Resource} of the specified resource path
+     *
+     * @param path resource path
+     *
+     * @return {@link Resource} or null if failed
+     */
+    public Resource searchLastResource(String path) {
+        return searchResource(path, false);
+    }
+    /**
+     * Get the first ocurred resource as {@link Resource} of the specified resource path
+     *
+     * @param path resource path
+     *
+     * @return {@link Resource} or null if failed
+     */
+    public static Resource findFirstResource(String path) {
+        return findResource(path, true);
+    }
+    /**
+     * Get the first ocurred resource as {@link Resource} of the specified resource path
+     *
+     * @param path resource path
+     *
+     * @return {@link Resource} or null if failed
+     */
+    public Resource searchFirstResource(String path) {
+        return searchResource(path, true);
+    }
 
     /**
      * Get the resource as {@link InputStream} of the specified resource path
