@@ -119,53 +119,31 @@ public class Nlh4jApplicationContextInitializer extends AbstractApplicationConte
 	 * @return {@link ResourcePropertySource}(s)
 	 */
 	protected List<PropertySource<?>> loadPropertiesResources(final String propertiesLocation) {
-		try {
-			// check for resource from classpath
-			if (StringUtils.startsWithIgnoreCase(propertiesLocation, PROPERTIES_CLASSPATH_PATTERN)
-					|| StringUtils.startsWithIgnoreCase(propertiesLocation, PROPERTIES_CLASSPATH_WILDCARD_PATTERN)) {
-				Set<String> resolvableResourcePaths = org.nlh4j.util.StringUtils.resolveResourceNames(propertiesLocation);
-				if (log.isDebugEnabled() || log.isTraceEnabled()) {
-					log.debug("Resolvable resource paths [{}] from [{}]", StringUtils.join(resolvableResourcePaths, ", "), propertiesLocation);
-				}
-				Set<Resource> resources = resolvableResourcePaths.parallelStream()
-						.map(resourcePath -> Optional.ofNullable(getContextHelper())
-								.map(ctx -> ctx.searchResources(resourcePath))
-								.map(Map<String, List<Resource>>::entrySet).orElseGet(LinkedHashSet::new))
-						.flatMap(Set<Entry<String, List<Resource>>>::stream)
-						.map(Entry<String, List<Resource>>::getValue)
-						.flatMap(List<Resource>::stream).filter(Resource::exists)
-						.collect(Collectors.toCollection(LinkedHashSet::new));
-				return resources.parallelStream().map(res -> {
-					ResourcePropertySource propertySource = null;
-					try {
-						propertySource = new ResourcePropertySource(res);
-					} catch (IOException e) {
-						// for tracing
-						log.warn("Could not load resource [{}]: {}", res, e.getMessage());
-						ExceptionUtils.traceException(log, e);
+		// check for resource from classpath
+		Set<Resource> resources = Optional.ofNullable(getContextHelper())
+				.map(ctx -> ctx.searchResources(propertiesLocation))
+				.map(Map<String, List<Resource>>::entrySet).orElseGet(LinkedHashSet::new)
+				.parallelStream()
+				.map(Entry<String, List<Resource>>::getValue)
+				.flatMap(List<Resource>::stream).filter(Resource::exists)
+				.collect(Collectors.toCollection(LinkedHashSet::new));
+		return resources.parallelStream().map(res -> {
+			ResourcePropertySource propertySource = null;
+			try {
+				propertySource = new ResourcePropertySource(res);
+			} catch (IOException e) {
+				// for tracing
+				log.warn("Could not load resource [{}]: {}", res, e.getMessage());
+				ExceptionUtils.traceException(log, e);
 
-					} finally {
-						if (log.isDebugEnabled() && propertySource != null) {
-							log.debug("Loaded [{}] properties from [{}]", res.toString(), propertySource.getSource().size());
-						}
-					}
-					return tracePropertiesSource(propertySource);
-				}).filter(Objects::nonNull)
-				.collect(Collectors.toCollection(LinkedList::new));
-
-				// non-classpath
-			} {
-				if (log.isDebugEnabled()) {
-					log.debug("Loaded properties from [{}]", propertiesLocation);
+			} finally {
+				if (log.isDebugEnabled() && propertySource != null) {
+					log.debug("Loaded [{}] properties from [{}]", res.toString(), propertySource.getSource().size());
 				}
-				return Arrays.asList(tracePropertiesSource(new ResourcePropertySource(propertiesLocation)));
 			}
-		} catch (IOException e) {
-			// for tracing
-			log.warn("Could not load properties [{}]: {}", propertiesLocation, e.getMessage());
-			ExceptionUtils.traceException(log, e);
-			return Collections.emptyList();
-		}
+			return tracePropertiesSource(propertySource);
+		}).filter(Objects::nonNull)
+		.collect(Collectors.toCollection(LinkedList::new));
 	}
 	
 	/**
