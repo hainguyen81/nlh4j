@@ -274,22 +274,20 @@ public class ResourceGreedyCacheSqlFileRepository implements InitializingBean, D
 	                        Constants.SQL_PATH_PREFIX + prefix, resPath);
 	                // search resource
 	                if (!CollectionUtils.isEmpty(resourcePaths)) {
-	                	sqlMap.putAll(
-	                			resourcePaths.parallelStream()
-	                			.map(ExceptionUtils.wrap(log).function(Exceptions.wrap().function(resourcePath -> {
-	                				Map<String, List<Resource>> foundResources = this.getContextHelper().searchResources(resourcePath);
-	                				List<Resource> resourcesByPath = foundResources.getOrDefault(resourcePath, new LinkedList<>());
-	                				Resource sqlResource = null;
-	                				if (!CollectionUtils.isEmpty(resourcesByPath)) {
-	                					if (log.isDebugEnabled()) log.debug("Found SQL file by pattern [" + resourcePath + "]");
-	                					sqlResource = this.isOverride() ? resourcesByPath.get(resourcesByPath.size() - 1)
-	                							: resourcesByPath.get(0);
-
-	                				} else if (log.isDebugEnabled()) log.debug("Not found SQL file by pattern [" + resourcePath + "]");
-	                				return (sqlResource == null ? null : StringUtils.toString(sqlResource.getInputStream()));
-	                			}))).filter(Optional::isPresent).map(Optional::get)
-	                			.filter(StringUtils::hasText).map(s -> new SimpleEntry<>(path, s))
-	                			.collect(Collectors.toMap(Entry<String, String>::getKey, Entry<String, String>::getValue, (k1, k2) -> k1)));
+	                	for(String resourcePath : resourcePaths) {
+	                        sql = (this.isOverride() ? this.getContextHelper().searchLastResourceAsString(resourcePath)
+	                                : this.getContextHelper().searchFirstResourceAsString(resourcePath));
+	                        if (StringUtils.hasText(sql)) {
+	                            if (log.isDebugEnabled()) {
+	                                log.debug("Found SQL file by pattern [" + resourcePath + "]");
+	                            }
+	                            sqlMap.put(path, sql);
+	                            break;
+	                        }
+	                        else if (log.isDebugEnabled()) {
+	                            log.debug("Not found SQL file by pattern [" + resourcePath + "]");
+	                        }
+	                    }
 	                }
             	} else {
             		// cache SQL
