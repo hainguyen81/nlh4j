@@ -5,7 +5,6 @@
 package org.nlh4j.core.servlet;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.net.URL;
@@ -589,40 +588,35 @@ public final class SpringContextHelper implements Serializable {
 		if (applicationContext != null && !CollectionUtils.isEmpty(resourcePaths)) {
 		    ApplicationContext ctx = applicationContext;
 		    while(ctx != null) {
-		        try {
-		        	final ApplicationContext tmpCtx = ctx;
-		        	resources.putAll(
-		        			resourcePaths.parallelStream().filter(StringUtils::hasText)
-		        			.map(resourcePath -> {
-		        				Resource[] resourcesByPath = null;
-		        				try {
-		        					resourcesByPath = tmpCtx.getResources(resourcePath);
-		        				} catch (IOException e) {
-		        					ExceptionUtils.traceException(log, e);
-		        				}
+	        	final ApplicationContext tmpCtx = ctx;
+	        	resources.putAll(
+	        			resourcePaths.parallelStream().filter(StringUtils::hasText)
+	        			.map(resourcePath -> {
+	        				Resource[] resourcesByPath = null;
+	        				try {
+	        					resourcesByPath = tmpCtx.getResources(resourcePath);
+	        				} catch (Exception e) {
+	        					ExceptionUtils.traceException(log, e);
+	        				}
 
-		        				// tracing
-		        				if (ArrayUtils.isNotEmpty(resourcesByPath)) {
-		    						traceResource(resourcePath, resourcesByPath[0]);
-		    					}
-		    					return new SimpleEntry<String, List<Resource>>(resourcePath,
-		            					Optional.ofNullable(resourcesByPath).filter(ArrayUtils::isNotEmpty)
-		            					.map(CollectionUtils::toList).orElseGet(Collections::emptyList)
-		            					.parallelStream().collect(Collectors.toCollection(LinkedList::new)));
-		        			})
-		        			.filter(e -> !CollectionUtils.isEmpty(e.getValue()))
-		        			.collect(Collectors.toMap(Entry<String, List<Resource>>::getKey,
-		        					Entry<String, List<Resource>>::getValue, (k1, k2) -> k1)));
-		        	
-		            // continue with parent context if not found
-		            if (CollectionUtils.isEmpty(resources)) ctx = ctx.getParent();
-		            else if (!CollectionUtils.isEmpty(resources)) break;
-
-		        } catch (Exception e) {
-					log.warn("Could not resolve resource [{}] by ApplicationContext: {}", path, e.getMessage());
-					ExceptionUtils.traceException(log, e);
-		        	resources.clear();
-		        }
+	        				// tracing
+	        				if (ArrayUtils.isNotEmpty(resourcesByPath)) {
+	        					if (log.isDebugEnabled()) {
+	        						log.debug("Resolved [{}] resources by path [{}]", resourcesByPath.length, resourcePath);
+	        					}
+	    						traceResource(resourcePath, resourcesByPath[0]);
+	    					}
+	    					return new SimpleEntry<String, List<Resource>>(resourcePath,
+	            					Optional.ofNullable(resourcesByPath).filter(ArrayUtils::isNotEmpty)
+	            					.map(CollectionUtils::toList).orElseGet(Collections::emptyList)
+	            					.parallelStream().collect(Collectors.toCollection(LinkedList::new)));
+	        			})
+	        			.filter(e -> !CollectionUtils.isEmpty(e.getValue()))
+	        			.collect(Collectors.toMap(Entry<String, List<Resource>>::getKey,
+	        					Entry<String, List<Resource>>::getValue, (k1, k2) -> k1)));
+	        	
+	            // continue with parent context
+	            ctx = ctx.getParent();
 		    }
 		}
 		return resources;
@@ -700,14 +694,15 @@ public final class SpringContextHelper implements Serializable {
 					traceResource(path, resource);
 					break;
 				}
-				// continue with parent context if not found
-				if (resource == null) loader = loader.getParent();
 
 			} catch (Exception e) {
 				log.warn("Could not resolve resource [{}] by ClassLoader: {}", path, e.getMessage());
 				ExceptionUtils.traceException(log, e);
 				resource = null;
 			}
+			
+			// continue with parent context if not found
+			if (resource == null) loader = loader.getParent();
 		}
 		return resource;
 	}
@@ -726,31 +721,32 @@ public final class SpringContextHelper implements Serializable {
 		if (!CollectionUtils.isEmpty(resourcePaths)) {
 		    ApplicationContext ctx = applicationContext;
 		    while(resource == null && ctx != null) {
-		        try {
-		            for(String resourcePath : resourcePaths) {
-		            	if (!StringUtils.hasText(resourcePath)) {
-		            		continue;
-		            	}
+	            for(String resourcePath : resourcePaths) {
+	            	if (!StringUtils.hasText(resourcePath)) {
+	            		continue;
+	            	}
 
-		            	// solve resource
-		                resources = ctx.getResources(resourcePath);
-		                resource = (CollectionUtils.isEmpty(resources) ? null : resources[0]);
-		                if (resource != null) {
-		                	// debug
-		                	traceResource(resourcePath, resource);
-		                	break;
-		                }
-		            }
+	            	// solve resource
+	            	try {
+	            		resources = ctx.getResources(resourcePath);
+	            		resource = (CollectionUtils.isEmpty(resources) ? null : resources[0]);
+	            	} catch (Exception e) {
+						log.warn("Could not resolve resource [{}] by ApplicationContext: {}", path, e.getMessage());
+						ExceptionUtils.traceException(log, e);
+			            resources = null;
+			            resource = null;
+			        }
 
-		            // continue with parent context if not found
-		            if (resource == null) ctx = ctx.getParent();
+	            	// tracing
+	                if (resource != null) {
+	                	// debug
+	                	traceResource(resourcePath, resource);
+	                	break;
+	                }
+	            }
 
-		        } catch (Exception e) {
-					log.warn("Could not resolve resource [{}] by ApplicationContext: {}", path, e.getMessage());
-					ExceptionUtils.traceException(log, e);
-		            resources = null;
-		            resource = null;
-		        }
+	            // continue with parent context if not found
+	            if (resource == null) ctx = ctx.getParent();
 		    }
 		}
 		return resource;
