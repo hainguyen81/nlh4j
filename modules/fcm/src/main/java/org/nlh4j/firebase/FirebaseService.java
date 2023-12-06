@@ -120,7 +120,7 @@ public class FirebaseService implements Serializable {
     	}
 
     	// require input stream from adminSDK account
-        InputStream is = SpringContextHelper.findFirstResourceAsStream(this.getAdminSdkResource());
+        InputStream is = SpringContextHelper.findResourceAsStream(this.getAdminSdkResource());
         if (is == null) {
         	throw new IllegalArgumentException(
         			"Not found adminSDK account JSON resource [" + this.getAdminSdkResource() + "]");

@@ -1,0 +1,1 @@
+org.springframework.context.ApplicationContextInitializer=org.nlh4j.core.context.Nlh4jApplicationContextInitializer

@@ -7,19 +7,26 @@ package jp.doma.config;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.lang.reflect.Method;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import com.machinezoo.noexception.Exceptions;
+
 import org.nlh4j.core.servlet.ApplicationContextProvider;
 import org.nlh4j.core.servlet.SpringContextHelper;
 import org.nlh4j.util.CollectionUtils;
+import org.nlh4j.util.ExceptionUtils;
 import org.nlh4j.util.StreamUtils;
 import org.nlh4j.util.StringUtils;
 import org.seasar.doma.DomaIllegalArgumentException;
@@ -267,20 +274,22 @@ public class ResourceGreedyCacheSqlFileRepository implements InitializingBean, D
 	                        Constants.SQL_PATH_PREFIX + prefix, resPath);
 	                // search resource
 	                if (!CollectionUtils.isEmpty(resourcePaths)) {
-	                    for(String resourcePath : resourcePaths) {
-	                        sql = (this.isOverride() ? this.getContextHelper().searchLastResourceAsString(resourcePath)
-	                                : this.getContextHelper().searchFirstResourceAsString(resourcePath));
-	                        if (StringUtils.hasText(sql)) {
-	                            if (log.isDebugEnabled()) {
-	                                log.debug("Found SQL file by pattern [" + resourcePath + "]");
-	                            }
-	                            sqlMap.put(path, sql);
-	                            break;
-	                        }
-	                        else if (log.isDebugEnabled()) {
-	                            log.debug("Not found SQL file by pattern [" + resourcePath + "]");
-	                        }
-	                    }
+	                	sqlMap.putAll(
+	                			resourcePaths.parallelStream()
+	                			.map(ExceptionUtils.wrap(log).function(Exceptions.wrap().function(resourcePath -> {
+	                				Map<String, List<Resource>> foundResources = this.getContextHelper().searchResources(resourcePath);
+	                				List<Resource> resourcesByPath = foundResources.getOrDefault(resourcePath, new LinkedList<>());
+	                				Resource sqlResource = null;
+	                				if (!CollectionUtils.isEmpty(resourcesByPath)) {
+	                					if (log.isDebugEnabled()) log.debug("Found SQL file by pattern [" + resourcePath + "]");
+	                					sqlResource = this.isOverride() ? resourcesByPath.get(0)
+	                							: resourcesByPath.get(resourcesByPath.size() - 1);
+
+	                				} else if (log.isDebugEnabled()) log.debug("Not found SQL file by pattern [" + resourcePath + "]");
+	                				return (sqlResource == null ? null : StringUtils.toString(sqlResource.getInputStream()));
+	                			}))).filter(Optional::isPresent).map(Optional::get)
+	                			.filter(StringUtils::hasText).map(s -> new SimpleEntry<>(path, s))
+	                			.collect(Collectors.toMap(Entry<String, String>::getKey, Entry<String, String>::getValue, (k1, k2) -> k1)));
 	                }
             	} else {
             		// cache SQL

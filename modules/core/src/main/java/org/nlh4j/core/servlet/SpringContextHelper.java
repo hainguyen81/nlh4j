@@ -5,14 +5,20 @@
 package org.nlh4j.core.servlet;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.net.URL;
-import java.util.Iterator;
+import java.util.AbstractMap.SimpleEntry;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -20,8 +26,12 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import com.machinezoo.noexception.Exceptions;
+
+import org.apache.commons.lang3.ArrayUtils;
 import org.nlh4j.util.BeanUtils;
 import org.nlh4j.util.CollectionUtils;
+import org.nlh4j.util.ExceptionUtils;
 import org.nlh4j.util.StringUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -344,15 +354,12 @@ public final class SpringContextHelper implements Serializable {
 		    	}
     		}
 	    	if (!CollectionUtils.isEmpty(beans)) {
-		    	for(final Iterator<String> it = beans.keySet().iterator(); it.hasNext();) {
-		    		String beanref = it.next();
-		    		Object fbean = beans.get(beanref);
-		    		if (beanClass.equals(fbean.getClass())
-		    				|| (inherited && BeanUtils.isInstanceOf(fbean.getClass(), beanClass))) {
-		    			bean = BeanUtils.safeType(fbean, beanClass);
-		    			break;
-		    		}
-		    	}
+		    	bean = beans.entrySet().parallelStream()
+			    		.filter(e -> Objects.nonNull(e.getValue())
+			    				&& (beanClass.equals(e.getValue().getClass())
+			    						|| (inherited && BeanUtils.isInstanceOf(e.getValue().getClass(), beanClass))))
+			    		.map(e -> BeanUtils.safeType(e.getValue(), beanClass))
+			    		.filter(Objects::nonNull).findFirst().orElse(null);
 	    	}
     	}
     	// if not found the bean with specified class but using inherited flag;
@@ -394,7 +401,7 @@ public final class SpringContextHelper implements Serializable {
     		while(CollectionUtils.isEmpty(beans) && ctx != null) {
 		    	try { beans = ctx.getBeansOfType(beanClass, Boolean.TRUE, Boolean.FALSE); }
 		    	catch (BeansException e) {
-		    		log.warn(e.getMessage());
+		    		ExceptionUtils.traceException(log, e);
 		    		beans = null;
 		    	} finally {
 			    	if (!CollectionUtils.isEmpty(beans)) break;
@@ -402,15 +409,13 @@ public final class SpringContextHelper implements Serializable {
 		    	}
     		}
 	    	if (!CollectionUtils.isEmpty(beans)) {
-		    	for(final Iterator<String> it = beans.keySet().iterator(); it.hasNext();) {
-		    		String beanref = it.next();
-		    		Object fbean = beans.get(beanref);
-		    		if (beanClass.equals(fbean.getClass())
-		    				|| (inherited && BeanUtils.isInstanceOf(fbean.getClass(), beanClass))) {
-		    			T bean = BeanUtils.safeType(fbean, beanClass);
-		    			if (bean != null) beansLst.add(bean);
-		    		}
-		    	}
+	    		beansLst.addAll(
+	    				beans.entrySet().parallelStream()
+			    		.filter(e -> Objects.nonNull(e.getValue())
+			    				&& (beanClass.equals(e.getValue().getClass())
+			    						|| (inherited && BeanUtils.isInstanceOf(e.getValue().getClass(), beanClass))))
+			    		.map(e -> BeanUtils.safeType(e.getValue(), beanClass))
+			    		.filter(Objects::nonNull).collect(Collectors.toCollection(LinkedList::new)));
 	    	}
     	}
     	// if not found the bean with specified class but using inherited flag;
@@ -470,8 +475,8 @@ public final class SpringContextHelper implements Serializable {
      * @param originalPath the original resource pattern
      * @param resource to debug
      */
-    private static void debugResource(String originalPath, Resource resource) {
-    	if (log.isDebugEnabled() && resource != null) {
+    private static void traceResource(String originalPath, Resource resource) {
+    	if (log.isTraceEnabled() && resource != null) {
     		String resPath = null;
     		// URL
     		if (!StringUtils.hasText(resPath)) {
@@ -488,7 +493,7 @@ public final class SpringContextHelper implements Serializable {
     			try { resPath = resource.getFile().getPath(); }
     			catch (Exception e) {}
     		}
-    		log.debug("Resolved [" + originalPath + "] to [" + resPath + "]");
+    		log.trace("Resolved [" + originalPath + "] to [" + resPath + "]");
     	}
     }
     /**
@@ -499,38 +504,13 @@ public final class SpringContextHelper implements Serializable {
      *
      * @return {@link Resource} map by pattern and resources list or null if failed
      */
-    public static Map<String, List<Resource>> findResources(final ApplicationContext applicationContext, String path) {
+    public static Map<String, List<Resource>> findResources(ApplicationContext applicationContext, String path) {
     	Map<String, List<Resource>> resources = new LinkedHashMap<String, List<Resource>>();
-        if (applicationContext != null) {
+        if (applicationContext != null && StringUtils.hasText(path)) {
             // resolve all possible resource paths
-            List<String> resourcePaths = StringUtils.resolveResourceNames(path);
-            if (!CollectionUtils.isEmpty(resourcePaths)) {
-                ApplicationContext ctx = applicationContext;
-                while(ctx != null) {
-    	            try {
-    	                for(String resourcePath : resourcePaths) {
-        	                Resource[] arrResources = ctx.getResources(resourcePath);
-        	                if (!CollectionUtils.isEmpty(arrResources)) {
-        	                	resources.put(resourcePath,
-        	                			CollectionUtils.toList(arrResources));
-        	                	// debug
-        	                	Resource resource = arrResources[0];
-        	                	debugResource(resourcePath, resource);
-        	                }
-    	                }
-    	                // continue with parent context if not found
-    	                if (CollectionUtils.isEmpty(resources)) ctx = ctx.getParent();
-    	                else if (!CollectionUtils.isEmpty(resources)) break;
-    	            }
-    	            catch (Exception e) {
-    	                log.error(e.getMessage(), e);
-    	                if (!CollectionUtils.isEmpty(resources)) {
-    	                	resources.clear();
-    	                }
-    	            }
-                }
-            }
+        	resources.putAll(findResourcesByApplicationContext(applicationContext, path));
         }
+
         // try detecting local file
         if (CollectionUtils.isEmpty(resources) && StringUtils.hasText(path)) {
             File f = new File(path);
@@ -538,38 +518,115 @@ public final class SpringContextHelper implements Serializable {
                 resources = new LinkedHashMap<String, List<Resource>>();
                 resources.put(path, new LinkedList<Resource>());
                 resources.get(path).add(new FileSystemResource(path));
-                debugResource(path, resources.get(path).get(0));
+                traceResource(path, resources.get(path).get(0));
             }
         }
+
+        // try using current thread class loader
+        if (CollectionUtils.isEmpty(resources) && StringUtils.hasText(path)) {
+        	// resolve all possible resource paths
+        	resources.putAll(findResourcesByClassLoader(Thread.currentThread().getContextClassLoader(), path));
+        }
+
         // try using class loader
 		if (CollectionUtils.isEmpty(resources) && StringUtils.hasText(path)) {
         	// resolve all possible resource paths
-        	ClassLoader loader = SpringContextHelper.class.getClassLoader();
-        	while (loader != null) {
-				try {
-					URL url = loader.getResource(path);
-					Resource resource = (url != null ? new UrlResource(url) : null);
-					if (resource != null) {
-						String resourcePath = url.getPath();
-						if (resources.get(resourcePath) == null) {
-							resources.put(resourcePath, new LinkedList<Resource>());
-						}
-						resources.get(resourcePath).add(resource);
-						debugResource(resourcePath, resource);
-					}
-					// continue with parent context if not found
-					loader = loader.getParent();
-				} catch (Exception e) {
-					log.error(e.getMessage(), e);
-				}
-			}
+			resources.putAll(findResourcesByClassLoader(SpringContextHelper.class.getClassLoader(), path));
         }
+
         // debug
         if (CollectionUtils.isEmpty(resources) && log.isDebugEnabled()) {
         	log.warn("Not found resource path [" + path + "]");
         }
         return resources;
     }
+
+    /**
+     * Get the resource as {@link Resource} array of the specified resource path
+     *
+     * @param loader {@link ClassLoader}
+     * @param path resource path
+     *
+     * @return {@link Resource} map by pattern and resources list or null if failed
+     */
+	public static Map<String, List<Resource>> findResourcesByClassLoader(ClassLoader loader, String path) {
+		Map<String, List<Resource>> resources = new LinkedHashMap<String, List<Resource>>();
+		while (loader != null && StringUtils.hasText(path)) {
+			try {
+
+				URL url = loader.getResource(path);
+				Resource resource = (url != null ? new UrlResource(url) : null);
+				if (resource != null) {
+					String resourcePath = url.getPath();
+					if (resources.get(resourcePath) == null) {
+						resources.put(resourcePath, new LinkedList<Resource>());
+					}
+					resources.get(resourcePath).add(resource);
+					traceResource(resourcePath, resource);
+				}
+				// continue with parent context if not found
+				loader = loader.getParent();
+
+			} catch (Exception e) {
+				log.warn("Could not resolve resource [{}] by ClassLoader: {}", path, e.getMessage());
+				ExceptionUtils.traceException(log, e);
+				resources.clear();
+			}
+		}
+		return resources;
+	}
+    /**
+     * Get the resource as {@link Resource} array of the specified resource path
+     *
+     * @param applicationContext context
+     * @param path resource path
+     *
+     * @return {@link Resource} map by pattern and resources list or null if failed
+     */
+	public static Map<String, List<Resource>> findResourcesByApplicationContext(ApplicationContext applicationContext, String path) {
+		Map<String, List<Resource>> resources = new LinkedHashMap<String, List<Resource>>();
+		List<String> resourcePaths = StringUtils.resolveResourceNames(path);
+		if (applicationContext != null && !CollectionUtils.isEmpty(resourcePaths)) {
+		    ApplicationContext ctx = applicationContext;
+		    while(ctx != null) {
+		        try {
+		        	final ApplicationContext tmpCtx = ctx;
+		        	resources.putAll(
+		        			resourcePaths.parallelStream().filter(StringUtils::hasText)
+		        			.map(resourcePath -> {
+		        				Resource[] resourcesByPath = null;
+		        				try {
+		        					resourcesByPath = tmpCtx.getResources(resourcePath);
+		        				} catch (IOException e) {
+		        					ExceptionUtils.traceException(log, e);
+		        				}
+
+		        				// tracing
+		        				if (ArrayUtils.isNotEmpty(resourcesByPath)) {
+		    						traceResource(resourcePath, resourcesByPath[0]);
+		    					}
+		    					return new SimpleEntry<String, List<Resource>>(resourcePath,
+		            					Optional.ofNullable(resourcesByPath).filter(ArrayUtils::isNotEmpty)
+		            					.map(CollectionUtils::toList).orElseGet(Collections::emptyList)
+		            					.parallelStream().collect(Collectors.toCollection(LinkedList::new)));
+		        			})
+		        			.filter(e -> !CollectionUtils.isEmpty(e.getValue()))
+		        			.collect(Collectors.toMap(Entry<String, List<Resource>>::getKey,
+		        					Entry<String, List<Resource>>::getValue, (k1, k2) -> k1)));
+		        	
+		            // continue with parent context if not found
+		            if (CollectionUtils.isEmpty(resources)) ctx = ctx.getParent();
+		            else if (!CollectionUtils.isEmpty(resources)) break;
+
+		        } catch (Exception e) {
+					log.warn("Could not resolve resource [{}] by ApplicationContext: {}", path, e.getMessage());
+					ExceptionUtils.traceException(log, e);
+		        	resources.clear();
+		        }
+		    }
+		}
+		return resources;
+	}
     /**
      * Get the resource as {@link Resource} of the specified resource path
      *
@@ -580,6 +637,7 @@ public final class SpringContextHelper implements Serializable {
     public Map<String, List<Resource>> searchResources(String path) {
     	return findResources(this.getContext(), path);
     }
+
     /**
      * Get the resource as {@link Resource} of the specified resource path
      *
@@ -589,66 +647,34 @@ public final class SpringContextHelper implements Serializable {
      *
      * @return {@link Resource} or null if failed
      */
-    public static Resource findResource(final ApplicationContext applicationContext, String path, boolean firstOccurs) {
+    public static Resource findResource(ApplicationContext applicationContext, String path) {
     	Resource resource = null;
-        if (applicationContext != null) {
+        if (applicationContext != null && StringUtils.hasText(path)) {
             // resolve all possible resource paths
-            List<String> resourcePaths = StringUtils.resolveResourceNames(path);
-            Resource[] resources = null;
-            if (!CollectionUtils.isEmpty(resourcePaths)) {
-                ApplicationContext ctx = applicationContext;
-                while(resource == null && ctx != null) {
-    	            try {
-    	                for(String resourcePath : resourcePaths) {
-        	                resources = ctx.getResources(resourcePath);
-        	                resource = (CollectionUtils.isEmpty(resources)
-        	                        ? null : firstOccurs ? resources[0] : resources[resources.length - 1]);
-        	                if (resource != null) {
-        	                	// debug
-        	                	debugResource(resourcePath, resource);
-        	                	break;
-        	                }
-    	                }
-    	                // continue with parent context if not found
-    	                if (resource == null) ctx = ctx.getParent();
-    	            }
-    	            catch (Exception e) {
-    	                log.error(e.getMessage(), e);
-    	                resources = null;
-    	                resource = null;
-    	            }
-                }
-            }
+            resource = findResourceByApplicationContext(applicationContext, path);
         }
+
         // try detecting local file
         if (resource == null && StringUtils.hasText(path)) {
             File f = new File(path);
             if (f.exists() && f.canRead()) {
                 resource = new FileSystemResource(path);
-                debugResource(path, resource);
+                traceResource(path, resource);
             }
         }
+
+        // try using current thread class loader
+        if (resource == null && StringUtils.hasText(path)) {
+        	// resolve all possible resource paths
+        	resource = findResourceByClassLoader(Thread.currentThread().getContextClassLoader(), path);
+        }
+
         // try using class loader
         if (resource == null && StringUtils.hasText(path)) {
         	// resolve all possible resource paths
-        	ClassLoader loader = SpringContextHelper.class.getClassLoader();
-        	while (resource == null && loader != null) {
-				try {
-					URL url = loader.getResource(path);
-					resource = (url != null ? new UrlResource(url) : null);
-					if (resource != null) {
-						// debug
-						debugResource(path, resource);
-						break;
-					}
-					// continue with parent context if not found
-					if (resource == null) loader = loader.getParent();
-				} catch (Exception e) {
-					log.error(e.getMessage(), e);
-					resource = null;
-				}
-			}
+        	resource = findResourceByClassLoader(SpringContextHelper.class.getClassLoader(), path);
         }
+
         // debug
         if (resource == null && log.isDebugEnabled()) {
         	log.warn("Not found resource path [" + path + "]");
@@ -658,204 +684,144 @@ public final class SpringContextHelper implements Serializable {
     /**
      * Get the resource as {@link Resource} of the specified resource path
      *
+     * @param loader {@link ClassLoader}
      * @param path resource path
-     * @param firstOccurs specify returning stream of first occured resource. false for last occured resource
      *
      * @return {@link Resource} or null if failed
      */
-    public static Resource findResource(String path, boolean firstOccurs) {
-    	return findResource(ApplicationContextProvider.getAwareApplicationContext(), path, firstOccurs);
+    public static Resource findResourceByClassLoader(ClassLoader loader, String path) {
+		Resource resource = null;
+		while (resource == null && loader != null && StringUtils.hasText(path)) {
+			try {
+				URL url = loader.getResource(path);
+				resource = (url != null ? new UrlResource(url) : null);
+				if (resource != null) {
+					// debug
+					traceResource(path, resource);
+					break;
+				}
+				// continue with parent context if not found
+				if (resource == null) loader = loader.getParent();
+
+			} catch (Exception e) {
+				log.warn("Could not resolve resource [{}] by ClassLoader: {}", path, e.getMessage());
+				ExceptionUtils.traceException(log, e);
+				resource = null;
+			}
+		}
+		return resource;
+	}
+    /**
+     * Get the resource as {@link Resource} of the specified resource path
+     *
+     * @param applicationContext context
+     * @param path resource path
+     *
+     * @return {@link Resource} or null if failed
+     */
+    public static Resource findResourceByApplicationContext(ApplicationContext applicationContext, String path) {
+		List<String> resourcePaths = StringUtils.resolveResourceNames(path);
+		Resource[] resources = null;
+		Resource resource = null;
+		if (!CollectionUtils.isEmpty(resourcePaths)) {
+		    ApplicationContext ctx = applicationContext;
+		    while(resource == null && ctx != null) {
+		        try {
+		            for(String resourcePath : resourcePaths) {
+		            	if (!StringUtils.hasText(resourcePath)) {
+		            		continue;
+		            	}
+
+		            	// solve resource
+		                resources = ctx.getResources(resourcePath);
+		                resource = (CollectionUtils.isEmpty(resources) ? null : resources[0]);
+		                if (resource != null) {
+		                	// debug
+		                	traceResource(resourcePath, resource);
+		                	break;
+		                }
+		            }
+
+		            // continue with parent context if not found
+		            if (resource == null) ctx = ctx.getParent();
+
+		        } catch (Exception e) {
+					log.warn("Could not resolve resource [{}] by ApplicationContext: {}", path, e.getMessage());
+					ExceptionUtils.traceException(log, e);
+		            resources = null;
+		            resource = null;
+		        }
+		    }
+		}
+		return resource;
+	}
+    /**
+     * Get the resource as {@link Resource} of the specified resource path
+     *
+     * @param path resource path
+     *
+     * @return {@link Resource} or null if failed
+     */
+    public static Resource findResource(String path) {
+    	return findResource(ApplicationContextProvider.getAwareApplicationContext(), path);
     }
     /**
      * Get the resource as {@link Resource} of the specified resource path
      *
      * @param path resource path
-     * @param firstOccurs specify returning stream of first occured resource. false for last occured resource
      *
      * @return {@link Resource} or null if failed
      */
-    public Resource searchResource(String path, boolean firstOccurs) {
-    	return findResource(this.getContext(), path, firstOccurs);
-    }
-    /**
-     * Get the last ocurred resource as {@link Resource} of the specified resource path
-     *
-     * @param path resource path
-     *
-     * @return {@link Resource} or null if failed
-     */
-    public static Resource findLastResource(String path) {
-        return findResource(path, false);
-    }
-    /**
-     * Get the last ocurred resource as {@link Resource} of the specified resource path
-     *
-     * @param path resource path
-     *
-     * @return {@link Resource} or null if failed
-     */
-    public Resource searchLastResource(String path) {
-        return searchResource(path, false);
-    }
-    /**
-     * Get the first ocurred resource as {@link Resource} of the specified resource path
-     *
-     * @param path resource path
-     *
-     * @return {@link Resource} or null if failed
-     */
-    public static Resource findFirstResource(String path) {
-        return findResource(path, true);
-    }
-    /**
-     * Get the first ocurred resource as {@link Resource} of the specified resource path
-     *
-     * @param path resource path
-     *
-     * @return {@link Resource} or null if failed
-     */
-    public Resource searchFirstResource(String path) {
-        return searchResource(path, true);
+    public Resource searchResource(String path) {
+    	return findResource(this.getContext(), path);
     }
 
     /**
      * Get the resource as {@link InputStream} of the specified resource path
      *
      * @param path resource path
-     * @param firstOccurs specify returning stream of first occured resource. false for last occured resource
      *
      * @return {@link InputStream} or null if failed
      */
-    public static InputStream findResourceAsStream(String path, boolean firstOccurs) {
-    	Resource resource = findResource(path, firstOccurs);
-    	try {
-    		return (resource == null ? null : resource.getInputStream());
-    	} catch (Exception e) {
-    		log.warn(e.getMessage());
-    	}
-    	return null;
+    public static InputStream findResourceAsStream(String path) {
+    	return Optional.ofNullable(findResource(path)).filter(Resource::exists)
+    			.map(ExceptionUtils.wrap(log).function(Exceptions.wrap().function(Resource::getInputStream)))
+    			.filter(Optional::isPresent).map(Optional::get).orElse(null);
     }
     /**
      * Get the resource as {@link InputStream} of the specified resource path
      *
      * @param path resource path
-     * @param firstOccurs specify returning stream of first occured resource. false for last occured resource
      *
      * @return {@link InputStream} or null if failed
      */
-    public InputStream searchResourceAsStream(String path, boolean firstOccurs) {
-    	Resource resource = searchResource(path, firstOccurs);
-    	try {
-    		return (resource == null ? null : resource.getInputStream());
-    	} catch (Exception e) {
-    		log.warn(e.getMessage());
-    	}
-    	return null;
-    }
-    /**
-     * Get the last ocurred resource as {@link InputStream} of the specified resource path
-     *
-     * @param path resource path
-     *
-     * @return {@link InputStream} or null if failed
-     */
-    public static InputStream findLastResourceAsStream(String path) {
-        return findResourceAsStream(path, false);
-    }
-    /**
-     * Get the last ocurred resource as {@link InputStream} of the specified resource path
-     *
-     * @param path resource path
-     *
-     * @return {@link InputStream} or null if failed
-     */
-    public InputStream searchLastResourceAsStream(String path) {
-        return searchResourceAsStream(path, false);
-    }
-    /**
-     * Get the first ocurred resource as {@link InputStream} of the specified resource path
-     *
-     * @param path resource path
-     *
-     * @return {@link InputStream} or null if failed
-     */
-    public static InputStream findFirstResourceAsStream(String path) {
-        return findResourceAsStream(path, true);
-    }
-    /**
-     * Get the first ocurred resource as {@link InputStream} of the specified resource path
-     *
-     * @param path resource path
-     *
-     * @return {@link InputStream} or null if failed
-     */
-    public InputStream searchFirstResourceAsStream(String path) {
-        return searchResourceAsStream(path, true);
+    public InputStream searchResourceAsStream(String path) {
+    	return Optional.ofNullable(searchResource(path)).filter(Resource::exists)
+    			.map(ExceptionUtils.wrap(log).function(Exceptions.wrap().function(Resource::getInputStream)))
+    			.filter(Optional::isPresent).map(Optional::get).orElse(null);
     }
 
     /**
      * Get the resource as string of the specified resource path
      *
      * @param path resource path
-     * @param firstOccurs specify returning string of first occured resource. false for last occured resource
      *
      * @return SQL string or null if failed
      */
-    public static String findResourceAsString(String path, boolean firstOccurs) {
-        InputStream is = findResourceAsStream(path, firstOccurs);
+    public static String findResourceAsString(String path) {
+        InputStream is = findResourceAsStream(path);
         return (is == null ? null : StringUtils.toString(is));
     }
     /**
      * Get the resource as string of the specified resource path
      *
      * @param path resource path
-     * @param firstOccurs specify returning string of first occured resource. false for last occured resource
      *
      * @return SQL string or null if failed
      */
-    public String searchResourceAsString(String path, boolean firstOccurs) {
-        InputStream is = searchResourceAsStream(path, firstOccurs);
+    public String searchResourceAsString(String path) {
+        InputStream is = searchResourceAsStream(path);
         return (is == null ? null : StringUtils.toString(is));
-    }
-    /**
-     * Get the last ocurred resource as string of the specified resource path
-     *
-     * @param path resource path
-     *
-     * @return SQL string or null if failed
-     */
-    public static String findLastResourceAsString(String path) {
-        return findResourceAsString(path, false);
-    }
-    /**
-     * Get the last ocurred resource as string of the specified resource path
-     *
-     * @param path resource path
-     *
-     * @return SQL string or null if failed
-     */
-    public String searchLastResourceAsString(String path) {
-        return searchResourceAsString(path, false);
-    }
-    /**
-     * Get the resource as string of the specified resource path
-     *
-     * @param path resource path
-     *
-     * @return SQL string or null if failed
-     */
-    public static String findFirstResourceAsString(String path) {
-        return findResourceAsString(path, true);
-    }
-    /**
-     * Get the resource as string of the specified resource path
-     *
-     * @param path resource path
-     *
-     * @return SQL string or null if failed
-     */
-    public String searchFirstResourceAsString(String path) {
-        return searchResourceAsString(path, true);
     }
 
     /***************************************************
@@ -883,21 +849,13 @@ public final class SpringContextHelper implements Serializable {
      *
      * @return {@link HandlerExecutionChain} or NULL if not found
      */
-    public static HandlerExecutionChain findExecutionChain(HttpServletRequest request) {
+    public static HandlerExecutionChain findExecutionChain(final HttpServletRequest request) {
     	List<HandlerMapping> mappings = findHandlerMappings();
-    	HandlerExecutionChain mappedHandler = null;
-    	if (!CollectionUtils.isEmpty(mappings)) {
-    		for(HandlerMapping mapping : mappings) {
-    			try { mappedHandler = mapping.getHandler(request); }
-    			catch (Exception e) { mappedHandler = null; }
-    			finally {
-    				if (mappedHandler != null) {
-    					break;
-    				}
-    			}
-    		}
-    	}
-    	return mappedHandler;
+    	return Optional.ofNullable(mappings).orElseGet(LinkedList::new)
+    			.parallelStream()
+    			.map(ExceptionUtils.wrap(log).function(Exceptions.wrap().function(mapping -> mapping.getHandler(request))))
+    			.filter(Optional::isPresent).map(Optional::get)
+    			.filter(Objects::nonNull).findFirst().orElse(null);
     }
     /**
      * Find {@link HandlerExecutionChain} of the specified {@link HttpServletRequest}
@@ -906,21 +864,13 @@ public final class SpringContextHelper implements Serializable {
      *
      * @return {@link HandlerExecutionChain} or NULL if not found
      */
-    public HandlerExecutionChain searchExecutionChain(HttpServletRequest request) {
+    public HandlerExecutionChain searchExecutionChain(final HttpServletRequest request) {
     	List<HandlerMapping> mappings = searchHandlerMappings();
-    	HandlerExecutionChain mappedHandler = null;
-    	if (!CollectionUtils.isEmpty(mappings)) {
-    		for(HandlerMapping mapping : mappings) {
-    			try { mappedHandler = mapping.getHandler(request); }
-    			catch (Exception e) { mappedHandler = null; }
-    			finally {
-    				if (mappedHandler != null) {
-    					break;
-    				}
-    			}
-    		}
-    	}
-    	return mappedHandler;
+    	return Optional.ofNullable(mappings).orElseGet(LinkedList::new)
+    			.parallelStream()
+    			.map(ExceptionUtils.wrap(log).function(Exceptions.wrap().function(mapping -> mapping.getHandler(request))))
+    			.filter(Optional::isPresent).map(Optional::get)
+    			.filter(Objects::nonNull).findFirst().orElse(null);
     }
     /**
      * Find handler object of the specified {@link HttpServletRequest}

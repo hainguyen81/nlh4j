@@ -7,7 +7,6 @@ package jp.doma.config;
 import javax.inject.Singleton;
 import javax.sql.DataSource;
 
-import org.seasar.doma.SingletonConfig;
 import org.seasar.doma.jdbc.Config;
 import org.seasar.doma.jdbc.dialect.Dialect;
 

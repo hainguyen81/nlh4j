@@ -4,6 +4,13 @@
  */
 package org.nlh4j;
 
+import org.apache.commons.lang3.BooleanUtils;
+import org.nlh4j.core.controller.AbstractController;
+import org.nlh4j.core.service.MessageService;
+import org.nlh4j.util.BeanUtils;
+import org.nlh4j.util.RequestUtils;
+import org.nlh4j.util.SessionUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.session.SessionAuthenticationException;
@@ -12,11 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import org.nlh4j.core.controller.AbstractController;
-import org.nlh4j.core.service.MessageService;
-import org.nlh4j.util.BeanUtils;
-import org.nlh4j.util.RequestUtils;
-import org.nlh4j.util.SessionUtils;
+import lombok.AccessLevel;
+import lombok.Getter;
 
 /**
  * Login controller
@@ -28,10 +32,37 @@ import org.nlh4j.util.SessionUtils;
 @RequestMapping(value = "/login")
 public abstract class AbstractLoginController extends AbstractController {
 
-	/**
-	 * serialVersionUID
-	 */
+	/** */
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * authentication entry point for rendering as login-form POST action<br>
+	 * default is `j_spring_security_check` for spring security 4 or below
+	 */
+	@Value("${sec.auth.entry.login.url:j_spring_security_check}")
+	@Getter(value = AccessLevel.PROTECTED)
+	private String authenticationEntryPointUrl;
+	/**
+	 * the user parameter for the authentication entry point for rendering as login-form user<br>
+	 * default is `j_username` for spring security 4 or below
+	 */
+	@Value("${sec.auth.login.param.user:j_username}")
+	@Getter(value = AccessLevel.PROTECTED)
+	private String authenticationEntryUserName;
+	/**
+	 * the password parameter for the authentication entry point for rendering as login-form password<br>
+	 * default is `j_password` for spring security 4 or below
+	 */
+	@Value("${sec.auth.login.param.password:j_password}")
+	@Getter(value = AccessLevel.PROTECTED)
+	private String authenticationEntryPassword;
+	/**
+	 * the remember parameter for the authentication entry point for rendering as login-form password<br>
+	 * default is `j_remember` for spring security 4 or below
+	 */
+	@Value("${sec.auth.login.param.remember:j_remember}")
+	@Getter(value = AccessLevel.PROTECTED)
+	private String authenticationEntryRemember;
 
 	/**
 	 * Login page
@@ -43,7 +74,7 @@ public abstract class AbstractLoginController extends AbstractController {
 	    AuthenticationException ae = null;
 	    // check for expired or used by another
 	    boolean expired = RequestUtils.getBooleanParameter("expired");
-	    if (!Boolean.TRUE.equals(expired)) {
+	    if (BooleanUtils.isNotTrue(expired)) {
 		    if (super.getRequest() != null) {
 			    ae = RequestUtils.getRequestAttribute(
 			    		super.getRequest(), WebAttributes.AUTHENTICATION_EXCEPTION, AuthenticationException.class);
@@ -75,6 +106,13 @@ public abstract class AbstractLoginController extends AbstractController {
 	    if (ae != null) {
 	        mv.addObject("error", this.dispatchAuthenticationException(ae));
 	    }
+
+	    // TODO Important: need there values for rendering login-form due to the changes from spring-security
+	    // add default render values
+	    mv.addObject("loginAction", getAuthenticationEntryPointUrl());
+	    mv.addObject("loginUser", getAuthenticationEntryUserName());
+	    mv.addObject("loginPwd", getAuthenticationEntryPassword());
+	    mv.addObject("loginRemember", getAuthenticationEntryRemember());
 		return mv;
 	}
 	/**

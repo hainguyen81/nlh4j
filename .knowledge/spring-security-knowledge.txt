@@ -1,0 +1,13 @@
++ Spring security 4 or below:
+	Login Form:
+		- Renders the login page with form action `/spring_security_login`
+		- POST `/j_spring_security_check` for checking security by spring-security
+		- Login username field is `j_username`
+		- Login password field is `j_password`
+
++ Spring security 5 or later:
+	Login Form:
+		- Renders the login page with form action `/login`
+		- POST `/login` for checking security by spring-security
+		- Login username field is `username`
+		- Login password field is `password`

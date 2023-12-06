@@ -42,5 +42,10 @@
 	<import resource="classpath*:spring/socket-config.xml" />
 
 	<!-- Import spring security configure -->
-	<import resource="classpath*:spring/security-config.xml" />
+	<beans profile="security3">
+		<import resource="classpath*:spring/security/security-config-3.xml" />
+	</beans>
+	<beans profile=",default,simple,security5,quartz,mail,template,socket,socket-notification,socket-chat,socket-online,socket-queue,full">
+		<import resource="classpath*:spring/security/security-config-5.xml" />
+	</beans>
 </beans>

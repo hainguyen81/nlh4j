@@ -7,10 +7,17 @@ package org.nlh4j.core.handlers;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
 import javax.inject.Inject;
 
+import org.nlh4j.core.service.MessageService;
+import org.nlh4j.core.servlet.ApplicationContextProvider;
+import org.nlh4j.core.servlet.SpringContextHelper;
+import org.nlh4j.core.validation.errors.FieldErrorResource;
+import org.nlh4j.exceptions.ApplicationRuntimeException;
+import org.nlh4j.exceptions.ApplicationValidationException;
+import org.nlh4j.util.BeanUtils;
+import org.nlh4j.util.JsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -27,14 +34,6 @@ import org.springframework.web.context.request.WebRequest;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.nlh4j.core.service.MessageService;
-import org.nlh4j.core.servlet.ApplicationContextProvider;
-import org.nlh4j.core.servlet.SpringContextHelper;
-import org.nlh4j.core.validation.errors.FieldErrorResource;
-import org.nlh4j.exceptions.ApplicationRuntimeException;
-import org.nlh4j.exceptions.ApplicationValidationException;
-import org.nlh4j.util.BeanUtils;
-import org.nlh4j.util.JsonUtils;
 
 /**
  * Handle REST API response entity exception (request AJAX and response JSON)<br>
