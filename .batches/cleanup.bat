@@ -16,22 +16,25 @@ FOR /d /r %PROJ_DIR% %%d IN (target) DO @IF EXIST "%%d" rd /s /q "%%d"
 echo 3. Remove .eclipse directories
 FOR /d /r %PROJ_DIR%\modules %%d IN (.eclipse) DO @IF EXIST "%%d" rd /s /q "%%d"
 
-echo 4. Remove .profiles directories
-FOR /d /r %PROJ_DIR%\modules %%d IN (.eclipse) DO @IF EXIST "%%d" rd /s /q "%%d"
+echo 4. Remove .license directory
+rd /s /d %PROJ_DIR%\.license
 
-echo 5. Remove .settings directories
+echo 5. Remove .profiles directories
+FOR /d /r %PROJ_DIR%\modules %%d IN (.profiles) DO @IF EXIST "%%d" rd /s /q "%%d"
+
+echo 6. Remove .settings directories
 FOR /d /r %PROJ_DIR%\modules %%d IN (.settings) DO @IF EXIST "%%d" rd /s /q "%%d"
 
-echo 6. Remove .classpath files
+echo 7. Remove .classpath files
 FOR /d /r %PROJ_DIR%\modules %%d IN (.classpath) DO @IF EXIST "%%d" del /s /q "%%d"
 
-echo 7. Remove .factorypath files
+echo 8. Remove .factorypath files
 FOR /d /r %PROJ_DIR%\modules %%d IN (.factorypath) DO @IF EXIST "%%d" del /s /q "%%d"
 
-echo 8. Remove .project files
+echo 9. Remove .project files
 FOR /d /r %PROJ_DIR%\modules %%d IN (.project) DO @IF EXIST "%%d" del /s /q "%%d"
 
-echo 9. Remove .log files
+echo 10. Remove .log files
 FOR /d /r %PROJ_DIR%\modules %%d IN (.log) DO @IF EXIST "%%d" del /s /q "%%d"
 
 SET PATH=%PREV_PATH%

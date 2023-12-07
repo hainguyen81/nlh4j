@@ -108,6 +108,7 @@
 				<jarsigner.skip>false</jarsigner.skip>
 				<jarsigner.verbose>true</jarsigner.verbose>
 				<jarsigner.keystore>${certificate.basedir}/jdk8/${module.groupId}.keystore.jks</jarsigner.keystore>
+				<jarsigner.cert>${certificate.basedir}/jdk8/${module.groupId}.keystore.cer</jarsigner.cert>
 				<jarsigner.alias>${license.alias}</jarsigner.alias>
 				<jarsigner.storepass>${license.storepass}</jarsigner.storepass>
 				<jarsigner.keypass>${license.keypass}</jarsigner.keypass>
@@ -654,6 +655,7 @@
 				<!-- jdeps plugin for supporting module-info -->
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<maven.toolchains.version>3.1.0</maven.toolchains.version>
+				<maven.javahome.resolver.version>1.0.2</maven.javahome.resolver.version>
 				<maven.jdeps.version>3.1.2</maven.jdeps.version>
 				<maven.moditect.version>1.0.0.Final</maven.moditect.version>
 
@@ -669,6 +671,7 @@
 				<jarsigner.skip>false</jarsigner.skip>
 				<jarsigner.verbose>true</jarsigner.verbose>
 				<jarsigner.keystore>${certificate.basedir}/jdk11/jdk11.${module.groupId}.keystore.jks</jarsigner.keystore>
+				<jarsigner.cert>${certificate.basedir}/jdk11/jdk11.${module.groupId}.keystore.cer</jarsigner.cert>
 				<jarsigner.alias>${license.alias}</jarsigner.alias>
 				<jarsigner.storepass>${license.storepass}</jarsigner.storepass>
 				<jarsigner.keypass>${license.keypass}</jarsigner.keypass>
@@ -1368,6 +1371,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 						<!-- jdeps plugin for supporting module-info -->
 						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+						<!-- toolchains -->
 						<plugin>
 							<groupId>org.apache.maven.plugins</groupId>
 							<artifactId>maven-toolchains-plugin</artifactId>
@@ -1383,6 +1387,19 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 								<execution>
 							    	<goals>
 										<goal>toolchain</goal>
+									</goals>
+								</execution>
+							</executions>
+						</plugin>
+						<!-- support for exporting JAVA_HOME path to `javaHome` maven property -->
+						<plugin>
+							<groupId>com.diamondq.maven</groupId>
+							<artifactId>javahome-resolver-maven-plugin</artifactId>
+							<version>${maven.javahome.resolver.version}</version>
+							<executions>
+								<execution>
+									<goals>
+										<goal>resolve</goal>
 									</goals>
 								</execution>
 							</executions>
@@ -1431,9 +1448,15 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 					<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 					<!-- jdeps plugin for supporting module-info -->
 					<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+					<!-- toolchains -->
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-toolchains-plugin</artifactId>
+					</plugin>
+					<!-- support for exporting JAVA_HOME path to `javaHome` maven property -->
+					<plugin>
+						<groupId>com.diamondq.maven</groupId>
+						<artifactId>javahome-resolver-maven-plugin</artifactId>
 					</plugin>
 	    			<!--<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -1452,15 +1475,21 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 					<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 					<!-- jdeps plugin for supporting module-info -->
 					<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+					<!-- toolchains -->
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-toolchains-plugin</artifactId>
 					</plugin>
-	    			<plugin>
+					<!-- support for exporting JAVA_HOME path to `javaHome` maven property -->
+					<plugin>
+						<groupId>com.diamondq.maven</groupId>
+						<artifactId>javahome-resolver-maven-plugin</artifactId>
+					</plugin>
+	    			<!--<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-jdeps-plugin</artifactId>
 	    			</plugin>
-					<!--<plugin>
+					<plugin>
 						<groupId>org.moditect</groupId>
 					    <artifactId>moditect-maven-plugin</artifactId>
 					</plugin>-->
@@ -1598,6 +1627,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 				<!-- jdeps plugin for supporting module-info -->
 				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 				<maven.toolchains.version>3.1.0</maven.toolchains.version>
+				<maven.javahome.resolver.version>1.0.2</maven.javahome.resolver.version>
 				<maven.jdeps.version>3.1.2</maven.jdeps.version>
 				<maven.jdeps.version>3.1.2</maven.jdeps.version>
 
@@ -1613,6 +1643,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 				<jarsigner.skip>false</jarsigner.skip>
 				<jarsigner.verbose>true</jarsigner.verbose>
 				<jarsigner.keystore>${certificate.basedir}/jdk17/jdk17.${module.groupId}.keystore.jks</jarsigner.keystore>
+				<jarsigner.cert>${certificate.basedir}/jdk17/jdk17.${module.groupId}.keystore.cer</jarsigner.cert>
 				<jarsigner.alias>${license.alias}</jarsigner.alias>
 				<jarsigner.storepass>${license.storepass}</jarsigner.storepass>
 				<jarsigner.keypass>${license.keypass}</jarsigner.keypass>
@@ -2324,6 +2355,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 						<!-- jdeps plugin for supporting module-info -->
 						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+						<!-- toolchains -->
 						<plugin>
 							<groupId>org.apache.maven.plugins</groupId>
 							<artifactId>maven-toolchains-plugin</artifactId>
@@ -2339,6 +2371,19 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 								<execution>
 							    	<goals>
 										<goal>toolchain</goal>
+									</goals>
+								</execution>
+							</executions>
+						</plugin>
+						<!-- support for exporting JAVA_HOME path to `javaHome` maven property -->
+						<plugin>
+							<groupId>com.diamondq.maven</groupId>
+							<artifactId>javahome-resolver-maven-plugin</artifactId>
+							<version>${maven.javahome.resolver.version}</version>
+							<executions>
+								<execution>
+									<goals>
+										<goal>resolve</goal>
 									</goals>
 								</execution>
 							</executions>
@@ -2387,9 +2432,15 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 					<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 					<!-- jdeps plugin for supporting module-info -->
 					<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+					<!-- toolchains -->
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-toolchains-plugin</artifactId>
+					</plugin>
+					<!-- support for exporting JAVA_HOME path to `javaHome` maven property -->
+					<plugin>
+						<groupId>com.diamondq.maven</groupId>
+						<artifactId>javahome-resolver-maven-plugin</artifactId>
 					</plugin>
 	    			<!--<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -2408,9 +2459,15 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 					<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 					<!-- jdeps plugin for supporting module-info -->
 					<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+					<!-- toolchains -->
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-toolchains-plugin</artifactId>
+					</plugin>
+					<!-- support for exporting JAVA_HOME path to `javaHome` maven property -->
+					<plugin>
+						<groupId>com.diamondq.maven</groupId>
+						<artifactId>javahome-resolver-maven-plugin</artifactId>
 					</plugin>
 	    			<!--<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -3262,6 +3319,8 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 		<!-- Maven Assembly for building license tool -->
 		<maven.assembly.version>3.6.0</maven.assembly.version>
 		<maven.assembly.skip>true</maven.assembly.skip>
+		<license.tool.directory>.license</license.tool.directory>
+		<license.tool.directory.path>${root.basedir}/${license.tool.directory}</license.tool.directory.path>
 		<license.tool.name>LicenseTool</license.tool.name>
 		<license.tool.main.class>org.nlh4j.license.LicenseTool</license.tool.main.class>
 		<license.tool.descriptor.ref>jar-with-dependencies</license.tool.descriptor.ref>
@@ -4260,6 +4319,64 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 							    </target>
 							</configuration>
 						</execution>
+						
+						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+						<!-- License Tool -->
+						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+						<!-- copy files for making license -->
+						<execution>
+							<id>process-license-tool</id>
+							<!-- use phase `install` after phase `package` when `maven-assembly-plugin` executed -->
+							<phase>install</phase>
+							<goals>
+							    <goal>run</goal>
+							</goals>
+							<configuration>
+								<!-- process license tool -->
+							    <target name="process-license-tool-task" unless="${maven.assembly.skip}">
+									<!-- delete all old files -->
+									<delete includeEmptyDirs="true" verbose="false" quiet="true"
+							        failonerror="false" performGCOnFailedDelete="false">
+										<fileset dir="${license.tool.directory.path}" includes="**/*.jks"/>
+										<fileset dir="${license.tool.directory.path}" includes="**/*.cer"/>
+										<fileset dir="${license.tool.directory.path}" includes="**/*.jar"/>
+										<fileset dir="${license.tool.directory.path}" includes="**/*.bat"/>
+									</delete>
+									<!-- create .license folder at root basedir -->
+									<mkdir dir="${license.tool.directory.path}" />
+									<!-- copy keystore/cert to .license folder -->
+									<copy file="${jarsigner.keystore}" tofile=".keystore.jks" />
+									<copy file="${jarsigner.cert}" tofile=".keystore.cer" />
+									<!-- copy the packed JAR from license package after `maven-assembly-plugin` executed -->
+									<copy file="${root.basedir}/modules/license/target/${license.tool.name}.jar" todir="${license.tool.directory.path}" />
+									<!-- create license script to run license package JAR -->
+									<if>
+										<condition>
+											<or>
+												<equals arg1="${javaHome}" arg2=""/>
+												<not>
+													<isset property="false"/>
+												</not>
+											</or>
+										</condition>
+										<then>
+											<echo file="${license.tool.directory.path}/${license.tool.name}.bat">
+												@echo off
+												%JAVA_HOME%\bin\java -jar .\${license.tool.name}.jar -f .\licenseIn.lic -ks .\.keystore.jks -t JKS -p ${license.keypass} -s Serial.Key -a ${module.groupId}
+												pause
+											</echo>
+										</then>
+										<else>
+											<echo file="${license.tool.directory.path}/${license.tool.name}.bat">
+												@echo off
+												${javaHome}\bin\java -jar .\${license.tool.name}.jar -f .\licenseIn.lic -ks .\.keystore.jks -t JKS -p ${license.keypass} -s Serial.Key -a ${module.groupId}
+												pause
+											</echo>
+										</else>
+									</if>
+								</target>
+							</configuration>
+						</execution>
 
 						<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 						<!-- Process sources -->
@@ -4342,10 +4459,8 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 												<available file="${project.eclipse.template.directory.path}" type="dir"/>
 												<then>
 													<!-- 1. replace token holder by maven properties -->
-													<replace dir="${project.eclipse.template.directory.path}"
+													<replace dir="${project.eclipse.template.directory.path}" failOnNoReplacements="true"
 													encoding="${project.build.sourceEncoding}">
-														<include name="**"/>
-
 														<!-- common tokens -->
 														<replacefilter token="@java.version@" value="${java.version}" />
 														<replacefilter token="@project.build.sourceEncoding@" value="${project.build.sourceEncoding}" />
@@ -5675,6 +5790,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 					<configuration>
 						<skipAssembly>${maven.assembly.skip}</skipAssembly>
 						<finalName>${license.tool.name}</finalName>
+						<appendAssemblyId>false</appendAssemblyId>
 						<encoding>${project.build.sourceEncoding}</encoding>
 						<archive>
 							<manifest>
@@ -5808,6 +5924,17 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 										<versionRange>[1.+,)</versionRange>
 										<goals>
 											<goal>toolchain</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action><ignore /></action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>com.diamondq.maven</groupId>
+										<artifactId>javahome-resolver-maven-plugin</artifactId>
+										<versionRange>[1.+,)</versionRange>
+										<goals>
+											<goal>resolve</goal>
 										</goals>
 									</pluginExecutionFilter>
 									<action><ignore /></action>
