@@ -7,26 +7,20 @@ package jp.doma.config;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.lang.reflect.Method;
-import java.util.AbstractMap.SimpleEntry;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import com.machinezoo.noexception.Exceptions;
-
 import org.nlh4j.core.servlet.ApplicationContextProvider;
 import org.nlh4j.core.servlet.SpringContextHelper;
 import org.nlh4j.util.CollectionUtils;
-import org.nlh4j.util.ExceptionUtils;
 import org.nlh4j.util.StreamUtils;
 import org.nlh4j.util.StringUtils;
 import org.seasar.doma.DomaIllegalArgumentException;
@@ -270,7 +264,7 @@ public class ResourceGreedyCacheSqlFileRepository implements InitializingBean, D
             	// if not found from scanner; try re-scan resource
             	if (!StringUtils.hasText(sql)) {
 	                // resolve resource with META-INF/"prefix"
-	                List<String> resourcePaths = StringUtils.resolveResourceNames(
+            		Set<String> resourcePaths = StringUtils.resolveResourceNames(
 	                        Constants.SQL_PATH_PREFIX + prefix, resPath);
 	                // search resource
 	                if (!CollectionUtils.isEmpty(resourcePaths)) {

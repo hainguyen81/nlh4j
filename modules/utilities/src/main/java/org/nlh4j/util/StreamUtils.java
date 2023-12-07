@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author Hai Nguyen (hainguyenjc@gmail.com)
@@ -227,7 +227,7 @@ public final class StreamUtils implements Serializable {
             // check by resource
             if (is == null) {
                 // resolve resource path
-                List<String> resourcePaths = StringUtils.resolveResourceNames(filePathOrResource);
+            	Set<String> resourcePaths = StringUtils.resolveResourceNames(filePathOrResource);
                 if (!CollectionUtils.isEmpty(resourcePaths)) {
                     for(String resourcePath : resourcePaths) {
                         try {

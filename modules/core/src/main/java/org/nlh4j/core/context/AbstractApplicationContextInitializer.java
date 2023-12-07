@@ -92,8 +92,14 @@ public abstract class AbstractApplicationContextInitializer implements Applicati
 		Optional.ofNullable(getApplicationContext())
 		.ifPresent(ctx -> setContextHelper(new SpringContextHelper(getApplicationContext())));
 
-		// initializing
+		// initialization
 		try {
+			// apply current class loader for searching resources
+			ClassLoader classLoader = getClass().getClassLoader();
+			Thread.currentThread().setContextClassLoader(classLoader);
+			Optional.ofNullable(getApplicationContext()).ifPresent(ctx -> ctx.setClassLoader(classLoader));
+
+			// initializing
 			Map<String, String> contextParamsMap = Collections.unmodifiableMap(parseContextParameters());
 			log.info("Configured context parameters: [{}]", contextParamsMap);
 			doInitialize(contextParamsMap);

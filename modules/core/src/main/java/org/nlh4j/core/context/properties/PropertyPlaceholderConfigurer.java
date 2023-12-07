@@ -24,6 +24,7 @@ import org.nlh4j.util.NumberUtils;
  */
 public class PropertyPlaceholderConfigurer
 		extends org.springframework.beans.factory.config.PropertyPlaceholderConfigurer {
+
 	/** properties container to expose */
 	private final Map<Object, Object> exposedProperties = new LinkedHashMap<Object, Object>();
 
