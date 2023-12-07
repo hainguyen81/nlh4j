@@ -2,7 +2,7 @@
 
 call "./setEnv.bat" /wait
 
-SET "MAVEN_GOALS=eclipse:clean eclipse:eclipse"
+SET "MAVEN_GOALS=dependency:resolve"
 
 CD /D %PROJ_DIR%
 

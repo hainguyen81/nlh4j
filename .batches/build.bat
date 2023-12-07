@@ -2,12 +2,18 @@
 
 call "./setEnv.bat" /wait
 
+SET "MAVEN_GOALS=clean install"
+
 CD /D %PROJ_DIR%
 
+echo -------------------------------------------------
+echo mvn -s %MAVEN_SETTINGS% -t %PROJ_TOOLCHAINS% -P %MAVEN_PROFILES% -T 5 -U -up -X -DskipTests=%SKIP_TESTS% -Dmaven.test.skip=%SKIP_TESTS% -Dmaven.repo.local=%MAVEN_REPO% %MAVEN_GOALS%
+echo -------------------------------------------------
+echo.
 if "%DEBUG%" == "true" (
-	mvn --settings %MAVEN_SETTINGS% clean install -P %MAVEN_PROFILES% -T 5 -X -DskipTests=%SKIP_TESTS% -Dmaven.test.skip=%SKIP_TESTS% -Dmaven.repo.local=%MAVEN_REPO%
+	mvn -s %MAVEN_SETTINGS% -t %PROJ_TOOLCHAINS% -P %MAVEN_PROFILES% -T 5 -U -up -X -DskipTests=%SKIP_TESTS% -Dmaven.test.skip=%SKIP_TESTS% -Dmaven.repo.local=%MAVEN_REPO% %MAVEN_GOALS%
 ) else (
-	mvn --settings %MAVEN_SETTINGS% clean install -P %MAVEN_PROFILES% -T 5 -X -DskipTests=%SKIP_TESTS% -Dmaven.test.skip=%SKIP_TESTS% -Dmaven.repo.local=%MAVEN_REPO% 1> build.log 2>&1
+	mvn -s %MAVEN_SETTINGS% -t %PROJ_TOOLCHAINS% -P %MAVEN_PROFILES% -T 5 -U -up -X -DskipTests=%SKIP_TESTS% -Dmaven.test.skip=%SKIP_TESTS% -Dmaven.repo.local=%MAVEN_REPO% %MAVEN_GOALS% 1> build.log 2>&1
 )
 
 CD /D %BATCHES_DIR%
