@@ -17,102 +17,141 @@
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-2.5.xsd">
 
+	<!-- Use SPRING configuration -->
+    <context:spring-configured/>
+
     <!-- Properties bean to map to JSP -->
     <bean id="properties"
         class="org.springframework.beans.factory.config.PropertiesFactoryBean"
         scope="singleton">
+        <property name="ignoreResourceNotFound" value="true" />
+        <property name="fileEncoding" value="UTF-8" />
 	    <property name="locations">
 	        <list>
 	            <!--
-	            Load from sub classpath resources, and classpath resources fisrt.
-	            Then loading from webapp resources file.
-	            Resource files from root will override properties of sub classpath resources
-	            if they overlap property key
+		            Load from sub classpath resources, and classpath resources fisrt.
+		            Then loading from webapp resources file.
+		            Resource files from root will override properties of sub classpath resources
+		            if they overlap property key
 	            -->
+	            <value>classpath*:**/properties/**/*.properties</value>
+	            <value>classpath*:properties/**/*.properties</value>
 	            <value>classpath*:**/properties/*.properties</value>
-	            <value>classpath*:/properties/*.properties</value>
-	            <value>classpath:**/properties/*.properties</value>
-	            <value>classpath:/properties/*.properties</value>
+	            <value>classpath*:properties/*.properties</value>
 	            <value>classpath*:**/*.properties</value>
-	            <value>classpath:**/*.properties</value>
 	            <value>classpath*:*.properties</value>
-				<value>classpath:*.properties</value>
 			</list>
 	    </property>
 	</bean>
 
-    <!-- プロパティのプレースホルダ -->
+    <!-- property placeholder configurer -->
     <bean id="propertyConfigurer"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+		class="org.nlh4j.core.context.properties.PropertyPlaceholderConfigurer"
 		scope="singleton">
 		<property name="searchSystemEnvironment" value="true" />
 		<property name="systemPropertiesMode" value="1" />
 		<property name="ignoreUnresolvablePlaceholders" value="true" />
 		<property name="ignoreResourceNotFound" value="true" />
-		<property name="locations">
-			<list>
-				<!--
-	            Load from sub classpath resources, and classpath resources fisrt.
-	            Then loading from webapp resources file.
-	            Resource files from root will override properties of sub classpath resources
-	            if they overlap property key
-	            -->
-	            <value>classpath*:**/properties/*.properties</value>
-	            <value>classpath*:/properties/*.properties</value>
-	            <value>classpath:**/properties/*.properties</value>
-	            <value>classpath:/properties/*.properties</value>
-	            <value>classpath*:**/*.properties</value>
-	            <value>classpath:**/*.properties</value>
-	            <value>classpath*:*.properties</value>
-				<value>classpath:*.properties</value>
-			</list>
-		</property>
+        <property name="fileEncoding" value="UTF-8" />
+        <property name="properties" ref="properties" />
 	</bean>
+
+	<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+	<!-- classpath*:* -->
+	<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 	<context:property-placeholder
-	    location="classpath:*.properties"
+	    location="classpath*:**/properties/**/*.properties"
 	    ignore-resource-not-found="true"
 	    ignore-unresolvable="true"
-	    order="0" />
-	<context:property-placeholder
-	    location="classpath:**/*.properties"
-	    ignore-resource-not-found="true"
-	    ignore-unresolvable="true"
+	    file-encoding="UTF-8"
+	    properties-ref="properties"
 	    order="1" />
 	<context:property-placeholder
-	    location="classpath:/properties/*.properties"
+	    location="classpath*:**/**/*.properties"
 	    ignore-resource-not-found="true"
 	    ignore-unresolvable="true"
+	    file-encoding="UTF-8"
+	    properties-ref="properties"
 	    order="2" />
-	<context:property-placeholder
-	    location="classpath:**/properties/*.properties"
-	    ignore-resource-not-found="true"
-	    ignore-unresolvable="true"
-	    order="3" />
-	<context:property-placeholder
-	    location="classpath*:*.properties"
-	    ignore-resource-not-found="true"
-	    ignore-unresolvable="true"
-	    order="4" />
-	<context:property-placeholder
-	    location="classpath*:**/*.properties"
-	    ignore-resource-not-found="true"
-	    ignore-unresolvable="true"
-	    order="5" />
-	<context:property-placeholder
-	    location="classpath*:/properties/*.properties"
-	    ignore-resource-not-found="true"
-	    ignore-unresolvable="true"
-	    order="6" />
 	<context:property-placeholder
 	    location="classpath*:**/properties/*.properties"
 	    ignore-resource-not-found="true"
 	    ignore-unresolvable="true"
-	    order="7" />
+	    file-encoding="UTF-8"
+	    properties-ref="properties"
+	    order="3" />
+	<context:property-placeholder
+	    location="classpath*:**/*.properties"
+	    ignore-resource-not-found="true"
+	    ignore-unresolvable="true"
+	    file-encoding="UTF-8"
+	    properties-ref="properties"
+	    order="4" />
+	<context:property-placeholder
+	    location="classpath*:properties/*.properties"
+	    ignore-resource-not-found="true"
+	    ignore-unresolvable="true"
+	    file-encoding="UTF-8"
+	    properties-ref="properties"
+	    order="5" />
+	<context:property-placeholder
+	    location="classpath*:*.properties"
+	    ignore-resource-not-found="true"
+	    ignore-unresolvable="true"
+	    file-encoding="UTF-8"
+	    properties-ref="properties"
+	    order="6" />
 
-	<mvc:annotation-driven />
+	<!--
+		Setup a simple strategy:
+		1. Take all the defaults.
+		2. Return XML by default when not sure.
+	-->
+	<bean id="contentNegotiationManager"
+	    class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+		<property name="favorPathExtension" value="false" />
+		<property name="favorParameter" value="true" />
+		<property name="parameterName" value="mediaType" />
+		<property name="ignoreAcceptHeader" value="true"/>
+		<property name="useJaf" value="false"/>
+		<property name="defaultContentType" value="application/json" />
+		<property name="mediaTypes">
+			<map>
+				<entry key="json" value="application/json" />
+				<entry key="xml" value="application/xml" />
+				<entry key="txt" value="text/plain" />
+				<entry key="htm" value="text/html" />
+			</map>
+		</property>
+	</bean>
+
+	<!--
+		TODO Override SPRING RequestMappingHandlerMapping
+		- Must declare before mvc:annotation-driven
+		- Must using bean name org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+		to override bean definition from mvc:annotation-driven
+	-->
+	<bean id="requestMappingHandlerMapping"
+		name="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"
+		class="org.nlh4j.core.handlers.RequestMappingHandlerMapping"
+		scope="singleton" />
+
+	<!-- Default SPRING MVC -->
+		<!-- Scan components for autowiring/injecting -->
+		<!-- <mvc:annotation-driven /> -->
+		<!-- Scan components for autowiring/injecting default validator bean -->
+		<mvc:annotation-driven validator="validator" content-negotiation-manager="contentNegotiationManager" />
+
+	<!-- Custom SPRING MVC for ambigous request mapping -->
+		<!-- <bean id="mvcConfig"
+		    class="org.nlh4j.core.servlet.WebMvcConfiguration"
+		    scope="singleton">
+		    <property name="contentNegotiationManager" ref="contentNegotiationManager" />
+		</bean> -->
+
 	<!-- AOP annotation setting -->
 	<aop:aspectj-autoproxy />
 	<context:annotation-config />
-	<context:component-scan base-package="org.nlh4j.*" />
+	<context:component-scan base-package="org.nlh4j" />
 
 </beans>

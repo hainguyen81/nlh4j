@@ -127,20 +127,41 @@ public class Nlh4jApplicationContextInitializer extends AbstractApplicationConte
 		return resources.parallelStream().map(res -> {
 			ResourcePropertySource propertySource = null;
 			try {
-				propertySource = new ResourcePropertySource(res);
+				propertySource = new ResourcePropertySource(getNameForResource(res), res);
 			} catch (IOException e) {
 				// for tracing
-				log.warn("Could not load resource [{}]: {}", res, e.getMessage());
+				if (log.isDebugEnabled()) {
+					log.warn("Could not load resource [{}]: {}", res, e.getMessage());
+				}
 				ExceptionUtils.traceException(log, e);
+				propertySource = null;
 
 			} finally {
-				if (log.isDebugEnabled() && propertySource != null) {
-					log.debug("Loaded [{}] properties from [{}]", propertySource.getSource().size(), res.toString());
+				if (log.isDebugEnabled()) {
+					if (propertySource != null) {
+						log.debug("Loaded [{}] properties from [{}]", propertySource.getSource().size(), res.toString());
+
+					} else {
+						log.warn("Could not loaded properties from [{}]", res.toString());
+					}
 				}
 			}
 			return tracePropertiesSource(propertySource);
 		}).filter(Objects::nonNull)
 		.collect(Collectors.toCollection(LinkedList::new));
+	}
+	
+	/**
+	 * Return the description for the given Resource; if the description is
+	 * empty, return the class name of the resource plus its identity hash code.
+	 * @see org.springframework.core.io.Resource#getDescription()
+	 */
+	private static String getNameForResource(Resource resource) {
+		String name = resource.getDescription();
+		if (StringUtils.isBlank(name)) {
+			name = String.format("%s@%d", resource.getClass().getSimpleName(), System.identityHashCode(resource));
+		}
+		return String.format("%s@%s", Nlh4jApplicationContextInitializer.class.getSimpleName(), name);
 	}
 	
 	/**
