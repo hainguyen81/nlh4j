@@ -4345,8 +4345,8 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 									<!-- create .license folder at root basedir -->
 									<mkdir dir="${license.tool.directory.path}" />
 									<!-- copy keystore/cert to .license folder -->
-									<copy file="${jarsigner.keystore}" tofile=".keystore.jks" />
-									<copy file="${jarsigner.cert}" tofile=".keystore.cer" />
+									<copy file="${jarsigner.keystore}" tofile="${license.tool.directory.path}/.keystore.jks" />
+									<copy file="${jarsigner.cert}" tofile="${license.tool.directory.path}/.keystore.cer" />
 									<!-- copy the packed JAR from license package after `maven-assembly-plugin` executed -->
 									<copy file="${root.basedir}/modules/license/target/${license.tool.name}.jar" todir="${license.tool.directory.path}" />
 									<!-- create license script to run license package JAR -->
@@ -4361,16 +4361,12 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 										</condition>
 										<then>
 											<echo file="${license.tool.directory.path}/${license.tool.name}.bat">
-												@echo off
-												%JAVA_HOME%\bin\java -jar .\${license.tool.name}.jar -f .\licenseIn.lic -ks .\.keystore.jks -t JKS -p ${license.keypass} -s Serial.Key -a ${module.groupId}
-												pause
+												@echo off${line.separator}${line.separator}%JAVA_HOME%\bin\java -jar .\${license.tool.name}.jar -f .\licenseIn.lic -ks .\.keystore.jks -t JKS -p ${license.keypass} -s Serial.Key -a ${module.groupId}${line.separator}pause
 											</echo>
 										</then>
 										<else>
 											<echo file="${license.tool.directory.path}/${license.tool.name}.bat">
-												@echo off
-												${javaHome}\bin\java -jar .\${license.tool.name}.jar -f .\licenseIn.lic -ks .\.keystore.jks -t JKS -p ${license.keypass} -s Serial.Key -a ${module.groupId}
-												pause
+												@echo off${line.separator}${line.separator}${javaHome}\bin\java -jar .\${license.tool.name}.jar -f .\licenseIn.lic -ks .\.keystore.jks -t JKS -p ${license.keypass} -s Serial.Key -a ${module.groupId}${line.separator}pause
 											</echo>
 										</else>
 									</if>
