@@ -1,0 +1,15 @@
+1.	Install eclipse
+2.	Modify eclipse.ini flowing the instruction in [eclipse-4.24-lombok-1.18.30-configuration.txt]
+3.	Use git to clone source
+4.	Use batch script from [.batches] to setup eclipse enviroment and build source (suggestion - should executing batch scripts under administration right):
+	- Check/Modify the enviroment variables compatibility with local in [setenv.bat]
+	- Run [resolve.bat] for resolving/downloading dependencies/plugins to local maven repository
+	- Run [eclipseSetup.bat] for generating eclipse project files such as .project, .classpath, .settings, .factorypath, etc.
+5.	Open eclipse and import source as existing maven project
+6.	After importing, we will have some projects error on building:
+	- Check their build paths whether were included the [src/main/java], [src/main/resources], [src/test/java], [src/test/resources] folder as source folders
+	- If not yet, then adding them manually for these error projects
+	- Update maven project or re-building all projects by eclipse clean feature
+
+Important: Need to do these steps for nlh4j first, after that is for other projects, due to nlh4j is base FW for other projects.
+We need to build it first to install dependencies for local maven repository.
