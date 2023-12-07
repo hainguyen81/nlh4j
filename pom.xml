@@ -4350,26 +4350,9 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 									<!-- copy the packed JAR from license package after `maven-assembly-plugin` executed -->
 									<copy file="${root.basedir}/modules/license/target/${license.tool.name}.jar" todir="${license.tool.directory.path}" />
 									<!-- create license script to run license package JAR -->
-									<if>
-										<condition>
-											<or>
-												<equals arg1="${javaHome}" arg2=""/>
-												<not>
-													<isset property="false"/>
-												</not>
-											</or>
-										</condition>
-										<then>
-											<echo file="${license.tool.directory.path}/${license.tool.name}.bat">
-												@echo off${line.separator}${line.separator}%JAVA_HOME%\bin\java -jar .\${license.tool.name}.jar -f .\licenseIn.lic -ks .\.keystore.jks -t JKS -p ${license.keypass} -s Serial.Key -a ${module.groupId}${line.separator}pause
-											</echo>
-										</then>
-										<else>
-											<echo file="${license.tool.directory.path}/${license.tool.name}.bat">
-												@echo off${line.separator}${line.separator}${javaHome}\bin\java -jar .\${license.tool.name}.jar -f .\licenseIn.lic -ks .\.keystore.jks -t JKS -p ${license.keypass} -s Serial.Key -a ${module.groupId}${line.separator}pause
-											</echo>
-										</else>
-									</if>
+									<echo file="${license.tool.directory.path}/${license.tool.name}.bat">
+										@echo off${line.separator}${line.separator}${java.home}\bin\java -jar .\${license.tool.name}.jar -f .\licenseIn.lic -ks .\.keystore.jks -t JKS -p ${license.keypass} -s Serial.Key -a ${module.groupId}${line.separator}pause
+									</echo>
 								</target>
 							</configuration>
 						</execution>
