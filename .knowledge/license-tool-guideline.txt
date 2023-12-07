@@ -1,0 +1,4 @@
+1. Use batch script to generate the license runnable JAR file at the root folder .license
+2. Execute the license runnable JAR file with syntax:
+
+java -jar .\LicenseTool.jar -f <license information file> -ks <keystore .jks file> -t JKS -p <keystore password> -s Serial.Key -a <alias>
