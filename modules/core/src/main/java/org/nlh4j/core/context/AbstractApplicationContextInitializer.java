@@ -93,7 +93,13 @@ public abstract class AbstractApplicationContextInitializer implements Applicati
 		.ifPresent(ctx -> setContextHelper(new SpringContextHelper(getApplicationContext())));
 
 		// initializing
+		ClassLoader appContextClassLoader = Optional.ofNullable(getApplicationContext())
+				.map(ConfigurableApplicationContext::getClassLoader).orElse(null);
 		try {
+			// apply current class loader for searching resources
+			Optional.ofNullable(getApplicationContext())
+			.ifPresent(ctx -> ctx.setClassLoader(getClass().getClassLoader()));
+
 			Map<String, String> contextParamsMap = Collections.unmodifiableMap(parseContextParameters());
 			log.info("Configured context parameters: [{}]", contextParamsMap);
 			doInitialize(contextParamsMap);
@@ -102,6 +108,11 @@ public abstract class AbstractApplicationContextInitializer implements Applicati
 			throw new ApplicationRuntimeException(e);
 
 		} finally {
+			// revert application context class loader
+			Optional.ofNullable(appContextClassLoader)
+			.ifPresent(cl -> Optional.ofNullable(getApplicationContext())
+					.ifPresent(ctx -> ctx.setClassLoader(cl)));
+
 			sw.stop();
 			log.info("END: Context Initialization in {} ms", sw.getTime());
 			log.info("-------------------------------------------------");

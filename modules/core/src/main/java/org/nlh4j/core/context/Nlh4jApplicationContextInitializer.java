@@ -135,7 +135,7 @@ public class Nlh4jApplicationContextInitializer extends AbstractApplicationConte
 
 			} finally {
 				if (log.isDebugEnabled() && propertySource != null) {
-					log.debug("Loaded [{}] properties from [{}]", res.toString(), propertySource.getSource().size());
+					log.debug("Loaded [{}] properties from [{}]", propertySource.getSource().size(), res.toString());
 				}
 			}
 			return tracePropertiesSource(propertySource);

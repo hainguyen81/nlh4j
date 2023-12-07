@@ -606,7 +606,10 @@ public final class SpringContextHelper implements Serializable {
 	        						log.debug("Resolved [{}] resources by path [{}]", resourcesByPath.length, resourcePath);
 	        					}
 	    						traceResource(resourcePath, resourcesByPath[0]);
-	    					}
+
+	    					} else if (log.isDebugEnabled()) {
+        						log.warn("Could not resolve resources by path [{}]", resourcePath);
+        					}
 	    					return new SimpleEntry<String, List<Resource>>(resourcePath,
 	            					Optional.ofNullable(resourcesByPath).filter(ArrayUtils::isNotEmpty)
 	            					.map(CollectionUtils::toList).orElseGet(Collections::emptyList)
