@@ -17,7 +17,7 @@ echo 3. Remove .eclipse directories
 FOR /d /r %PROJ_DIR%\modules %%d IN (.eclipse) DO @IF EXIST "%%d" rd /s /q "%%d"
 
 echo 4. Remove .license directory
-rd /s /d %PROJ_DIR%\.license
+rd /s /q %PROJ_DIR%\.license
 
 echo 5. Remove .profiles directories
 FOR /d /r %PROJ_DIR%\modules %%d IN (.profiles) DO @IF EXIST "%%d" rd /s /q "%%d"
