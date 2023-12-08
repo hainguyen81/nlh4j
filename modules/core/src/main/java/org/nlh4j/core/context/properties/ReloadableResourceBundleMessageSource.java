@@ -13,9 +13,12 @@ import java.util.stream.Stream;
 
 import org.nlh4j.util.StringUtils;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Customize {@link org.springframework.context.support.ReloadableResourceBundleMessageSource}
  */
+@Slf4j
 public class ReloadableResourceBundleMessageSource
 		extends org.springframework.context.support.ReloadableResourceBundleMessageSource
 		implements Serializable {
@@ -31,5 +34,9 @@ public class ReloadableResourceBundleMessageSource
 				.parallel().filter(StringUtils::hasText).map(StringUtils::resolveResourceNames)
 				.flatMap(Set<String>::parallelStream).filter(StringUtils::hasText)
 				.collect(Collectors.toCollection(LinkedHashSet::new)));
+		if (log.isDebugEnabled()) {
+			log.debug("Solved resource base names: [{}]",
+					org.apache.commons.lang3.StringUtils.join(getBasenameSet(), System.lineSeparator()));
+		}
 	}
 }
