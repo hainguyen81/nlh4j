@@ -41,11 +41,6 @@
 			classpath*:properties/*.properties
 			classpath*:**/*.properties
 			classpath*:*.properties
-
-			/WEB-INF/**/properties/**/*.properties
-			/WEB-INF/properties/**/*.properties
-			/WEB-INF/properties/*.properties
-			/WEB-INF/*.properties
 		</param-value>
 	</context-param>
 	<!-- FIRST|LAST -->

@@ -94,8 +94,9 @@ public class Nlh4jApplicationContextInitializer extends AbstractApplicationConte
 
 			    } else {
                     log.info("Load [{}] property sources at FIRST!", resourcePropertySources.size());
-                    propertiesLocationsSet = propertiesLocationsSet.stream().sorted(Collections.reverseOrder())
-                    		.collect(Collectors.toCollection(LinkedHashSet::new));
+                    // FIXME Do we need to reserve the order to add FIRST???
+					//    propertiesLocationsSet = propertiesLocationsSet.stream().sorted(Collections.reverseOrder())
+					//    		.collect(Collectors.toCollection(LinkedHashSet::new));
                     // FIXME Using parallel stream makes resources not keep correct order loading
                     //    resourcePropertySources.parallelStream().forEach(propertySources::addFirst);
                     resourcePropertySources.forEach(propertySources::addFirst);
