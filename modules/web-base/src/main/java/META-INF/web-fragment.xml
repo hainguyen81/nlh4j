@@ -35,12 +35,17 @@
 				the upper level will override the below level.
 				the property sources will override the properties-config.xml if necessary
 			-->
-			classpath*:*.properties
-			classpath*:**/*.properties
-			classpath*:properties/*.properties
-			classpath*:**/properties/*.properties
-			classpath*:properties/**/*.properties
 			classpath*:**/properties/**/*.properties
+			classpath*:properties/**/*.properties
+			classpath*:**/properties/*.properties
+			classpath*:properties/*.properties
+			classpath*:**/*.properties
+			classpath*:*.properties
+
+			/WEB-INF/**/properties/**/*.properties
+			/WEB-INF/properties/**/*.properties
+			/WEB-INF/properties/*.properties
+			/WEB-INF/*.properties
 		</param-value>
 	</context-param>
 	<!-- FIRST|LAST -->
