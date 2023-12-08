@@ -1062,7 +1062,7 @@ public final class StringUtils implements Serializable {
      */
     public static Set<String> resolveResourceNames(String prefix, String resource) {
         // resolve resource path
-    	Set<String> resourcePaths = new LinkedHashSet<String>();
+    	Set<String> resourcePaths = new LinkedHashSet<>();
         if (hasText(prefix) && prefix.startsWith("/")) prefix = prefix.substring(1);
         if (hasText(prefix) && prefix.endsWith("/")) prefix = prefix.substring(0, prefix.length() - 1);
         prefix = (hasText(prefix) ? prefix + "/" : "");

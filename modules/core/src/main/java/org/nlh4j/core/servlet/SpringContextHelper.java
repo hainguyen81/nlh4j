@@ -9,7 +9,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.net.URL;
 import java.util.AbstractMap.SimpleEntry;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -26,9 +26,6 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
-import com.machinezoo.noexception.Exceptions;
-
-import org.apache.commons.lang3.ArrayUtils;
 import org.nlh4j.util.BeanUtils;
 import org.nlh4j.util.CollectionUtils;
 import org.nlh4j.util.ExceptionUtils;
@@ -43,6 +40,8 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerExecutionChain;
 import org.springframework.web.servlet.HandlerMapping;
+
+import com.machinezoo.noexception.Exceptions;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -155,10 +154,9 @@ public final class SpringContextHelper implements Serializable {
 	            try { bean = ctx.getBean(beanRef); }
 	            catch (BeansException e) {
 	            	log.warn(e.getMessage());
-	            } finally {
-	            	if (bean != null) break;
-	            	else ctx = ctx.getParent();
 	            }
+            	if (bean != null) break;
+            	else ctx = ctx.getParent();
         	}
         }
         return bean;
@@ -202,10 +200,9 @@ public final class SpringContextHelper implements Serializable {
 	            try { bean = ctx.getBean(beanRef, requiredType); }
 	            catch (BeansException e) {
 	            	log.warn(e.getMessage());
-	            } finally {
-	            	if (bean != null) break;
-	            	else ctx = ctx.getParent();
 	            }
+            	if (bean != null) break;
+            	else ctx = ctx.getParent();
         	}
         }
         return bean;
@@ -252,10 +249,9 @@ public final class SpringContextHelper implements Serializable {
 	            try { bean = ctx.getBean(beanRef, args); }
 	            catch (BeansException e) {
 	            	log.warn(e.getMessage());
-	            } finally {
-	            	if (bean != null) break;
-	            	else ctx = ctx.getParent();
 	            }
+            	if (bean != null) break;
+            	else ctx = ctx.getParent();
         	}
         }
         return bean;
@@ -348,19 +344,17 @@ public final class SpringContextHelper implements Serializable {
 		    	catch (BeansException e) {
 		    		log.warn(e.getMessage());
 		    		beans = null;
-		    	} finally {
-			    	if (!CollectionUtils.isEmpty(beans)) break;
-			    	else ctx = ctx.getParent();
 		    	}
+		    	if (!CollectionUtils.isEmpty(beans)) break;
+		    	else ctx = ctx.getParent();
     		}
-	    	if (!CollectionUtils.isEmpty(beans)) {
-		    	bean = beans.entrySet().parallelStream()
-			    		.filter(e -> Objects.nonNull(e.getValue())
-			    				&& (beanClass.equals(e.getValue().getClass())
-			    						|| (inherited && BeanUtils.isInstanceOf(e.getValue().getClass(), beanClass))))
-			    		.map(e -> BeanUtils.safeType(e.getValue(), beanClass))
-			    		.filter(Objects::nonNull).findFirst().orElse(null);
-	    	}
+	    	bean = Optional.ofNullable(beans).orElseGet(LinkedHashMap::new)
+	    	        .entrySet().parallelStream()
+		    		.filter(e -> Objects.nonNull(e.getValue())
+		    				&& (beanClass.equals(e.getValue().getClass())
+		    						|| (inherited && BeanUtils.isInstanceOf(e.getValue().getClass(), beanClass))))
+		    		.map(e -> BeanUtils.safeType(e.getValue(), beanClass))
+		    		.filter(Objects::nonNull).findFirst().orElse(null);
     	}
     	// if not found the bean with specified class but using inherited flag;
     	// then returning the found first bean
@@ -395,7 +389,7 @@ public final class SpringContextHelper implements Serializable {
      */
 	public static <T> List<T> findBeans(final ApplicationContext applicationContext, final Class<T> beanClass, boolean inherited) {
 		Map<String, ?> beans = null;
-    	List<T> beansLst = new LinkedList<T>();
+    	List<T> beansLst = new LinkedList<>();
     	if (applicationContext != null && beanClass != null) {
     		ApplicationContext ctx = applicationContext;
     		while(CollectionUtils.isEmpty(beans) && ctx != null) {
@@ -403,20 +397,18 @@ public final class SpringContextHelper implements Serializable {
 		    	catch (BeansException e) {
 		    		ExceptionUtils.traceException(log, e);
 		    		beans = null;
-		    	} finally {
-			    	if (!CollectionUtils.isEmpty(beans)) break;
-			    	else ctx = ctx.getParent();
 		    	}
+		    	if (!CollectionUtils.isEmpty(beans)) break;
+		    	else ctx = ctx.getParent();
     		}
-	    	if (!CollectionUtils.isEmpty(beans)) {
-	    		beansLst.addAll(
-	    				beans.entrySet().parallelStream()
-			    		.filter(e -> Objects.nonNull(e.getValue())
-			    				&& (beanClass.equals(e.getValue().getClass())
-			    						|| (inherited && BeanUtils.isInstanceOf(e.getValue().getClass(), beanClass))))
-			    		.map(e -> BeanUtils.safeType(e.getValue(), beanClass))
-			    		.filter(Objects::nonNull).collect(Collectors.toCollection(LinkedList::new)));
-	    	}
+    		beansLst.addAll(
+    				Optional.ofNullable(beans).orElseGet(LinkedHashMap::new)
+    				.entrySet().parallelStream()
+		    		.filter(e -> Objects.nonNull(e.getValue())
+		    				&& (beanClass.equals(e.getValue().getClass())
+		    						|| (inherited && BeanUtils.isInstanceOf(e.getValue().getClass(), beanClass))))
+		    		.map(e -> BeanUtils.safeType(e.getValue(), beanClass))
+		    		.filter(Objects::nonNull).collect(Collectors.toCollection(LinkedList::new)));
     	}
     	// if not found the bean with specified class but using inherited flag;
     	// then returning the found first bean
@@ -476,28 +468,77 @@ public final class SpringContextHelper implements Serializable {
      * @param resource to debug
      */
     private static void traceResource(String originalPath, Resource resource) {
-    	if (log.isTraceEnabled() && resource != null) {
-    		String resPath = null;
-    		// URL
-    		if (!StringUtils.hasText(resPath)) {
-    			try { resPath = resource.getURL().getPath(); }
-    			catch (Exception e) {}
-    		}
-    		// URI
-    		if (!StringUtils.hasText(resPath)) {
-    			try { resPath = resource.getURI().getPath(); }
-    			catch (Exception e) {}
-    		}
-    		// File
-    		if (!StringUtils.hasText(resPath)) {
-    			try { resPath = resource.getFile().getPath(); }
-    			catch (Exception e) {}
-    		}
-    		log.trace("Resolved [" + originalPath + "] to [" + resPath + "]");
+    	if (!log.isTraceEnabled() || resource == null) {
+    	    return;
     	}
+
+		String resPath = null;
+		// URL
+		if (!StringUtils.hasText(resPath)) {
+			try { resPath = resource.getURL().getPath(); }
+			catch (Exception e) {
+			    // do nothing
+			}
+		}
+		// URI
+		if (!StringUtils.hasText(resPath)) {
+			try { resPath = resource.getURI().getPath(); }
+			catch (Exception e) {
+                // do nothing
+		    }
+		}
+		// File
+		if (!StringUtils.hasText(resPath)) {
+			try { resPath = resource.getFile().getPath(); }
+			catch (Exception e) {
+                // do nothing
+		    }
+		}
+		log.trace("Resolved [" + originalPath + "] to [" + resPath + "]");
+    }
+
+    /**
+     * Get the resource as {@link Resource} of the specified resource path<br>
+     * by below strategies:<br>
+     * - specified {@link ApplicationContext}<br>
+     * - specified {@link ApplicationContext#getClassLoader()} (if not found by upper algorithms)<br>
+     * - physical {@link File} by specified resource path (if not found by upper algorithms)<br>
+     * - current {@link Thread#getContextClassLoader()} (if not found by upper algorithms)<br>
+     * - this class {@link SpringContextHelper} loader (if not found by upper algorithms)
+     *
+     * @param path resource path
+     *
+     * @return {@link Resource} map by pattern and resources list or null if failed
+     */
+    public Map<String, List<Resource>> searchResources(String path) {
+        return findResources(this.getContext(), path);
+    }
+
+    /**
+     * Get the resource as {@link Resource} array of the specified resource path<br>
+     * by below strategies:<br>
+     * - specified {@link ApplicationContext} by {@link ApplicationContextProvider#getAwareApplicationContext()}<br>
+     * - specified {@link ApplicationContext#getClassLoader()} by {@link ApplicationContextProvider#getAwareApplicationContext()}<br>
+     *   (if not found by upper algorithms)<br>
+     * - physical {@link File} by specified resource path (if not found by upper algorithms)<br>
+     * - current {@link Thread#getContextClassLoader()} (if not found by upper algorithms)<br>
+     * - this class {@link SpringContextHelper} loader (if not found by upper algorithms)
+     *
+     * @param path resource path
+     *
+     * @return {@link Resource} map by pattern and resources list or null if failed
+     */
+    public static Map<String, List<Resource>> findResources(String path) {
+        return findResources(ApplicationContextProvider.getAwareApplicationContext(), path);
     }
     /**
-     * Get the resource as {@link Resource} array of the specified resource path
+     * Get the resource as {@link Resource} array of the specified resource path<br>
+     * by below strategies:<br>
+     * - specified {@link ApplicationContext}<br>
+     * - specified {@link ApplicationContext#getClassLoader()} (if not found by upper algorithms)<br>
+     * - physical {@link File} by specified resource path (if not found by upper algorithms)<br>
+     * - current {@link Thread#getContextClassLoader()} (if not found by upper algorithms)<br>
+     * - this class {@link SpringContextHelper} loader (if not found by upper algorithms)
      *
      * @param applicationContext context
      * @param path resource path
@@ -505,18 +546,18 @@ public final class SpringContextHelper implements Serializable {
      * @return {@link Resource} map by pattern and resources list or null if failed
      */
     public static Map<String, List<Resource>> findResources(ApplicationContext applicationContext, String path) {
-    	Map<String, List<Resource>> resources = new LinkedHashMap<String, List<Resource>>();
+    	Map<String, List<Resource>> resources = new LinkedHashMap<>();
         if (applicationContext != null && StringUtils.hasText(path)) {
             // resolve all possible resource paths
-        	resources.putAll(findResourcesByApplicationContext(applicationContext, path));
+        	resources.putAll(findContextResourcesRecursively(applicationContext, path));
         }
 
         // try detecting local file
         if (CollectionUtils.isEmpty(resources) && StringUtils.hasText(path)) {
             File f = new File(path);
             if (f.exists() && f.canRead()) {
-                resources = new LinkedHashMap<String, List<Resource>>();
-                resources.put(path, new LinkedList<Resource>());
+                resources = new LinkedHashMap<>();
+                resources.put(path, new LinkedList<>());
                 resources.get(path).add(new FileSystemResource(path));
                 traceResource(path, resources.get(path).get(0));
             }
@@ -525,13 +566,13 @@ public final class SpringContextHelper implements Serializable {
         // try using current thread class loader
         if (CollectionUtils.isEmpty(resources) && StringUtils.hasText(path)) {
         	// resolve all possible resource paths
-        	resources.putAll(findResourcesByClassLoader(Thread.currentThread().getContextClassLoader(), path));
+        	resources.putAll(findClassLoaderResourcesRecursively(Thread.currentThread().getContextClassLoader(), path));
         }
 
         // try using class loader
 		if (CollectionUtils.isEmpty(resources) && StringUtils.hasText(path)) {
         	// resolve all possible resource paths
-			resources.putAll(findResourcesByClassLoader(SpringContextHelper.class.getClassLoader(), path));
+			resources.putAll(findClassLoaderResourcesRecursively(SpringContextHelper.class.getClassLoader(), path));
         }
 
         // debug
@@ -540,30 +581,24 @@ public final class SpringContextHelper implements Serializable {
         }
         return resources;
     }
-
     /**
-     * Get the resource as {@link Resource} array of the specified resource path
+     * Get the resource as {@link Resource} array of the specified resource path (recursively)<br>
+     * by the specified {@link ClassLoader} and recursively finding on its parent {@link ClassLoader}
      *
      * @param loader {@link ClassLoader}
      * @param path resource path
      *
      * @return {@link Resource} map by pattern and resources list or null if failed
      */
-	public static Map<String, List<Resource>> findResourcesByClassLoader(ClassLoader loader, String path) {
-		Map<String, List<Resource>> resources = new LinkedHashMap<String, List<Resource>>();
+	public static Map<String, List<Resource>> findClassLoaderResourcesRecursively(ClassLoader loader, String path) {
+		Map<String, List<Resource>> resources = new LinkedHashMap<>();
 		while (loader != null && StringUtils.hasText(path)) {
 			try {
+			    // find resources
+			    Optional.ofNullable(findClassLoaderResources(loader, path))
+                .filter(e -> !CollectionUtils.isEmpty(e.getValue()))
+                .ifPresent(e -> resources.put(e.getKey(), e.getValue()));
 
-				URL url = loader.getResource(path);
-				Resource resource = (url != null ? new UrlResource(url) : null);
-				if (resource != null) {
-					String resourcePath = url.getPath();
-					if (resources.get(resourcePath) == null) {
-						resources.put(resourcePath, new LinkedList<Resource>());
-					}
-					resources.get(resourcePath).add(resource);
-					traceResource(resourcePath, resource);
-				}
 				// continue with parent context if not found
 				loader = loader.getParent();
 
@@ -575,16 +610,92 @@ public final class SpringContextHelper implements Serializable {
 		}
 		return resources;
 	}
+	/**
+	 * Find the specified resource path from the specified {@link ClassLoader} (non-recursively)<br>
+     * by the specified {@link ClassLoader}
+	 * 
+	 * @param loader {@link ClassLoader}
+	 * @param path resource path
+	 * 
+	 * @return the pair of the specified resource path and a list of found {@link Resource}
+	 */
+    public static Entry<String, List<Resource>> findClassLoaderResources(ClassLoader loader, String path) {
+        Entry<String, List<Resource>> resources = new SimpleEntry<>(path, new LinkedList<>());
+        URL url = Optional.ofNullable(loader).map(cl -> cl.getResource(path)).orElse(null);
+        Resource resource = Optional.ofNullable(url).map(UrlResource::new).orElse(null);
+        if (resource != null && url != null) {
+        	resources.getValue().add(resource);
+        	traceResource(path, resource);
+        }
+        return resources;
+    }
     /**
-     * Get the resource as {@link Resource} array of the specified resource path
+     * Get the resource as {@link Resource} array of the specified resource path (recursively)<br>
+     * by current {@link Thread#getContextClassLoader()} (and recursively finding on its parent),<br>
+     * if not found, then continue finding on this class {@link SpringContextHelper} loader<br>
+     * (and recursively finding on its parent)
+     *
+     * @param path resource path
+     *
+     * @return {@link Resource} map by pattern and resources list or null if failed
+     */
+    public static Map<String, List<Resource>> findConcurrenceClassLoaderResources(String path) {
+        Map<String, List<Resource>> resources = new LinkedHashMap<>();
+
+        // try using current thread class loader
+        if (CollectionUtils.isEmpty(resources) && StringUtils.hasText(path)) {
+            // resolve all possible resource paths
+            resources.putAll(findClassLoaderResourcesRecursively(Thread.currentThread().getContextClassLoader(), path));
+        }
+
+        // try using class loader
+        if (CollectionUtils.isEmpty(resources) && StringUtils.hasText(path)) {
+            // resolve all possible resource paths
+            resources.putAll(findClassLoaderResourcesRecursively(SpringContextHelper.class.getClassLoader(), path));
+        }
+
+        return resources;
+    }
+    /**
+     * Get the resource as {@link Resource} array of the specified resource path (recursively)<br>
+     * by below strategies:<br>
+     * - specified {@link ApplicationContext}<br>
+     * - specified {@link ApplicationContext#getClassLoader()} (if not found by upper algorithms)
+     *
+     * @param path resource path
+     *
+     * @return {@link Resource} map by pattern and resources list or null if failed
+     */
+    public Map<String, List<Resource>> searchContextResourcesRecursively(String path) {
+        return findContextResourcesRecursively(getContext(), path);
+    }
+    /**
+     * Get the resource as {@link Resource} array of the specified resource path (recursively)<br>
+     * by below strategies:<br>
+     * - specified {@link ApplicationContext} by {@link ApplicationContextProvider#getAwareApplicationContext()}<br>
+     * - specified {@link ApplicationContext#getClassLoader()} by {@link ApplicationContextProvider#getAwareApplicationContext()}<br>
+     *   (if not found by upper algorithms)
+     *
+     * @param path resource path
+     *
+     * @return {@link Resource} map by pattern and resources list or null if failed
+     */
+    public static Map<String, List<Resource>> findContextResourcesRecursively(String path) {
+        return findContextResourcesRecursively(ApplicationContextProvider.getAwareApplicationContext(), path);
+    }
+    /**
+     * Get the resource as {@link Resource} array of the specified resource path (recursively)<br>
+     * by below strategies:<br>
+     * - specified {@link ApplicationContext}<br>
+     * - specified {@link ApplicationContext#getClassLoader()} (if not found by upper algorithms)
      *
      * @param applicationContext context
      * @param path resource path
      *
      * @return {@link Resource} map by pattern and resources list or null if failed
      */
-	public static Map<String, List<Resource>> findResourcesByApplicationContext(ApplicationContext applicationContext, String path) {
-		Map<String, List<Resource>> resources = new LinkedHashMap<String, List<Resource>>();
+	public static Map<String, List<Resource>> findContextResourcesRecursively(ApplicationContext applicationContext, String path) {
+		Map<String, List<Resource>> resources = new LinkedHashMap<>();
 		Set<String> resourcePaths = StringUtils.resolveResourceNames(path);
 		if (applicationContext != null && !CollectionUtils.isEmpty(resourcePaths)) {
 		    ApplicationContext ctx = applicationContext;
@@ -592,32 +703,9 @@ public final class SpringContextHelper implements Serializable {
 	        	final ApplicationContext tmpCtx = ctx;
 	        	resources.putAll(
 	        			resourcePaths.parallelStream().filter(StringUtils::hasText)
-	        			.map(resourcePath -> {
-	        				Resource[] resourcesByPath = null;
-	        				try {
-	        					resourcesByPath = tmpCtx.getResources(resourcePath);
-	        				} catch (Exception e) {
-	        					ExceptionUtils.traceException(log, e);
-	        				}
-
-	        				// tracing
-	        				if (ArrayUtils.isNotEmpty(resourcesByPath)) {
-	        					if (log.isDebugEnabled()) {
-	        						log.debug("Resolved [{}] resources by path [{}]", resourcesByPath.length, resourcePath);
-	        					}
-	    						traceResource(resourcePath, resourcesByPath[0]);
-
-	    					} else if (log.isDebugEnabled()) {
-        						log.warn("Could not resolve resources by path [{}]", resourcePath);
-        					}
-	    					return new SimpleEntry<String, List<Resource>>(resourcePath,
-	            					Optional.ofNullable(resourcesByPath).filter(ArrayUtils::isNotEmpty)
-	            					.map(CollectionUtils::toList).orElseGet(Collections::emptyList)
-	            					.parallelStream().collect(Collectors.toCollection(LinkedList::new)));
-	        			})
+	        			.map(resourcePath -> findContextResources(tmpCtx, resourcePath))
 	        			.filter(e -> !CollectionUtils.isEmpty(e.getValue()))
-	        			.collect(Collectors.toMap(Entry<String, List<Resource>>::getKey,
-	        					Entry<String, List<Resource>>::getValue, (k1, k2) -> k1)));
+	        			.collect(Collectors.toMap(Entry::getKey, Entry::getValue, (k1, k2) -> k1)));
 	        	
 	            // continue with parent context
 	            ctx = ctx.getParent();
@@ -626,27 +714,127 @@ public final class SpringContextHelper implements Serializable {
 
 		// try with classloader of application context
 		if (applicationContext != null && CollectionUtils.isEmpty(resources)) {
-			resources.putAll(findResourcesByClassLoader(applicationContext.getClassLoader(), path));
+			resources.putAll(findClassLoaderResourcesRecursively(applicationContext.getClassLoader(), path));
 		}
 		return resources;
 	}
-    /**
-     * Get the resource as {@link Resource} of the specified resource path
-     *
-     * @param path resource path
-     *
-     * @return {@link Resource} map by pattern and resources list or null if failed
+
+	/**
+     * Find {@link Resource}(s) from the specified {@link ApplicationContext} and resource path (non-recursively)<br>
+     * by below strategies:<br>
+     * - specified {@link ApplicationContext}<br>
+     * - specified {@link ApplicationContext#getClassLoader()} (if not found by upper algorithms)
+     * 
+     * @param resourcePath resource path
+     * 
+     * @return the {@link Entry} of the specified resource path and a list of {@link Resource}
      */
-    public Map<String, List<Resource>> searchResources(String path) {
-    	return findResources(this.getContext(), path);
+    public Entry<String, List<Resource>> searchContextResources(String resourcePath) {
+        return findContextResources(getContext(), resourcePath);
+    }
+    /**
+     * Find {@link Resource}(s) from the specified {@link ApplicationContext} and resource path (non-recursively)<br>
+     * by below strategies:<br>
+     * - specified {@link ApplicationContext} by {@link ApplicationContextProvider#getAwareApplicationContext()}<br>
+     * - specified {@link ApplicationContext#getClassLoader()} by {@link ApplicationContextProvider#getAwareApplicationContext()}<br>
+     *   (if not found by upper algorithms)
+     * 
+     * @param resourcePath resource path
+     * 
+     * @return the {@link Entry} of the specified resource path and a list of {@link Resource}
+     */
+    public static Entry<String, List<Resource>> findContextResources(String resourcePath) {
+        return findContextResources(ApplicationContextProvider.getAwareApplicationContext(), resourcePath);
+    }
+	/**
+	 * Find {@link Resource}(s) from the specified {@link ApplicationContext} and resource path (non-recursively)<br>
+     * by below strategies:<br>
+     * - specified {@link ApplicationContext}<br>
+     * - specified {@link ApplicationContext#getClassLoader()} (if not found by upper algorithms)
+	 * 
+	 * @param ctx {@link ApplicationContext}
+	 * @param resourcePath resource path
+	 * 
+	 * @return the {@link Entry} of the specified resource path and a list of {@link Resource}
+	 */
+    public static Entry<String, List<Resource>> findContextResources(ApplicationContext ctx, String resourcePath) {
+        Entry<String, List<Resource>> resources = new SimpleEntry<>(resourcePath, new LinkedList<>());
+        // find resources
+        if (ctx != null) {
+            try {
+                resources.getValue().addAll(Arrays.asList(ctx.getResources(resourcePath)));
+            } catch (Exception e) {
+            	ExceptionUtils.traceException(log, e);
+            }
+        }
+        
+        // try to find by application context class loader
+        if (ctx != null && ctx.getClassLoader() != null && CollectionUtils.isEmpty(resources.getValue())) {
+            Optional.ofNullable(findClassLoaderResources(ctx.getClassLoader(), resourcePath))
+            .filter(e -> !CollectionUtils.isEmpty(e.getValue()))
+            .ifPresent(e -> resources.getValue().addAll(e.getValue()));
+        }
+
+        // tracing
+        if (!CollectionUtils.isEmpty(resources.getValue())) {
+        	if (log.isDebugEnabled()) {
+        		log.debug("Resolved [{}] resources by path [{}]", resources.getValue().size(), resourcePath);
+        	}
+        	traceResource(resourcePath, resources.getValue().get(0));
+
+        } else if (log.isDebugEnabled()) {
+        	log.warn("Could not resolve resources by path [{}]", resourcePath);
+        }
+        return resources;
     }
 
     /**
-     * Get the resource as {@link Resource} of the specified resource path
+     * Get the resource as {@link Resource} of the specified resource path<br>
+     * by below strategies:<br>
+     * - specified {@link ApplicationContext}<br>
+     * - specified {@link ApplicationContext#getClassLoader()} (if not found by upper algorithms)<br>
+     * - physical {@link File} by specified resource path (if not found by upper algorithms)<br>
+     * - current {@link Thread#getContextClassLoader()} (if not found by upper algorithms)<br>
+     * - this class {@link SpringContextHelper} loader (if not found by upper algorithms)
+     *
+     * @param path resource path
+     * @param firstOccurs specify returning stream of first occurred resource. false for last occurred resource
+     *
+     * @return {@link Resource} or null if failed
+     */
+    public Resource searchResource(String path, boolean firstOccurs) {
+        return findResource(getContext(), path, firstOccurs);
+    }
+    /**
+     * Get the resource as {@link Resource} of the specified resource path<br>
+     * by below strategies:<br>
+     * - specified {@link ApplicationContext} by {@link ApplicationContextProvider#getAwareApplicationContext()}<br>
+     * - specified {@link ApplicationContext#getClassLoader()} by {@link ApplicationContextProvider#getAwareApplicationContext()}<br>
+     *   (if not found by upper algorithms)<br>
+     * - physical {@link File} by specified resource path (if not found by upper algorithms)<br>
+     * - current {@link Thread#getContextClassLoader()} (if not found by upper algorithms)<br>
+     * - this class {@link SpringContextHelper} loader (if not found by upper algorithms)
+     *
+     * @param path resource path
+     * @param firstOccurs specify returning stream of first occurred resource. false for last occurred resource
+     *
+     * @return {@link Resource} or null if failed
+     */
+    public static Resource findResource(String path, boolean firstOccurs) {
+        return findResource(ApplicationContextProvider.getAwareApplicationContext(), path, firstOccurs);
+    }
+    /**
+     * Get the resource as {@link Resource} of the specified resource path<br>
+     * by below strategies:<br>
+     * - specified {@link ApplicationContext}<br>
+     * - specified {@link ApplicationContext#getClassLoader()} (if not found by upper algorithms)<br>
+     * - physical {@link File} by specified resource path (if not found by upper algorithms)<br>
+     * - current {@link Thread#getContextClassLoader()} (if not found by upper algorithms)<br>
+     * - this class {@link SpringContextHelper} loader (if not found by upper algorithms)
      *
      * @param applicationContext context
      * @param path resource path
-     * @param firstOccurs specify returning stream of first occured resource. false for last occured resource
+     * @param firstOccurs specify returning stream of first occurred resource. false for last occurred resource
      *
      * @return {@link Resource} or null if failed
      */
@@ -654,7 +842,7 @@ public final class SpringContextHelper implements Serializable {
     	Resource resource = null;
         if (applicationContext != null && StringUtils.hasText(path)) {
             // resolve all possible resource paths
-            resource = findResourceByApplicationContext(applicationContext, path, firstOccurs);
+            resource = findContextResourceRecursively(applicationContext, path, firstOccurs);
         }
 
         // try detecting local file
@@ -669,13 +857,13 @@ public final class SpringContextHelper implements Serializable {
         // try using current thread class loader
         if (resource == null && StringUtils.hasText(path)) {
         	// resolve all possible resource paths
-        	resource = findResourceByClassLoader(Thread.currentThread().getContextClassLoader(), path, firstOccurs);
+        	resource = findClassLoaderResourceRecursively(Thread.currentThread().getContextClassLoader(), path, firstOccurs);
         }
 
         // try using class loader
         if (resource == null && StringUtils.hasText(path)) {
         	// resolve all possible resource paths
-        	resource = findResourceByClassLoader(SpringContextHelper.class.getClassLoader(), path, firstOccurs);
+        	resource = findClassLoaderResourceRecursively(SpringContextHelper.class.getClassLoader(), path, firstOccurs);
         }
 
         // debug
@@ -685,7 +873,8 @@ public final class SpringContextHelper implements Serializable {
         return resource;
     }
     /**
-     * Get the resource as {@link Resource} of the specified resource path
+     * Get the resource as {@link Resource} of the specified resource path (recursively)<br>
+     * by the specified {@link ClassLoader} and recursively finding on its parent {@link ClassLoader}
      *
      * @param loader {@link ClassLoader}
      * @param path resource path
@@ -693,38 +882,52 @@ public final class SpringContextHelper implements Serializable {
      *
      * @return {@link Resource} or null if failed
      */
-    public static Resource findResourceByClassLoader(ClassLoader loader, String path, boolean firstOccurs) {
-		Resource resource = null;
-		Resource prevResource = null;
-		while (resource == null && loader != null && StringUtils.hasText(path)) {
-			try {
-				URL url = loader.getResource(path);
-				resource = (url != null ? new UrlResource(url) : null);
-				if (resource != null) {
-					// debug
-					traceResource(path, resource);
-					// break for first found resource
-					if (firstOccurs) {
-						break;
+    public static Resource findClassLoaderResourceRecursively(ClassLoader loader, String path, boolean firstOccurs) {
+        Entry<String, List<Resource>> resources = null;
+        Entry<String, List<Resource>> prevResources = null;
+		while ((resources == null || CollectionUtils.isEmpty(resources.getValue())) && loader != null && StringUtils.hasText(path)) {
+		    resources = findClassLoaderResources(loader, path);
+		    if (!CollectionUtils.isEmpty(resources.getValue())) {
+		        // debug
+                traceResource(path, resources.getValue().get(0));
 
-					} else {
-						prevResource = resource; // back-up the last found resource
-					}
-				}
+                // break for first found resource
+                if (firstOccurs) {
+                    break;
 
-			} catch (Exception e) {
-				log.warn("Could not resolve resource [{}] by ClassLoader: {}", path, e.getMessage());
-				ExceptionUtils.traceException(log, e);
-				resource = null;
-			}
-			
-			// continue with parent context if not found
-			if (resource == null) loader = loader.getParent();
+                } else {
+                    prevResources = resources; // back-up the last found resources
+                }
+		    }
+
+		    // continue finding on parent class loader
+			loader = loader.getParent();
 		}
-		return (firstOccurs ? resource : prevResource);
+		return (firstOccurs ? Optional.ofNullable(resources)
+		        .map(Entry::getValue).orElseGet(LinkedList::new).parallelStream().findFirst().orElse(null)
+		        : Optional.ofNullable(prevResources)
+                .map(Entry::getValue).orElseGet(LinkedList::new).parallelStream().findFirst().orElse(null));
 	}
     /**
-     * Get the resource as {@link Resource} of the specified resource path
+     * Get the resource as {@link Resource} of the specified resource path (recursively)<br>
+     * by below strategies:<br>
+     * - specified {@link ApplicationContext} by {@link ApplicationContextProvider#getAwareApplicationContext()}<br>
+     * - specified {@link ApplicationContext#getClassLoader()} by {@link ApplicationContextProvider#getAwareApplicationContext()}<br>
+     *   (if not found by upper algorithms)
+     *
+     * @param path resource path
+     * @param firstOccurs specify returning stream of first occurred resource. false for last occurred resource
+     *
+     * @return {@link Resource} or null if failed
+     */
+    public static Resource findContextResourceRecursively(String path, boolean firstOccurs) {
+        return findContextResourceRecursively(ApplicationContextProvider.getAwareApplicationContext(), path, firstOccurs);
+    }
+    /**
+     * Get the resource as {@link Resource} of the specified resource path (recursively)<br>
+     * by below strategies:<br>
+     * - specified {@link ApplicationContext}<br>
+     * - specified {@link ApplicationContext#getClassLoader()} (if not found by upper algorithms)
      *
      * @param applicationContext context
      * @param path resource path
@@ -732,71 +935,45 @@ public final class SpringContextHelper implements Serializable {
      *
      * @return {@link Resource} or null if failed
      */
-    public static Resource findResourceByApplicationContext(ApplicationContext applicationContext, String path, boolean firstOccurs) {
+    /* java:S3776: Cognitive Complexity of methods should not be too high */
+    @SuppressWarnings({ "java:S3776" })
+    public static Resource findContextResourceRecursively(ApplicationContext applicationContext, String path, boolean firstOccurs) {
     	Set<String> resourcePaths = StringUtils.resolveResourceNames(path);
-		Resource[] resources = null;
+    	Entry<String, List<Resource>> prevResources = null;
 		Resource resource = null;
 		if (applicationContext != null && !CollectionUtils.isEmpty(resourcePaths)) {
 		    ApplicationContext ctx = applicationContext;
 		    while(resource == null && ctx != null) {
+		        // loop for every resource path
 	            for(String resourcePath : resourcePaths) {
-	            	if (!StringUtils.hasText(resourcePath)) {
-	            		continue;
-	            	}
+	                Entry<String, List<Resource>> resources = findContextResources(ctx, resourcePath);
+	                if (!CollectionUtils.isEmpty(resources.getValue())) {
+	                    // debug
+	                    resource = resources.getValue().get(0);
+                        traceResource(resourcePath, resource);
 
-	            	// solve resource
-	            	try {
-	            		resources = ctx.getResources(resourcePath);
-	            		resource = (CollectionUtils.isEmpty(resources) ? null
-	            				: firstOccurs ? resources[0] : resources[resources.length - 1]);
-	            	} catch (Exception e) {
-						log.warn("Could not resolve resource [{}] by ApplicationContext: {}", path, e.getMessage());
-						ExceptionUtils.traceException(log, e);
-			            resources = null;
-			            resource = null;
-			        }
+                        // break for first found resource
+                        if (firstOccurs) {
+                            break;
 
-	            	// tracing
-	                if (resource != null) {
-	                	// debug
-	                	traceResource(resourcePath, resource);
-	                	break;
+                        } else {
+                            prevResources = resources; // back-up the last found resources
+                        }
 	                }
+	            }
+
+	            // break loop
+	            if (firstOccurs && resource != null) {
+	                break;
 	            }
 
 	            // continue with parent context if not found
 	            if (resource == null) ctx = ctx.getParent();
 		    }
 		}
-
-		// try with classloader of application context
-		if (applicationContext != null && resource == null) {
-			resource = findResourceByClassLoader(applicationContext.getClassLoader(), path, firstOccurs);
-		}
-		return resource;
+		return (firstOccurs ? resource : Optional.ofNullable(prevResources)
+		        .map(Entry::getValue).orElseGet(LinkedList::new).parallelStream().findFirst().orElse(null));
 	}
-    /**
-     * Get the resource as {@link Resource} of the specified resource path
-     *
-     * @param path resource path
-     * @param firstOccurs specify returning stream of first occurred resource. false for last occurred resource
-     *
-     * @return {@link Resource} or null if failed
-     */
-    public static Resource findResource(String path, boolean firstOccurs) {
-    	return findResource(ApplicationContextProvider.getAwareApplicationContext(), path, firstOccurs);
-    }
-    /**
-     * Get the resource as {@link Resource} of the specified resource path
-     *
-     * @param path resource path
-     * @param firstOccurs specify returning stream of first occurred resource. false for last occurred resource
-     *
-     * @return {@link Resource} or null if failed
-     */
-    public Resource searchResource(String path, boolean firstOccurs) {
-    	return findResource(this.getContext(), path, firstOccurs);
-    }
     /**
      * Get the last ocurred resource as {@link Resource} of the specified resource path
      *

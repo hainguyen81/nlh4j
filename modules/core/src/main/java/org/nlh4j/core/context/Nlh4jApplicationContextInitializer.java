@@ -5,7 +5,6 @@
 package org.nlh4j.core.context;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -78,20 +77,17 @@ public class Nlh4jApplicationContextInitializer extends AbstractApplicationConte
 		log.info("`{}`: {} - separate: [{}]", PROPERTIES_LOCATIONS_CONTEXT_PARAM, propertiesLocations, propertiesLocationsList);
 		if (CollectionUtils.isNotEmpty(propertiesLocationsList)) {
 			List<PropertySource<?>> resourcePropertySources = propertiesLocationsList.parallelStream()
-					.map(propertyLocation -> loadPropertiesResources(propertyLocation))
-					.filter(CollectionUtils::isNotEmpty).flatMap(List<PropertySource<?>>::stream)
-					.collect(Collectors.toCollection(LinkedList::new));
+					.map(this::loadPropertiesResources).filter(CollectionUtils::isNotEmpty)
+					.flatMap(List<PropertySource<?>>::stream).collect(Collectors.toCollection(LinkedList::new));
 			if (CollectionUtils.isNotEmpty(resourcePropertySources)) {
-				switch(propertiesLoadOrder) {
-					case PROPERTIES_LOAD_ORDER_LAST:
-						resourcePropertySources.parallelStream().forEach(propertySources::addLast);
-						break;
+			    if (StringUtils.equalsIgnoreCase(propertiesLoadOrder, PROPERTIES_LOAD_ORDER_LAST)) {
+			        log.info("Load property sources at LAST!");
+			        resourcePropertySources.parallelStream().forEach(propertySources::addLast);
 
-					default:
-						Collections.reverse(resourcePropertySources);
-						resourcePropertySources.parallelStream().forEach(propertySources::addFirst);
-						break;
-				}
+			    } else {
+                    log.info("Load property sources at FIRST!");
+                    resourcePropertySources.parallelStream().forEach(propertySources::addFirst);
+			    }
 				
 			} else log.warn("Not found any valid `propertiesLocations` to load! Please re-check properties locations again!");
 
