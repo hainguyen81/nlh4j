@@ -14,7 +14,6 @@ import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -39,8 +38,6 @@ public final class StringUtils implements Serializable {
     public static final int DEFAULT_BUFFER_SIZE = (4 * 1024);
     public static final String PREFIX_CLASSPATH = "classpath:";
     public static final String PREFIX_WIRECAST_CLASSPATH = "classpath*:";
-    public static final String PREFIX_SUB_CLASSPATH = "classpath:**";
-    public static final String PREFIX_SUB_WIRECAST_CLASSPATH = "classpath*:**";
 
     /**
      * Window special characters restriction
@@ -1065,25 +1062,26 @@ public final class StringUtils implements Serializable {
     	Set<String> resourcePaths = new LinkedHashSet<>();
         if (hasText(prefix) && prefix.startsWith("/")) prefix = prefix.substring(1);
         if (hasText(prefix) && prefix.endsWith("/")) prefix = prefix.substring(0, prefix.length() - 1);
-        prefix = (hasText(prefix) ? prefix + "/" : "");
+        prefix = (hasText(prefix) ? String.format("%s/", prefix) : "");
         String nonePrefixResource = resource
-                .replace(PREFIX_SUB_WIRECAST_CLASSPATH, "")
-                .replace(PREFIX_SUB_CLASSPATH, "")
                 .replace(PREFIX_WIRECAST_CLASSPATH, "")
                 .replace(PREFIX_CLASSPATH, "");
-        if (nonePrefixResource.startsWith("/")) {
+        if (hasText(prefix) && nonePrefixResource.startsWith("/")) {
             nonePrefixResource = nonePrefixResource.substring(1);
         }
         if (hasText(nonePrefixResource)) {
-            resourcePaths.add(PREFIX_SUB_WIRECAST_CLASSPATH + "/" + prefix + nonePrefixResource);
-            resourcePaths.add(PREFIX_SUB_CLASSPATH + "/" + prefix + nonePrefixResource);
-            resourcePaths.add(PREFIX_WIRECAST_CLASSPATH + "/" + prefix + nonePrefixResource);
-            resourcePaths.add(PREFIX_CLASSPATH + "/" + prefix + nonePrefixResource);
+        	/**
+        	 * generate new reource names by classpath:<br>
+        	 * - classpath*:/&lt;prefix&gt;/&lt;sub resource path&gt;<br>
+        	 * - classpath:/&lt;prefix&gt;/&lt;sub resource path&gt;
+        	 * - /&lt;prefix&gt;/&lt;sub resource path&gt;<br>
+        	 * - &lt;prefix&gt;/&lt;sub resource path&gt;
+        	 */
             resourcePaths.add(PREFIX_WIRECAST_CLASSPATH + prefix + nonePrefixResource);
             resourcePaths.add(PREFIX_CLASSPATH + prefix + nonePrefixResource);
-            resourcePaths.add("/" + prefix + nonePrefixResource);
             resourcePaths.add(prefix + nonePrefixResource);
             if (StringUtils.hasText(prefix)) {
+            	// includes all resource paths (excluded prefix)
                 resourcePaths.addAll(resolveResourceNames(nonePrefixResource));
             }
         }

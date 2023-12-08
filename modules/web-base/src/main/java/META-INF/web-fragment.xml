@@ -31,16 +31,12 @@
 	<context-param>
 		<param-name>propertiesLocations</param-name>
 		<param-value>
-			classpath*:**/properties/*.properties
-			classpath*:/properties/*.properties
-			classpath*:properties/*.properties
-			classpath:**/properties/*.properties
-			classpath:/properties/*.properties
-			classpath:properties/*.properties
-			classpath*:**/*.properties
-			classpath:**/*.properties
 			classpath*:*.properties
-			classpath:*.properties
+			classpath*:**/*.properties
+			classpath*:properties/*.properties
+			classpath*:**/properties/*.properties
+			classpath*:properties/**/*.properties
+			classpath*:**/properties/**/*.properties
 		</param-value>
 	</context-param>
 	<!-- FIRST|LAST -->

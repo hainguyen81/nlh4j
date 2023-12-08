@@ -18,6 +18,7 @@ import java.util.stream.Stream;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.nlh4j.core.servlet.SpringContextHelper;
 import org.nlh4j.util.ExceptionUtils;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -69,9 +70,9 @@ public class Nlh4jApplicationContextInitializer extends AbstractApplicationConte
 				.map(p -> PROPERTIES_LOAD_ORDER_LAST).orElse(PROPERTIES_LOAD_ORDER_FIRST);
 		log.info("`{}`: {}", PROPERTIES_LOAD_ORDER_CONTEXT_PARAM, propertiesLoadOrder);
 		String propertiesLocations = contextParamsMap.getOrDefault(PROPERTIES_LOCATIONS_CONTEXT_PARAM, null);
-		List<String> propertiesLocationsList = Stream.of(
-				Optional.ofNullable(StringUtils.split(propertiesLocations, PROPERTIES_LOCATIONS_SEPARATORS))
-				.orElseGet(() -> new String[0])).parallel()
+		String[] propertiesLocationsArray = StringUtils.split(propertiesLocations, PROPERTIES_LOCATIONS_SEPARATORS);
+		List<String> propertiesLocationsList = Stream.of(Optional.ofNullable(propertiesLocationsArray).orElseGet(() -> new String[0]))
+				.parallel()
 				.filter(StringUtils::isNotBlank).map(StringUtils::trimToEmpty)
 				.collect(Collectors.toCollection(LinkedList::new));
 		log.info("`{}`: {} - separate: [{}]", PROPERTIES_LOCATIONS_CONTEXT_PARAM, propertiesLocations, propertiesLocationsList);
@@ -81,11 +82,11 @@ public class Nlh4jApplicationContextInitializer extends AbstractApplicationConte
 					.flatMap(List<PropertySource<?>>::stream).collect(Collectors.toCollection(LinkedList::new));
 			if (CollectionUtils.isNotEmpty(resourcePropertySources)) {
 			    if (StringUtils.equalsIgnoreCase(propertiesLoadOrder, PROPERTIES_LOAD_ORDER_LAST)) {
-			        log.info("Load property sources at LAST!");
+			        log.info("Load [{}] property sources at LAST!", resourcePropertySources.size());
 			        resourcePropertySources.parallelStream().forEach(propertySources::addLast);
 
 			    } else {
-                    log.info("Load property sources at FIRST!");
+                    log.info("Load [{}] property sources at FIRST!", resourcePropertySources.size());
                     resourcePropertySources.parallelStream().forEach(propertySources::addFirst);
 			    }
 				
@@ -120,7 +121,9 @@ public class Nlh4jApplicationContextInitializer extends AbstractApplicationConte
 				.map(Entry<String, List<Resource>>::getValue)
 				.flatMap(List<Resource>::stream).filter(Resource::exists)
 				.collect(Collectors.toCollection(LinkedHashSet::new));
-		return resources.parallelStream().map(res -> {
+
+		// solve property source
+		List<PropertySource<?>> propertySources = resources.parallelStream().map(res -> {
 			ResourcePropertySource propertySource = null;
 			try {
 				propertySource = new ResourcePropertySource(getNameForResource(res), res);
@@ -145,6 +148,12 @@ public class Nlh4jApplicationContextInitializer extends AbstractApplicationConte
 			return tracePropertiesSource(propertySource);
 		}).filter(Objects::nonNull)
 		.collect(Collectors.toCollection(LinkedList::new));
+
+		// tracing
+		if (log.isDebugEnabled()) {
+			log.debug("==> Solved [{}] property sources for path [{}]", propertySources.size(), propertiesLocation);
+		}
+		return propertySources;
 	}
 	
 	/**
@@ -153,9 +162,12 @@ public class Nlh4jApplicationContextInitializer extends AbstractApplicationConte
 	 * @see org.springframework.core.io.Resource#getDescription()
 	 */
 	private static String getNameForResource(Resource resource) {
-		String name = resource.getDescription();
-		if (StringUtils.isBlank(name)) {
+		String name = SpringContextHelper.getResourceDescription(resource);
+		if (resource != null && StringUtils.isBlank(name)) {
 			name = String.format("%s@%d", resource.getClass().getSimpleName(), System.identityHashCode(resource));
+
+		} else if (StringUtils.isBlank(name)) {
+			name = "Invalid Resource Detection!";
 		}
 		return String.format("%s@%s", Nlh4jApplicationContextInitializer.class.getSimpleName(), name);
 	}

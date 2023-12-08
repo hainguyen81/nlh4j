@@ -462,17 +462,19 @@ public final class SpringContextHelper implements Serializable {
      ***************************************************/
 
     /**
-     * Log the specified resource for debug
-     *
-     * @param originalPath the original resource pattern
-     * @param resource to debug
+     * Get the information of the specified {@link Resource} such as URL, URI, or file path.<br>
+     * If failed, it will return {@link Resource#getDescription()} same as {@link Object#toString()}
+     * 
+     * @param resource {@link Resource}
+     * 
+     * @return the information of the specified {@link Resource}
      */
-    private static void traceResource(String originalPath, Resource resource) {
-    	if (!log.isTraceEnabled() || resource == null) {
-    	    return;
+    public static String getResourceDescription(Resource resource) {
+    	if (resource == null) {
+    		return null;
     	}
 
-		String resPath = null;
+    	String resPath = null;
 		// URL
 		if (!StringUtils.hasText(resPath)) {
 			try { resPath = resource.getURL().getPath(); }
@@ -494,7 +496,24 @@ public final class SpringContextHelper implements Serializable {
                 // do nothing
 		    }
 		}
-		log.trace("Resolved [" + originalPath + "] to [" + resPath + "]");
+
+		// return information
+		return Optional.ofNullable(resPath).filter(StringUtils::hasText).orElseGet(() -> resource.getDescription());
+    }
+
+    /**
+     * Log the specified resource for debug
+     *
+     * @param originalPath the original resource pattern
+     * @param resource to debug
+     */
+    private static void traceResource(String originalPath, Resource resource) {
+    	if (!log.isTraceEnabled() || resource == null) {
+    	    return;
+    	}
+
+    	// tracing
+		log.trace("Resolved [" + originalPath + "] to [" + getResourceDescription(resource) + "]");
     }
 
     /**
@@ -697,6 +716,8 @@ public final class SpringContextHelper implements Serializable {
 	public static Map<String, List<Resource>> findContextResourcesRecursively(ApplicationContext applicationContext, String path) {
 		Map<String, List<Resource>> resources = new LinkedHashMap<>();
 		Set<String> resourcePaths = StringUtils.resolveResourceNames(path);
+		log.debug("Resolve location [{}] to solvable locations [{}]",
+				path, org.apache.commons.lang3.StringUtils.join(path, ", "));
 		if (applicationContext != null && !CollectionUtils.isEmpty(resourcePaths)) {
 		    ApplicationContext ctx = applicationContext;
 		    while(ctx != null) {
