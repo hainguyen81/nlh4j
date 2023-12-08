@@ -5,7 +5,9 @@
 package org.nlh4j.core.context;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -92,6 +94,8 @@ public class Nlh4jApplicationContextInitializer extends AbstractApplicationConte
 
 			    } else {
                     log.info("Load [{}] property sources at FIRST!", resourcePropertySources.size());
+                    propertiesLocationsSet = propertiesLocationsSet.stream().sorted(Collections.reverseOrder())
+                    		.collect(Collectors.toCollection(LinkedHashSet::new));
                     // FIXME Using parallel stream makes resources not keep correct order loading
                     //    resourcePropertySources.parallelStream().forEach(propertySources::addFirst);
                     resourcePropertySources.forEach(propertySources::addFirst);
