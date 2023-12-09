@@ -5,9 +5,7 @@
 package org.nlh4j.core.context;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.LinkedHashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -17,17 +15,22 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.inject.Singleton;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.nlh4j.core.servlet.SpringContextHelper;
 import org.nlh4j.util.ExceptionUtils;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Scope;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertySource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.ResourcePropertySource;
+import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,6 +38,9 @@ import lombok.extern.slf4j.Slf4j;
  * {@link ApplicationContextInitializer}
  */
 @Slf4j
+@Component
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
+@Singleton
 public class Nlh4jApplicationContextInitializer extends AbstractApplicationContextInitializer {
 	
 	/** */
