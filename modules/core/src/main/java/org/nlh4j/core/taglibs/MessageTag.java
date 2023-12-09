@@ -14,6 +14,10 @@ import org.springframework.util.StringUtils;
 /**
  * Extended message JSP tag for application.
  * Some format message key:
+ * . System:		SYS_MSG_ID_ERR_0000# - system message
+ *                  SYS_MSG_ID_INF_0000# - info message
+ *                  SYS_MSG_ID_WARN_0000# - warning message
+ *                  SYS_MSG_ID_CONF_0000# - confirm message
  * . Common:        COM_MSG_ID_ERR_0000# - error message
  *                  COM_MSG_ID_INF_0000# - info message
  *                  COM_MSG_ID_WARN_0000# - warning message
@@ -40,6 +44,7 @@ public class MessageTag extends org.springframework.web.servlet.tags.MessageTag 
      */
     public enum MSG_CATEGORY {
         NONE
+        , SYSTEM
         , COMMON
         , APPLICATION
         , SCREEN
@@ -63,13 +68,37 @@ public class MessageTag extends org.springframework.web.servlet.tags.MessageTag 
             return this.value;
         }
     }
+    
+    /*************************************************
+     * MESSAGE CODE
+     *************************************************/
+    private String code;
+    @Override
+    public void setCode(String code) {
+    	this.code = code; // keep the message code for system error case
+    	super.setCode(code);
+    }
+    
+    /*************************************************
+     * SYSTEM ERROR
+     *************************************************/
+    private boolean systemError = false;
+    /**
+     * Set default message category as string: SYSTEM.
+     * If true, it will turn the default system error message: SYS_MSG_ID_ERR_99999
+     *
+     * @param systemError true for system error
+     */
+    public void setSystemError(boolean systemError) {
+		this.systemError = systemError;
+	}
 
     /*************************************************
      * MESSAGE CATEGORY
      *************************************************/
     private MSG_CATEGORY msgCategory = MSG_CATEGORY.NONE;
     /**
-     * Set message category as string: COMMON, APPLICATION, SCREEN.
+     * Set message category as string: SYSTEM, COMMON, APPLICATION, SCREEN.
      * If message category is invalid; then just using message key as &lt;code&gt; property (non-format)
      *
      * @param msgCategory message category
@@ -81,15 +110,19 @@ public class MessageTag extends org.springframework.web.servlet.tags.MessageTag 
         this.msgCategory = category;
     }
     /**
-     * Set message category as integer: 1 - COMMON, 2 - APPLICATION, 3 - SCREEN.
+     * Set message category as integer: 0 - SYSTEM, 1 - COMMON, 2 - APPLICATION, 3 - SCREEN.
      * If message category is invalid; then just using message key as &lt;code&gt; property (non-format)
      *
      * @param msgCategory message category
      */
     public void setCategoryNumber(Integer msgCategory) {
         MSG_CATEGORY category = MSG_CATEGORY.NONE;
-        if (msgCategory != null && 0 < msgCategory && msgCategory < 4) {
+        if (msgCategory != null && 0 <= msgCategory && msgCategory < 4) {
             switch(msgCategory) {
+                case 0: {
+                    category = MSG_CATEGORY.SYSTEM;
+                    break;
+                }
                 case 1: {
                     category = MSG_CATEGORY.COMMON;
                     break;
@@ -200,11 +233,24 @@ public class MessageTag extends org.springframework.web.servlet.tags.MessageTag 
      */
     @Override
     protected String resolveMessage() throws JspException, NoSuchMessageException {
+    	// detect whether is default system error
+    	if (this.systemError) {
+			setCategoryNumber(0);
+			setTypeNumber(1);
+			setNumber(99999);
+			setNumLen(0);
+			setArguments(code);
+		}
+
         // detect for overriding message code
         if (this.msgCategory != null && !MSG_CATEGORY.NONE.equals(this.msgCategory)) {
             String code = null;
             String numFmt = ("%0" + String.valueOf(this.msgNumLength) + "d");
             switch(this.msgCategory) {
+                case SYSTEM: {
+                    this.screenId = "SYS";
+                    break;
+                }
                 case COMMON: {
                     this.screenId = "COM";
                     break;
