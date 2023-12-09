@@ -109,6 +109,10 @@ public class Nlh4jApplicationContextInitializer extends AbstractApplicationConte
 					.flatMap(Set<PropertySource<?>>::parallelStream)
 					.distinct()
 					.collect(Collectors.toCollection(LinkedHashSet::new));
+			if (log.isDebugEnabled()) {
+				log.debug("Property Sources: [{}]", resourcePropertySources.parallelStream()
+						.map(PropertySource::getName).collect(Collectors.joining(System.lineSeparator())));
+			}
 			if (CollectionUtils.isNotEmpty(resourcePropertySources)) {
 			    if (StringUtils.equalsIgnoreCase(propertiesLoadOrder, PROPERTIES_LOAD_ORDER_LAST)) {
 			        log.info("Load [{}] property sources at LAST!", resourcePropertySources.size());

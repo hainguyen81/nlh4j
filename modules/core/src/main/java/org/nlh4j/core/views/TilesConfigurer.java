@@ -5,22 +5,34 @@
 package org.nlh4j.core.views;
 
 import java.io.Serializable;
+import java.net.URL;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 
+import com.machinezoo.noexception.Exceptions;
+
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.tiles.TilesException;
 import org.apache.tiles.request.ApplicationContext;
 import org.apache.tiles.request.ApplicationResource;
 import org.nlh4j.core.servlet.ApplicationContextProvider;
 import org.nlh4j.core.servlet.SpringContextHelper;
-import org.nlh4j.util.CollectionUtils;
-import org.nlh4j.util.StringUtils;
+import org.nlh4j.util.ExceptionUtils;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.web.servlet.view.tiles3.SpringWildcardServletTilesApplicationContext;
 
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +50,6 @@ public class TilesConfigurer extends org.springframework.web.servlet.view.tiles3
 
     /** */
     private static final long serialVersionUID = 1L;
-    private static final String CLASSPATH_PREFIX = "classpath";
 
 	/** tile definitions */
 	private ServletContext servletContext;
@@ -100,138 +111,63 @@ public class TilesConfigurer extends org.springframework.web.servlet.view.tiles3
      */
     private void parseValidDefinitions(ApplicationContext context, String...definitions) {
     	// if defined definitions
-    	List<String> validDefinitions = new LinkedList<String>();
-    	if (!CollectionUtils.isEmpty(definitions)) {
+    	Set<String> validDefinitions = new LinkedHashSet<String>();
+    	if (ArrayUtils.isNotEmpty(definitions)) {
     		// debug
     		if (log.isDebugEnabled()) {
     			log.debug("Resolving definitions ["
     					+ org.springframework.util.StringUtils.arrayToCommaDelimitedString(definitions) + "]");
     		}
-    		// check definition
+
+    		// find definitions from Apache context
+    		List<String> definitionsList = Stream.of(Optional.ofNullable(definitions).orElseGet(() -> new String[0]))
+    	    		.parallel().filter(StringUtils::isNotBlank).collect(Collectors.toCollection(LinkedList::new));
+    		Map<String, Collection<ApplicationResource>> definitionResources = definitionsList.parallelStream()
+    				.map(d -> new SimpleEntry<>(d, Optional.ofNullable(context)
+    						.map(ExceptionUtils.wrap(log).function(Exceptions.wrap().function(c -> c.getResources(d))))
+    						.filter(Optional::isPresent).map(Optional::get)
+    						.filter(CollectionUtils::isNotEmpty).orElseGet(LinkedList::new)))
+    				.filter(e -> CollectionUtils.isNotEmpty(e.getValue()))
+    				.collect(Collectors.toMap(Entry::getKey, Entry::getValue, (k1, k2) -> k1));
+    		// remove resolved definitions
+    		definitionsList.removeAll(definitionResources.keySet());
+    		validDefinitions.addAll(
+    				definitionResources.entrySet().parallelStream()
+    				.map(Entry::getValue).flatMap(Collection<ApplicationResource>::parallelStream)
+    				.map(ExceptionUtils.wrap(log).function(Exceptions.wrap().function(ApplicationResource::getLocalePath)))
+    				.filter(Optional::isPresent).map(Optional::get)
+    				.filter(StringUtils::isNotBlank)
+    				.distinct().collect(Collectors.toCollection(LinkedList::new)));
+    		if (log.isTraceEnabled()) {
+    			log.debug("APACHE CONTEXT: Resolved resources [{}]", StringUtils.join(validDefinitions, ", "));
+    		}
+
+    		// find remaining definitions from Spring context
     		SpringContextHelper helper = this.getContextHelper();
-    		org.springframework.context.ApplicationContext appCtx =
-    				(helper != null ? helper.getContext() : null);
-			for(String definition : definitions) {
-				boolean valid = false;
-				Resource[] ctxRes = null;
-
-				// try with Apache context
-				if (context != null) {
-					// resolve all occured resources
-					Collection<ApplicationResource> resources = null;
-					try {
-						// with classpath prefix
-						resources = context.getResources(definition);
-						valid = !CollectionUtils.isEmpty(resources);
-						// cache valid definition
-						if (valid) {
-							validDefinitions.add(definition);
-						}
-						// debug
-						if (log.isTraceEnabled() && valid) {
-							List<String> resolved = new LinkedList<String>();
-							for(ApplicationResource resource : resources) {
-								String path = null;
-								// resource path
-								if (!StringUtils.hasText(path)) {
-									try {
-										path = resource.getLocalePath();
-									} catch (Exception e) {}
-								}
-								if (!StringUtils.hasText(path)) resolved.add(path);
-							}
-							if (!CollectionUtils.isEmpty(resources)) {
-
-							}
-							if (log.isTraceEnabled()) {
-								log.debug("Resolved resource pattern [" + definition + "] to resource ["
-										+ (CollectionUtils.isEmpty(resolved)
-												? "" : org.springframework.util.StringUtils.collectionToCommaDelimitedString(resolved)));
-							}
-						}
-					} catch (Exception e) {
-						if (!CollectionUtils.isEmpty(resources)) {
-							resources.clear();
-						}
-						valid = false;
-					}
-				}
-
-				// try with application context
-				if (!valid && appCtx != null) {
-					try {
-						// resource resolve
-						PathMatchingResourcePatternResolver resourceResolver =
-								new PathMatchingResourcePatternResolver(appCtx.getClassLoader());
-						// with classpath prefix
-						if (definition.toLowerCase().startsWith(CLASSPATH_PREFIX)) {
-							ctxRes = resourceResolver.getResources(definition);
-						} else {
-							ctxRes = appCtx.getResources(definition);
-						}
-						valid = !CollectionUtils.isEmpty(ctxRes);
-						// parse for correct resource path
-						// because super class could not found it
-						if (valid) {
-							List<String> resolved = new LinkedList<String>();
-							for(Resource resource : ctxRes) {
-								String path = null;
-                                //	// file path
-                                //	if (!StringUtils.hasText(path)) {
-                                //		try {
-                                //			path = resource.getFile().getPath();
-                                //		} catch (Exception e) {}
-                                //	}
-                                //	// URI path
-                                //	if (!StringUtils.hasText(path)) {
-                                //		try {
-                                //			path = resource.getURI().getPath();
-                                //		} catch (Exception e) {}
-                                //	}
-								// URL path
-								if (!StringUtils.hasText(path)) {
-									try {
-										path = resource.getURL().getPath();
-									} catch (Exception e) {}
-								}
-								// cache valid resource path as definition
-								if (StringUtils.hasText(path)) resolved.add(path);
-							}
-							// if valid; then using it as definition
-							if (!CollectionUtils.isEmpty(resolved)) {
-								validDefinitions.addAll(resolved);
-							}
-							// debug
-							if (log.isTraceEnabled()) {
-								log.debug("Resolved resource pattern [" + definition + "] to resource ["
-										+ (CollectionUtils.isEmpty(resolved)
-												? "" : org.springframework.util.StringUtils.collectionToCommaDelimitedString(resolved)));
-							}
-						}
-					} catch (Exception e) {
-						ctxRes = null;
-						valid = false;
-					}
-				}
-
-				// if invalid
-				if (!valid && log.isTraceEnabled()) {
-					log.error("Could not found resource at location: [" + definition + "]");
-				}
-			}
+    		if (CollectionUtils.isNotEmpty(definitionsList) && helper != null) {
+	    		validDefinitions.addAll(
+	    				definitionsList.parallelStream()
+	    				.map(d -> Optional.ofNullable(helper)
+	    						.map(ExceptionUtils.wrap(log).function(Exceptions.wrap().function(h -> h.searchResources(d))))
+	    						.filter(Optional::isPresent).map(Optional::get).map(Map<String, List<Resource>>::values)
+	    						.filter(CollectionUtils::isNotEmpty).orElseGet(LinkedList::new))
+	    				.filter(CollectionUtils::isNotEmpty)
+	    				.flatMap(Collection<List<Resource>>::parallelStream)
+	    				.flatMap(List<Resource>::parallelStream)
+	    				.map(ExceptionUtils.wrap(log).function(Exceptions.wrap().function(Resource::getURL)))
+	    				.filter(Optional::isPresent).map(Optional::get)
+	    				.map(ExceptionUtils.wrap(log).function(Exceptions.wrap().function(URL::getPath)))
+	    				.filter(Optional::isPresent).map(Optional::get)
+	    				.filter(StringUtils::isNotBlank)
+	    				.distinct().collect(Collectors.toCollection(LinkedList::new)));
+	    		if (log.isTraceEnabled()) {
+	    			log.debug("SPRING CONTEXT: Resolved resources [{}]", StringUtils.join(validDefinitions, ", "));
+	    		}
+    		}
 		}
     	// re-apply valid definitions
-    	this.definitions = (CollectionUtils.isEmpty(validDefinitions)
-    			? new String[] {} : validDefinitions.toArray(new String[validDefinitions.size()]));
+    	this.definitions = validDefinitions.toArray(new String[0]);
     	super.setDefinitions(this.definitions);
-    	if (CollectionUtils.isEmpty(validDefinitions)) {
-    		log.warn("Could not found any valid definitions"
-    				+ (CollectionUtils.isEmpty(definitions)
-    						? "" : " from [" + org.springframework.util.StringUtils.arrayToCommaDelimitedString(definitions) + "]"));
-    	} else {
-    	    log.info("Resolved [" + validDefinitions.size() + "] valid tiles definitions to ["
-                    + org.springframework.util.StringUtils.collectionToCommaDelimitedString(validDefinitions));
-    	}
     }
 
     /* (Non-Javadoc)

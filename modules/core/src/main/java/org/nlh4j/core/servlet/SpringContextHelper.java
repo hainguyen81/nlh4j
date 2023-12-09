@@ -26,6 +26,7 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.nlh4j.util.BeanUtils;
 import org.nlh4j.util.CollectionUtils;
 import org.nlh4j.util.ExceptionUtils;
@@ -60,6 +61,9 @@ public final class SpringContextHelper implements Serializable {
 
 	/** */
 	private static final long serialVersionUID = 1L;
+	
+	private static final String RESOURCE_JAR_PART_PATH = ".jar!";
+	private static final String RESOURCE_WAR_PART_PATH = ".war!";
 
 	/**
 	 * WEBコンテクスト
@@ -475,13 +479,6 @@ public final class SpringContextHelper implements Serializable {
     	}
 
     	String resPath = null;
-		// File
-		if (!StringUtils.hasText(resPath)) {
-			try { resPath = resource.getFile().getPath(); }
-			catch (Exception e) {
-                // do nothing
-		    }
-		}
 		// URI
 		if (!StringUtils.hasText(resPath)) {
 			try { resPath = resource.getURI().getPath(); }
@@ -496,8 +493,36 @@ public final class SpringContextHelper implements Serializable {
 			    // do nothing
 			}
 		}
+		// File
+		if (!StringUtils.hasText(resPath)) {
+			try { resPath = resource.getFile().getPath(); }
+			catch (Exception e) {
+                // do nothing
+		    }
+		}
 
 		// return information
+		if (StringUtils.hasText(resPath)) {
+			resPath = resPath.replace("\\", "/");
+			String[] resPartPaths = null;
+			if (resPath.indexOf(RESOURCE_JAR_PART_PATH) > 0) {
+				resPartPaths = org.apache.commons.lang3.StringUtils.splitByWholeSeparator(resPath, RESOURCE_JAR_PART_PATH);
+
+			} else if (resPath.indexOf(RESOURCE_WAR_PART_PATH) > 0) {
+				resPartPaths = org.apache.commons.lang3.StringUtils.splitByWholeSeparator(resPath, RESOURCE_WAR_PART_PATH);
+			}
+			if (ArrayUtils.isNotEmpty(resPartPaths)) {
+				if (resPartPaths[0].lastIndexOf("/") > 0) {
+					resPartPaths[0] = resPartPaths[0].substring(resPartPaths[0].lastIndexOf("/") + 1);
+				}
+				if (resPath.indexOf(RESOURCE_JAR_PART_PATH) > 0) {
+					resPath = String.format("%s%s%s", resPartPaths[0], RESOURCE_JAR_PART_PATH, resPartPaths.length > 1 ? resPartPaths[1] : "");
+
+				} else if (resPath.indexOf(RESOURCE_WAR_PART_PATH) > 0) {
+					resPath = String.format("%s%s%s", resPartPaths[0], RESOURCE_WAR_PART_PATH, resPartPaths.length > 1 ? resPartPaths[1] : "");
+				}
+			}
+		}
 		return Optional.ofNullable(resPath).filter(StringUtils::hasText).orElseGet(() -> resource.getDescription());
     }
 
