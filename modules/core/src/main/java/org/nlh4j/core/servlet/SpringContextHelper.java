@@ -475,12 +475,12 @@ public final class SpringContextHelper implements Serializable {
     	}
 
     	String resPath = null;
-		// URL
+		// File
 		if (!StringUtils.hasText(resPath)) {
-			try { resPath = resource.getURL().getPath(); }
+			try { resPath = resource.getFile().getPath(); }
 			catch (Exception e) {
-			    // do nothing
-			}
+                // do nothing
+		    }
 		}
 		// URI
 		if (!StringUtils.hasText(resPath)) {
@@ -489,12 +489,12 @@ public final class SpringContextHelper implements Serializable {
                 // do nothing
 		    }
 		}
-		// File
+		// URL
 		if (!StringUtils.hasText(resPath)) {
-			try { resPath = resource.getFile().getPath(); }
+			try { resPath = resource.getURL().getPath(); }
 			catch (Exception e) {
-                // do nothing
-		    }
+			    // do nothing
+			}
 		}
 
 		// return information

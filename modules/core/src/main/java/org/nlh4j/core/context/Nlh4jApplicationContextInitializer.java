@@ -5,7 +5,9 @@
 package org.nlh4j.core.context;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -18,6 +20,7 @@ import java.util.stream.Stream;
 import javax.inject.Singleton;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.nlh4j.core.servlet.SpringContextHelper;
 import org.nlh4j.util.ExceptionUtils;
@@ -45,21 +48,25 @@ public class Nlh4jApplicationContextInitializer extends AbstractApplicationConte
 	
 	/** */
 	private static final long serialVersionUID = 1L;
+	
+	/** highPriorityOnFirstLoad */
+	private static final String CONTEXT_PARAM_PROPERTIES_LOCATIONS_ORDER_REVERSE = "reverseLocationsOrder";
 
 	/** propertiesLoadOrder */
+	private static final String CONTEXT_PARAM_PROPERTIES_LOAD_ORDER = "propertiesLoadOrder";
 	private static final String PROPERTIES_LOAD_ORDER_FIRST = "FIRST";
 	private static final String PROPERTIES_LOAD_ORDER_LAST = "LAST";
-	private static final String PROPERTIES_LOAD_ORDER_CONTEXT_PARAM = "propertiesLoadOrder";
 
 	/** propertiesLocations */
-	private static final String PROPERTIES_LOCATIONS_CONTEXT_PARAM = "propertiesLocations";
+	private static final String CONTEXT_PARAM_PROPERTIES_LOCATIONS = "propertiesLocations";
 	private static final String PROPERTIES_LOCATIONS_SEPARATORS = System.lineSeparator() + ",; ";
 	
 	@Override
 	protected String[] getContextParams() {
 		return new String[] {
-				PROPERTIES_LOAD_ORDER_CONTEXT_PARAM,
-				PROPERTIES_LOCATIONS_CONTEXT_PARAM
+				CONTEXT_PARAM_PROPERTIES_LOAD_ORDER,
+				CONTEXT_PARAM_PROPERTIES_LOCATIONS_ORDER_REVERSE,
+				CONTEXT_PARAM_PROPERTIES_LOCATIONS
 		};
 	}
 	
@@ -71,26 +78,37 @@ public class Nlh4jApplicationContextInitializer extends AbstractApplicationConte
 			return;
 		}
 
+		boolean propertiesLocationsOrderReverse = Optional.ofNullable(contextParamsMap.getOrDefault(
+				CONTEXT_PARAM_PROPERTIES_LOCATIONS_ORDER_REVERSE, Boolean.FALSE.toString()))
+				.map(BooleanUtils::toBoolean).orElse(Boolean.FALSE);
+		log.info("`{}`: {}", CONTEXT_PARAM_PROPERTIES_LOCATIONS_ORDER_REVERSE, propertiesLocationsOrderReverse);
 		String propertiesLoadOrder = Optional.ofNullable(contextParamsMap.getOrDefault(
-				PROPERTIES_LOAD_ORDER_CONTEXT_PARAM, PROPERTIES_LOAD_ORDER_FIRST))
+				CONTEXT_PARAM_PROPERTIES_LOAD_ORDER, PROPERTIES_LOAD_ORDER_FIRST))
 				.filter(StringUtils::isNotBlank).filter(p -> StringUtils.equalsIgnoreCase(PROPERTIES_LOAD_ORDER_LAST, p))
 				.map(p -> PROPERTIES_LOAD_ORDER_LAST).orElse(PROPERTIES_LOAD_ORDER_FIRST);
-		log.info("`{}`: {}", PROPERTIES_LOAD_ORDER_CONTEXT_PARAM, propertiesLoadOrder);
-		String propertiesLocations = contextParamsMap.getOrDefault(PROPERTIES_LOCATIONS_CONTEXT_PARAM, null);
+		log.info("`{}`: {}", CONTEXT_PARAM_PROPERTIES_LOAD_ORDER, propertiesLoadOrder);
+		String propertiesLocations = contextParamsMap.getOrDefault(CONTEXT_PARAM_PROPERTIES_LOCATIONS, null);
 		String[] propertiesLocationsArray = StringUtils.split(propertiesLocations, PROPERTIES_LOCATIONS_SEPARATORS);
-		Set<String> propertiesLocationsSet = Stream.of(Optional.ofNullable(propertiesLocationsArray).orElseGet(() -> new String[0]))
+		List<String> propertiesLocationsList = Stream.of(Optional.ofNullable(propertiesLocationsArray).orElseGet(() -> new String[0]))
 				.parallel()
 				.filter(StringUtils::isNotBlank).map(StringUtils::trimToEmpty)
-				.collect(Collectors.toCollection(LinkedHashSet::new));
-		log.info("`{}`: {} - separate: [{}]", PROPERTIES_LOCATIONS_CONTEXT_PARAM, propertiesLocations, propertiesLocationsSet);
-		if (CollectionUtils.isNotEmpty(propertiesLocationsSet)) {
+				.distinct()
+				.collect(Collectors.toCollection(LinkedList::new));
+		// reverse properties locations
+		if (propertiesLocationsOrderReverse) {
+			Collections.reverse(propertiesLocationsList);
+		}
+		log.info("`{}`: {} - separate: [{}]", CONTEXT_PARAM_PROPERTIES_LOCATIONS, propertiesLocations, propertiesLocationsList);
+		if (CollectionUtils.isNotEmpty(propertiesLocationsList)) {
 			// FIXME Using parallel stream makes resources not keep correct order loading
 			//	Set<PropertySource<?>> resourcePropertySources = propertiesLocationsSet.stream()
 			//			.map(this::loadPropertiesResources).filter(CollectionUtils::isNotEmpty)
 			//			.flatMap(Set<PropertySource<?>>::stream).collect(Collectors.toCollection(LinkedHashSet::new));
-			Set<PropertySource<?>> resourcePropertySources = propertiesLocationsSet.stream()
+			Set<PropertySource<?>> resourcePropertySources = propertiesLocationsList.parallelStream()
 					.map(this::loadPropertiesResources).filter(CollectionUtils::isNotEmpty)
-					.flatMap(Set<PropertySource<?>>::stream).collect(Collectors.toCollection(LinkedHashSet::new));
+					.flatMap(Set<PropertySource<?>>::parallelStream)
+					.distinct()
+					.collect(Collectors.toCollection(LinkedHashSet::new));
 			if (CollectionUtils.isNotEmpty(resourcePropertySources)) {
 			    if (StringUtils.equalsIgnoreCase(propertiesLoadOrder, PROPERTIES_LOAD_ORDER_LAST)) {
 			        log.info("Load [{}] property sources at LAST!", resourcePropertySources.size());
@@ -100,11 +118,6 @@ public class Nlh4jApplicationContextInitializer extends AbstractApplicationConte
 
 			    } else {
                     log.info("Load [{}] property sources at FIRST!", resourcePropertySources.size());
-                    // FIXME Do we need to reserve the order to add FIRST???
-					//    propertiesLocationsSet = propertiesLocationsSet.stream().sorted(Collections.reverseOrder())
-					//    		.collect(Collectors.toCollection(LinkedHashSet::new));
-                    // FIXME Using parallel stream makes resources not keep correct order loading
-                    //    resourcePropertySources.parallelStream().forEach(propertySources::addFirst);
                     resourcePropertySources.forEach(propertySources::addFirst);
 			    }
 				
