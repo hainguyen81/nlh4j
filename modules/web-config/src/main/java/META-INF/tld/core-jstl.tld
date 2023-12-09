@@ -27,16 +27,24 @@
 		<attribute>
 			<description>The category to use when formatting code if code is not provided.
 			If code is not provided, and category is NONE, the text attribute will be used.
-			Valid values: 1 - COMMON, 2 - APPLICATION, 3 - SCREEN.
-			Formatted code is [COM/APP/SCR]_MSG_ID_[MSG TYPE]_[FORMATTED MSG NUMBER]</description>
+			Valid values: true/false.
+			Formatted code is SYS_MSG_ID_ERR_99999</description>
+			<name>systemError</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The category to use when formatting code if code is not provided.
+			If code is not provided, and category is NONE, the text attribute will be used.
+			Valid values: 0 - SYSTEM, 1 - COMMON, 2 - APPLICATION, 3 - SCREEN.
+			Formatted code is [SYS/COM/APP/SCR]_MSG_ID_[MSG TYPE]_[FORMATTED MSG NUMBER]</description>
 			<name>category</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description>The category to use when formatting code if code is not provided.
 			If code is not provided, and category is NONE, the text attribute will be used.
-			Valid values: 1 - COMMON, 2 - APPLICATION, 3 - SCREEN.
-			Formatted code is [COM/APP/SCR]_MSG_ID_[MSG TYPE]_[FORMATTED MSG NUMBER]</description>
+			Valid values: 0 - SYSTEM, 1 - COMMON, 2 - APPLICATION, 3 - SCREEN.
+			Formatted code is [SYS/COM/APP/SCR]_MSG_ID_[MSG TYPE]_[FORMATTED MSG NUMBER]</description>
 			<name>categoryNumber</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -45,7 +53,7 @@
 			If code is not provided, and category is NONE, the text attribute will be used.
 			Valid values: 1 - ERROR, 2 - WARN, 3 - CONFIRM.
 			Default is INFO.
-			Formatted code is [COM/APP/SCR]_MSG_ID_[MSG TYPE]_[FORMATTED MSG NUMBER]</description>
+			Formatted code is [SYS/COM/APP/SCR]_MSG_ID_[MSG TYPE]_[FORMATTED MSG NUMBER]</description>
 			<name>type</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -54,7 +62,7 @@
 			If code is not provided, and category is NONE, the text attribute will be used.
 			Valid values: 1 - ERROR, 2 - WARN, 3 - CONFIRM.
 			Default is INFO.
-			Formatted code is [COM/APP/SCR]_MSG_ID_[MSG TYPE]_[FORMATTED MSG NUMBER]</description>
+			Formatted code is [SYS/COM/APP/SCR]_MSG_ID_[MSG TYPE]_[FORMATTED MSG NUMBER]</description>
 			<name>typeNumber</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -62,7 +70,7 @@
 			<description>The screen identity while message category is SCREEN to use when formatting code if code is not provided.
 			If code is not provided, and category is NONE, the text attribute will be used.
 			Default is SCR.
-			Formatted code is [COM/APP/SCR]_MSG_ID_[MSG TYPE]_[FORMATTED MSG NUMBER]</description>
+			Formatted code is [SYS/COM/APP/SCR]_MSG_ID_[MSG TYPE]_[FORMATTED MSG NUMBER]</description>
 			<name>screen</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -70,7 +78,7 @@
 			<description>The message number to use when formatting code if code is not provided.
 			If code is not provided, and category is NONE, the text attribute will be used.
 			Default is 0.
-			Formatted code is [COM/APP/SCR]_MSG_ID_[MSG TYPE]_[FORMATTED MSG NUMBER]</description>
+			Formatted code is [SYS/COM/APP/SCR]_MSG_ID_[MSG TYPE]_[FORMATTED MSG NUMBER]</description>
 			<name>number</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -79,7 +87,7 @@
 			If code is not provided, and category is NONE, the text attribute will be used.
 			If length is equals or less than 0; default i 5.
 			Default is 5.
-			Formatted code is [COM/APP/SCR]_MSG_ID_[MSG TYPE]_[FORMATTED MSG NUMBER]</description>
+			Formatted code is [SYS/COM/APP/SCR]_MSG_ID_[MSG TYPE]_[FORMATTED MSG NUMBER]</description>
 			<name>numLen</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
