@@ -43,10 +43,15 @@
 			classpath*:*.properties
 		</param-value>
 	</context-param>
-	<!-- FIRST|LAST -->
+	<!-- FIRST|LAST (default is FIRST) -->
 	<!-- <context-param>
 		<param-name>propertiesLoadOrder</param-name>
 		<param-value>FIRST</param-value>
+	</context-param> -->
+	<!-- true|false (default is false) -->
+	<!-- <context-param>
+		<param-name>reverseLocationsOrder</param-name>
+		<param-value>false</param-value>
 	</context-param> -->
 
 	<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->

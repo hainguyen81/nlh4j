@@ -32,7 +32,8 @@ import org.nlh4j.util.RequestUtils;
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 @Singleton
-public final class ApplicationContextProvider implements ApplicationContextAware, ServletContextAware, ServletConfigAware, Serializable {
+public final class ApplicationContextProvider
+	implements ApplicationContextAware, ServletContextAware, ServletConfigAware, Serializable {
 
     /** */
     private static final long serialVersionUID = 1L;
