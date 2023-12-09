@@ -31,16 +31,16 @@
 	<context-param>
 		<param-name>propertiesLocations</param-name>
 		<param-value>
+			<!--
+				the upper level will override the below level.
+				the property sources will override the properties-config.xml if necessary
+			-->
+			classpath*:**/properties/**/*.properties
+			classpath*:properties/**/*.properties
 			classpath*:**/properties/*.properties
-			classpath*:/properties/*.properties
 			classpath*:properties/*.properties
-			classpath:**/properties/*.properties
-			classpath:/properties/*.properties
-			classpath:properties/*.properties
 			classpath*:**/*.properties
-			classpath:**/*.properties
 			classpath*:*.properties
-			classpath:*.properties
 		</param-value>
 	</context-param>
 	<!-- FIRST|LAST -->

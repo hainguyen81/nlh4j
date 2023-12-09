@@ -6,7 +6,6 @@ package org.nlh4j.core.context;
 
 import java.io.IOException;
 import java.util.LinkedHashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -16,16 +15,22 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.inject.Singleton;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.nlh4j.core.servlet.SpringContextHelper;
 import org.nlh4j.util.ExceptionUtils;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Scope;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertySource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.ResourcePropertySource;
+import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,6 +38,9 @@ import lombok.extern.slf4j.Slf4j;
  * {@link ApplicationContextInitializer}
  */
 @Slf4j
+@Component
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
+@Singleton
 public class Nlh4jApplicationContextInitializer extends AbstractApplicationContextInitializer {
 	
 	/** */
@@ -69,24 +77,35 @@ public class Nlh4jApplicationContextInitializer extends AbstractApplicationConte
 				.map(p -> PROPERTIES_LOAD_ORDER_LAST).orElse(PROPERTIES_LOAD_ORDER_FIRST);
 		log.info("`{}`: {}", PROPERTIES_LOAD_ORDER_CONTEXT_PARAM, propertiesLoadOrder);
 		String propertiesLocations = contextParamsMap.getOrDefault(PROPERTIES_LOCATIONS_CONTEXT_PARAM, null);
-		List<String> propertiesLocationsList = Stream.of(
-				Optional.ofNullable(StringUtils.split(propertiesLocations, PROPERTIES_LOCATIONS_SEPARATORS))
-				.orElseGet(() -> new String[0])).parallel()
+		String[] propertiesLocationsArray = StringUtils.split(propertiesLocations, PROPERTIES_LOCATIONS_SEPARATORS);
+		Set<String> propertiesLocationsSet = Stream.of(Optional.ofNullable(propertiesLocationsArray).orElseGet(() -> new String[0]))
+				.parallel()
 				.filter(StringUtils::isNotBlank).map(StringUtils::trimToEmpty)
-				.collect(Collectors.toCollection(LinkedList::new));
-		log.info("`{}`: {} - separate: [{}]", PROPERTIES_LOCATIONS_CONTEXT_PARAM, propertiesLocations, propertiesLocationsList);
-		if (CollectionUtils.isNotEmpty(propertiesLocationsList)) {
-			List<PropertySource<?>> resourcePropertySources = propertiesLocationsList.parallelStream()
+				.collect(Collectors.toCollection(LinkedHashSet::new));
+		log.info("`{}`: {} - separate: [{}]", PROPERTIES_LOCATIONS_CONTEXT_PARAM, propertiesLocations, propertiesLocationsSet);
+		if (CollectionUtils.isNotEmpty(propertiesLocationsSet)) {
+			// FIXME Using parallel stream makes resources not keep correct order loading
+			//	Set<PropertySource<?>> resourcePropertySources = propertiesLocationsSet.stream()
+			//			.map(this::loadPropertiesResources).filter(CollectionUtils::isNotEmpty)
+			//			.flatMap(Set<PropertySource<?>>::stream).collect(Collectors.toCollection(LinkedHashSet::new));
+			Set<PropertySource<?>> resourcePropertySources = propertiesLocationsSet.stream()
 					.map(this::loadPropertiesResources).filter(CollectionUtils::isNotEmpty)
-					.flatMap(List<PropertySource<?>>::stream).collect(Collectors.toCollection(LinkedList::new));
+					.flatMap(Set<PropertySource<?>>::stream).collect(Collectors.toCollection(LinkedHashSet::new));
 			if (CollectionUtils.isNotEmpty(resourcePropertySources)) {
 			    if (StringUtils.equalsIgnoreCase(propertiesLoadOrder, PROPERTIES_LOAD_ORDER_LAST)) {
-			        log.info("Load property sources at LAST!");
-			        resourcePropertySources.parallelStream().forEach(propertySources::addLast);
+			        log.info("Load [{}] property sources at LAST!", resourcePropertySources.size());
+			        // FIXME Using parallel stream makes resources not keep correct order loading
+			        //    resourcePropertySources.parallelStream().forEach(propertySources::addLast);
+			        resourcePropertySources.forEach(propertySources::addLast);
 
 			    } else {
-                    log.info("Load property sources at FIRST!");
-                    resourcePropertySources.parallelStream().forEach(propertySources::addFirst);
+                    log.info("Load [{}] property sources at FIRST!", resourcePropertySources.size());
+                    // FIXME Do we need to reserve the order to add FIRST???
+					//    propertiesLocationsSet = propertiesLocationsSet.stream().sorted(Collections.reverseOrder())
+					//    		.collect(Collectors.toCollection(LinkedHashSet::new));
+                    // FIXME Using parallel stream makes resources not keep correct order loading
+                    //    resourcePropertySources.parallelStream().forEach(propertySources::addFirst);
+                    resourcePropertySources.forEach(propertySources::addFirst);
 			    }
 				
 			} else log.warn("Not found any valid `propertiesLocations` to load! Please re-check properties locations again!");
@@ -111,7 +130,7 @@ public class Nlh4jApplicationContextInitializer extends AbstractApplicationConte
 	 * 
 	 * @return {@link ResourcePropertySource}(s)
 	 */
-	protected List<PropertySource<?>> loadPropertiesResources(final String propertiesLocation) {
+	protected Set<PropertySource<?>> loadPropertiesResources(final String propertiesLocation) {
 		// check for resource from classpath
 		Set<Resource> resources = Optional.ofNullable(getContextHelper())
 				.map(ctx -> ctx.searchResources(propertiesLocation))
@@ -120,7 +139,9 @@ public class Nlh4jApplicationContextInitializer extends AbstractApplicationConte
 				.map(Entry<String, List<Resource>>::getValue)
 				.flatMap(List<Resource>::stream).filter(Resource::exists)
 				.collect(Collectors.toCollection(LinkedHashSet::new));
-		return resources.parallelStream().map(res -> {
+
+		// solve property source
+		Set<PropertySource<?>> propertySources = resources.parallelStream().map(res -> {
 			ResourcePropertySource propertySource = null;
 			try {
 				propertySource = new ResourcePropertySource(getNameForResource(res), res);
@@ -144,7 +165,13 @@ public class Nlh4jApplicationContextInitializer extends AbstractApplicationConte
 			}
 			return tracePropertiesSource(propertySource);
 		}).filter(Objects::nonNull)
-		.collect(Collectors.toCollection(LinkedList::new));
+		.collect(Collectors.toCollection(LinkedHashSet::new));
+
+		// tracing
+		if (log.isDebugEnabled()) {
+			log.debug("==> Solved [{}] property sources for path [{}]", propertySources.size(), propertiesLocation);
+		}
+		return propertySources;
 	}
 	
 	/**
@@ -153,9 +180,12 @@ public class Nlh4jApplicationContextInitializer extends AbstractApplicationConte
 	 * @see org.springframework.core.io.Resource#getDescription()
 	 */
 	private static String getNameForResource(Resource resource) {
-		String name = resource.getDescription();
-		if (StringUtils.isBlank(name)) {
+		String name = SpringContextHelper.getResourceDescription(resource);
+		if (resource != null && StringUtils.isBlank(name)) {
 			name = String.format("%s@%d", resource.getClass().getSimpleName(), System.identityHashCode(resource));
+
+		} else if (StringUtils.isBlank(name)) {
+			name = "Invalid Resource Detection!";
 		}
 		return String.format("%s@%s", Nlh4jApplicationContextInitializer.class.getSimpleName(), name);
 	}

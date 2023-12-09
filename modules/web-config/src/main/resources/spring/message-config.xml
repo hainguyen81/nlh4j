@@ -43,29 +43,29 @@
 
 			    <!-- System -->
 			    <value>classpath*:**/properties/i18n/systemResources</value>
-				<value>classpath*:/properties/i18n/systemResources</value>
+				<value>classpath*:properties/i18n/systemResources</value>
 				<value>classpath*:**/i18n/systemResources</value>
-				<value>classpath*:/i18n/systemResources</value>
+				<value>classpath*:i18n/systemResources</value>
 				<value>classpath*:**/systemResources</value>
 				<value>classpath*:systemResources</value>
 
 			    <!-- Base -->
 			    <value>classpath*:**/properties/i18n/baseResources</value>
-				<value>classpath*:/properties/i18n/baseResources</value>
+				<value>classpath*:properties/i18n/baseResources</value>
 				<value>classpath*:**/i18n/baseResources</value>
-				<value>classpath*:/i18n/baseResources</value>
+				<value>classpath*:i18n/baseResources</value>
 				<value>classpath*:**/baseResources</value>
 				<value>classpath*:baseResources</value>
 
 				<!-- Application -->
 				<value>classpath*:**/properties/i18n/ApplicationResources</value>
 				<value>classpath*:**/properties/i18n/messages</value>
-				<value>classpath*:/properties/i18n/ApplicationResources</value>
-				<value>classpath*:/properties/i18n/messages</value>
+				<value>classpath*:properties/i18n/ApplicationResources</value>
+				<value>classpath*:properties/i18n/messages</value>
 				<value>classpath*:**/i18n/ApplicationResources</value>
 				<value>classpath*:**/i18n/messages</value>
-				<value>classpath*:/i18n/ApplicationResources</value>
-				<value>classpath*:/i18n/messages</value>
+				<value>classpath*:i18n/ApplicationResources</value>
+				<value>classpath*:i18n/messages</value>
 				<value>classpath*:**/ApplicationResources</value>
 				<value>classpath*:**/messages</value>
 				<value>classpath*:ApplicationResources</value>
@@ -73,21 +73,21 @@
 
 				<!-- Module -->
 				<value>classpath*:**/properties/i18n/moduleResources</value>
-				<value>classpath*:/properties/i18n/moduleResources</value>
+				<value>classpath*:properties/i18n/moduleResources</value>
 				<value>classpath*:**/i18n/moduleResources</value>
-				<value>classpath*:/i18n/moduleResources</value>
+				<value>classpath*:i18n/moduleResources</value>
 				<value>classpath*:**/moduleResources</value>
 				<value>classpath*:moduleResources</value>
 
 				<!-- By Theme -->
 				<value>classpath*:**/properties/i18n/${app.theme}Resources</value>
 				<value>classpath*:**/properties/i18n/${app.theme}Messages</value>
-				<value>classpath*:/properties/i18n/${app.theme}Resources</value>
-				<value>classpath*:/properties/i18n/${app.theme}Messages</value>
+				<value>classpath*:properties/i18n/${app.theme}Resources</value>
+				<value>classpath*:properties/i18n/${app.theme}Messages</value>
 				<value>classpath*:**/i18n/${app.theme}Resources</value>
 				<value>classpath*:**/i18n/${app.theme}Messages</value>
-				<value>classpath*:/i18n/${app.theme}Resources</value>
-				<value>classpath*:/i18n/${app.theme}Messages</value>
+				<value>classpath*:i18n/${app.theme}Resources</value>
+				<value>classpath*:i18n/${app.theme}Messages</value>
 				<value>classpath*:**/${app.theme}Resources</value>
 				<value>classpath*:**/${app.theme}Messages</value>
 				<value>classpath*:${app.theme}Resources</value>
@@ -99,41 +99,41 @@
 
 			    <!-- System -->
 				<value>classpath*:**/properties/i18n/systemValidationMessages</value>
-				<value>classpath*:/properties/i18n/systemValidationMessages</value>
+				<value>classpath*:properties/i18n/systemValidationMessages</value>
 				<value>classpath*:**/i18n/systemValidationMessages</value>
-				<value>classpath*:/i18n/systemValidationMessages</value>
+				<value>classpath*:i18n/systemValidationMessages</value>
 				<value>classpath*:**/systemValidationMessages</value>
 				<value>classpath*:systemValidationMessages</value>
 
 			    <!-- Base -->
 				<value>classpath*:**/properties/i18n/baseValidationMessages</value>
-				<value>classpath*:/properties/i18n/baseValidationMessages</value>
+				<value>classpath*:properties/i18n/baseValidationMessages</value>
 				<value>classpath*:**/i18n/baseValidationMessages</value>
-				<value>classpath*:/i18n/baseValidationMessages</value>
+				<value>classpath*:i18n/baseValidationMessages</value>
 				<value>classpath*:**/baseValidationMessages</value>
 				<value>classpath*:baseValidationMessages</value>
 
 				<!-- Application -->
 				<value>classpath*:**/properties/i18n/validationMessages</value>
-				<value>classpath*:/properties/i18n/validationMessages</value>
+				<value>classpath*:properties/i18n/validationMessages</value>
 				<value>classpath*:**/i18n/validationMessages</value>
-				<value>classpath*:/i18n/validationMessages</value>
+				<value>classpath*:i18n/validationMessages</value>
 				<value>classpath*:**/validationMessages</value>
 				<value>classpath*:validationMessages</value>
 
 				<!-- Module -->
 				<value>classpath*:**/properties/i18n/moduleValidationMessages</value>
-				<value>classpath*:/properties/i18n/moduleValidationMessages</value>
+				<value>classpath*:properties/i18n/moduleValidationMessages</value>
 				<value>classpath*:**/i18n/moduleValidationMessages</value>
-				<value>classpath*:/i18n/moduleValidationMessages</value>
+				<value>classpath*:i18n/moduleValidationMessages</value>
 				<value>classpath*:**/moduleValidationMessages</value>
 				<value>classpath*:moduleValidationMessages</value>
 
 				<!-- By Theme -->
 				<value>classpath*:**/properties/i18n/${app.theme}ValidationMessages</value>
-				<value>classpath*:/properties/i18n/${app.theme}ValidationMessages</value>
+				<value>classpath*:properties/i18n/${app.theme}ValidationMessages</value>
 				<value>classpath*:**/i18n/${app.theme}ValidationMessages</value>
-				<value>classpath*:/i18n/${app.theme}ValidationMessages</value>
+				<value>classpath*:i18n/${app.theme}ValidationMessages</value>
 				<value>classpath*:**/${app.theme}ValidationMessages</value>
 				<value>classpath*:${app.theme}ValidationMessages</value>
 			</list>
