@@ -7,7 +7,11 @@ package org.nlh4j.core.views;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Locale;
+import java.util.Optional;
 
+import javax.inject.Inject;
+
+import org.nlh4j.core.servlet.SpringContextHelper;
 import org.nlh4j.exceptions.ApplicationUnderConstructionException;
 
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +27,9 @@ public class JstlView extends org.springframework.web.servlet.view.JstlView impl
 
     /** */
     private static final long serialVersionUID = 1L;
+    
+    @Inject
+    SpringContextHelper contextHelper;
 
     /* (Non-Javadoc)
      * @see org.springframework.web.servlet.view.AbstractUrlBasedView#checkResource(java.util.Locale)
@@ -33,7 +40,9 @@ public class JstlView extends org.springframework.web.servlet.view.JstlView impl
         if (log.isDebugEnabled()) {
             log.debug("Check existed view URL: [{}]", url);
         }
-        InputStream is = super.getServletContext().getResourceAsStream(url);
+        InputStream is = Optional.ofNullable(super.getServletContext().getResourceAsStream(url))
+        		.orElseGet(() -> Optional.ofNullable(contextHelper).orElseGet(() -> new SpringContextHelper(getServletContext()))
+        				.searchFirstResourceAsStream(url));
         if (is == null) {
             throw new ApplicationUnderConstructionException(
                     "Could not found view from URL [" + url + "]");
