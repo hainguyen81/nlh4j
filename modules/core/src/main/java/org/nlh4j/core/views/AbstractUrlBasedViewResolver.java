@@ -164,10 +164,10 @@ public abstract class AbstractUrlBasedViewResolver extends UrlBasedViewResolver 
 	protected static String strip(String val, boolean slash) {
 		val = StringUtils.trimToEmpty(val);
 		if (StringUtils.isNotBlank(val)) {
-			if (!StringUtils.startsWith(val, slash ? "/" : ".")) {
-				val = String.format(slash ? "/%s" : ".%s", val);
+			if (StringUtils.startsWith(val, slash ? "/" : ".")) {
+				val = val.substring(1);
 			}
-			if (slash && StringUtils.endsWith(val, "/")) {
+			if (StringUtils.endsWith(val, slash ? "/" : ".")) {
 				val = val.substring(0, val.length() - 1);
 			}
 		}
@@ -194,13 +194,16 @@ public abstract class AbstractUrlBasedViewResolver extends UrlBasedViewResolver 
 		if (StringUtils.isNotBlank(appTheme) && !StringUtils.endsWith(prefix, appTheme)) {
 			return String.format("%s%s%s%s",
 					// prefix (included appTheme)
-					prefix,
+					Optional.ofNullable(prefix).filter(StringUtils::isNotBlank)
+					.map(s -> String.format("/%s", s)).orElse(StringUtils.EMPTY),
 					// appTheme
-					appTheme,
+					Optional.ofNullable(appTheme).filter(StringUtils::isNotBlank)
+					.map(s -> String.format("/%s/", s)).orElse(StringUtils.EMPTY),
 					// view name
 					viewName,
 					// suffix
-					suffix
+					Optional.ofNullable(suffix).filter(StringUtils::isNotBlank)
+					.map(s -> String.format(".%s", s)).orElse(StringUtils.EMPTY)
 			);
 
 			// not using appTheme or prefix already included appTheme
@@ -208,11 +211,13 @@ public abstract class AbstractUrlBasedViewResolver extends UrlBasedViewResolver 
 			// 
 			return String.format("%s%s%s",
 					// prefix (included appTheme)
-					prefix,
+					Optional.ofNullable(prefix).filter(StringUtils::isNotBlank)
+					.map(s -> String.format("/%s/", s)).orElse(StringUtils.EMPTY),
 					// view name
 					viewName,
 					// suffix
-					suffix
+					Optional.ofNullable(suffix).filter(StringUtils::isNotBlank)
+					.map(s -> String.format(".%s", s)).orElse(StringUtils.EMPTY)
 			);
 		}
 	}
