@@ -76,12 +76,12 @@
 	<context-param>
 		<param-name>spring.profiles.default</param-name>
 		<!-- <param-value>socket,socket-notification</param-value> -->
-		<param-value>${sec.profile},quartz</param-value>
+		<param-value>${spring.profiles.default}</param-value>
 	</context-param>
 	<context-param>
 		<param-name>spring.profiles.active</param-name>
 		<!-- <param-value>socket,socket-notification</param-value> -->
-		<param-value>${sec.profile},quartz</param-value>
+		<param-value>${spring.profiles.active}</param-value>
 	</context-param>
 
 	<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->

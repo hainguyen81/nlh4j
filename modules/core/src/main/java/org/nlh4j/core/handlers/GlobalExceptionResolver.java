@@ -219,63 +219,14 @@ public class GlobalExceptionResolver implements Serializable {
 		// check for response HTML page or JSON
 		boolean responsed = false;
 		if (response != null && RequestUtils.isAjaxRequest(request)) {
-			// handle by response entity
-			ResponseEntity<Object> responseEntity;
-			try {
-				responseEntity = (this.entityExceptionHandler != null
-						? this.entityExceptionHandler.handleException(innerEx, webRequest)
-								: new ResponseEntity<Object>(this.getInternalServerErrorReason(),
-										HttpStatus.INTERNAL_SERVER_ERROR));
-			} catch (Exception e) {
-				logger.error("Could not parse response entity from real exception [{}]: {}", innerEx.getMessage(), e.getMessage(), e);
-				logger.error("Real exception: {}", innerEx.getMessage(), innerEx);
-				responseEntity = new ResponseEntity<Object>(this.getInternalServerErrorReason(), HttpStatus.INTERNAL_SERVER_ERROR);
-			}
-			// status
-			HttpStatus status = responseEntity.getStatusCode();
-			response.setStatus(status.value());
-			response.setCharacterEncoding(EncryptUtils.ENCODING_UTF8);
-			// headers
-			HttpHeaders headers = responseEntity.getHeaders();
-			if (!CollectionUtils.isEmpty(headers)) {
-				for(final Iterator<String> it = headers.keySet().iterator(); it.hasNext();) {
-					String key = it.next();
-					response.addHeader(key, StringUtils.collectionToCommaDelimitedString(
-							headers.get(key)));
-				}
-			}
-			// content
-			Object body = responseEntity.getBody();
-			body = (body == null ? this.getHttpStatusReason(status, (Object[]) null) : body);
-			body = (body == null ? this.getInternalServerErrorReason() : body);
-			if (body != null) {
-				// check for response entity
-				String responseBody = null;
-				if (BeanUtils.isInstanceOf(body, String.class)) {
-					responseBody = body.toString();
-
-					// if entity is object; then serializing
-				} else {
-					responseBody = JsonUtils.serialize(body);
-				}
-				// write to response
-				PrintWriter out = null;
-				try {
-					out = response.getWriter();
-					out.println(responseBody);
-					responsed = true;
-				}
-				catch (IOException e) {}
-				finally {
-					if (out != null) out.flush();
-				}
-			}
+			responsed = handleAjaxException(webRequest, response, innerEx);
 		}
 
 		// response as default
 		if (!responsed && ex != null) {
 			if (this.handlerExceptionResover == null) {
 				throw new ApplicationRuntimeException(innerEx);
+
 			} else {
 				ModelAndView mav = this.handlerExceptionResover.resolveException(
 						request, response, handler, innerEx);
@@ -290,5 +241,75 @@ public class GlobalExceptionResolver implements Serializable {
 				} else throw new ApplicationRuntimeException(innerEx);
 			}
 		}
+	}
+
+	/**
+	 * Handle AJAX/REST request exception
+	 * 
+	 * @param webRequest {@link WebRequest}
+	 * @param response {@link HttpServletResponse}
+	 * @param ex {@link Exception}
+	 * 
+	 * @return true for specify the {@link Throwable} already was handled; else false
+	 */
+	protected boolean handleAjaxException(WebRequest webRequest, HttpServletResponse response, Exception ex) {
+		// handle by response entity
+		ResponseEntity<Object> responseEntity;
+		try {
+			responseEntity = (this.entityExceptionHandler != null
+					? this.entityExceptionHandler.handleException(ex, webRequest)
+							: new ResponseEntity<Object>(this.getInternalServerErrorReason(), HttpStatus.INTERNAL_SERVER_ERROR));
+		} catch (Exception e) {
+			logger.error("Could not parse response entity from real exception [{}]: {}", ex.getMessage(), e.getMessage(), e);
+			logger.error("Real exception: {}", ex.getMessage(), ex);
+			responseEntity = new ResponseEntity<Object>(this.getInternalServerErrorReason(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		// status
+		HttpStatus status = responseEntity.getStatusCode();
+		response.setStatus(status.value());
+		response.setCharacterEncoding(EncryptUtils.ENCODING_UTF8);
+
+		// headers
+		HttpHeaders headers = responseEntity.getHeaders();
+		if (!CollectionUtils.isEmpty(headers)) {
+			for(final Iterator<String> it = headers.keySet().iterator(); it.hasNext();) {
+				String key = it.next();
+				response.addHeader(key, StringUtils.collectionToCommaDelimitedString(
+						headers.get(key)));
+			}
+		}
+
+		// content
+		Object body = responseEntity.getBody();
+		body = (body == null ? this.getHttpStatusReason(status, (Object[]) null) : body);
+		body = (body == null ? this.getInternalServerErrorReason() : body);
+		if (body != null) {
+			// check for response entity
+			String responseBody = null;
+			if (BeanUtils.isInstanceOf(body, String.class)) {
+				responseBody = body.toString();
+
+				// if entity is object; then serializing
+			} else {
+				responseBody = JsonUtils.serialize(body);
+			}
+
+			// write to response
+			PrintWriter out = null;
+			try {
+				out = response.getWriter();
+				out.println(responseBody);
+				return true;
+			} catch (IOException e) {
+				logger.error("Could not response the exception [{}]: {}", ex.getMessage(), e.getMessage(), e);
+				logger.error("Real exception: {}", ex.getMessage(), ex);
+			} finally {
+				if (out != null) out.flush();
+			}
+		}
+
+		// handled or not
+		return false;
 	}
 }

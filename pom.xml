@@ -3910,7 +3910,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 		<!-- jasperreports -->
 		<net.sf.jasperreports.version>6.2.0</net.sf.jasperreports.version>
 		<net.sourceforge.jexcelapi.version>2.6.10</net.sourceforge.jexcelapi.version>
-		<net.sf.jasperreports.olap4j.version>1.0.2</net.sf.jasperreports.olap4j.version>
+		<net.sf.jasperreports.olap4j.version>1.2.0</net.sf.jasperreports.olap4j.version>
 
 		<!-- Joda Time -->
 		<joda.time.version>2.7</joda.time.version>

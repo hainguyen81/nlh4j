@@ -21,12 +21,17 @@
 		<!-- Error pages by status -->
         <property name="errorStatusPages">
             <map>
+                <entry key="400" value="error/400" />
                 <entry key="403" value="error/403" />
                 <entry key="404" value="error/404" />
                 <entry key="405" value="error/405" />
                 <entry key="409" value="error/409" />
                 <entry key="415" value="error/415" />
+                <entry key="422" value="error/422" />
+                <entry key="451" value="error/451" />
                 <entry key="500" value="error/500" />
+                <entry key="501" value="error/501" />
+                <entry key="503" value="error/503" />
             </map>
         </property>
 		<!-- Expose context bean to JSP -->

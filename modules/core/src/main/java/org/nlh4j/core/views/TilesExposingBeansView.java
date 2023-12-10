@@ -10,10 +10,10 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.nlh4j.util.CollectionUtils;
 import org.springframework.web.context.support.ContextExposingHttpServletRequest;
 
 import lombok.Setter;
-import org.nlh4j.util.CollectionUtils;
 
 /**
  * An extended class of {@link org.springframework.web.servlet.view.tiles3.TilesView} for exposing context beans

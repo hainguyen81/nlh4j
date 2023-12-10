@@ -4,14 +4,16 @@
  */
 package org.nlh4j.web.base.changepwd.controller;
 
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.nlh4j.core.annotation.ExecutePermission;
 import org.nlh4j.core.controller.MasterPageType;
 import org.nlh4j.core.dto.AbstractDto;
+import org.nlh4j.core.util.AuthenticationUtils;
 import org.nlh4j.util.EncryptUtils;
 import org.nlh4j.web.base.changepwd.dto.UserDto;
 import org.nlh4j.web.base.changepwd.dto.UserEntityParamControllerDto;
@@ -21,6 +23,15 @@ import org.nlh4j.web.base.common.AppConst;
 import org.nlh4j.web.base.common.Module;
 import org.nlh4j.web.base.common.ModuleConst;
 import org.nlh4j.web.base.common.controller.AbstractActionController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Change current USER password controller
@@ -45,6 +56,146 @@ public class ChangePasswordController
         super(ChangePasswordService.class, Module.CMN_CHANGE_PASSWORD);
     }
 
+    /*
+     * (non-Javadoc)
+     * @see org.nlh4j.core.controller.AbstractMasterController#view(org.nlh4j.core.dto.AbstractDto, org.springframework.validation.BindingResult)
+     */
+    @Override
+    @RequestMapping(method = { RequestMethod.GET, RequestMethod.POST })
+    public ModelAndView view(UserUniqueDto entitypk, BindingResult result) {
+    	org.nlh4j.web.core.dto.UserDto sessUdto =
+                AuthenticationUtils.getCurrentProfile(org.nlh4j.web.core.dto.UserDto.class);
+    	return super.view(
+    			Objects.requireNonNullElseGet(entitypk,
+    					() -> Optional.ofNullable(sessUdto)
+    					.map(u -> new UserUniqueDto(u.getId(), u.getUsername())).orElse(null)),
+    			result);
+    }
+    
+    @Override
+    public ModelAndView edit(UserUniqueDto entitypk, BindingResult result) {
+    	org.nlh4j.web.core.dto.UserDto sessUdto =
+                AuthenticationUtils.getCurrentProfile(org.nlh4j.web.core.dto.UserDto.class);
+    	return super.edit(
+    			Objects.requireNonNullElseGet(entitypk,
+    					() -> Optional.ofNullable(sessUdto)
+    					.map(u -> new UserUniqueDto(u.getId(), u.getUsername())).orElse(null)),
+    			result);
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.nlh4j.core.controller.AbstractMasterController#create()
+     */
+    @Deprecated
+    @Override
+    public ModelAndView create() {
+    	throw new UnsupportedOperationException();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.nlh4j.core.controller.AbstractMasterController#create(org.nlh4j.core.dto.AbstractDto, org.springframework.validation.BindingResult)
+     */
+    @Deprecated
+    @Override
+    public ResponseEntity<String> create(UserDto entity, BindingResult result) {
+    	throw new UnsupportedOperationException();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.nlh4j.core.controller.AbstractMasterController#createModel(org.nlh4j.core.dto.AbstractDto, org.springframework.validation.BindingResult)
+     */
+    @Deprecated
+    @Override
+    public ResponseEntity<String> createModel(UserDto entity, BindingResult result) {
+    	throw new UnsupportedOperationException();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.nlh4j.core.controller.AbstractMasterController#delete(org.nlh4j.core.dto.BaseEntityParamControllerDto, org.springframework.validation.BindingResult)
+     */
+    @Deprecated
+    @Override
+    public ResponseEntity<String> delete(UserEntityParamControllerDto entitypk, BindingResult result) {
+    	throw new UnsupportedOperationException();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.nlh4j.core.controller.AbstractMasterController#deleteModel(org.nlh4j.core.dto.BaseEntityParamControllerDto, org.springframework.validation.BindingResult)
+     */
+    @Deprecated
+    @Override
+    public ResponseEntity<String> deleteModel(UserEntityParamControllerDto entitypk, BindingResult result) {
+    	throw new UnsupportedOperationException();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.nlh4j.core.controller.AbstractMasterController#download(org.nlh4j.core.dto.AbstractDto, javax.servlet.http.HttpServletResponse, org.springframework.validation.BindingResult)
+     */
+    @Deprecated
+    @Override
+    public ResponseEntity<String> download(AbstractDto data, HttpServletResponse response, BindingResult result) {
+    	throw new UnsupportedOperationException();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.nlh4j.core.controller.AbstractMasterController#downloadBody(org.nlh4j.core.dto.AbstractDto, javax.servlet.http.HttpServletResponse, org.springframework.validation.BindingResult)
+     */
+    @Deprecated
+    @Override
+    public ResponseEntity<String> downloadBody(AbstractDto data, HttpServletResponse response, BindingResult result) {
+    	throw new UnsupportedOperationException();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.nlh4j.core.controller.AbstractMasterController#searchEntity(org.nlh4j.core.dto.BaseEntityParamControllerDto, org.springframework.validation.BindingResult)
+     */
+    @Deprecated
+    @Override
+    public UserDto searchEntity(UserEntityParamControllerDto entitypk, BindingResult result) {
+    	throw new UnsupportedOperationException();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.nlh4j.core.controller.AbstractMasterController#upload(org.nlh4j.core.dto.AbstractDto, java.util.List, org.springframework.web.multipart.MultipartHttpServletRequest)
+     */
+    @Deprecated
+    @Override
+    public ResponseEntity<String> upload(AbstractDto data, List<MultipartFile> files,
+    		MultipartHttpServletRequest request) {
+    	throw new UnsupportedOperationException();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.nlh4j.core.controller.AbstractMasterController#uploadBody(org.nlh4j.core.dto.AbstractDto, java.util.List, org.springframework.web.multipart.MultipartHttpServletRequest)
+     */
+    @Deprecated
+    @Override
+    public ResponseEntity<String> uploadBody(AbstractDto data, List<MultipartFile> files,
+    		MultipartHttpServletRequest request) {
+    	throw new UnsupportedOperationException();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.nlh4j.core.controller.AbstractMasterController#uploadParam(org.nlh4j.core.dto.AbstractDto, java.util.List, org.springframework.web.multipart.MultipartHttpServletRequest)
+     */
+    @Deprecated
+    @Override
+    public ResponseEntity<String> uploadParam(AbstractDto data, List<MultipartFile> files,
+    		MultipartHttpServletRequest request) {
+    	throw new UnsupportedOperationException();
+    }
+    
     /* (Non-Javadoc)
      * @see org.nlh4j.core.controller.AbstractMasterController#attachModelAndView(org.springframework.web.servlet.ModelAndView, org.nlh4j.core.controller.AbstractMasterController.PAGE)
      */

@@ -5,11 +5,20 @@
 package org.nlh4j.core.taglibs;
 
 import java.text.MessageFormat;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.jsp.JspException;
 
+import org.apache.commons.lang3.math.NumberUtils;
+import org.nlh4j.util.RequestUtils;
 import org.springframework.context.NoSuchMessageException;
+import org.springframework.http.HttpStatus;
 import org.springframework.util.StringUtils;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.support.RequestContext;
+import org.springframework.web.util.WebUtils;
 
 /**
  * Extended message JSP tag for application.
@@ -237,9 +246,28 @@ public class MessageTag extends org.springframework.web.servlet.tags.MessageTag 
     	if (this.systemError) {
 			setCategoryNumber(0);
 			setTypeNumber(1);
-			setNumber(99999);
-			setNumLen(0);
-			setArguments(code);
+			// try to detect message number
+			if (this.msgNum <= 0 && StringUtils.hasText(this.code)) {
+				setNumber(NumberUtils.toInt(this.code, this.msgNum));
+			}
+			if (this.msgNum <= 0) {
+				setNumber(99999);
+			}
+
+			// try to resolve by Exception/HttpStatus to parse reason
+			String arguments = this.code;
+			Exception exception = tryToDetectPageException();
+			// by page exception
+			if (exception != null) {
+				arguments = String.format("%s - %s", arguments, exception.getMessage());
+
+				// by HttpStatus
+			} else {
+				HttpStatus status = HttpStatus.resolve(msgNum);
+				status =Optional.ofNullable(status).orElseGet(() -> HttpStatus.resolve(NumberUtils.toInt(this.code, -1)));
+				arguments = Optional.ofNullable(status).map(s -> String.format("%s - %s", String.valueOf(s.value()), s.getReasonPhrase())).orElse(arguments);
+			}
+			setArguments(arguments);
 		}
 
         // detect for overriding message code
@@ -273,5 +301,30 @@ public class MessageTag extends org.springframework.web.servlet.tags.MessageTag 
         }
         // resolve message as default
         return super.resolveMessage();
+    }
+    
+    /**
+     * Try to detect {@link Exception} from page/request context attributes such as:<br>
+     * - {@link WebUtils#ERROR_EXCEPTION_ATTRIBUTE}<br>
+     * - `exception` key from page model
+     * 
+     * @return {@link Exception} or NULL
+     */
+    protected final Exception tryToDetectPageException() {
+    	Exception exception = RequestUtils.getRequestAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE, Exception.class);
+    	exception = Optional.ofNullable(exception).orElseGet(
+    			() -> Optional.ofNullable(super.pageContext.getAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE, WebRequest.SCOPE_REQUEST))
+    			.filter(Exception.class::isInstance).map(Exception.class::cast).orElse(null));
+    	exception = Optional.ofNullable(exception).orElseGet(
+    			() -> {
+    				Map<String, Object> requestModel = Optional.ofNullable(super.getRequestContext())
+    						.map(RequestContext::getModel).orElseGet(LinkedHashMap::new);
+    				return Optional.ofNullable(requestModel.getOrDefault("exception", null))
+    						.filter(Exception.class::isInstance).map(Exception.class::cast)
+    						.orElseGet(() -> requestModel.values().parallelStream()
+    								.filter(Exception.class::isInstance).map(Exception.class::cast)
+    								.findFirst().orElse(null));
+    			});
+    	return exception;
     }
 }

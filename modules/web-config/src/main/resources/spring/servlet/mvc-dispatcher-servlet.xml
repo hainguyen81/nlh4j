@@ -85,6 +85,35 @@
 	<bean id="tilesConfigurer" class="org.nlh4j.core.views.TilesConfigurer">
         <property name="definitions">
             <list>
+            	<!-- Core -->
+                <value>classpath*:**/META-INF/resources/WEB-INF/views/tiles.xml</value>
+                <value>classpath*:**/META-INF/resources/WEB-INF/views/views.xml</value>
+                <value>classpath*:/META-INF/resources/WEB-INF/views/tiles.xml</value>
+                <value>classpath*:/META-INF/resources/WEB-INF/views/views.xml</value>
+                <value>classpath*:**/WEB-INF/views/tiles.xml</value>
+                <value>classpath*:**/WEB-INF/views/views.xml</value>
+                <value>classpath*:/WEB-INF/views/tiles.xml</value>
+                <value>classpath*:/WEB-INF/views/views.xml</value>
+                <value>classpath*:**/views/tiles.xml</value>
+                <value>classpath*:**/views/views.xml</value>
+                <value>classpath*:/views/tiles.xml</value>
+                <value>classpath*:/views/views.xml</value>
+                <value>classpath:**/META-INF/resources/WEB-INF/views/tiles.xml</value>
+                <value>classpath:**/META-INF/resources/WEB-INF/views/views.xml</value>
+                <value>classpath:/META-INF/resources/WEB-INF/views/tiles.xml</value>
+                <value>classpath:/META-INF/resources/WEB-INF/views/views.xml</value>
+                <value>classpath:**/WEB-INF/views/tiles.xml</value>
+                <value>classpath:**/WEB-INF/views/views.xml</value>
+                <value>classpath:/WEB-INF/views/tiles.xml</value>
+                <value>classpath:/WEB-INF/views/views.xml</value>
+                <value>classpath:**/views/tiles.xml</value>
+                <value>classpath:**/views/views.xml</value>
+                <value>classpath:/views/tiles.xml</value>
+                <value>classpath:/views/views.xml</value>
+                <value>/WEB-INF/views/tiles.xml</value>
+                <value>/WEB-INF/views/views.xml</value>
+
+            	<!-- Overrided by Application Theme -->
                 <value>classpath*:**/META-INF/resources/WEB-INF/views/${app.theme}/tiles.xml</value>
                 <value>classpath*:**/META-INF/resources/WEB-INF/views/${app.theme}/views.xml</value>
                 <value>classpath*:/META-INF/resources/WEB-INF/views/${app.theme}/tiles.xml</value>

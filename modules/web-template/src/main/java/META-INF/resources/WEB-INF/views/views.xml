@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+    <!-- C12 - Change password -->
+    <definition name="C1200/C1202" extends="master.action.definition">
+        <put-attribute name="module" value="C12" />
+        <put-attribute name="page" value="C1202" />
+        <put-attribute name="controllerMapping" value="/chgpwd" />
+        <put-attribute name="detailForm" value="/WEB-INF/views/C1200/detailForm.jsp" />
+    </definition>
+
+    <!-- S01 - System Role Management -->
+    <definition name="S0100/S0101" extends="master.definition">
+        <put-attribute name="module" value="S01" />
+        <put-attribute name="page" value="S0101" />
+        <put-attribute name="controllerMapping" value="/system/role" />
+        <put-attribute name="searchForm" value="/WEB-INF/views/S0100/searchForm.jsp" />
+        <put-attribute name="listColumns" value="/WEB-INF/views/S0100/listColumns.jsp" />
+        <put-attribute name="listItems" value="/WEB-INF/views/S0100/listItems.jsp" />
+        <put-attribute name="showBaseActions" value="true" />
+        <put-attribute name="showPagination" value="true" />
+    </definition>
+    <definition name="S0100/S0102" extends="master.action.definition">
+        <put-attribute name="module" value="S01" />
+        <put-attribute name="page" value="S0102" />
+        <put-attribute name="controllerMapping" value="/system/role" />
+        <put-attribute name="detailForm" value="/WEB-INF/views/S0100/detailForm.jsp" />
+    </definition>
+
+    <!-- S02 - System User Management -->
+    <definition name="S0200/S0201" extends="master.definition">
+        <put-attribute name="module" value="S02" />
+        <put-attribute name="page" value="S0201" />
+        <put-attribute name="controllerMapping" value="/system/user" />
+        <put-attribute name="searchForm" value="/WEB-INF/views/S0200/searchForm.jsp" />
+        <put-attribute name="listColumns" value="/WEB-INF/views/S0200/listColumns.jsp" />
+        <put-attribute name="listItems" value="/WEB-INF/views/S0200/listItems.jsp" />
+        <put-attribute name="showBaseActions" value="true" />
+        <put-attribute name="showPagination" value="true" />
+    </definition>
+    <definition name="S0200/S0202" extends="master.action.definition">
+        <put-attribute name="module" value="S02" />
+        <put-attribute name="page" value="S0202" />
+        <put-attribute name="controllerMapping" value="/system/user" />
+        <put-attribute name="detailForm" value="/WEB-INF/views/S0200/detailForm.jsp" />
+    </definition>
+
+    <!-- S04 - System Modules Management -->
+    <definition name="S0400/S0401" extends="master.definition">
+        <put-attribute name="module" value="S04" />
+        <put-attribute name="page" value="S0401" />
+        <put-attribute name="controllerMapping" value="/system/module" />
+        <put-attribute name="searchForm" value="/WEB-INF/views/S0400/searchForm.jsp" />
+        <put-attribute name="listColumns" value="/WEB-INF/views/S0400/listColumns.jsp" />
+        <put-attribute name="listItems" value="/WEB-INF/views/S0400/listItems.jsp" />
+        <put-attribute name="showBaseActions" value="true" />
+        <put-attribute name="showPagination" value="true" />
+    </definition>
+    <definition name="S0400/S0402" extends="master.action.definition">
+        <put-attribute name="module" value="S04" />
+        <put-attribute name="page" value="S0402" />
+        <put-attribute name="controllerMapping" value="/system/module" />
+        <put-attribute name="detailForm" value="/WEB-INF/views/S0400/detailForm.jsp" />
+    </definition>
+
+    <!-- S05 - System Module Functions Management -->
+    <definition name="S0500/S0501" extends="master.definition">
+        <put-attribute name="module" value="S05" />
+        <put-attribute name="page" value="S0501" />
+        <put-attribute name="controllerMapping" value="/system/function" />
+        <put-attribute name="searchForm" value="/WEB-INF/views/S0500/searchForm.jsp" />
+        <put-attribute name="listColumns" value="/WEB-INF/views/S0500/listColumns.jsp" />
+        <put-attribute name="listItems" value="/WEB-INF/views/S0500/listItems.jsp" />
+        <put-attribute name="showBaseActions" value="true" />
+        <put-attribute name="showPagination" value="true" />
+    </definition>
+    <definition name="S0400/S0402" extends="master.action.definition">
+        <put-attribute name="module" value="S05" />
+        <put-attribute name="page" value="S0502" />
+        <put-attribute name="controllerMapping" value="/system/function" />
+        <put-attribute name="detailForm" value="/WEB-INF/views/S0500/detailForm.jsp" />
+    </definition>
+</tiles-definitions>

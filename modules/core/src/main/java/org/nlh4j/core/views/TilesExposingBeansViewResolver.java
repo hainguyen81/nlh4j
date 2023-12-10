@@ -7,11 +7,11 @@ package org.nlh4j.core.views;
 import java.io.Serializable;
 import java.util.Set;
 
+import org.nlh4j.util.CollectionUtils;
 import org.springframework.web.servlet.view.AbstractUrlBasedView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import lombok.Setter;
-import org.nlh4j.util.CollectionUtils;
 
 /**
  * An extended class of {@link UrlBasedViewResolver} for exposing context beans to view.<br>
