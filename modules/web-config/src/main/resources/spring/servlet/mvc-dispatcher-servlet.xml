@@ -141,25 +141,29 @@
     <bean id="tilesViewResolver" class="org.nlh4j.core.views.TilesExposingBeansViewResolver"
 	scope="singleton">
         <property name="order" value="1" />
-		<property name="prefix" value="/WEB-INF/views" />
-		<property name="appTheme" value="${app.theme}" />
         <property name="viewClass" value="org.nlh4j.core.views.TilesExposingBeansView" />
+        <property name="checkResourceOnBuildView" value="false" />
         <!-- Expose context bean to JSP -->
         <property name="exposedContextBeanNames">
             <list><value>properties</value></list>
         </property>
+        <property name="contentType" value="text/html;charset=UTF-8" />
     </bean>
 	<bean id="viewResolver" class="org.nlh4j.core.views.InternalResourceViewResolver"
 	scope="singleton">
 		<property name="order" value="2" />
-		<property name="prefix" value="/WEB-INF/views" />
-		<property name="appTheme" value="${app.theme}" />
-		<property name="suffix" value=".jsp" />
 		<property name="viewClass" value="org.nlh4j.core.views.JstlExposingBeansView" />
+		<property name="appTheme" value="${app.theme}" />
+		<property name="prefix" value="/META-INF/resources/WEB-INF/views" />
+		<property name="additionalPrefixes">
+			<list><value>/WEB-INF/views</value></list>
+		</property>
+		<property name="suffix" value=".jsp" />
 		<!-- Expose context bean to JSP -->
 		<property name="exposedContextBeanNames">
 		    <list><value>properties</value></list>
 		</property>
+        <property name="contentType" value="text/html;charset=UTF-8" />
 	</bean>
 
 </beans>

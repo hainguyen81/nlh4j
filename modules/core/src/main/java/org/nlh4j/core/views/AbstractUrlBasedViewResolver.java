@@ -6,9 +6,15 @@ package org.nlh4j.core.views;
 
 import java.io.InputStream;
 import java.io.Serializable;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
@@ -21,6 +27,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.servlet.view.AbstractUrlBasedView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -58,6 +65,16 @@ public abstract class AbstractUrlBasedViewResolver extends UrlBasedViewResolver 
 	@Getter
 	@Setter
 	private String appTheme;
+	@Setter
+	@Getter(value = AccessLevel.PROTECTED)
+	private Set<String> additionalPrefixes;
+	
+	/**
+	 * Specify whether should check the existing view resource on building view
+	 */
+	@Setter
+	@Getter(value = AccessLevel.PROTECTED)
+	private boolean checkResourceOnBuildView = true;
 	
 	/**
 	 * Creates a new View instance of the specified view class and configures it.
@@ -69,17 +86,14 @@ public abstract class AbstractUrlBasedViewResolver extends UrlBasedViewResolver 
 	 * first, before setting further properties themselves. {@code loadView}
 	 * will then apply Spring lifecycle methods at the end of this process.
 	 * 
-	 * @param viewName the name of the view to build
-	 * @param prefix the URL prefix
-	 * @param suffix the view suffix extension
-	 * @param appTheme view by theme
+	 * @param viewUrl the URL of the view to build
 	 * 
-	 * @return the View instance
+	 * @return the View {@link AbstractUrlBasedView} instance
 	 * @throws Exception if the view couldn't be resolved
 	 * @see #loadView(String, java.util.Locale)
 	 */
-	protected final AbstractUrlBasedView doBuildView(String prefix, String appTheme, String viewName, String suffix) throws Exception {
-		String viewUrl = buildViewUrl(prefix, appTheme, viewName, suffix);
+	protected final AbstractUrlBasedView doBuildView(String viewUrl) throws Exception {
+		// trace
 		log.info("Build view URL: [{}]", viewUrl);
 
 		AbstractUrlBasedView view = instantiateView();
@@ -110,6 +124,28 @@ public abstract class AbstractUrlBasedViewResolver extends UrlBasedViewResolver 
 		}
 
 		return view;
+	}
+	/**
+	 * Creates a new View instance of the specified view class and configures it.
+	 * Does <i>not</i> perform any lookup for pre-defined View instances.
+	 * <p>Spring lifecycle methods as defined by the bean container do not have to
+	 * be called here; those will be applied by the {@code loadView} method
+	 * after this method returns.
+	 * <p>Subclasses will typically call {@code super.buildView(viewName)}
+	 * first, before setting further properties themselves. {@code loadView}
+	 * will then apply Spring lifecycle methods at the end of this process.
+	 * 
+	 * @param viewName the name of the view to build
+	 * @param prefix the URL prefix
+	 * @param suffix the view suffix extension
+	 * @param appTheme view by theme
+	 * 
+	 * @return the View {@link AbstractUrlBasedView} instance
+	 * @throws Exception if the view couldn't be resolved
+	 * @see #loadView(String, java.util.Locale)
+	 */
+	protected final AbstractUrlBasedView doBuildView(String prefix, String appTheme, String viewName, String suffix) throws Exception {
+		return doBuildView(buildViewUrl(prefix, appTheme, viewName, suffix));
 	}
 	
 	/**
@@ -182,46 +218,79 @@ public abstract class AbstractUrlBasedViewResolver extends UrlBasedViewResolver 
 			);
 		}
 	}
+	
+	/**
+	 * Build a set of view URL(s) based on the specified view name
+	 * 
+	 * @param viewName to build
+	 * 
+	 * @return a set of view URL(s)
+	 */
+	protected final Set<String> buildViewUrls(String viewName) {
+		List<String> viewUrls = new LinkedList<>();
+
+		// with appTheme (high priority on appTheme if settings)
+		if (StringUtils.isNotBlank(getAppTheme())) {
+			viewUrls.add(buildViewUrl(getPrefix(), getAppTheme(), viewName, getSuffix()));
+			viewUrls.addAll(
+					Optional.ofNullable(getAdditionalPrefixes()).orElseGet(LinkedHashSet::new)
+					.parallelStream().filter(StringUtils::isNotBlank).map(StringUtils::trimToEmpty)
+					.map(p -> buildViewUrl(p, getAppTheme(), viewName, getSuffix()))
+					.collect(Collectors.toCollection(LinkedList::new)));
+		}
+
+		// without appTheme
+		viewUrls.add(buildViewUrl(getPrefix(), null, viewName, getSuffix()));
+		viewUrls.addAll(
+				Optional.ofNullable(getAdditionalPrefixes()).orElseGet(LinkedHashSet::new)
+				.parallelStream().filter(StringUtils::isNotBlank).map(StringUtils::trimToEmpty)
+				.map(p -> buildViewUrl(p, null, viewName, getSuffix()))
+				.collect(Collectors.toCollection(LinkedList::new)));
+
+		// distinct
+		return viewUrls.parallelStream().collect(Collectors.toCollection(LinkedHashSet::new));
+	}
 
 	@Override
 	protected final AbstractUrlBasedView buildView(String viewName) throws Exception {
-		// appTheme has been specified case
-		AbstractUrlBasedView view = null;
-		if (StringUtils.isNotBlank(getAppTheme())) {
-			// build/check view URL by appTheme
-			String viewUrl = buildViewUrl(getPrefix(), getAppTheme(), viewName, getSuffix());
-			view = cacheUrlBasedView.getOrDefault(viewUrl, null);
-			if (view == null) {
-				InputStream viewResourceStream = Optional.ofNullable(super.getServletContext())
-						.map(ctx -> ctx.getResourceAsStream(viewUrl)).orElseGet(
-								() -> getContextHelper().searchFirstResourceAsStream(viewUrl));
-				// invalid resource
-				if (viewResourceStream == null) {
-					if (log.isDebugEnabled()) {
-						log.warn("Could not find the view [{}] by appTheme [{}]", viewUrl, appTheme);
-					}
-		
-					/**
-					 * return the view that has been excluded the appTheme<br>
-					 * for using NLH4J core view. if view doesn't exist, it will throw exception automatically
-					 */
-					view = doBuildView(getPrefix(), null, viewName, getSuffix());
-	
-					// valid resource; so building view by appTheme
-				} else {
-					view = doBuildView(getPrefix(), getAppTheme(), viewName, getSuffix());
-				}
-			}
+		// build view url(s) w/o appTheme
+		Set<String> viewUrls = buildViewUrls(viewName);
 
-			// not specify appTheme
-		} else {
-			// build view without appTheme
-			view = doBuildView(getPrefix(), null, viewName, getSuffix());
+		// check from cached views
+		AbstractUrlBasedView view = viewUrls.parallelStream()
+				.filter(url -> cacheUrlBasedView.containsKey(url))
+				.findFirst().map(url -> cacheUrlBasedView.getOrDefault(url, null)).orElse(null);
+		if (view == null) {
+			// if need to check the existing resource on building view
+			if (isCheckResourceOnBuildView()) {
+				for(String viewUrl : viewUrls) {
+					InputStream viewResourceStream = Optional.ofNullable(super.getServletContext())
+							.map(ctx -> ctx.getResourceAsStream(viewUrl)).orElseGet(
+									() -> getContextHelper().searchFirstResourceAsStream(viewUrl));
+					if (viewResourceStream == null) {
+						if (log.isDebugEnabled()) {
+							log.warn("Could not find the view [{}] [appTheme: {}]", viewUrl, appTheme);
+						}
+	
+					} else {
+						log.info("Found resource of view [{} - {}]", viewName, viewUrl);
+						// cache view url
+						view = doBuildView(viewUrl);
+						cacheUrlBasedView.putIfAbsent(viewUrl, view);
+						break;
+					}
+				}
+
+				// else just focusing on the first view URL to build view
+			} else {
+				String viewUrl = viewUrls.stream().findFirst().filter(StringUtils::isNotBlank).orElse(viewName);
+				view = doBuildView(viewUrl);
+				cacheUrlBasedView.putIfAbsent(viewUrl, view);
+			}
 		}
 
-		// cache the view
-		Optional.ofNullable(view).ifPresent(v -> cacheUrlBasedView.putIfAbsent(v.getUrl(), v));
-		return view;
+		// built view
+		return Objects.requireNonNull(view, "view");
 	}
 
 	@Override
