@@ -121,22 +121,6 @@ public abstract class AbstractOncePerRequestFilter extends OncePerRequestFilter 
     @Inject
     protected GlobalExceptionResolver exceptionResolver;
 
-//    /**
-//	 * Get the exceptionResolver
-//	 *
-//	 * @return the exceptionResolver
-//	 */
-//	protected final GlobalExceptionResolver getExceptionResolver() {
-//		if (this.exceptionResolver == null
-//				&& this.getContextHelper() != null) {
-//			this.exceptionResolver = this.getContextHelper().searchBean(GlobalExceptionResolver.class);
-//		}
-//		if (this.exceptionResolver == null) return null;
-//		synchronized(this.exceptionResolver) {
-//			return this.exceptionResolver;
-//		}
-//	}
-
     /*
      * (Non-Javadoc)
      * @see org.springframework.web.filter.OncePerRequestFilter#doFilterInternal(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, javax.servlet.FilterChain)

@@ -14,10 +14,16 @@ import org.nlh4j.core.service.MessageService;
 import org.nlh4j.core.servlet.ApplicationContextProvider;
 import org.nlh4j.core.servlet.SpringContextHelper;
 import org.nlh4j.core.validation.errors.FieldErrorResource;
+import org.nlh4j.exceptions.ApplicationException;
+import org.nlh4j.exceptions.ApplicationLicenseException;
+import org.nlh4j.exceptions.ApplicationNotSupportedException;
 import org.nlh4j.exceptions.ApplicationRuntimeException;
+import org.nlh4j.exceptions.ApplicationUnderConstructionException;
 import org.nlh4j.exceptions.ApplicationValidationException;
 import org.nlh4j.util.BeanUtils;
+import org.nlh4j.util.ExceptionUtils;
 import org.nlh4j.util.JsonUtils;
+import org.nlh4j.util.RequestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -31,6 +37,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.util.WebUtils;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -169,7 +176,8 @@ public class ResponseEntityExceptionHandler
      * @return
      */
     @ExceptionHandler(value = { ApplicationValidationException.class })
-    protected final ResponseEntity<Object> handleValidationException(ApplicationValidationException ex, WebRequest request) {
+    @Nullable
+    public final ResponseEntity<Object> handleValidationException(ApplicationValidationException ex, WebRequest request) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         Object body = null;
@@ -186,27 +194,130 @@ public class ResponseEntityExceptionHandler
         }
         if (body == null && !CollectionUtils.isEmpty(fieldErrors)) {
             body = JsonUtils.serialize(fieldErrors);
+
         } else if (body == null) {
             body = JsonUtils.serialize(ex.getErrors().getAllErrors());
         }
         return new ResponseEntity<Object>(body, headers, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+    
+    /**
+	 * Handle under-construction exception
+     *
+     * @param ex under-construction exception
+     * @param request request
+     * @return
+     */
+    @ExceptionHandler(value = { ApplicationUnderConstructionException.class })
+    @Nullable
+    public final ResponseEntity<Object> handleUnderConstructionException(ApplicationUnderConstructionException ex, WebRequest request) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        return new ResponseEntity<Object>(
+        		JsonUtils.serialize(String.format("[%s] %s: %s",
+        				String.valueOf(HttpStatus.NOT_IMPLEMENTED.value()), ex.getErrorCode(), ex.getMessage())),
+        		headers, HttpStatus.NOT_IMPLEMENTED);
+    }
+    
+    /**
+	 * Handle license exception
+     *
+     * @param ex license exception
+     * @param request request
+     * 
+     * @return
+     */
+    @ExceptionHandler(value = { ApplicationLicenseException.class })
+    @Nullable
+    public final ResponseEntity<Object> handleLicenseException(ApplicationLicenseException ex, WebRequest request) {
+    	HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        return new ResponseEntity<Object>(
+        		JsonUtils.serialize(String.format("[%s] %s: %s",
+        				String.valueOf(HttpStatus.UNAVAILABLE_FOR_LEGAL_REASONS.value()), ex.getErrorCode(), ex.getMessage())),
+        		headers, HttpStatus.UNAVAILABLE_FOR_LEGAL_REASONS);
+    }
+    
+    /**
+	 * Handle un-supported exception
+     *
+     * @param ex un-supported exception
+     * @param request request
+     * 
+     * @return
+     */
+    @ExceptionHandler(value = { ApplicationNotSupportedException.class })
+    @Nullable
+    public final ResponseEntity<Object> handleNotSupportedException(ApplicationNotSupportedException ex, WebRequest request) {
+    	HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        return new ResponseEntity<Object>(
+        		JsonUtils.serialize(String.format("[%s] %s: %s",
+        				String.valueOf(HttpStatus.SERVICE_UNAVAILABLE.value()), ex.getErrorCode(), ex.getMessage())),
+        		headers, HttpStatus.SERVICE_UNAVAILABLE);
     }
 
     /* (Non-Javadoc)
      * @see org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler#handleExceptionInternal(java.lang.Exception, java.lang.Object, org.springframework.http.HttpHeaders, org.springframework.http.HttpStatus, org.springframework.web.context.request.WebRequest)
      */
     @Override
-    protected ResponseEntity<Object> handleExceptionInternal(Exception ex, @Nullable Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    protected final ResponseEntity<Object> handleExceptionInternal(Exception ex, @Nullable Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
     	// validation exception
-    	if (BeanUtils.isInstanceOf(ex, ApplicationValidationException.class)) {
+    	if (ExceptionUtils.isKindOfValidationException(ex)) {
     		return this.handleValidationException(
-    				BeanUtils.safeType(ex, ApplicationValidationException.class), request);
+    				ExceptionUtils.getExceptionCause(ex, ApplicationValidationException.class), request);
+    	}
+    	
+    	// under-construction exception
+    	if (BeanUtils.isInstanceOf(ex, ApplicationUnderConstructionException.class)) {
+    		return this.handleUnderConstructionException(
+    				ExceptionUtils.getExceptionCause(ex, ApplicationUnderConstructionException.class), request);
+    	}
+    	
+    	// license exception
+    	if (BeanUtils.isInstanceOf(ex, ApplicationLicenseException.class)) {
+    		return this.handleLicenseException(
+    				ExceptionUtils.getExceptionCause(ex, ApplicationLicenseException.class), request);
+    	}
+    	
+    	// un-supported exception
+    	if (BeanUtils.isInstanceOf(ex, ApplicationNotSupportedException.class)) {
+    		return this.handleNotSupportedException(
+    				ExceptionUtils.getExceptionCause(ex, ApplicationNotSupportedException.class), request);
     	}
 
     	// common exception
+        return handleCustomException(ex, body, headers, status, request);
+    }
+    
+    /**
+     * Child class could override this method for handling custom exception
+     * 
+     * @param ex to handle
+     * @param body response body
+     * @param headers {@link HttpHeaders}
+     * @param status {@link HttpStatus}
+     * @param request {@link WebRequest}
+     * 
+     * @return {@link ResponseEntity}
+     */
+    protected ResponseEntity<Object> handleCustomException(Exception ex, @Nullable Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    	// common exception
         if (HttpStatus.INTERNAL_SERVER_ERROR.equals(status)) {
-            String msg = this.getInternalServerErrorReason();
-            ex = new ApplicationRuntimeException(msg, ex);
+        	// !ApplicationException && !ApplicationRuntimeException
+        	if (!ExceptionUtils.isKindOfException(ex, ApplicationException.class)
+        			&& !ExceptionUtils.isKindOfException(ex, ApplicationRuntimeException.class)) {
+	    		ex = new ApplicationRuntimeException(this.getInternalServerErrorReason(), ex);
+
+	    		// ApplicationException
+        	} else if (ExceptionUtils.isKindOfException(ex, ApplicationException.class)) {
+        		ex = new ApplicationException(this.getInternalServerErrorReason(), ex.getCause() != null ? ex.getCause() : ex);
+
+	    		// ApplicationRuntimeException
+        	} else if (ExceptionUtils.isKindOfException(ex, ApplicationRuntimeException.class)) {
+        		ex = new ApplicationRuntimeException(this.getInternalServerErrorReason(), ex.getCause() != null ? ex.getCause() : ex);
+        	}
+        	RequestUtils.setRequestAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE, ex);
         }
         return super.handleExceptionInternal(ex, body, headers, status, request);
     }

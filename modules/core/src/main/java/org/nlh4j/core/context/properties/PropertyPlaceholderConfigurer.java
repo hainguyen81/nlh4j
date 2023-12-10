@@ -9,9 +9,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import javax.inject.Singleton;
 
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import org.nlh4j.util.CollectionUtils;
 import org.nlh4j.util.NumberUtils;
 
@@ -22,6 +26,9 @@ import org.nlh4j.util.NumberUtils;
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  *
  */
+@Component
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
+@Singleton
 public class PropertyPlaceholderConfigurer
 		extends org.springframework.beans.factory.config.PropertyPlaceholderConfigurer {
 

@@ -10,7 +10,7 @@
 	hideNotification="${!nlh4j:isSocketNotificationProfile()}">
 		<nlh4jTags:Layout>
 			<div style="width: 100%; text-align: center;">
-				<nlh4j:message code="403" systemError="true" />
+				<nlh4j:message code="403" number="403" systemError="true" />
 			</div>
 			<div style="width: 100%; text-align: center; padding-top: 10px">
 				<c:url var="backUrl" value="/dashboard" />

@@ -4,14 +4,18 @@
  */
 package org.nlh4j.core.views;
 
-import java.io.Serializable;
+import java.util.Optional;
 import java.util.Set;
 
+import org.apache.commons.lang3.ArrayUtils;
+import org.nlh4j.util.BeanUtils;
+import org.nlh4j.util.CollectionUtils;
 import org.springframework.web.servlet.view.AbstractUrlBasedView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
+import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.Setter;
-import org.nlh4j.util.CollectionUtils;
 
 /**
  * An extended class of {@link UrlBasedViewResolver} for exposing context beans to view.<br>
@@ -20,39 +24,34 @@ import org.nlh4j.util.CollectionUtils;
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  *
  */
-public class TilesExposingBeansViewResolver extends UrlBasedViewResolver implements Serializable {
+public class TilesExposingBeansViewResolver extends AbstractUrlBasedViewResolver {
 
     /** */
     private static final long serialVersionUID = 1L;
     /** specify exposing context beans as view attributes */
     @Setter
+    @Getter(value = AccessLevel.PROTECTED)
     private boolean exposeContextBeansAsAttributes = false;
     /** specify exposing context bean names */
     @Setter
-    private Set<String> exposedContextBeanNames;
-    /** specify exposing context bean names */
-    @Setter
-    private String[] exposedContextBeanNamesArray;
+    @Getter(value = AccessLevel.PROTECTED)
+    private Set<String> exposedContextBeanNamesSet;
 
-    /* (Non-Javadoc)
-     * @see org.springframework.web.servlet.view.UrlBasedViewResolver#buildView(java.lang.String)
-     */
     @Override
-    protected AbstractUrlBasedView buildView(String viewName) throws Exception {
-        AbstractUrlBasedView superView = super.buildView(viewName);
-        if (superView instanceof TilesExposingBeansView) {
-            TilesExposingBeansView view = (TilesExposingBeansView) superView;
-            // expose as attributes
-            if (this.exposeContextBeansAsAttributes) {
-                view.setExposeContextBeansAsAttributes(this.exposeContextBeansAsAttributes);
+    protected void customizeView(AbstractUrlBasedView view) {
+    	Optional.ofNullable(BeanUtils.safeType(view, TilesExposingBeansView.class))
+    	.ifPresent(v -> {
+    		// expose as attributes
+            if (isExposeContextBeansAsAttributes()) {
+                v.setExposeContextBeansAsAttributes(isExposeContextBeansAsAttributes());
             }
             // expose bean names
-            if (!CollectionUtils.isEmpty(this.exposedContextBeanNames)) {
-                view.setExposedContextBeanNames(this.exposedContextBeanNames);
-            } else if (!CollectionUtils.isEmpty(this.exposedContextBeanNames)) {
-                view.setExposedContextBeanNamesArray(this.exposedContextBeanNamesArray);
+            if (ArrayUtils.isNotEmpty(getExposedContextBeanNames())) {
+                v.setExposedContextBeanNamesArray(getExposedContextBeanNames());
+
+            } else if (!CollectionUtils.isEmpty(getExposedContextBeanNamesSet())) {
+                v.setExposedContextBeanNames(getExposedContextBeanNamesSet());
             }
-        }
-        return superView;
+    	});
     }
 }

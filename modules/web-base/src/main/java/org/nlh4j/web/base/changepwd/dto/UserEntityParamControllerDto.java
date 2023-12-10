@@ -5,7 +5,6 @@
 package org.nlh4j.web.base.changepwd.dto;
 
 import org.nlh4j.core.dto.BaseEntityParamControllerDto;
-import org.nlh4j.web.base.changepwd.dto.UserUniqueDto;
 
 /**
  * See {@link BaseEntityParamControllerDto} and {@link UserUniqueDto}

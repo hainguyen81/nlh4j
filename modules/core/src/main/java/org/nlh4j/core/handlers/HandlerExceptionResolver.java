@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -15,6 +16,19 @@ import javax.inject.Singleton;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.nlh4j.core.servlet.ApplicationContextProvider;
+import org.nlh4j.core.servlet.SpringContextHelper;
+import org.nlh4j.exceptions.ApplicationException;
+import org.nlh4j.exceptions.ApplicationLicenseException;
+import org.nlh4j.exceptions.ApplicationNotSupportedException;
+import org.nlh4j.exceptions.ApplicationRuntimeException;
+import org.nlh4j.exceptions.ApplicationUnderConstructionException;
+import org.nlh4j.exceptions.ApplicationValidationException;
+import org.nlh4j.util.BeanUtils;
+import org.nlh4j.util.CollectionUtils;
+import org.nlh4j.util.EncryptUtils;
+import org.nlh4j.util.ExceptionUtils;
+import org.nlh4j.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.TypeMismatchException;
@@ -43,14 +57,6 @@ import org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolv
 
 import lombok.Getter;
 import lombok.Setter;
-import org.nlh4j.core.servlet.ApplicationContextProvider;
-import org.nlh4j.core.servlet.SpringContextHelper;
-import org.nlh4j.exceptions.ApplicationException;
-import org.nlh4j.exceptions.ApplicationRuntimeException;
-import org.nlh4j.util.BeanUtils;
-import org.nlh4j.util.CollectionUtils;
-import org.nlh4j.util.EncryptUtils;
-import org.nlh4j.util.StringUtils;
 
 /**
  * Handle request HANDLER exception (request page view (ModelAndView) and response page view)<br>
@@ -192,19 +198,11 @@ public class HandlerExceptionResolver extends DefaultHandlerExceptionResolver im
 				&& request.getServletContext() != null) {
 			this.contextHelper = new SpringContextHelper(request.getServletContext());
 		}
-		// check for inner exception
-		if (BeanUtils.isInstanceOf(ex, ApplicationException.class)) {
-			Exception innerEx = BeanUtils.safeType(BeanUtils.safeType(ex, ApplicationException.class).getCause(), Exception.class);
-			if (innerEx != null) ex = innerEx;
 
-			// check for runtime inner exception
-		} else if (BeanUtils.isInstanceOf(ex, ApplicationRuntimeException.class)) {
-			Exception innerEx = BeanUtils.safeType(BeanUtils.safeType(ex, ApplicationRuntimeException.class).getCause(), Exception.class);
-			if (innerEx != null) ex = innerEx;
-		}
+		// detect exception cause
+		Exception causeEx = detectExceptionCause(ex);
 		// resolve exception as supper class
-		boolean handledError = (!CollectionUtils.isEmpty(this.getErrorStatusPages())
-				|| !CollectionUtils.isEmpty(this.getErrorExceptionPages()));
+		boolean handledError = (!CollectionUtils.isEmpty(this.getErrorStatusPages()) || !CollectionUtils.isEmpty(this.getErrorExceptionPages()));
 		ModelAndView mav = null;
 		if (handledError) {
 			// check existed error view
@@ -212,14 +210,14 @@ public class HandlerExceptionResolver extends DefaultHandlerExceptionResolver im
 			HttpStatus status = null;
 			// by status code mapping
 			if (!CollectionUtils.isEmpty(this.getErrorStatusPages())) {
-				status = this.mapException(ex);
+				status = this.mapException(causeEx);
 				viewName = this.getErrorStatusPages().get(status.value());
 			}
 			// or by exception class name mapping
 			if (!StringUtils.hasText(viewName)
 					&& !CollectionUtils.isEmpty(this.getErrorExceptionPages())) {
 				status = HttpStatus.INTERNAL_SERVER_ERROR;
-				viewName = this.getErrorExceptionPages().get(ex.getClass().getName());
+				viewName = this.getErrorExceptionPages().get(causeEx.getClass().getName());
 			}
 			// return valid view if handled
 			handledError = StringUtils.hasText(viewName);
@@ -229,7 +227,7 @@ public class HandlerExceptionResolver extends DefaultHandlerExceptionResolver im
 				if (handledError) {
 					// apply view
 					mav = new ModelAndView();
-					mav.addObject("exception", ex);
+					mav.addObject("exception", causeEx);
 					mav.setView(view);
 					// apply response status
 					response.setStatus(status.value());
@@ -237,12 +235,14 @@ public class HandlerExceptionResolver extends DefaultHandlerExceptionResolver im
 				}
 			}
 		}
+
 		// if not handling error
 		if (!handledError) {
 			// expose beans into request
 			HttpServletRequest exposedRequest = this.getRequestToExpose(request);
-			mav = super.doResolveException(exposedRequest, response, handler, ex);
+			mav = super.doResolveException(exposedRequest, response, handler, causeEx);
 		}
+
 		// debug
 		if ((mav == null || mav.isEmpty()) && logger.isDebugEnabled()) {
 			logger.warn("Not found definition of error pages for response status code (could not using exposed context beans in your definition error pages in web.xml)");
@@ -292,6 +292,25 @@ public class HandlerExceptionResolver extends DefaultHandlerExceptionResolver im
 		}
 		return view;
 	}
+	
+	/**
+	 * Detect exception cause for detecting the error page view
+	 * 
+	 * @param ex to parse
+	 * 
+	 * @return {@link Exception} cause that has been wrapped or it's
+	 */
+	protected Exception detectExceptionCause(final Exception ex) {
+		Exception cause = ExceptionUtils.getExceptionCause(ex, ApplicationValidationException.class);
+		cause = Optional.ofNullable(cause).orElseGet(() -> ExceptionUtils.getExceptionCause(ex, ApplicationLicenseException.class));
+		cause = Optional.ofNullable(cause).orElseGet(() -> ExceptionUtils.getExceptionCause(ex, ApplicationUnderConstructionException.class));
+		cause = Optional.ofNullable(cause).orElseGet(() -> ExceptionUtils.getExceptionCause(ex, ApplicationNotSupportedException.class));
+		cause = Optional.ofNullable(cause).orElseGet(() -> Optional.ofNullable(ExceptionUtils.getExceptionCause(ex, ApplicationException.class))
+				.map(ApplicationException::getCause).filter(Exception.class::isInstance).map(Exception.class::cast)
+				.orElseGet(() -> Optional.ofNullable(ExceptionUtils.getExceptionCause(ex, ApplicationRuntimeException.class))
+						.map(ApplicationRuntimeException::getCause).filter(Exception.class::isInstance).map(Exception.class::cast).orElse(null)));
+		return Optional.ofNullable(cause).orElse(ex);
+	}
 
 	/**
 	 * Map exception to response status to found configured error page.<br>
@@ -324,6 +343,22 @@ public class HandlerExceptionResolver extends DefaultHandlerExceptionResolver im
 				|| BeanUtils.isInstanceOf(e, MissingServletRequestPartException.class)
 				|| BeanUtils.isInstanceOf(e, BindException.class)) {
 			return HttpStatus.BAD_REQUEST;
+		}
+		// 422
+		else if (BeanUtils.isInstanceOf(e, ApplicationValidationException.class)) {
+			return HttpStatus.UNPROCESSABLE_ENTITY;
+		}
+		// 451
+		else if (BeanUtils.isInstanceOf(e, ApplicationLicenseException.class)) {
+			return HttpStatus.UNAVAILABLE_FOR_LEGAL_REASONS;
+		}
+		// 501
+		else if (BeanUtils.isInstanceOf(e, ApplicationUnderConstructionException.class)) {
+			return HttpStatus.NOT_IMPLEMENTED;
+		}
+		// 503
+		else if (BeanUtils.isInstanceOf(e, ApplicationNotSupportedException.class)) {
+			return HttpStatus.SERVICE_UNAVAILABLE;
 		}
 		// 500
 		else return HttpStatus.INTERNAL_SERVER_ERROR;

@@ -71,20 +71,38 @@
 	    mapping="/WEB-INF/templates/${app.theme}/**"
 	    location="/templates/${app.theme}/,classpath*:**/templates/${app.theme}/,classpath*:/templates/${app.theme}/,classpath:**/templates/${app.theme}/,classpath:/templates/${app.theme}/,classpath*:**/META-INF/resources/WEB-INF/templates/${app.theme}/,classpath*:/META-INF/resources/WEB-INF/templates/${app.theme}/,classpath:**/META-INF/resources/WEB-INF/templates/${app.theme}/,classpath:/META-INF/resources/WEB-INF/templates/${app.theme}/" />
 
-	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="order" value="2" />
-		<property name="prefix" value="/WEB-INF/views/${app.theme}/" />
-		<property name="suffix" value=".jsp" />
-		<property name="viewClass" value="org.nlh4j.core.views.JstlView" />
-		<!-- Expose context bean to JSP -->
-		<property name="exposedContextBeanNames">
-		    <list><value>properties</value></list>
-		</property>
-	</bean>
-
 	<bean id="tilesConfigurer" class="org.nlh4j.core.views.TilesConfigurer">
         <property name="definitions">
             <list>
+            	<!-- Core -->
+                <value>classpath*:**/META-INF/resources/WEB-INF/views/tiles.xml</value>
+                <value>classpath*:**/META-INF/resources/WEB-INF/views/views.xml</value>
+                <value>classpath*:/META-INF/resources/WEB-INF/views/tiles.xml</value>
+                <value>classpath*:/META-INF/resources/WEB-INF/views/views.xml</value>
+                <value>classpath*:**/WEB-INF/views/tiles.xml</value>
+                <value>classpath*:**/WEB-INF/views/views.xml</value>
+                <value>classpath*:/WEB-INF/views/tiles.xml</value>
+                <value>classpath*:/WEB-INF/views/views.xml</value>
+                <value>classpath*:**/views/tiles.xml</value>
+                <value>classpath*:**/views/views.xml</value>
+                <value>classpath*:/views/tiles.xml</value>
+                <value>classpath*:/views/views.xml</value>
+                <value>classpath:**/META-INF/resources/WEB-INF/views/tiles.xml</value>
+                <value>classpath:**/META-INF/resources/WEB-INF/views/views.xml</value>
+                <value>classpath:/META-INF/resources/WEB-INF/views/tiles.xml</value>
+                <value>classpath:/META-INF/resources/WEB-INF/views/views.xml</value>
+                <value>classpath:**/WEB-INF/views/tiles.xml</value>
+                <value>classpath:**/WEB-INF/views/views.xml</value>
+                <value>classpath:/WEB-INF/views/tiles.xml</value>
+                <value>classpath:/WEB-INF/views/views.xml</value>
+                <value>classpath:**/views/tiles.xml</value>
+                <value>classpath:**/views/views.xml</value>
+                <value>classpath:/views/tiles.xml</value>
+                <value>classpath:/views/views.xml</value>
+                <value>/WEB-INF/views/tiles.xml</value>
+                <value>/WEB-INF/views/views.xml</value>
+
+            	<!-- Overrided by Application Theme -->
                 <value>classpath*:**/META-INF/resources/WEB-INF/views/${app.theme}/tiles.xml</value>
                 <value>classpath*:**/META-INF/resources/WEB-INF/views/${app.theme}/views.xml</value>
                 <value>classpath*:/META-INF/resources/WEB-INF/views/${app.theme}/tiles.xml</value>
@@ -114,17 +132,38 @@
             </list>
         </property>
     </bean>
-    <bean id="tilesViewResolver" class="org.nlh4j.core.views.TilesExposingBeansViewResolver">
+    
+    <bean id="xmlViewResolver" class="org.nlh4j.core.views.XmlViewResolver"
+	scope="singleton">
+		<property name="locationClasspath" value="classpath*:spring/jasper-views-config.xml" />
+		<property name="order" value="0" />
+	</bean>
+    <bean id="tilesViewResolver" class="org.nlh4j.core.views.TilesExposingBeansViewResolver"
+	scope="singleton">
         <property name="order" value="1" />
+        <property name="viewClass" value="org.nlh4j.core.views.TilesExposingBeansView" />
+        <property name="checkResourceOnBuildView" value="false" />
         <!-- Expose context bean to JSP -->
         <property name="exposedContextBeanNames">
             <list><value>properties</value></list>
         </property>
-        <property name="viewClass" value="org.nlh4j.core.views.TilesExposingBeansView" />
+        <property name="contentType" value="text/html;charset=UTF-8" />
     </bean>
-
-	<bean id="xmlViewResolver" class="org.nlh4j.core.views.XmlViewResolver">
-		<property name="locationClasspath" value="classpath*:spring/jasper-views-config.xml" />
-		<property name="order" value="0" />
+	<bean id="viewResolver" class="org.nlh4j.core.views.InternalResourceViewResolver"
+	scope="singleton">
+		<property name="order" value="2" />
+		<property name="viewClass" value="org.nlh4j.core.views.JstlExposingBeansView" />
+		<property name="appTheme" value="${app.theme}" />
+		<property name="prefix" value="/META-INF/resources/WEB-INF/views" />
+		<property name="additionalPrefixes">
+			<list><value>/WEB-INF/views</value></list>
+		</property>
+		<property name="suffix" value=".jsp" />
+		<!-- Expose context bean to JSP -->
+		<property name="exposedContextBeanNames">
+		    <list><value>properties</value></list>
+		</property>
+        <property name="contentType" value="text/html;charset=UTF-8" />
 	</bean>
+
 </beans>

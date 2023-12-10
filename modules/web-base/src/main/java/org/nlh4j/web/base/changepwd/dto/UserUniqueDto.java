@@ -4,9 +4,12 @@
  */
 package org.nlh4j.web.base.changepwd.dto;
 
+import org.nlh4j.core.dto.AbstractDto;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.nlh4j.core.dto.AbstractDto;
+import lombok.NoArgsConstructor;
 
 /**
  * {@link UserDto} unique constraint DTO information
@@ -14,6 +17,8 @@ import org.nlh4j.core.dto.AbstractDto;
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  *
  */
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class UserUniqueDto extends AbstractDto {
