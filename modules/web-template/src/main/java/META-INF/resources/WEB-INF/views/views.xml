@@ -76,7 +76,7 @@
         <put-attribute name="showBaseActions" value="true" />
         <put-attribute name="showPagination" value="true" />
     </definition>
-    <definition name="S0400/S0402" extends="master.action.definition">
+    <definition name="S0500/S0502" extends="master.action.definition">
         <put-attribute name="module" value="S05" />
         <put-attribute name="page" value="S0502" />
         <put-attribute name="controllerMapping" value="/system/function" />

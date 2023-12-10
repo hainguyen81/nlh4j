@@ -10,12 +10,15 @@ import java.util.Locale;
 
 import org.nlh4j.exceptions.ApplicationUnderConstructionException;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Custom {@link org.springframework.web.servlet.view.JstlView} for under construction
  *
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  *
  */
+@Slf4j
 public class JstlView extends org.springframework.web.servlet.view.JstlView implements Serializable {
 
     /** */
@@ -27,13 +30,13 @@ public class JstlView extends org.springframework.web.servlet.view.JstlView impl
     @Override
     public boolean checkResource(Locale locale) throws Exception {
         String url = super.getUrl();
-        if (super.logger.isDebugEnabled()) {
-            super.logger.debug("Check existed view URL: '" + url + "'");
+        if (log.isDebugEnabled()) {
+            log.debug("Check existed view URL: [{}]", url);
         }
         InputStream is = super.getServletContext().getResourceAsStream(url);
         if (is == null) {
             throw new ApplicationUnderConstructionException(
-                    "Could not found view from URL '" + url + "'");
+                    "Could not found view from URL [" + url + "]");
         }
         return (is == null ? false : super.checkResource(locale));
     }
