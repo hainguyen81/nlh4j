@@ -22,7 +22,6 @@ import javax.servlet.ServletContext;
 import org.apache.commons.lang3.StringUtils;
 import org.nlh4j.core.servlet.SpringContextHelper;
 import org.springframework.beans.factory.DisposableBean;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.servlet.view.AbstractUrlBasedView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
@@ -61,7 +60,6 @@ public abstract class AbstractUrlBasedViewResolver extends UrlBasedViewResolver 
 		return contextHelper;
 	}
 
-	@Value("${app.theme:}")
 	@Getter
 	@Setter
 	private String appTheme;
