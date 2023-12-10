@@ -10,9 +10,11 @@ import java.util.Locale;
 import java.util.Optional;
 
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
 
 import org.nlh4j.core.servlet.SpringContextHelper;
 import org.nlh4j.exceptions.ApplicationUnderConstructionException;
+import org.springframework.context.ApplicationContext;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,8 +30,21 @@ public class JstlView extends org.springframework.web.servlet.view.JstlView impl
     /** */
     private static final long serialVersionUID = 1L;
     
+    /** {@link SpringContextHelper} */
     @Inject
-    SpringContextHelper contextHelper;
+    private SpringContextHelper contextHelper;
+    
+    /**
+     * Get the {@link SpringContextHelper} instance
+     * 
+     * @return the {@link SpringContextHelper} instance
+     */
+    protected final SpringContextHelper getContextHelper() {
+    	if (contextHelper == null) {
+    		contextHelper = new SpringContextHelper();
+    	}
+		return contextHelper;
+	}
 
     /* (Non-Javadoc)
      * @see org.springframework.web.servlet.view.AbstractUrlBasedView#checkResource(java.util.Locale)
@@ -49,4 +64,16 @@ public class JstlView extends org.springframework.web.servlet.view.JstlView impl
         }
         return (is == null ? false : super.checkResource(locale));
     }
+    
+    @Override
+	protected void initApplicationContext(ApplicationContext context) {
+		Optional.ofNullable(context).ifPresent(c -> getContextHelper().setApplicationContext(c));
+		super.initApplicationContext(context);
+	}
+
+	@Override
+	protected void initServletContext(ServletContext servletContext) {
+		Optional.ofNullable(servletContext).ifPresent(c -> getContextHelper().setServletContext(c));
+		super.initServletContext(servletContext);
+	}
 }

@@ -10,9 +10,14 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import javax.inject.Inject;
+import javax.servlet.ServletContext;
+
 import org.apache.commons.lang3.StringUtils;
+import org.nlh4j.core.servlet.SpringContextHelper;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.web.servlet.view.AbstractUrlBasedView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
@@ -32,6 +37,22 @@ public abstract class AbstractUrlBasedViewResolver extends UrlBasedViewResolver 
 	/** default SQL cache capacity */
     private static final int DEFAULT_CACHE_CAPACITY = 200;
 	protected final ConcurrentMap<String, AbstractUrlBasedView> cacheUrlBasedView = new ConcurrentHashMap<>(DEFAULT_CACHE_CAPACITY);
+
+	/** {@link SpringContextHelper} */
+    @Inject
+    private SpringContextHelper contextHelper;
+    
+    /**
+     * Get the {@link SpringContextHelper} instance
+     * 
+     * @return the {@link SpringContextHelper} instance
+     */
+    protected final SpringContextHelper getContextHelper() {
+    	if (contextHelper == null) {
+    		contextHelper = new SpringContextHelper();
+    	}
+		return contextHelper;
+	}
 
 	@Value("${app.theme:}")
 	@Getter
@@ -172,7 +193,8 @@ public abstract class AbstractUrlBasedViewResolver extends UrlBasedViewResolver 
 			view = cacheUrlBasedView.getOrDefault(viewUrl, null);
 			if (view == null) {
 				InputStream viewResourceStream = Optional.ofNullable(super.getServletContext())
-						.map(ctx -> ctx.getResourceAsStream(viewUrl)).orElse(null);
+						.map(ctx -> ctx.getResourceAsStream(viewUrl)).orElseGet(
+								() -> getContextHelper().searchFirstResourceAsStream(viewUrl));
 				// invalid resource
 				if (viewResourceStream == null) {
 					if (log.isDebugEnabled()) {
@@ -215,5 +237,17 @@ public abstract class AbstractUrlBasedViewResolver extends UrlBasedViewResolver 
 	 */
 	protected void doDestroy() throws Exception {
 		// do nothing
+	}
+	
+	@Override
+	protected void initApplicationContext(ApplicationContext context) {
+		Optional.ofNullable(context).ifPresent(c -> getContextHelper().setApplicationContext(c));
+		super.initApplicationContext(context);
+	}
+
+	@Override
+	protected void initServletContext(ServletContext servletContext) {
+		Optional.ofNullable(servletContext).ifPresent(c -> getContextHelper().setServletContext(c));
+		super.initServletContext(servletContext);
 	}
 }
