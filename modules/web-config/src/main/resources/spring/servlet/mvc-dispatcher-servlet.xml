@@ -139,11 +139,12 @@
 	</bean>
     <bean id="tilesViewResolver" class="org.nlh4j.core.views.TilesExposingBeansViewResolver">
         <property name="order" value="1" />
+		<property name="appTheme" value="${app.theme}" />
+        <property name="viewClass" value="org.nlh4j.core.views.TilesExposingBeansView" />
         <!-- Expose context bean to JSP -->
         <property name="exposedContextBeanNames">
             <list><value>properties</value></list>
         </property>
-        <property name="viewClass" value="org.nlh4j.core.views.TilesExposingBeansView" />
     </bean>
 	<bean id="viewResolver" class="org.nlh4j.core.views.InternalResourceViewResolver">
 		<property name="order" value="2" />
