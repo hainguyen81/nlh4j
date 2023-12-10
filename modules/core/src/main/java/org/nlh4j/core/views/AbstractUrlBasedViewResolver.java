@@ -203,7 +203,17 @@ public abstract class AbstractUrlBasedViewResolver extends UrlBasedViewResolver 
 	}
 
 	@Override
-	public void destroy() throws Exception {
+	public final void destroy() throws Exception {
+		doDestroy();
 		cacheUrlBasedView.clear();
+	}
+
+	/**
+	 * Override for releasing resources when destroying bean
+	 * 
+	 * @throws Exception if failed
+	 */
+	protected void doDestroy() throws Exception {
+		// do nothing
 	}
 }
