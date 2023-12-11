@@ -6,12 +6,16 @@ package org.nlh4j.core.views;
 
 import java.io.Serializable;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.machinezoo.noexception.Exceptions;
 
 import org.apache.tiles.Definition;
 import org.apache.tiles.TilesContainer;
@@ -132,7 +136,23 @@ public class TilesView extends org.springframework.web.servlet.view.tiles3.Tiles
 		 */
 		return render.isRenderable(url, request);
     }
-    
+
+    /*
+     * (non-Javadoc)
+     * @see org.springframework.web.servlet.view.AbstractView#render(java.util.Map, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     */
+    @Override
+    public void render(Map<String, ?> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	// wrap for throwing under-construction exception for global exception resolver
+    	Exceptions.wrap(ex -> new ApplicationUnderConstructionException(
+    			"[" + JstlView.class.getSimpleName() + "]" + ex.getMessage(), ex))
+    	.run(() -> TilesView.super.render(model, request, response));
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.springframework.web.context.support.WebApplicationObjectSupport#initApplicationContext(org.springframework.context.ApplicationContext)
+     */
     @Override
 	protected void initApplicationContext(org.springframework.context.ApplicationContext context) {
 		Optional.ofNullable(context).ifPresent(c -> {
@@ -144,12 +164,20 @@ public class TilesView extends org.springframework.web.servlet.view.tiles3.Tiles
 		super.initApplicationContext(context);
 	}
 
+    /*
+     * (non-Javadoc)
+     * @see org.springframework.web.context.support.WebApplicationObjectSupport#initServletContext(javax.servlet.ServletContext)
+     */
 	@Override
 	protected void initServletContext(ServletContext servletContext) {
 		ensureTilesRenderAndContainer(servletContext);
 		super.initServletContext(servletContext);
 	}
-	
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.springframework.web.servlet.view.tiles3.TilesView#afterPropertiesSet()
+	 */
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		super.afterPropertiesSet();
