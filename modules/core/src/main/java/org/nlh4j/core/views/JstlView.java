@@ -14,6 +14,7 @@ import javax.servlet.ServletContext;
 
 import org.nlh4j.core.servlet.SpringContextHelper;
 import org.nlh4j.exceptions.ApplicationUnderConstructionException;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.context.ApplicationContext;
 
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @Slf4j
-public class JstlView extends org.springframework.web.servlet.view.JstlView implements Serializable {
+public class JstlView extends org.springframework.web.servlet.view.JstlView implements DisposableBean, Serializable {
 
     /** */
     private static final long serialVersionUID = 1L;
@@ -75,5 +76,18 @@ public class JstlView extends org.springframework.web.servlet.view.JstlView impl
 	protected void initServletContext(ServletContext servletContext) {
 		Optional.ofNullable(servletContext).ifPresent(c -> getContextHelper().setServletContext(c));
 		super.initServletContext(servletContext);
+	}
+	
+	@Override
+	public final void destroy() throws Exception {
+		// release memory if necessary
+		doDestroy();
+	}
+	
+	/**
+	 * Child class override this for releasing memory if necessary when destroying view
+	 */
+	protected void doDestroy() {
+		// do nothing
 	}
 }

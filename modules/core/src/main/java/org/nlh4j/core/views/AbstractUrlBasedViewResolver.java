@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -19,10 +20,17 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 
+import com.machinezoo.noexception.Exceptions;
+
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.nlh4j.core.servlet.SpringContextHelper;
+import org.nlh4j.util.ExceptionUtils;
+import org.nlh4j.util.RequestUtils;
 import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
+import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.AbstractUrlBasedView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
@@ -35,14 +43,17 @@ import lombok.extern.slf4j.Slf4j;
  * Custom {@link UrlBasedViewResolver} for appTheme
  */
 @Slf4j
-public abstract class AbstractUrlBasedViewResolver extends UrlBasedViewResolver implements DisposableBean, Serializable {
+public abstract class AbstractUrlBasedViewResolver extends UrlBasedViewResolver implements InitializingBean, DisposableBean, Serializable {
 
 	/** */
 	private static final long serialVersionUID = 1L;
 	
 	/** default SQL cache capacity */
     private static final int DEFAULT_CACHE_CAPACITY = 200;
-	protected final ConcurrentMap<String, AbstractUrlBasedView> cacheUrlBasedView = new ConcurrentHashMap<>(DEFAULT_CACHE_CAPACITY);
+    @Getter(value = AccessLevel.PROTECTED)
+    private final ConcurrentMap<String, Set<String>> cacheResolvableBasedUrls = new ConcurrentHashMap<>(DEFAULT_CACHE_CAPACITY);
+    @Getter(value = AccessLevel.PROTECTED)
+	private final ConcurrentMap<String, AbstractUrlBasedView> cacheUrlBasedViews = new ConcurrentHashMap<>(DEFAULT_CACHE_CAPACITY);
 
 	/** {@link SpringContextHelper} */
     @Inject
@@ -255,51 +266,90 @@ public abstract class AbstractUrlBasedViewResolver extends UrlBasedViewResolver 
 	}
 
 	@Override
+	public void afterPropertiesSet() throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	protected View loadView(String viewName, Locale locale) throws Exception {
+		AbstractUrlBasedView view = buildView(viewName);
+		View result = Optional.ofNullable(view).map(v -> applyLifecycleMethods(viewName, v)).orElse(null);
+		return Optional.ofNullable(view)
+				.filter(ExceptionUtils.wrap(log).predicate(
+						Exceptions.wrap().predicate((AbstractUrlBasedView v) -> v.checkResource(locale))).orElse(false))
+				.map(v -> result).orElse(null);
+	}
+
+	@Override
 	protected final AbstractUrlBasedView buildView(String viewName) throws Exception {
 		// build view url(s) w/o appTheme
-		Set<String> viewUrls = buildViewUrls(viewName);
+		Set<String> viewUrls = getCacheResolvableBasedUrls().putIfAbsent(viewName, buildViewUrls(viewName));
 
 		// check from cached views
 		AbstractUrlBasedView view = viewUrls.parallelStream()
-				.filter(url -> cacheUrlBasedView.containsKey(url))
-				.findFirst().map(url -> cacheUrlBasedView.getOrDefault(url, null)).orElse(null);
+				.filter(url -> getCacheUrlBasedViews().containsKey(url))
+				.findFirst().map(url -> getCacheUrlBasedViews().getOrDefault(url, null)).orElse(null);
 		if (view == null) {
 			// if need to check the existing resource on building view
-			if (isCheckResourceOnBuildView()) {
-				for(String viewUrl : viewUrls) {
-					InputStream viewResourceStream = Optional.ofNullable(super.getServletContext())
-							.map(ctx -> ctx.getResourceAsStream(viewUrl)).orElseGet(
-									() -> getContextHelper().searchFirstResourceAsStream(viewUrl));
-					if (viewResourceStream == null) {
-						if (log.isDebugEnabled()) {
-							log.warn("Could not find the view [{}] [appTheme: {}]", viewUrl, appTheme);
-						}
-	
-					} else {
-						log.info("Found resource of view [{} - {}]", viewName, viewUrl);
-						// cache view url
-						view = doBuildView(viewUrl);
-						cacheUrlBasedView.putIfAbsent(viewUrl, view);
-						break;
-					}
-				}
+			for(String viewUrl : viewUrls) {
+				if (isCheckResourceOnBuildView()) {
+					view = checkResource(viewUrl);
 
-				// else just focusing on the first view URL to build view
-			} else {
-				String viewUrl = viewUrls.stream().findFirst().filter(StringUtils::isNotBlank).orElse(viewName);
-				view = doBuildView(viewUrl);
-				cacheUrlBasedView.putIfAbsent(viewUrl, view);
+				} else {
+					view = doBuildView(viewUrl);
+				}
+				if (view != null) {
+					view = getCacheUrlBasedViews().putIfAbsent(viewUrl, view);
+					break;
+				}
 			}
 		}
 
-		// built view
-		return Objects.requireNonNull(view, "view");
+		// view could be null, but waiting for rendering the view
+		return view;
+	}
+	
+	/**
+	 * Get a boolean value indicating the specified view URL whether is valid resource for building
+	 * 
+	 * @param viewUrl to check
+	 * 
+	 * @return {@link AbstractUrlBasedView} for valid; else NULL
+	 */
+	protected AbstractUrlBasedView checkResource(final String viewUrl) {
+		AbstractUrlBasedView view = ExceptionUtils.wrap(log).function(Exceptions.wrap().function((String url) -> doBuildView(url)))
+				.apply(viewUrl).filter(Objects::nonNull).orElse(null);
+		InputStream viewResourceStream = Optional.ofNullable(super.getServletContext())
+				.map(ctx -> ctx.getResourceAsStream(viewUrl)).orElseGet(
+						() -> getContextHelper().searchFirstResourceAsStream(viewUrl));
+		boolean validView = viewResourceStream != null;
+		if (!validView) {
+			// try to check via the built view
+			validView = Optional.ofNullable(view)
+					// check resource by request locale
+					.map(ExceptionUtils.wrap(log).function(Exceptions.wrap().function(v -> v.checkResource(RequestUtils.getRequestLocale()))))
+					.filter(Optional::isPresent).map(Optional::get).orElse(Boolean.FALSE);
+		}
+
+		// tracing
+		if (validView && view != null) {
+			log.info("Found the resource for the view [{}] [appTheme: {}]", viewUrl, appTheme);
+
+		} else if (validView && view == null && log.isDebugEnabled()) {
+			log.debug("Found the resource for the view [{}] [appTheme: {}] but occuring exception while building view", viewUrl, appTheme);
+
+		} else if (!validView && log.isDebugEnabled()) {
+			log.debug("Could not found the resource for the view [{}] [appTheme: {}] or exception has been occurred while building view", viewUrl, appTheme);
+		}
+		return validView && view != null ? view : null;
 	}
 
 	@Override
 	public final void destroy() throws Exception {
 		doDestroy();
-		cacheUrlBasedView.clear();
+		getCacheUrlBasedViews().clear();
+		getCacheResolvableBasedUrls().clear();
 	}
 
 	/**

@@ -67,4 +67,10 @@ public class JstlExposingBeansView extends JstlView {
         super.exposeModelAsRequestAttributes(model, requestToExpose);
         super.renderMergedOutputModel(model, requestToExpose, response);
     }
+
+    @Override
+    protected void doDestroy() {
+    	getExposedContextBeanNames().clear();
+    	setExposedContextBeanNames((String[]) null);
+    }
 }

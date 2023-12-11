@@ -17,19 +17,25 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.context.i18n.LocaleContext;
 import org.springframework.core.env.Environment;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.LocaleContextResolver;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.support.RequestContext;
 
 import eu.bitwalker.useragentutils.Browser;
@@ -1128,5 +1134,110 @@ public final class RequestUtils implements Serializable {
      */
     public static final StringBuilder getRequestBody() {
         return getRequestBody(getHttpRequest());
+    }
+
+    /**
+     * Detect the {@link LocaleResolver} from the specified {@link HttpServletRequest}
+     * 
+     * @param request to detect
+     * 
+     * @return {@link LocaleResolver} or NULL
+     */
+    public static LocaleResolver getRequestLocaleResolver(final HttpServletRequest request) {
+    	return Optional.ofNullable(request).map(req -> req.getAttribute(DispatcherServlet.LOCALE_RESOLVER_ATTRIBUTE))
+    			.filter(LocaleResolver.class::isInstance).map(LocaleResolver.class::cast).orElse(null);
+    }
+    /**
+     * Detect the {@link LocaleResolver} from the present {@link HttpServletRequest}
+     * 
+     * @return {@link LocaleResolver} or NULL
+     */
+    public static LocaleResolver getRequestLocaleResolver() {
+    	return getRequestLocaleResolver(getHttpRequest());
+    }
+
+    /**
+     * Build the {@link LocaleContext}
+     * 
+     * @param localeResolver {@link LocaleResolver}
+     * @param request {@link HttpServletRequest}
+     * @param defaultLocale specify whether should build based on default locale
+     * 
+     * @return {@link LocaleContext}/NULL
+     */
+    private static LocaleContext buildLocaleContext(final LocaleResolver localeResolver, final HttpServletRequest request, boolean defaultLocale) {
+    	return () -> localeResolver == null && request == null && !defaultLocale
+    			? null : localeResolver == null && request == null && defaultLocale
+    			? Locale.getDefault() : localeResolver == null && request != null && !defaultLocale
+    			? request.getLocale() : localeResolver == null && request != null && defaultLocale
+    			? Optional.ofNullable(request.getLocale()).orElseGet(Locale::getDefault)
+    					: localeResolver != null && request == null && !defaultLocale
+    					? null : localeResolver != null && request == null && defaultLocale
+    					? Locale.getDefault() : localeResolver != null && request != null && !defaultLocale
+    					? localeResolver.resolveLocale(request) : localeResolver != null && request != null && defaultLocale
+    					? Optional.ofNullable(localeResolver.resolveLocale(request)).orElseGet(Locale::getDefault) : null;
+    }
+    /**
+     * Detect the {@link LocaleResolver} from the specified {@link HttpServletRequest}
+     * 
+     * @param request to detect
+     * @param defaultLocale specify whether should build with default locale
+     * 
+     * @return {@link LocaleResolver}/NULL
+     */
+    public static LocaleContext buildRequestLocaleContext(final HttpServletRequest request, final boolean defaultLocale) {
+    	return Optional.ofNullable(getRequestLocaleResolver(request))
+    			.filter(LocaleContextResolver.class::isInstance).map(LocaleContextResolver.class::cast)
+    			.map(lcr -> lcr.resolveLocaleContext(request))
+    			.orElseGet(() -> buildLocaleContext(getRequestLocaleResolver(request), request, defaultLocale));
+    }
+    /**
+     * Detect the {@link LocaleResolver} from the present {@link HttpServletRequest}
+     * 
+     * @param defaultLocale specify whether should build with default locale
+     * 
+     * @return {@link LocaleResolver}/NULL
+     */
+    public static LocaleContext buildRequestLocaleContext(boolean defaultLocale) {
+    	return buildRequestLocaleContext(getHttpRequest(), defaultLocale);
+    }
+    /**
+     * Detect the {@link LocaleResolver} from the present {@link HttpServletRequest}
+     * 
+     * @return {@link LocaleResolver}/NULL
+     */
+    public static LocaleContext buildRequestLocaleContext() {
+    	return buildRequestLocaleContext(true);
+    }
+    
+    /**
+     * Detect {@link Locale} from the specified {@link HttpServletRequest}
+     * 
+     * @param request {@link HttpServletRequest}
+     * @param defaultLocale specify whether should resolve as default locale if un-possible
+     * 
+     * @return {@link Locale}
+     */
+    public static Locale getRequestLocale(final HttpServletRequest request, final boolean defaultLocale) {
+    	return Optional.ofNullable(buildRequestLocaleContext(request, defaultLocale))
+    			.map(LocaleContext::getLocale).orElseGet(() -> defaultLocale ? Locale.getDefault() : null);
+    }
+    /**
+     * Detect {@link Locale} from the present {@link HttpServletRequest}
+     * 
+     * @param defaultLocale specify whether should resolve as default locale if un-possible
+     * 
+     * @return {@link Locale}
+     */
+    public static Locale getRequestLocale(boolean defaultLocale) {
+    	return getRequestLocale(getHttpRequest(), defaultLocale);
+    }
+    /**
+     * Detect {@link Locale} from the present {@link HttpServletRequest}
+     * 
+     * @return {@link Locale} or default
+     */
+    public static Locale getRequestLocale() {
+    	return getRequestLocale(true);
     }
 }

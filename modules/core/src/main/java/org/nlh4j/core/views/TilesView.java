@@ -24,6 +24,7 @@ import org.apache.tiles.request.servlet.ServletRequest;
 import org.apache.tiles.request.servlet.ServletUtil;
 import org.nlh4j.core.servlet.SpringContextHelper;
 import org.nlh4j.exceptions.ApplicationUnderConstructionException;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -41,7 +42,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @Slf4j
-public class TilesView extends org.springframework.web.servlet.view.tiles3.TilesView implements Serializable {
+public class TilesView extends org.springframework.web.servlet.view.tiles3.TilesView implements DisposableBean, Serializable {
 
     /** */
     private static final long serialVersionUID = 1L;
@@ -170,5 +171,18 @@ public class TilesView extends org.springframework.web.servlet.view.tiles3.Tiles
 				setRenderer(new DefinitionRenderer(getTilesContainer()));
 			}
 		});
+	}
+	
+	@Override
+	public final void destroy() throws Exception {
+		// release memory if necessary
+		doDestroy();
+	}
+	
+	/**
+	 * Child class override this for releasing memory if necessary when destroying view
+	 */
+	protected void doDestroy() {
+		// do nothing
 	}
 }
