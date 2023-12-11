@@ -7,13 +7,19 @@ package org.nlh4j.core.views;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.machinezoo.noexception.Exceptions;
 
 import org.nlh4j.core.servlet.SpringContextHelper;
 import org.nlh4j.exceptions.ApplicationUnderConstructionException;
+import org.nlh4j.util.ExceptionUtils;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.context.ApplicationContext;
 
@@ -65,19 +71,43 @@ public class JstlView extends org.springframework.web.servlet.view.JstlView impl
         }
         return (is == null ? false : super.checkResource(locale));
     }
-    
+
+    /*
+     * (non-Javadoc)
+     * @see org.springframework.web.servlet.view.AbstractView#render(java.util.Map, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     */
+    @Override
+    public void render(Map<String, ?> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	// wrap for throwing under-construction exception for global exception resolver
+    	Exceptions.wrap(ex -> new ApplicationUnderConstructionException(
+    			"[" + JstlView.class.getSimpleName() + "]" + ex.getMessage(), ex))
+    	.run(() -> JstlView.super.render(model, request, response));
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.springframework.web.context.support.WebApplicationObjectSupport#initApplicationContext(org.springframework.context.ApplicationContext)
+     */
     @Override
 	protected void initApplicationContext(ApplicationContext context) {
 		Optional.ofNullable(context).ifPresent(c -> getContextHelper().setApplicationContext(c));
 		super.initApplicationContext(context);
 	}
 
+    /*
+     * (non-Javadoc)
+     * @see org.springframework.web.servlet.view.JstlView#initServletContext(javax.servlet.ServletContext)
+     */
 	@Override
 	protected void initServletContext(ServletContext servletContext) {
 		Optional.ofNullable(servletContext).ifPresent(c -> getContextHelper().setServletContext(c));
 		super.initServletContext(servletContext);
 	}
-	
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.springframework.beans.factory.DisposableBean#destroy()
+	 */
 	@Override
 	public final void destroy() throws Exception {
 		// release memory if necessary
