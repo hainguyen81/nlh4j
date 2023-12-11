@@ -132,12 +132,14 @@
             </list>
         </property>
     </bean>
-    
+
+	<!-- For jasper reports -->
     <bean id="xmlViewResolver" class="org.nlh4j.core.views.XmlViewResolver"
 	scope="singleton">
 		<property name="locationClasspath" value="classpath*:spring/jasper-views-config.xml" />
 		<property name="order" value="0" />
 	</bean>
+	<!-- For Apache Tiles View via views.xml definitions with defined viewName -->
     <bean id="tilesViewResolver" class="org.nlh4j.core.views.TilesExposingBeansViewResolver"
 	scope="singleton">
         <property name="order" value="1" />
@@ -149,14 +151,15 @@
         </property>
         <property name="contentType" value="text/html;charset=UTF-8" />
     </bean>
+    <!-- For core JSP view with URL suffix `.jsp` -->
 	<bean id="viewResolver" class="org.nlh4j.core.views.InternalResourceViewResolver"
 	scope="singleton">
 		<property name="order" value="2" />
 		<property name="viewClass" value="org.nlh4j.core.views.JstlExposingBeansView" />
 		<property name="appTheme" value="${app.theme}" />
-		<property name="prefix" value="/META-INF/resources/WEB-INF/views" />
+		<property name="prefix" value="/WEB-INF/views/" />
 		<property name="additionalPrefixes">
-			<list><value>/WEB-INF/views</value></list>
+			<list><value>/META-INF/resources/WEB-INF/views/</value></list>
 		</property>
 		<property name="suffix" value=".jsp" />
 		<!-- Expose context bean to JSP -->

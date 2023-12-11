@@ -23,6 +23,8 @@ import org.apache.tiles.request.render.Renderer;
 import org.apache.tiles.request.servlet.ServletRequest;
 import org.apache.tiles.request.servlet.ServletUtil;
 import org.nlh4j.core.servlet.SpringContextHelper;
+import org.nlh4j.exceptions.ApplicationUnderConstructionException;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -40,7 +42,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @Slf4j
-public class TilesView extends org.springframework.web.servlet.view.tiles3.TilesView implements Serializable {
+public class TilesView extends org.springframework.web.servlet.view.tiles3.TilesView implements DisposableBean, Serializable {
 
     /** */
     private static final long serialVersionUID = 1L;
@@ -109,11 +111,18 @@ public class TilesView extends org.springframework.web.servlet.view.tiles3.Tiles
 			}
 		};
 
+		// detect view definition for under-construction
         String url = super.getUrl();
+        Definition tilesDef = container.getDefinition(url, request);
         if (log.isDebugEnabled()) {
             log.debug("Check existed view URL same as tiles definition name: [{}]", url);
-            Definition tilesDef = container.getDefinition(url, request);
             log.debug("- Definition: [{}]", tilesDef);
+        }
+
+        // under-construction if not found definition
+        if (tilesDef == null) {
+        	throw new ApplicationUnderConstructionException(
+                    "Could not found tiles defintion for view [" + url + "]");
         }
 
 		/**
@@ -162,5 +171,18 @@ public class TilesView extends org.springframework.web.servlet.view.tiles3.Tiles
 				setRenderer(new DefinitionRenderer(getTilesContainer()));
 			}
 		});
+	}
+	
+	@Override
+	public final void destroy() throws Exception {
+		// release memory if necessary
+		doDestroy();
+	}
+	
+	/**
+	 * Child class override this for releasing memory if necessary when destroying view
+	 */
+	protected void doDestroy() {
+		// do nothing
 	}
 }
