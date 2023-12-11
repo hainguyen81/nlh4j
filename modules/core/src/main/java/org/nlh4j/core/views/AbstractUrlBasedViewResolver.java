@@ -54,6 +54,10 @@ public abstract class AbstractUrlBasedViewResolver extends UrlBasedViewResolver 
     private final ConcurrentMap<String, Set<String>> cacheResolvableBasedUrls = new ConcurrentHashMap<>(DEFAULT_CACHE_CAPACITY);
     @Getter(value = AccessLevel.PROTECTED)
 	private final ConcurrentMap<String, AbstractUrlBasedView> cacheUrlBasedViews = new ConcurrentHashMap<>(DEFAULT_CACHE_CAPACITY);
+    @Getter(value = AccessLevel.PROTECTED)
+	private final ConcurrentMap<String, AbstractUrlBasedView> cacheNamedBasedViews = new ConcurrentHashMap<>(DEFAULT_CACHE_CAPACITY);
+    @Getter(value = AccessLevel.PROTECTED)
+	private final ConcurrentMap<String, View> cacheInitializedBasedViews = new ConcurrentHashMap<>(DEFAULT_CACHE_CAPACITY);
 
 	/** {@link SpringContextHelper} */
     @Inject
@@ -275,26 +279,38 @@ public abstract class AbstractUrlBasedViewResolver extends UrlBasedViewResolver 
 	protected View loadView(String viewName, Locale locale) throws Exception {
 		AbstractUrlBasedView view = buildView(viewName);
 		View result = Optional.ofNullable(view).map(v -> applyLifecycleMethods(viewName, v)).orElse(null);
-		return Optional.ofNullable(view)
+		View checkedResult = Optional.ofNullable(view)
 				.filter(ExceptionUtils.wrap(log).predicate(
 						Exceptions.wrap().predicate((AbstractUrlBasedView v) -> v.checkResource(locale))).orElse(false))
 				.map(v -> result).orElse(null);
+		// if loading view successfully; then caching it for next time
+		if (checkedResult != null) {
+			getCacheNamedBasedViews().putIfAbsent(viewName, view);
+			getCacheUrlBasedViews().putIfAbsent(view.getUrl(), view);
+			getCacheInitializedBasedViews().putIfAbsent(viewName, checkedResult);
+		}
+		return result;
 	}
 
 	@Override
 	protected final AbstractUrlBasedView buildView(String viewName) throws Exception {
-		// build view url(s) w/o appTheme
-		Set<String> viewUrls = Optional.ofNullable(getCacheResolvableBasedUrls().getOrDefault(viewName, null))
-				.filter(CollectionUtils::isNotEmpty)
-				.orElseGet(() -> Optional.ofNullable(buildViewUrls(viewName)).orElseGet(LinkedHashSet::new));
-		getCacheResolvableBasedUrls().putIfAbsent(viewName, viewUrls);
-
 		// check from cached views
-		AbstractUrlBasedView view = Optional.ofNullable(viewUrls).orElseGet(LinkedHashSet::new)
-				.parallelStream()
-				.filter(url -> getCacheUrlBasedViews().containsKey(url))
-				.findFirst().map(url -> getCacheUrlBasedViews().getOrDefault(url, null)).orElse(null);
-		if (view == null) {
+		Set<String> viewUrls = new LinkedHashSet<>();
+		AbstractUrlBasedView view = Optional.ofNullable(getCacheNamedBasedViews().getOrDefault(viewName, null))
+				.orElseGet(() -> {
+					// build view url(s) w/o appTheme
+					viewUrls.addAll(
+							Optional.ofNullable(getCacheResolvableBasedUrls().getOrDefault(viewName, null))
+							.filter(CollectionUtils::isNotEmpty)
+							.orElseGet(() -> Optional.ofNullable(buildViewUrls(viewName)).orElseGet(LinkedHashSet::new)));
+					getCacheResolvableBasedUrls().putIfAbsent(viewName, viewUrls);
+
+					return Optional.ofNullable(viewUrls).orElseGet(LinkedHashSet::new)
+							.parallelStream()
+							.filter(url -> getCacheUrlBasedViews().containsKey(url))
+							.findFirst().map(url -> getCacheUrlBasedViews().getOrDefault(url, null)).orElse(null);
+				});
+		if (view == null && CollectionUtils.isNotEmpty(viewUrls)) {
 			// if need to check the existing resource on building view
 			for(String viewUrl : viewUrls) {
 				if (isCheckResourceOnBuildView()) {
@@ -304,7 +320,6 @@ public abstract class AbstractUrlBasedViewResolver extends UrlBasedViewResolver 
 					view = doBuildView(viewUrl);
 				}
 				if (view != null) {
-					view = getCacheUrlBasedViews().putIfAbsent(viewUrl, view);
 					break;
 				}
 			}
@@ -352,7 +367,9 @@ public abstract class AbstractUrlBasedViewResolver extends UrlBasedViewResolver 
 	@Override
 	public final void destroy() throws Exception {
 		doDestroy();
+		getCacheNamedBasedViews().clear();
 		getCacheUrlBasedViews().clear();
+		getCacheInitializedBasedViews().clear();
 		getCacheResolvableBasedUrls().clear();
 	}
 

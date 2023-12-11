@@ -19,7 +19,6 @@ import com.machinezoo.noexception.Exceptions;
 
 import org.nlh4j.core.servlet.SpringContextHelper;
 import org.nlh4j.exceptions.ApplicationUnderConstructionException;
-import org.nlh4j.util.ExceptionUtils;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.context.ApplicationContext;
 
