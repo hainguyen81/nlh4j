@@ -1,2 +1,2 @@
 # nlh4j
-Spring, Doma
+Spring MVC, Doma
