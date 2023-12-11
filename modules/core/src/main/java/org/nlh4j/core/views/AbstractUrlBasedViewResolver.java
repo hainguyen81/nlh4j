@@ -294,17 +294,18 @@ public abstract class AbstractUrlBasedViewResolver extends UrlBasedViewResolver 
 
 	@Override
 	protected final AbstractUrlBasedView buildView(String viewName) throws Exception {
-		// check from cached views
+		// check from cached view names
 		Set<String> viewUrls = new LinkedHashSet<>();
 		AbstractUrlBasedView view = Optional.ofNullable(getCacheNamedBasedViews().getOrDefault(viewName, null))
 				.orElseGet(() -> {
-					// build view url(s) w/o appTheme
+					// build view URL(s) w/o appTheme
 					viewUrls.addAll(
 							Optional.ofNullable(getCacheResolvableBasedUrls().getOrDefault(viewName, null))
 							.filter(CollectionUtils::isNotEmpty)
 							.orElseGet(() -> Optional.ofNullable(buildViewUrls(viewName)).orElseGet(LinkedHashSet::new)));
 					getCacheResolvableBasedUrls().putIfAbsent(viewName, viewUrls);
 
+					// check view from cached view URL(s)
 					return Optional.ofNullable(viewUrls).orElseGet(LinkedHashSet::new)
 							.parallelStream()
 							.filter(url -> getCacheUrlBasedViews().containsKey(url))
