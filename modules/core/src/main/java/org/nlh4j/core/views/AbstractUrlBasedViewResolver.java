@@ -28,7 +28,6 @@ import org.nlh4j.core.servlet.SpringContextHelper;
 import org.nlh4j.util.ExceptionUtils;
 import org.nlh4j.util.RequestUtils;
 import org.springframework.beans.factory.DisposableBean;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.AbstractUrlBasedView;
@@ -43,7 +42,7 @@ import lombok.extern.slf4j.Slf4j;
  * Custom {@link UrlBasedViewResolver} for appTheme
  */
 @Slf4j
-public abstract class AbstractUrlBasedViewResolver extends UrlBasedViewResolver implements InitializingBean, DisposableBean, Serializable {
+public abstract class AbstractUrlBasedViewResolver extends UrlBasedViewResolver implements DisposableBean, Serializable {
 
 	/** */
 	private static final long serialVersionUID = 1L;
@@ -270,12 +269,6 @@ public abstract class AbstractUrlBasedViewResolver extends UrlBasedViewResolver 
 	}
 
 	@Override
-	public void afterPropertiesSet() throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	@Override
 	protected View loadView(String viewName, Locale locale) throws Exception {
 		AbstractUrlBasedView view = buildView(viewName);
 		View result = Optional.ofNullable(view).map(v -> applyLifecycleMethods(viewName, v)).orElse(null);
@@ -289,7 +282,7 @@ public abstract class AbstractUrlBasedViewResolver extends UrlBasedViewResolver 
 			getCacheUrlBasedViews().putIfAbsent(view.getUrl(), view);
 			getCacheInitializedBasedViews().putIfAbsent(viewName, checkedResult);
 		}
-		return result;
+		return checkedResult;
 	}
 
 	@Override
