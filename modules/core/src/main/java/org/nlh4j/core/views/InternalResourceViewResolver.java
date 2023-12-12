@@ -12,7 +12,6 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.ClassUtils;
 import org.springframework.web.servlet.view.AbstractUrlBasedView;
 import org.springframework.web.servlet.view.InternalResourceView;
-import org.springframework.web.servlet.view.JstlView;
 
 /**
  * Custom {@link org.springframework.web.servlet.view.InternalResourceViewResolver} by cloning code.
@@ -24,8 +23,11 @@ public class InternalResourceViewResolver extends AbstractUrlBasedViewResolver {
 	
 	private static final String DEFAULT_VIEW_SUFFIX_JSP = ".jsp";
 
-	private static final boolean jstlPresent = ClassUtils.isPresent(
+	private static final boolean JSTL_REFRESH_SPRING = ClassUtils.isPresent(
+            "javax.servlet.jsp.jstl.core.Config", org.springframework.web.servlet.view.InternalResourceViewResolver.class.getClassLoader());
+	private static final boolean JSTL_REFRESH_NLH4J = ClassUtils.isPresent(
 			"javax.servlet.jsp.jstl.core.Config", InternalResourceViewResolver.class.getClassLoader());
+	private static final boolean JSTL_REFRESH = JSTL_REFRESH_SPRING || JSTL_REFRESH_NLH4J;
 
 	@Nullable
 	private Boolean alwaysInclude;
@@ -37,7 +39,7 @@ public class InternalResourceViewResolver extends AbstractUrlBasedViewResolver {
 	 */
 	public InternalResourceViewResolver() {
 		Class<?> viewClass = requiredViewClass();
-		if (InternalResourceView.class == viewClass && jstlPresent) {
+		if (InternalResourceView.class == viewClass && JSTL_REFRESH) {
 			viewClass = JstlView.class;
 		}
 		setViewClass(viewClass);
@@ -60,6 +62,9 @@ public class InternalResourceViewResolver extends AbstractUrlBasedViewResolver {
 	 * Specify whether to always include the view rather than forward to it.
 	 * <p>Default is "false". Switch this flag on to enforce the use of a
 	 * Servlet include, even if a forward would be possible.
+	 * 
+	 * @param alwaysInclude {@link InternalResourceView#setAlwaysInclude(boolean)}
+	 * 
 	 * @see InternalResourceView#setAlwaysInclude
 	 */
 	public void setAlwaysInclude(boolean alwaysInclude) {
@@ -79,8 +84,20 @@ public class InternalResourceViewResolver extends AbstractUrlBasedViewResolver {
 
 	@Override
 	protected AbstractUrlBasedView instantiateView() {
-		return (getViewClass() == InternalResourceView.class ? new InternalResourceView() :
-				(getViewClass() == JstlView.class ? new JstlView() : super.instantiateView()));
+		return Optional.ofNullable(getViewClass())
+		        .filter(InternalResourceView.class::isAssignableFrom).map(clz -> new InternalResourceView())
+		        .filter(AbstractUrlBasedView.class::isInstance).map(AbstractUrlBasedView.class::cast)
+		        .orElseGet(() -> Optional.ofNullable(getViewClass())
+                        .filter(JstlExposingBeansView.class::isAssignableFrom).map(clz -> new JstlExposingBeansView())
+		                .filter(AbstractUrlBasedView.class::isInstance).map(AbstractUrlBasedView.class::cast)
+		                .orElseGet(() -> Optional.ofNullable(getViewClass())
+		                        .filter(JstlView.class::isAssignableFrom).map(clz -> new JstlView())
+		                        .filter(AbstractUrlBasedView.class::isInstance).map(AbstractUrlBasedView.class::cast)
+		                        .orElseGet(() -> Optional.ofNullable(getViewClass())
+        		                        .filter(org.springframework.web.servlet.view.JstlView.class::isAssignableFrom).map(clz -> new JstlView())
+        		                        .map(clz -> new org.springframework.web.servlet.view.JstlView())
+        		                        .filter(AbstractUrlBasedView.class::isInstance).map(AbstractUrlBasedView.class::cast)
+        		                        .orElseGet(super::instantiateView))));
 	}
 
 	@Override

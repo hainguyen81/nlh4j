@@ -19,6 +19,7 @@ import com.machinezoo.noexception.Exceptions;
 
 import org.nlh4j.core.servlet.SpringContextHelper;
 import org.nlh4j.exceptions.ApplicationUnderConstructionException;
+import org.nlh4j.util.ExceptionUtils;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.context.ApplicationContext;
 
@@ -61,14 +62,16 @@ public class JstlView extends org.springframework.web.servlet.view.JstlView impl
         if (log.isDebugEnabled()) {
             log.debug("Check existed view URL: [{}]", url);
         }
-        InputStream is = Optional.ofNullable(super.getServletContext().getResourceAsStream(url))
-        		.orElseGet(() -> Optional.ofNullable(contextHelper).orElseGet(() -> new SpringContextHelper(getServletContext()))
-        				.searchFirstResourceAsStream(url));
+        InputStream is = Optional.ofNullable(super.getServletContext())
+                .map(ExceptionUtils.wrap(log).function(Exceptions.wrap().function(sc -> sc.getResourceAsStream(url))))
+                .filter(Optional::isPresent).map(Optional::get)
+        		.orElseGet(() -> Optional.ofNullable(contextHelper)
+        		        .orElseGet(() -> new SpringContextHelper(getServletContext())).searchFirstResourceAsStream(url));
         if (is == null) {
             throw new ApplicationUnderConstructionException(
                     "Could not found view from URL [" + url + "]");
         }
-        return (is == null ? false : super.checkResource(locale));
+        return super.checkResource(locale);
     }
 
     /*

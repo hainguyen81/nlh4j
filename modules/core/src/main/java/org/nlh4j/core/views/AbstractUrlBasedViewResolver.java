@@ -277,7 +277,7 @@ public abstract class AbstractUrlBasedViewResolver extends UrlBasedViewResolver 
 						Exceptions.wrap().predicate((AbstractUrlBasedView v) -> v.checkResource(locale))).orElse(false))
 				.map(v -> result).orElse(null);
 		// if loading view successfully; then caching it for next time
-		if (checkedResult != null) {
+		if (checkedResult != null && view != null) {
 			getCacheNamedBasedViews().putIfAbsent(viewName, view);
 			getCacheUrlBasedViews().putIfAbsent(view.getUrl(), view);
 			getCacheInitializedBasedViews().putIfAbsent(viewName, checkedResult);
@@ -349,7 +349,7 @@ public abstract class AbstractUrlBasedViewResolver extends UrlBasedViewResolver 
 		if (validView && view != null) {
 			log.info("Found the resource for the view [{}] [appTheme: {}]", viewUrl, appTheme);
 
-		} else if (validView && view == null && log.isDebugEnabled()) {
+		} else if (validView && log.isDebugEnabled()) {
 			log.debug("Found the resource for the view [{}] [appTheme: {}] but occuring exception while building view", viewUrl, appTheme);
 
 		} else if (!validView && log.isDebugEnabled()) {

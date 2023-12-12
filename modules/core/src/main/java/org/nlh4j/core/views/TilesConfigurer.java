@@ -52,7 +52,7 @@ public class TilesConfigurer extends org.springframework.web.servlet.view.tiles3
     private static final long serialVersionUID = 1L;
 
 	/** tile definitions */
-	private ServletContext servletContext;
+	private transient ServletContext servletContext;
 	private String[] definitions;
 
 	/**
@@ -90,7 +90,7 @@ public class TilesConfigurer extends org.springframework.web.servlet.view.tiles3
      * @return bean or NULL
      */
     protected final <K> K findBean(Class<K> beanClass) {
-        return (this.getContextHelper() == null ? null : this.getContextHelper().searchBean(beanClass));
+        return Optional.ofNullable(this.getContextHelper()).map(ctx -> ctx.searchBean(beanClass)).orElse(null);
     }
     /**
      * Get bean by the specified bean class
@@ -100,7 +100,7 @@ public class TilesConfigurer extends org.springframework.web.servlet.view.tiles3
      * @return bean or NULL
      */
     protected final <K> List<K> findBeans(Class<K> beanClass) {
-        return (this.getContextHelper() == null ? null : this.getContextHelper().searchBeans(beanClass));
+        return Optional.ofNullable(this.getContextHelper()).map(ctx -> ctx.searchBeans(beanClass)).orElseGet(LinkedList::new);
     }
 
     /**
@@ -111,7 +111,7 @@ public class TilesConfigurer extends org.springframework.web.servlet.view.tiles3
      */
     private void parseValidDefinitions(ApplicationContext context, String...definitions) {
     	// if defined definitions
-    	Set<String> validDefinitions = new LinkedHashSet<String>();
+    	Set<String> validDefinitions = new LinkedHashSet<>();
     	if (ArrayUtils.isNotEmpty(definitions)) {
     		// debug
     		if (log.isDebugEnabled()) {
