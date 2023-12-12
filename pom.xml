@@ -6366,7 +6366,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 		<repository>
 			<id>maven.seasar.org</id>
 			<name>The Seasar Foundation Maven2 Repository</name>
-			<url>http://maven.seasar.org/maven2</url>
+			<url>https://maven.seasar.org/maven2</url>
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
@@ -6390,12 +6390,12 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 		<repository>
 			<id>maven.nuiton.org</id>
 			<name>The Nuiton Maven Nexus Repository</name>
-			<url>http://maven.nuiton.org/nexus/content/repositories</url>
+			<url>https://maven.nuiton.org/nexus/content/repositories</url>
 		</repository>
-		<repository>
+		<!--<repository>
 			<id>projectlombok.org</id>
 			<url>http://projectlombok.org/mavenrepo</url>
-		</repository>
+		</repository>-->
 		<repository>
 			<id>mvnrepository.com</id>
 			<url>https://mvnrepository.com/artifact</url>
@@ -6479,7 +6479,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 		</repository>
 		<repository>
 			<id>maven.xwiki.org</id>
-			<url>http://maven.xwiki.org/externals/</url>
+			<url>https://maven.xwiki.org/externals/</url>
 		</repository>
 		<!-- <repository>
 			<id>aperture.sourceforge.net</id>
