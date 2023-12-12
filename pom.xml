@@ -48,6 +48,20 @@
 	<!-- Profile configuration -->
 	<profiles>
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Proguard/JarSigner [for PRODUCTION relase] -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<profile>
+			<id>obfuscation</id>
+			<properties>
+				<!-- Progurad configuration -->
+				<proguard.skip>false</proguard.skip>
+				
+				<!-- JAR Signer -->
+				<jarsigner.skip>false</jarsigner.skip>
+			</properties>
+		</profile>
+
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!-- JDK 1.8 -->
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<profile>
@@ -96,16 +110,12 @@
 				<org.aspectj.version>1.8.13</org.aspectj.version>
 				<org.aspectj.skip>false</org.aspectj.skip>
 
-				<!-- Progurad configuration -->
-				<proguard.skip>false</proguard.skip>
-
 				<!-- License password -->
 				<license.alias>${module.groupId}</license.alias>
 				<license.storepass>01101981</license.storepass>
 				<license.keypass>01101981</license.keypass>
 
 				<!-- JAR Signer -->
-				<jarsigner.skip>false</jarsigner.skip>
 				<jarsigner.verbose>true</jarsigner.verbose>
 				<jarsigner.keystore>${certificate.basedir}/jdk8/${module.groupId}.keystore.jks</jarsigner.keystore>
 				<jarsigner.cert>${certificate.basedir}/jdk8/${module.groupId}.keystore.cer</jarsigner.cert>
@@ -659,16 +669,12 @@
 				<maven.jdeps.version>3.1.2</maven.jdeps.version>
 				<maven.moditect.version>1.0.0.Final</maven.moditect.version>
 
-				<!-- Progurad configuration -->
-				<proguard.skip>false</proguard.skip>
-
 				<!-- License password -->
 				<license.alias>${module.groupId}</license.alias>
 				<license.storepass>01101981</license.storepass>
 				<license.keypass>01101981</license.keypass>
 
 				<!-- JAR Signer -->
-				<jarsigner.skip>false</jarsigner.skip>
 				<jarsigner.verbose>true</jarsigner.verbose>
 				<jarsigner.keystore>${certificate.basedir}/jdk11/jdk11.${module.groupId}.keystore.jks</jarsigner.keystore>
 				<jarsigner.cert>${certificate.basedir}/jdk11/jdk11.${module.groupId}.keystore.cer</jarsigner.cert>
@@ -1631,16 +1637,12 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 				<maven.jdeps.version>3.1.2</maven.jdeps.version>
 				<maven.jdeps.version>3.1.2</maven.jdeps.version>
 
-				<!-- Progurad configuration -->
-				<proguard.skip>false</proguard.skip>
-
 				<!-- License password -->
 				<license.alias>${module.groupId}</license.alias>
 				<license.storepass>01101981</license.storepass>
 				<license.keypass>01101981</license.keypass>
 
 				<!-- JAR Signer -->
-				<jarsigner.skip>false</jarsigner.skip>
 				<jarsigner.verbose>true</jarsigner.verbose>
 				<jarsigner.keystore>${certificate.basedir}/jdk17/jdk17.${module.groupId}.keystore.jks</jarsigner.keystore>
 				<jarsigner.cert>${certificate.basedir}/jdk17/jdk17.${module.groupId}.keystore.cer</jarsigner.cert>
@@ -3232,6 +3234,15 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 					of the production profile is prod, we must set the value of the build.profile.id
 					property to prod. -->
 				<build.profile.id>prod</build.profile.id>
+
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- [for PRODUCTION relase] -->
+				<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+				<!-- Progurad configuration -->
+				<proguard.skip>false</proguard.skip>
+
+				<!-- JAR Signer -->
+				<jarsigner.skip>false</jarsigner.skip>
 			</properties>
 		</profile>
 		<!-- The configuration of the testing profile -->
@@ -3271,6 +3282,16 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 		<certificate.basedir.name>.certificate</certificate.basedir.name>
 		<certificate.basedir>${root.basedir}/${certificate.basedir.name}</certificate.basedir>
 		<certificate.proguard.configuration>${certificate.basedir}/proguard.cnf</certificate.proguard.configuration>
+		
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- [for PRODUCTION relase] -->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Progurad configuration -->
+		<proguard.skip>true</proguard.skip>
+
+		<!-- JAR Signer -->
+		<jarsigner.skip>true</jarsigner.skip>
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 
 		<!-- Profile properties file -->
 		<build.profile.id>dev</build.profile.id> <!-- default profile -->
@@ -6442,6 +6463,14 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 		<repository>
 			<id>artifacts.alfresco.com</id>
 			<url>https://artifacts.alfresco.com/nexus/content/repositories/public</url>
+		</repository>
+		<repository>
+			<id>artifacts.alfresco.com.thirdparty</id>
+			<url>https://artifacts.alfresco.com/nexus/content/repositories/thirdparty</url>
+		</repository>
+		<repository>
+			<id>com.googlecode.openbeans</id>
+			<url>https://mvnrepository.com/artifact/com.googlecode/openbeans</url>
 		</repository>
 		<repository>
 			<id>maven.xwiki.org</id>
