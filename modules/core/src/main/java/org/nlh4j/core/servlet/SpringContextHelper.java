@@ -26,7 +26,6 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.nlh4j.util.BeanUtils;
 import org.nlh4j.util.CollectionUtils;
 import org.nlh4j.util.ExceptionUtils;
