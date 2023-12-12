@@ -2936,7 +2936,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 			<!-- only activating this profile on WAR project -->
 			<activation>
 				<file>
-					<exists>${project.basedir}/src/main/webapp/WEB-INF/web.xml</exists>
+					<exists>${basedir}/src/main/webapp/WEB-INF/web.xml</exists>
 				</file>
 			</activation>
 			<properties>
