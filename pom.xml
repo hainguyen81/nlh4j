@@ -6379,7 +6379,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 		<repository>
 			<id>repository.jboss.org-public-developer</id>
 			<name>JBoss Developer repository</name>
-			<url>https://repository.jboss.org/nexus/content/groups/developer/</url>
+			<url>https://repository.jboss.org/nexus/content/groups/public-jboss/</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
