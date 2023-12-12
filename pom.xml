@@ -6371,7 +6371,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
-			<repository> 
+		<repository> 
 			<id>repository.spring.milestone</id> 
 			<name>Spring Milestone Repository</name> 
 			<url>https://repo.spring.io/milestone</url> 
