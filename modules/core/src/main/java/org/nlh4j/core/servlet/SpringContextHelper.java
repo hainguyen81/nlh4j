@@ -473,6 +473,8 @@ public final class SpringContextHelper implements Serializable {
      * 
      * @return the information of the specified {@link Resource}
      */
+    /* java:S3776: Cognitive Complexity of methods should not be too high */
+    @SuppressWarnings({ "java:S3776" })
     public static String getResourceDescription(Resource resource) {
     	if (resource == null) {
     		return null;
@@ -503,27 +505,27 @@ public final class SpringContextHelper implements Serializable {
 
 		// return information
 		if (StringUtils.hasText(resPath)) {
-			resPath = resPath.replace("\\", "/");
+			resPath = org.apache.commons.lang3.StringUtils.replace(resPath, "\\", "/");
 			String[] resPartPaths = null;
-			if (resPath.indexOf(RESOURCE_JAR_PART_PATH) > 0) {
+			if (org.apache.commons.lang3.StringUtils.indexOf(resPath, RESOURCE_JAR_PART_PATH) > 0) {
 				resPartPaths = org.apache.commons.lang3.StringUtils.splitByWholeSeparator(resPath, RESOURCE_JAR_PART_PATH);
 
-			} else if (resPath.indexOf(RESOURCE_WAR_PART_PATH) > 0) {
+			} else if (org.apache.commons.lang3.StringUtils.indexOf(resPath, RESOURCE_WAR_PART_PATH) > 0) {
 				resPartPaths = org.apache.commons.lang3.StringUtils.splitByWholeSeparator(resPath, RESOURCE_WAR_PART_PATH);
 			}
-			if (ArrayUtils.isNotEmpty(resPartPaths)) {
-				if (resPartPaths[0].lastIndexOf("/") > 0) {
+			if (resPartPaths != null && resPartPaths.length > 0) {
+				if (org.apache.commons.lang3.StringUtils.lastIndexOf(resPartPaths[0], "/") > 0) {
 					resPartPaths[0] = resPartPaths[0].substring(resPartPaths[0].lastIndexOf("/") + 1);
 				}
-				if (resPath.indexOf(RESOURCE_JAR_PART_PATH) > 0) {
+				if (org.apache.commons.lang3.StringUtils.indexOf(resPath, RESOURCE_JAR_PART_PATH) > 0) {
 					resPath = String.format("%s%s%s", resPartPaths[0], RESOURCE_JAR_PART_PATH, resPartPaths.length > 1 ? resPartPaths[1] : "");
 
-				} else if (resPath.indexOf(RESOURCE_WAR_PART_PATH) > 0) {
+				} else if (org.apache.commons.lang3.StringUtils.indexOf(resPath, RESOURCE_WAR_PART_PATH) > 0) {
 					resPath = String.format("%s%s%s", resPartPaths[0], RESOURCE_WAR_PART_PATH, resPartPaths.length > 1 ? resPartPaths[1] : "");
 				}
 			}
 		}
-		return Optional.ofNullable(resPath).filter(StringUtils::hasText).orElseGet(() -> resource.getDescription());
+		return Optional.ofNullable(resPath).filter(StringUtils::hasText).orElseGet(resource::getDescription);
     }
 
     /**
