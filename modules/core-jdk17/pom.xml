@@ -7,7 +7,7 @@
 		<groupId>org.nlh4j</groupId>
 		<artifactId>nlh4j</artifactId>
 		<version>1.0</version>
-		<relativePath>../../pom.xml<relativePath>
+		<relativePath/> <!-- point to repository, required build parent before building modules -->
 	</parent>
 
 	<!-- Present package -->
