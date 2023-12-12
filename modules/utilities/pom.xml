@@ -7,7 +7,7 @@
 		<groupId>org.nlh4j</groupId>
 		<artifactId>nlh4j</artifactId>
 		<version>1.0</version>
-		<relativePath/>
+		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
 	<!-- Present package -->
