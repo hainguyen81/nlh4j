@@ -69,7 +69,7 @@ public class TilesView extends org.springframework.web.servlet.view.tiles3.Tiles
 
     /** {@link TilesContainer} */
     @Setter
-    private TilesContainer tilesContainer = null;
+    private transient TilesContainer tilesContainer = null;
 
     /**
      * Get the {@link TilesContainer} instance
@@ -82,7 +82,7 @@ public class TilesView extends org.springframework.web.servlet.view.tiles3.Tiles
     
     /** {@link Renderer} */
     @Getter(value = AccessLevel.PROTECTED)
-    private Renderer renderer;
+    private transient Renderer renderer;
     
     @Override
     public void setRenderer(Renderer renderer) {
@@ -105,9 +105,9 @@ public class TilesView extends org.springframework.web.servlet.view.tiles3.Tiles
 		}
 
 		ApplicationContext ctx = Optional.ofNullable(super.getServletContext())
-				.map(sc -> ServletUtil.getApplicationContext(sc))
+				.map(ServletUtil::getApplicationContext)
 				.orElseGet(() -> Optional.ofNullable(getContextHelper().getServletContext())
-						.map(sc -> ServletUtil.getApplicationContext(sc)).orElse(null));
+						.map(ServletUtil::getApplicationContext).orElse(null));
 		Request request = new ServletRequest(Objects.requireNonNull(ctx, "No ApplicationContext set"), servletRequest, null) {
 			@Override
 			public Locale getRequestLocale() {
