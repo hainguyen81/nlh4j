@@ -6371,6 +6371,11 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
+			<repository> 
+			<id>repository.spring.milestone</id> 
+			<name>Spring Milestone Repository</name> 
+			<url>https://repo.spring.io/milestone</url> 
+		</repository>
 		<repository>
 			<id>repository.jboss.org-public-developer</id>
 			<name>JBoss Developer repository</name>
