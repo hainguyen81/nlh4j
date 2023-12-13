@@ -6496,7 +6496,6 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 			<url>https://mvnrepository.com/artifact/org.codehaus.gmaven/groovy-maven-plugin</url>
 		</repository> -->
 		<repository>
-			<!-- See https://mvnrepository.com/artifact/com.googlecode/openbeans -->
 			<id>repository.com.redhat.ga</id>
 			<url>https://maven.repository.redhat.com/ga/</url> <!-- require the slash symbol at the end -->
 		</repository>
@@ -6515,10 +6514,6 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 		<repository>
 			<id>repository.com.alfresco.artifacts.thirdparty</id>
 			<url>https://artifacts.alfresco.com/nexus/content/repositories/thirdparty</url>
-		</repository>
-		<repository>
-			<id>repository.com.googlecode.openbeans</id>
-			<url>https://mvnrepository.com/artifact/com.googlecode/openbeans</url>
 		</repository>
 		<repository>
 			<id>repository.org.xwiki.externals</id>
