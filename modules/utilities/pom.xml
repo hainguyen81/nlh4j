@@ -28,6 +28,7 @@
 			<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
 					<!-- Extract com.googlecode:openbeans:1.0:jar -->
                     <execution>
                         <id>generate-source-openbeans</id>
