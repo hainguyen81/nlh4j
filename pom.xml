@@ -3932,6 +3932,8 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 		<net.sf.jasperreports.version>6.2.0</net.sf.jasperreports.version>
 		<net.sourceforge.jexcelapi.version>2.6.10</net.sourceforge.jexcelapi.version>
 		<net.sf.jasperreports.olap4j.version>1.2.0</net.sf.jasperreports.olap4j.version>
+		<!-- FIXME Jasper reports 6.2.0 required 2.1.7.js4 but it has been deprecated -->
+		<net.sf.jasperreports.itext.version>5.5.13.3</net.sf.jasperreports.itext.version>
 
 		<!-- Joda Time -->
 		<joda.time.version>2.7</joda.time.version>
@@ -6363,6 +6365,38 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 
 	<!-- Repositories -->
 	<repositories>
+		<!-- SPRING Repositories -->
+		<repository> 
+			<id>spring-release-repository</id> 
+			<name>Spring GA Repository</name> 
+			<url>https://repo.spring.io/release</url> 
+		</repository>
+		<repository> 
+			<id>spring-release-native-repository</id> 
+			<name>Spring GA Repository</name> 
+			<url>https://repo.spring.io/ui/native/release</url> 
+		</repository>
+		<repository> 
+			<id>spring-milestone-repository</id> 
+			<name>Spring Milestone Repository</name> 
+			<url>https://repo.spring.io/milestone</url> 
+		</repository>
+		<repository> 
+			<id>spring-milestone-native-repository</id> 
+			<name>Spring Milestone Repository</name> 
+			<url>https://repo.spring.io/ui/native/milestone</url> 
+		</repository>
+		<repository> 
+			<id>spring-snapshot-repository</id> 
+			<name>Spring Snapshot Repository</name> 
+			<url>https://repo.spring.io/snapshot</url> 
+		</repository>
+		<repository> 
+			<id>spring-snapshot-native-repository</id> 
+			<name>Spring Snapshot Repository</name> 
+			<url>https://repo.spring.io/ui/native/snapshot</url> 
+		</repository>
+		<!-- SEASAR Repository -->
 		<repository>
 			<id>maven.seasar.org</id>
 			<name>The Seasar Foundation Maven2 Repository</name>
@@ -6396,10 +6430,10 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 			<id>projectlombok.org</id>
 			<url>http://projectlombok.org/mavenrepo</url>
 		</repository>-->
-		<repository>
+		<!--<repository>
 			<id>mvnrepository.com</id>
 			<url>https://mvnrepository.com/artifact</url>
-		</repository>
+		</repository>-->
 		<repository>
 			<id>org.apache.httpcomponents</id>
 			<url>https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient</url>
@@ -7015,9 +7049,13 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 						<groupId>xml-apis</groupId>
 						<artifactId>xml-apis</artifactId>
 					</exclusion>
-					<exclusion>
+					<exclusion> <!-- FIXME jasperreports dependency: org.olap4j:olap4j:`old version` has been deprecated -->
 						<groupId>org.olap4j</groupId>
 						<artifactId>olap4j</artifactId>
+					</exclusion>
+					<exclusion> <!-- FIXME jasperreports/httpclient dependency: com.lowagie:itext:2.1.7.js4 has been deprecated -->
+						<groupId>com.lowagie</groupId>
+						<artifactId>itext</artifactId>
 					</exclusion>
 				</exclusions>
 			</dependency>
@@ -7026,10 +7064,15 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 				<artifactId>jxl</artifactId>
 				<version>${net.sourceforge.jexcelapi.version}</version>
 			</dependency>
-			<dependency> <!-- jasperreports dependency -->
+			<dependency> <!-- FIXME jasperreports dependency: org.olap4j:olap4j:`old version` has been deprecated -->
 				<groupId>org.olap4j</groupId>
 				<artifactId>olap4j</artifactId>
 				<version>${net.sf.jasperreports.olap4j.version}</version>
+			</dependency>
+			<dependency> <!-- FIXME jasperreports/httpclient dependency: com.lowagie:itext:2.1.7.js4 has been deprecated -->
+				<groupId>com.itextpdf</groupId>
+				<artifactId>itextpdf</artifactId>
+				<version>${net.sf.jasperreports.itext.version}</version>
 			</dependency>
 
 			<!-- Apache POI -->
@@ -7103,6 +7146,10 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 					<exclusion>
 						<groupId>commons-logging</groupId>
 						<artifactId>commons-logging</artifactId>
+					</exclusion>
+					<exclusion> <!-- FIXME jasperreports/httpclient dependency: com.lowagie:itext:2.1.7.js4 has been deprecated -->
+						<groupId>com.lowagie</groupId>
+						<artifactId>itext</artifactId>
 					</exclusion>
 			    </exclusions>
 			</dependency>
