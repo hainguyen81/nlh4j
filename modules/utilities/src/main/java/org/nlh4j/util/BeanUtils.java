@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.beanutils.ConvertUtilsBean;
@@ -220,7 +221,7 @@ public final class BeanUtils implements Serializable {
      * @throws Exception thrown if fail
      */
     public static <T, K> List<T> copyBeansList(List<K> srcList, Class<T> clazz, String...ignorePoperties) throws Exception {
-		  List<T> destDtos = new LinkedList<T>();
+		  List<T> destDtos = new LinkedList<>();
 		  if (!CollectionUtils.isEmpty(srcList)) {
 			  for(K src : srcList) {
 				  destDtos.add(copyBean(src, clazz, ignorePoperties));
@@ -255,7 +256,7 @@ public final class BeanUtils implements Serializable {
      * @throws Exception thrown if fail
      */
     public static <T, K> List<T> copyBeansListByFields(List<K> srcList, Class<T> clazz, String...ignoreFields) throws Exception {
-          List<T> destDtos = new LinkedList<T>();
+          List<T> destDtos = new LinkedList<>();
           if (!CollectionUtils.isEmpty(srcList)) {
               for(K src : srcList) {
                   destDtos.add(copyBeanByFields(src, clazz, ignoreFields));
@@ -353,6 +354,8 @@ public final class BeanUtils implements Serializable {
      * @param ignoreFields the ignored field names that has not been cloned value
      * @throws Exception thrown if fail
      */
+    /* java:S3776: Cognitive Complexity of methods should not be too high */
+    @SuppressWarnings({ "java:S3776" })
     public static <T, K> void copyFields(K src, T dest, String...ignoreFields) throws Exception {
         Assert.notNull(src, "source");
         Assert.notNull(dest, "destination");
@@ -2671,14 +2674,8 @@ public final class BeanUtils implements Serializable {
      * @return not null value or null
      */
     public static Object coalesce(Object...args) {
-        Object val = null;
-        if (!CollectionUtils.isEmpty(args)) {
-            for(Object arg : args) {
-                val = (val == null ? arg : val);
-                if (val != null) break;
-            }
-        }
-        return val;
+        return Stream.of(Optional.ofNullable(args).orElseGet(() -> new Object[0]))
+                .parallel().filter(Objects::nonNull).findFirst().orElse(null);
     }
     
     /**
@@ -2687,7 +2684,7 @@ public final class BeanUtils implements Serializable {
      * This's work-around for reflective with JDK8/9+ when the `isAccessible` method has been deprecated
      * 
      * @param target to check
-     * @param method to check
+     * @param methodOrField to check
      * 
      * @return true for can be accessed; else false
      */
