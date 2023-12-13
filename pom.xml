@@ -6498,7 +6498,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 		<repository>
 			<!-- See https://mvnrepository.com/artifact/com.googlecode/openbeans -->
 			<id>repository.com.redhat.ga</id>
-			<url>https://maven.repository.redhat.com/ga</url>
+			<url>https://maven.repository.redhat.com/ga/</url> <!-- require the slash symbol at the end -->
 		</repository>
 		<repository>
 			<id>repository.com.google.android</id>
