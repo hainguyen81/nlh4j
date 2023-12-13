@@ -6365,6 +6365,12 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 
 	<!-- Repositories -->
 	<repositories>
+		<!-- Common Maven Repository -->
+		<repository> 
+			<id>repository.org.maven.repo1.maven2</id> 
+			<name>Maven 2 Repository 1</name> 
+			<url>https://repo1.maven.org/maven2</url> 
+		</repository>
 		<!-- SPRING Repositories -->
 		<repository> 
 			<id>repository.spring.release</id> 
@@ -6399,7 +6405,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 		<!-- AspectJ Repository -->
 		<repository> 
 			<id>repository.org.aspectj</id> 
-			<name>Spring Snapshot Repository</name> 
+			<name>ASpectJ Maven Repository</name> 
 			<url>https://repo1.maven.org/maven2/org/aspectj</url> 
 		</repository>
 		<!-- SEASAR Repository -->
