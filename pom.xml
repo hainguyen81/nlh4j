@@ -5436,11 +5436,6 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 						</dependency>
 						<dependency>
 							<groupId>org.aspectj</groupId>
-							<artifactId>aspectjweaver</artifactId>
-							<version>${org.aspectj.version}</version>
-						</dependency>
-						<dependency>
-							<groupId>org.aspectj</groupId>
 							<artifactId>aspectjtools</artifactId>
 							<version>${org.aspectj.version}</version>
 						</dependency>
