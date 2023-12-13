@@ -6365,53 +6365,61 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 
 	<!-- Repositories -->
 	<repositories>
+		<!-- Common Maven Repository -->
+		<repository> 
+			<id>repository.org.maven.repo1.maven2</id> 
+			<name>Maven 2 Repository 1</name> 
+			<url>https://repo1.maven.org/maven2</url> 
+		</repository>
 		<!-- SPRING Repositories -->
 		<repository> 
-			<id>spring-release-repository</id> 
+			<id>repository.spring.release</id> 
 			<name>Spring GA Repository</name> 
 			<url>https://repo.spring.io/release</url> 
 		</repository>
 		<repository> 
-			<id>spring-release-native-repository</id> 
+			<id>repository.spring.release.native</id> 
 			<name>Spring GA Repository</name> 
 			<url>https://repo.spring.io/ui/native/release</url> 
-		</repository>
-		<repository> 
-			<id>spring-milestone-repository</id> 
-			<name>Spring Milestone Repository</name> 
-			<url>https://repo.spring.io/milestone</url> 
-		</repository>
-		<repository> 
-			<id>spring-milestone-native-repository</id> 
-			<name>Spring Milestone Repository</name> 
-			<url>https://repo.spring.io/ui/native/milestone</url> 
-		</repository>
-		<repository> 
-			<id>spring-snapshot-repository</id> 
-			<name>Spring Snapshot Repository</name> 
-			<url>https://repo.spring.io/snapshot</url> 
-		</repository>
-		<repository> 
-			<id>spring-snapshot-native-repository</id> 
-			<name>Spring Snapshot Repository</name> 
-			<url>https://repo.spring.io/ui/native/snapshot</url> 
-		</repository>
-		<!-- SEASAR Repository -->
-		<repository>
-			<id>maven.seasar.org</id>
-			<name>The Seasar Foundation Maven2 Repository</name>
-			<url>https://maven.seasar.org/maven2</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
 		</repository>
 		<repository> 
 			<id>repository.spring.milestone</id> 
 			<name>Spring Milestone Repository</name> 
 			<url>https://repo.spring.io/milestone</url> 
 		</repository>
+		<repository> 
+			<id>repository.spring.milestone.native</id> 
+			<name>Spring Milestone Repository</name> 
+			<url>https://repo.spring.io/ui/native/milestone</url> 
+		</repository>
+		<repository> 
+			<id>repository.spring.snapshot</id> 
+			<name>Spring Snapshot Repository</name> 
+			<url>https://repo.spring.io/snapshot</url> 
+		</repository>
+		<repository> 
+			<id>repository.spring.snapshot.native</id> 
+			<name>Spring Snapshot Repository</name> 
+			<url>https://repo.spring.io/ui/native/snapshot</url> 
+		</repository>
+		<!-- AspectJ Repository -->
+		<repository> 
+			<id>repository.org.aspectj</id> 
+			<name>ASpectJ Maven Repository</name> 
+			<url>https://repo1.maven.org/maven2/org/aspectj</url> 
+		</repository>
+		<!-- SEASAR Repository -->
 		<repository>
-			<id>repository.jboss.org-public-developer</id>
+			<id>repository.org.seasar</id>
+			<name>The Seasar Foundation Maven2 Repository</name>
+			<url>https://maven.seasar.org/maven2</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<!-- JBoss Repository -->
+		<repository>
+			<id>repository.org.jboss.public</id>
 			<name>JBoss Developer repository</name>
 			<url>https://repository.jboss.org/nexus/content/groups/public-jboss/</url>
 			<releases>
@@ -6421,8 +6429,9 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
+		<!-- Nuiton Nexus Respository -->
 		<repository>
-			<id>maven.nuiton.org</id>
+			<id>repository.org.nuiton.nexus</id>
 			<name>The Nuiton Maven Nexus Repository</name>
 			<url>https://maven.nuiton.org/nexus/content/repositories</url>
 		</repository>
@@ -6435,35 +6444,35 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 			<url>https://mvnrepository.com/artifact</url>
 		</repository>-->
 		<repository>
-			<id>org.apache.httpcomponents</id>
+			<id>repository.org.apache.httpcomponents.httpclient</id>
 			<url>https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient</url>
 		</repository>
 		<repository>
-			<id>org.apache.httpcomponents.core5</id>
+			<id>repository.org.apache.httpcomponents.core5</id>
 			<url>https://mvnrepository.com/artifact/org.apache.httpcomponents.core5/httpcore5</url>
 		</repository>
 		<repository>
-			<id>org.apache.httpcomponents.core5-h2</id>
+			<id>repository.org.apache.httpcomponents.core5-h2</id>
 			<url>https://mvnrepository.com/artifact/org.apache.httpcomponents.core5/httpcore5-h2</url>
 		</repository>
 		<repository>
-			<id>org.apache.httpcomponents.client5</id>
+			<id>repository.org.apache.httpcomponents.client5</id>
 			<url>https://mvnrepository.com/artifact/org.apache.httpcomponents.client5/httpclient5</url>
 		</repository>
 		<repository>
-			<id>maven.atlassian.com</id>
+			<id>repository.com.atlassian.3rdparty</id>
 			<url>https://maven.atlassian.com/3rdparty</url>
 		</repository>
 		<repository>
-			<id>avalon-framework</id>
+			<id>repository.avalon.framework</id>
 			<url>https://mvnrepository.com/artifact/avalon-framework/avalon-framework</url>
 		</repository>
 		<repository>
-			<id>avalon-framework-api</id>
+			<id>repository.avalon.framework.api</id>
 			<url>https://mvnrepository.com/artifact/avalon-framework/avalon-framework-api</url>
 		</repository>
 		<repository>
-			<id>avalon-framework-impl</id>
+			<id>repository.avalon.framework.impl</id>
 			<url>https://mvnrepository.com/artifact/avalon-framework/avalon-framework-impl</url>
 		</repository>
 		<!-- <repository>
@@ -6479,7 +6488,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 			<url>https://mvnrepository.com/artifact/org.apache.avalon.framework/avalon-framework-impl</url>
 		</repository> -->
 		<repository>
-			<id>net.sf.barcode4j</id>
+			<id>repository.net.sf.barcode4j</id>
 			<url>https://mvnrepository.com/artifact/net.sf.barcode4j/barcode4j</url>
 		</repository>
 		<!-- <repository>
@@ -6488,31 +6497,31 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 		</repository> -->
 		<repository>
 			<!-- See https://mvnrepository.com/artifact/com.googlecode/openbeans -->
-			<id>maven.repository.redhat.com</id>
+			<id>repository.com.redhat.ga</id>
 			<url>https://maven.repository.redhat.com/ga</url>
 		</repository>
 		<repository>
-			<id>com.google.android</id>
+			<id>repository.com.google.android</id>
 			<url>https://mvnrepository.com/artifact/com.google.android/android</url>
 		</repository>
 		<repository>
-			<id>com.google.android.support-v4</id>
+			<id>repository.com.google.android.support-v4</id>
 			<url>https://mvnrepository.com/artifact/com.google.android/support-v4</url>
 		</repository>
 		<repository>
-			<id>artifacts.alfresco.com</id>
+			<id>repository.com.alfresco.artifacts</id>
 			<url>https://artifacts.alfresco.com/nexus/content/repositories/public</url>
 		</repository>
 		<repository>
-			<id>artifacts.alfresco.com.thirdparty</id>
+			<id>repository.com.alfresco.artifacts.thirdparty</id>
 			<url>https://artifacts.alfresco.com/nexus/content/repositories/thirdparty</url>
 		</repository>
 		<repository>
-			<id>com.googlecode.openbeans</id>
+			<id>repository.com.googlecode.openbeans</id>
 			<url>https://mvnrepository.com/artifact/com.googlecode/openbeans</url>
 		</repository>
 		<repository>
-			<id>maven.xwiki.org</id>
+			<id>repository.org.xwiki.externals</id>
 			<url>https://maven.xwiki.org/externals/</url>
 		</repository>
 		<!-- <repository>
@@ -7581,6 +7590,10 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjtools</artifactId>
 		</dependency>
 	</dependencies>
 	
