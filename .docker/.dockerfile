@@ -117,7 +117,7 @@ COPY --from=jdk /usr/share/maven/conf/settings.xml .
 COPY --from=jdk /usr/share/maven/conf/toolchains.xml .
 COPY --from=base /data/.cert/jdk$JDK /root/.m2/.cert
 
-# Build root
+# Build project: solve dependencies > build project
 RUN echo "[maven-build - dev,jdk$JDK] Resolve dependencies to offline to publish as repository later" \
 	&& mvn -s settings.xml -t toolchains.xml -Dmaven.repo.local=/root/.m2/repository -N -q -T 7 -Dmaven.wagon.http.ssl.insecure=true -DskipTests=true -Dmaven.test.skip=true \
 	-P dev,jdk$JDK \

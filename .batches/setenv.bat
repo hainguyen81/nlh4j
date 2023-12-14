@@ -12,7 +12,7 @@ SET MAVEN=%MAVEN_HOME%\bin
 SET MAVEN_SETTINGS=%MAVEN_HOME%\conf\settings.xml
 SET MAVEN_REPO=E:\Java.Working\1.tools\maven\.m2\repository
 SET MAVEN_OPTS=-Xms256m -Xmx2048m
-SET MAVEN_PROFILES=dev,jdk11
+SET MAVEN_PROFILES=dev,jdk11,openbeans-unpack
 
 SET SKIP_TESTS=true
 
