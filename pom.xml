@@ -117,8 +117,8 @@
 
 				<!-- JAR Signer -->
 				<jarsigner.verbose>true</jarsigner.verbose>
-				<jarsigner.keystore>${certificate.basedir}/jdk8/${module.groupId}.keystore.jks</jarsigner.keystore>
-				<jarsigner.cert>${certificate.basedir}/jdk8/${module.groupId}.keystore.cer</jarsigner.cert>
+				<jarsigner.keystore>${certificate.basedir}/jdk8/jdk8.${module.groupId}.keystore.jks</jarsigner.keystore>
+				<jarsigner.cert>${certificate.basedir}/jdk8/jdk8.${module.groupId}.keystore.cer</jarsigner.cert>
 				<jarsigner.alias>${license.alias}</jarsigner.alias>
 				<jarsigner.storepass>${license.storepass}</jarsigner.storepass>
 				<jarsigner.keypass>${license.keypass}</jarsigner.keypass>

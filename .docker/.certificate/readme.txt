@@ -1,0 +1,1 @@
+Keep this folder to transfer jdk certificates to docker build
