@@ -31,8 +31,8 @@ WORKDIR /data
 RUN mkdir -p .cert && mkdir -p .cert/jdk$JDK
 RUN mkdir -p .dep
 COPY --from=certificate repo.maven.apache.org.crt .cert/
-COPY --from=certificate jdk$JDK/* .cert/jdk$JDK
-COPY --from=dep * .dep/
+COPY --from=certificate jdk$JDK .cert/jdk$JDK
+COPY --from=dep . .dep/
 
 
 # -------------------------------------------------
@@ -65,7 +65,7 @@ FROM maven:3.8.4-eclipse-temurin-$JDK-alpine as jdk
 ARG JDK
 
 # create maven settings.xml, toolchains.xml
-RUN	mkdir -p /root/.m2 && mkdir -p /root/.m2/repository && mkdir -p /root/.m2/.cert
+RUN	mkdir -p /root/.m2 && mkdir -p /root/.m2/repository && mkdir -p /root/.m2/.cert && mkdir -p /root/.m2/.dep
 RUN	mkdir -p /usr/share && mkdir -p /usr/share/maven && mkdir -p /usr/share/maven/conf
 RUN echo \
     "<settings xmlns='http://maven.apache.org/SETTINGS/1.0.0\' \
@@ -97,9 +97,6 @@ RUN	echo \
     </toolchains>" \
     > /usr/share/maven/conf/toolchains.xml
 
-# Copies dependencies from host if necessary
-COPY --from=base /data/.dep/* /root/.m2/repository
-
 # -------------------------------------------------
 WORKDIR /jdk
 RUN echo "[jdk] JAVA_HOME: $JAVA_HOME"
@@ -120,28 +117,17 @@ COPY --from=jdk /usr/share/maven/conf/settings.xml .
 COPY --from=jdk /usr/share/maven/conf/toolchains.xml .
 COPY --from=base /data/.cert/jdk$JDK /root/.m2/.cert
 
-# Build root first to create maven dependency reference
-RUN echo "[maven-build - dev,jdk$JDK] Build parent POM before building modules - [-N] non-recusive for building only parent POM"
-RUN mvn -s settings.xml -t toolchains.xml -Dmaven.repo.local=/root/.m2/repository -q -N -T 7 -U -Dmaven.wagon.http.ssl.insecure=true -DskipTests=true -Dmaven.test.skip=true -P dev,jdk$JDK \
-	dependency:go-offline \
-	--log-file /logs/parent.build.log
-#RUN --mount=type=bind,rw,target=/root/.m2/repository \
-#	mvn -s settings.xml -t toolchains.xml -Dmaven.repo.local=/root/.m2/repository -q -N -T 7 -U -Dmaven.wagon.http.ssl.insecure=true -DskipTests=true -Dmaven.test.skip=true -P dev,jdk$JDK clean install \
-#	--log-file /logs/parent.build.log
-
-# FIXME Re-pack com/googlecode/openbeans-1.0.jar due to issue on docker build
-#RUN ls /root/.m2/com/googlecode/openbeans/1.0/
-#RUN ls /root/.m2/repository/com/googlecode/openbeans/1.0/
-#RUN echo "[maven-build - dev,jdk$JDK] Fix com/googlecode/openbeans-1.0.jar ZIP End header not found issue"
-#RUN $JAVA_HOME/bin/jar xvf /root/.m2/repository/com/googlecode/openbeans/1.0/openbeans-1.0.jar
-#RUN rm -rf /root/.m2/repository/com/googlecode/openbeans/1.0/openbeans-1.0.jar
-#RUN $JAVA_HOME/bin/jar cf /root/.m2/repository/com/googlecode/openbeans/1.0/openbeans-1.0.jar /root/.m2/repository/com/googlecode/openbeans/1.0/openbeans-1.0/*
-
-# Build whole modules
-#RUN echo "[maven-build - dev,jdk$JDK,licenseTool] Build child modules after building only parent POM"
-#RUN --mount=type=cache,target=/root/.m2 \
-#	mvn -s settings.xml -t toolchains.xml -Dmaven.repo.local=/root/.m2/repository -q -T 7 -U -Dmaven.wagon.http.ssl.insecure=true -DskipTests=true -Dmaven.test.skip=true -P dev,jdk$JDK,licenseTool clean install \
-#	--log-file /logs/build.log
+# Build root
+RUN echo "[maven-build - dev,jdk$JDK] Resolve dependencies to offline to publish as repository later" \
+	&& mvn -s settings.xml -t toolchains.xml -Dmaven.repo.local=/root/.m2/repository -N -q -T 7 -Dmaven.wagon.http.ssl.insecure=true -DskipTests=true -Dmaven.test.skip=true \
+	-P dev,jdk$JDK \
+	dependency:resolve dependency:go-offline install \
+	--log-file /logs/maven.build.log \
+	&& echo "[maven-build - dev,jdk$JDK,licenseTool,unzip-dependencies] Build modules based on offline respository - use `unzip-dependencies` profile to unzip dependencies due to issue on docker build" \
+	&& mvn -s settings.xml -t toolchains.xml -Dmaven.repo.local=/root/.m2/repository -q -T 7 -Dmaven.wagon.http.ssl.insecure=true -DskipTests=true -Dmaven.test.skip=true \
+	-P dev,jdk$JDK,licenseTool \
+	clean install \
+	--log-file /logs/build.log
 
 
 # -------------------------------------------------
