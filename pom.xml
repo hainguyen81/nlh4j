@@ -6519,6 +6519,10 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 			<id>repository.org.xwiki.externals</id>
 			<url>https://maven.xwiki.org/externals/</url>
 		</repository>
+		<repository>
+			<id>repository.org.gluu.ox.maven</id>
+			<url>https://ox.gluu.org/maven</url>
+		</repository>
 		<!-- <repository>
 			<id>aperture.sourceforge.net</id>
 			<url>http://aperture.sourceforge.net/maven</url>
