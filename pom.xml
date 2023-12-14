@@ -6176,12 +6176,13 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 			<!--
 				 This plugin's configuration is used to store Eclipse m2e settings only.
 				 It has no influence on the Maven build itself.
+				 FIXME This only should exist in <pluginManagement />
 			-->
 			<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
-			<plugin>
+			<!--<plugin>
 				<groupId>org.eclipse.m2e</groupId>
 				<artifactId>lifecycle-mapping</artifactId>
-			</plugin>
+			</plugin>-->
 		</plugins>
 	</build>
 
@@ -6354,12 +6355,13 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 			<!--
 				 This plugin's configuration is used to store Eclipse m2e settings only.
 				 It has no influence on the Maven build itself.
+				 FIXME This only should exist in <pluginManagement />
 			-->
 			<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
-			<plugin>
+			<!--<plugin>
 				<groupId>org.eclipse.m2e</groupId>
 				<artifactId>lifecycle-mapping</artifactId>
-			</plugin>
+			</plugin>-->
 		</plugins>
 	</reporting>
 
