@@ -3216,9 +3216,12 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 			<id>issuedDep</id>
 			<properties>
 				<!-- Use project.basedir due to belonging to dependency of every module -->
-				<zipped.dependencies.directory.path>${project.basedir}/.docker</zipped.dependencies.directory.path>
+				<zipped.dependencies.directory.path>${root.basedir}/libs/.docker</zipped.dependencies.directory.path>
 				<zipped.class.dependencies.directory.path>${zipped.dependencies.directory.path}/classes</zipped.class.dependencies.directory.path>
 				<zipped.source.dependencies.directory.path>${zipped.dependencies.directory.path}/sources</zipped.source.dependencies.directory.path>
+				<zipped.extracted.class.dependencies.directory.path>${root.basedir}/target/extracted-class-dependencies</zipped.extracted.class.dependencies.directory.path>
+				<zipped.extracted.class.dependencies.systemPath>${zipped.extracted.class.dependencies.directory.path}/extracted-class-dependencies.jar</zipped.extracted.class.dependencies.systemPath>
+				<zipped.extracted.source.dependencies.directory.path>${root.basedir}/target/extracted-source-dependencies</zipped.extracted.source.dependencies.directory.path>
 			</properties>
 			<build>
 				<plugins>
@@ -3231,6 +3234,22 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-antrun-plugin</artifactId>
 						<executions>
+							<!-- ensure extracted source/class directories -->
+							<execution>
+								<id>ensure-extracted-issued-dependencies-directories</id>
+								<!-- borrow validate phase to initialize some requirement directories -->
+								<phase>validate</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<target name="ensure-extracted-issued-dependencies-directories">
+										<mkdir dir="${zipped.extracted.class.dependencies.directory.path}" />
+										<mkdir dir="${zipped.extracted.source.dependencies.directory.path}" />
+									</target>
+								</configuration>
+							</execution>
+
 							<!--
 								 Unzip all dependency classes to project target/extracted-class-dependencies,
 								 one of them is `com.googlecode:openbeans:1.0:jar`,
@@ -3247,35 +3266,45 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 										<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.plugin.classpath"/>
 
 										<if>
-											<available file="${zipped.class.dependencies.directory.path}" type="dir"/>
+											<available file="${zipped.extracted.class.dependencies.systemPath}"/>
 											<then>
-												<!-- extract all classes from class-dependencies -->
-												<mkdir dir="${project.build.directory}/extracted-class-dependencies" />
-												<unzip dest="${project.build.directory}/extracted-class-dependencies">
-													<patternset>
-														<exclude name="META-INF/MANIFEST.MF"/>
-														<exclude name="META-INF/*"/>
-														<exclude name="**/Test*.class"/>
-													</patternset>
-													<fileset dir="${zipped.class.dependencies.directory.path}">
-														<include name="**/*.zip"/>
-													</fileset>
-												</unzip>
-
-												<!-- create extracted-class-dependencies.jar for using in classpath -->
-												<if>
-													<length length="0" when="greater">
-														<fileset dir="${project.build.directory}/extracted-class-dependencies" followsymlinks="false"/>
-													</length>
-													<then>
-														<jar destfile="${project.build.directory}/extracted-class-dependencies/extracted-class-dependencies.jar">
-															<fileset dir="${project.build.directory}/extracted-class-dependencies">
-																<include name="**/**" />
-															</fileset>
-														</jar>
-	                 								</then>
-            									</if>
+												<echo message="Class dependencies has been extracted: ${zipped.extracted.class.dependencies.systemPath}"/>
 											</then>
+											<else>
+												<then>
+													<if>
+														<available file="${zipped.class.dependencies.directory.path}" type="dir"/>
+														<then>
+															<!-- extract all classes from class-dependencies -->
+															<mkdir dir="${zipped.extracted.class.dependencies.directory.path}" />
+															<unzip dest="${zipped.extracted.class.dependencies.directory.path}">
+																<patternset>
+																	<exclude name="META-INF/MANIFEST.MF"/>
+																	<exclude name="META-INF/*"/>
+																	<exclude name="**/Test*.class"/>
+																</patternset>
+																<fileset dir="${zipped.class.dependencies.directory.path}">
+																	<include name="**/*.zip"/>
+																</fileset>
+															</unzip>
+
+															<!-- create extracted-class-dependencies.jar for using in classpath -->
+															<if>
+																<length length="0" when="greater">
+																	<fileset dir="${zipped.extracted.class.dependencies.directory.path}" followsymlinks="false"/>
+																</length>
+																<then>
+																	<jar destfile="${zipped.extracted.class.dependencies.systemPath}">
+																		<fileset dir="${zipped.extracted.class.dependencies.directory.path}">
+																			<include name="**/**" />
+																		</fileset>
+																	</jar>
+																</then>
+															</if>
+														</then>
+													</if>
+												</then>
+											</else>
 										</if>
 									</target>
 								</configuration>
@@ -3297,11 +3326,11 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 										<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.plugin.classpath"/>
 
 										<if>
-											<available file="${zipped.class.dependencies.directory.path}" type="dir"/>
+											<available file="${zipped.source.dependencies.directory.path}" type="dir"/>
 											<then>
 												<!-- extract all sources from source-dependencies -->
-												<mkdir dir="${project.build.directory}/extracted-source-dependencies" />
-												<unzip dest="${project.build.directory}/extracted-source-dependencies">
+												<mkdir dir="${zipped.extracted.source.dependencies.directory.path}" />
+												<unzip dest="${zipped.extracted.source.dependencies.directory.path}">
 													<patternset>
 														<exclude name="META-INF/MANIFEST.MF"/>
 														<exclude name="META-INF/*"/>
@@ -3333,7 +3362,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 								</goals>
 								<configuration>
 									<sources>
-										<source>${project.build.directory}/extracted-source-dependencies</source>
+										<source>${zipped.source.dependencies.directory.path}</source>
 									</sources>
 								</configuration>
 							</execution>
@@ -3341,17 +3370,19 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 					</plugin>
 				</plugins>
 			</build>
-			<dependencies>
-				<dependency>
-					<groupId>${project.groupId}.${project.artifactId}</groupId>
-					<artifactId>extracted-issued-dependencies</artifactId>
-					<version>${project.version}</version>
-					<scope>system</scope>
-					<systemPath>${project.build.directory}/extracted-class-dependencies/extracted-class-dependencies.jar</systemPath>
-					<!-- use optional due to it could be not existed -->
-					<optional>true</optional>
-				</dependency>
-			</dependencies>
+
+			<!-- Dependencies -->
+			<dependencyManagement>
+				<dependencies>
+					<dependency>
+						<groupId>${project.groupId}</groupId>
+						<artifactId>extracted-issued-dependencies</artifactId>
+						<version>${project.version}</version>
+						<scope>system</scope>
+						<systemPath>${zipped.extracted.class.dependencies.systemPath}</systemPath>
+					</dependency>
+				</dependencies>
+			</dependencyManagement>
 		</profile>
 		
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->

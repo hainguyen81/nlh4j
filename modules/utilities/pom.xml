@@ -67,6 +67,21 @@
 				</plugins>
 			</build>
 		</profile>
+
+		<!--
+			 Unzip the classes/sources zipped of dependencies from `.docker` folder to project target/classes,
+			 one of them is `com.googlecode:openbeans:1.0:jar`, or `com.artofsolving:jodconverter-core:3.0-alfresco-patched-20141024:jar`
+		-->
+		<profile>
+			<id>issuedDep</id>
+			<dependencies>
+				<dependency>
+					<groupId>${project.groupId}</groupId>
+					<artifactId>extracted-issued-dependencies</artifactId>
+					<scope>system</scope>
+				</dependency>
+			</dependencies>
+		</profile>
 	</profiles>
 
 	<!-- Dependencies -->

@@ -1,1 +1,0 @@
-This folder to keep the source/classes of dependencies under ZIP format to extract when building dockerfile
