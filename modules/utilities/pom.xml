@@ -29,7 +29,7 @@
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!-- Unpack com.googlecode:openbeans:1.0:jar from maven reqpository -->
 		<profile>
-			<id>openbeans-unpack</id>
+			<id>unpackDep</id>
 			<build>
 				<plugins>
 					<!--
@@ -71,7 +71,7 @@
 
 		<!-- Unzip the classes/sources zipped of dependencies from `.docker` folder to project target/classes, one of them is `com.googlecode:openbeans:1.0:jar`  -->
 		<profile>
-			<id>unzip-dependencies</id>
+			<id>unzipDep</id>
 			<properties>
 				<zipped.dependencies.directory.path>${project.basedir}/.docker</zipped.dependencies.directory.path>
 			</properties>
