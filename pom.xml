@@ -3217,6 +3217,8 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 			<properties>
 				<!-- Use project.basedir due to belonging to dependency of every module -->
 				<zipped.dependencies.directory.path>${project.basedir}/.docker</zipped.dependencies.directory.path>
+				<zipped.class.dependencies.directory.path>${zipped.dependencies.directory.path}/classes</zipped.class.dependencies.directory.path>
+				<zipped.source.dependencies.directory.path>${zipped.dependencies.directory.path}/sources</zipped.source.dependencies.directory.path>
 			</properties>
 			<build>
 				<plugins>
@@ -3229,71 +3231,86 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-antrun-plugin</artifactId>
 						<executions>
-							<!-- Unzip all dependency sources to project target/classes, one of them is `com.googlecode:openbeans:1.0:jar`, or `com.artofsolving:jodconverter-core:3.0-alfresco-patched-20141024:jar` -->
+							<!--
+								 Unzip all dependency classes to project target/extracted-class-dependencies,
+								 one of them is `com.googlecode:openbeans:1.0:jar`,
+								 or `com.artofsolving:jodconverter-core:3.0-alfresco-patched-20141024:jar`
+							-->
 							<execution>
-								<id>unzip-dependency-sources</id>
-								<phase>generate-sources</phase>
+								<id>unzip-class-dependencies</id>
+								<phase>process-resources</phase>
 								<goals>
 									<goal>run</goal>
 								</goals>
 								<configuration>
-									<target name="unzip-dependency-sources">
+									<target name="unzip-class-dependencies">
 										<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.plugin.classpath"/>
 
 										<if>
-											<available file="${zipped.dependencies.directory.path}" type="dir"/>
+											<available file="${zipped.class.dependencies.directory.path}" type="dir"/>
 											<then>
-												<mkdir dir="${project.build.directory}/extracted-source-dependencies" />
-												<unzip dest="${project.build.directory}/extracted-source-dependencies">
+												<!-- extract all classes from class-dependencies -->
+												<mkdir dir="${project.build.directory}/extracted-class-dependencies" />
+												<unzip dest="${project.build.directory}/extracted-class-dependencies">
 													<patternset>
-														<patternset>
 														<exclude name="META-INF/MANIFEST.MF"/>
-														<exclude name="**/Test*.java"/>
 														<exclude name="META-INF/*"/>
+														<exclude name="**/Test*.class"/>
 													</patternset>
-													</patternset>
-													<fileset dir="${zipped.dependencies.directory.path}">
+													<fileset dir="${zipped.class.dependencies.directory.path}">
 														<include name="**/*.zip"/>
 													</fileset>
 												</unzip>
+
+												<!-- create extracted-class-dependencies.jar for using in classpath -->
+												<if>
+													<length length="0" when="greater">
+														<fileset dir="${project.build.directory}/extracted-class-dependencies" followsymlinks="false"/>
+													</length>
+													<then>
+														<jar destfile="${project.build.directory}/extracted-class-dependencies/extracted-class-dependencies.jar">
+															<fileset dir="${project.build.directory}/extracted-class-dependencies">
+																<include name="**/**" />
+															</fileset>
+														</jar>
+	                 								</then>
+            									</if>
 											</then>
 										</if>
 									</target>
 								</configuration>
 							</execution>
 
-							<!-- Unzip all dependency classes to project target/classes, one of them is `com.artofsolving:jodconverter-core:3.0-alfresco-patched-20141024:jar` -->
+							<!--
+								 Unzip all dependency sources to project target/extracted-class-dependencies,
+								 one of them is `com.googlecode:openbeans:1.0:jar`,
+								 or `com.artofsolving:jodconverter-core:3.0-alfresco-patched-20141024:jar`
+							-->
 							<execution>
-								<id>unzip-dependency-classes</id>
+								<id>unzip-source-dependencies</id>
 								<phase>generate-sources</phase>
 								<goals>
 									<goal>run</goal>
 								</goals>
 								<configuration>
-									<target name="unzip-dependency-classes">
+									<target name="unzip-source-dependencies">
 										<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.plugin.classpath"/>
 
 										<if>
-											<available file="${zipped.dependencies.directory.path}" type="dir"/>
+											<available file="${zipped.class.dependencies.directory.path}" type="dir"/>
 											<then>
-												<mkdir dir="${project.build.directory}/extracted-class-dependencies" />
-												<unzip dest="${project.build.directory}/extracted-class-dependencies">
+												<!-- extract all sources from source-dependencies -->
+												<mkdir dir="${project.build.directory}/extracted-source-dependencies" />
+												<unzip dest="${project.build.directory}/extracted-source-dependencies">
 													<patternset>
 														<exclude name="META-INF/MANIFEST.MF"/>
-														<exclude name="**/Test*.class"/>
 														<exclude name="META-INF/*"/>
+														<exclude name="**/Test*.java"/>
 													</patternset>
-													<fileset dir="${zipped.dependencies.directory.path}">
+													<fileset dir="${zipped.source.dependencies.directory.path}">
 														<include name="**/*.zip"/>
 													</fileset>
 												</unzip>
-												<copy todir="${project.build.directory}/classes"
-												encoding="${project.build.sourceEncoding}" outputencoding="${project.build.sourceEncoding}"
-												enablemultiplemappings="true"
-												overwrite="true" includeEmptyDirs="true" force="true"
-												quiet="false" verbose="true">  
-													<fileset dir="${project.build.directory}/extracted-class-dependencies" includes="**/*" />  
-												</copy>
 											</then>
 										</if>
 									</target>
@@ -3302,14 +3319,14 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 						</executions>
 					</plugin>
 
-					<!-- Attach more extracted classes folder -->
+					<!-- Attach more extracted sources folder -->
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>build-helper-maven-plugin</artifactId>
 						<executions>
-							<!-- add extracted classes folder -->
+							<!-- add extracted sources folder -->
 							<execution>
-								<id>add-extracted-dependencies</id>
+								<id>add-extracted-source-dependencies</id>
 								<phase>generate-sources</phase>
 								<goals>
 									<goal>add-source</goal>
@@ -3324,6 +3341,17 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 					</plugin>
 				</plugins>
 			</build>
+			<dependencies>
+				<dependency>
+					<groupId>${project.groupId}.${project.artifactId}</groupId>
+					<artifactId>extracted-issued-dependencies</artifactId>
+					<version>${project.version}</version>
+					<scope>system</scope>
+					<systemPath>${project.build.directory}/extracted-class-dependencies/extracted-class-dependencies.jar</systemPath>
+					<!-- use optional due to it could be not existed -->
+					<optional>true</optional>
+				</dependency>
+			</dependencies>
 		</profile>
 		
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
