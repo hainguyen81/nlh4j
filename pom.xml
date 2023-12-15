@@ -3219,9 +3219,9 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 				<zipped.dependencies.directory.path>${root.basedir}/libs/.docker</zipped.dependencies.directory.path>
 				<zipped.class.dependencies.directory.path>${zipped.dependencies.directory.path}/classes</zipped.class.dependencies.directory.path>
 				<zipped.source.dependencies.directory.path>${zipped.dependencies.directory.path}/sources</zipped.source.dependencies.directory.path>
-				<zipped.extracted.class.dependencies.directory.path>${root.basedir}/target/extracted-class-dependencies</zipped.extracted.class.dependencies.directory.path>
+				<zipped.extracted.class.dependencies.directory.path>${root.basedir}/.extracted-class-dependencies</zipped.extracted.class.dependencies.directory.path>
 				<zipped.extracted.class.dependencies.systemPath>${zipped.extracted.class.dependencies.directory.path}/extracted-class-dependencies.jar</zipped.extracted.class.dependencies.systemPath>
-				<zipped.extracted.source.dependencies.directory.path>${root.basedir}/target/extracted-source-dependencies</zipped.extracted.source.dependencies.directory.path>
+				<zipped.extracted.source.dependencies.directory.path>${root.basedir}/.extracted-source-dependencies</zipped.extracted.source.dependencies.directory.path>
 			</properties>
 			<build>
 				<plugins>
