@@ -3224,152 +3224,154 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 				<zipped.extracted.source.dependencies.directory.path>${root.basedir}/.extracted-source-dependencies</zipped.extracted.source.dependencies.directory.path>
 			</properties>
 			<build>
-				<plugins>
-					<!--
-						FIXME Due to `com.googlecode:openbeans:1.0:jar`, or `com.artofsolving:jodconverter-core:3.0-alfresco-patched-20141024:jar` zip(jar) END header not found issue on docker.
-						Then extracting its classes/sources to target/classes as project classes for compiling and packaging.
-						And it already was extracted in utilities package. So no need to import it as dependency anymore.
-					-->
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-antrun-plugin</artifactId>
-						<version>${maven.antrun.version}</version>
-						<executions>
-							<!-- ensure extracted source/class directories -->
-							<execution>
-								<id>ensure-extracted-issued-dependencies-directories</id>
-								<!-- borrow validate phase to initialize some requirement directories -->
-								<phase>validate</phase>
-								<goals>
-									<goal>run</goal>
-								</goals>
-								<configuration>
-									<target name="ensure-extracted-issued-dependencies-directories">
-										<mkdir dir="${zipped.extracted.class.dependencies.directory.path}" />
-										<mkdir dir="${zipped.extracted.source.dependencies.directory.path}" />
-									</target>
-								</configuration>
-							</execution>
+				<pluginManagement>
+					<plugins>
+						<!--
+							FIXME Due to `com.googlecode:openbeans:1.0:jar`, or `com.artofsolving:jodconverter-core:3.0-alfresco-patched-20141024:jar` zip(jar) END header not found issue on docker.
+							Then extracting its classes/sources to target/classes as project classes for compiling and packaging.
+							And it already was extracted in utilities package. So no need to import it as dependency anymore.
+						-->
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-antrun-plugin</artifactId>
+							<version>${maven.antrun.version}</version>
+							<executions>
+								<!-- ensure extracted source/class directories -->
+								<execution>
+									<id>ensure-extracted-issued-dependencies-directories</id>
+									<!-- borrow validate phase to initialize some requirement directories -->
+									<phase>validate</phase>
+									<goals>
+										<goal>run</goal>
+									</goals>
+									<configuration>
+										<target name="ensure-extracted-issued-dependencies-directories">
+											<mkdir dir="${zipped.extracted.class.dependencies.directory.path}" />
+											<mkdir dir="${zipped.extracted.source.dependencies.directory.path}" />
+										</target>
+									</configuration>
+								</execution>
 
-							<!--
-								 Unzip all dependency classes to project target/extracted-class-dependencies,
-								 one of them is `com.googlecode:openbeans:1.0:jar`,
-								 or `com.artofsolving:jodconverter-core:3.0-alfresco-patched-20141024:jar`
-							-->
-							<execution>
-								<id>unzip-class-dependencies</id>
-								<phase>process-resources</phase>
-								<goals>
-									<goal>run</goal>
-								</goals>
-								<configuration>
-									<target name="unzip-class-dependencies">
-										<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.plugin.classpath"/>
+								<!--
+									 Unzip all dependency classes to project target/extracted-class-dependencies,
+									 one of them is `com.googlecode:openbeans:1.0:jar`,
+									 or `com.artofsolving:jodconverter-core:3.0-alfresco-patched-20141024:jar`
+								-->
+								<execution>
+									<id>unzip-class-dependencies</id>
+									<phase>process-resources</phase>
+									<goals>
+										<goal>run</goal>
+									</goals>
+									<configuration>
+										<target name="unzip-class-dependencies">
+											<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.plugin.classpath"/>
 
-										<if>
-											<available file="${zipped.extracted.class.dependencies.systemPath}"/>
-											<then>
-												<echo message="Class dependencies has been extracted: ${zipped.extracted.class.dependencies.systemPath}"/>
-											</then>
-											<elseif>
-												<available file="${zipped.class.dependencies.directory.path}" type="dir"/>
+											<if>
+												<available file="${zipped.extracted.class.dependencies.systemPath}"/>
 												<then>
-													<!-- extract all classes from class-dependencies -->
-													<mkdir dir="${zipped.extracted.class.dependencies.directory.path}" />
-													<unzip dest="${zipped.extracted.class.dependencies.directory.path}">
+													<echo message="Class dependencies has been extracted: ${zipped.extracted.class.dependencies.systemPath}"/>
+												</then>
+												<elseif>
+													<available file="${zipped.class.dependencies.directory.path}" type="dir"/>
+													<then>
+														<!-- extract all classes from class-dependencies -->
+														<mkdir dir="${zipped.extracted.class.dependencies.directory.path}" />
+														<unzip dest="${zipped.extracted.class.dependencies.directory.path}">
+															<patternset>
+																<exclude name="META-INF/MANIFEST.MF"/>
+																<exclude name="META-INF/*"/>
+																<exclude name="**/Test*.class"/>
+															</patternset>
+															<fileset dir="${zipped.class.dependencies.directory.path}">
+																<include name="**/*.zip"/>
+															</fileset>
+														</unzip>
+
+														<!-- create extracted-class-dependencies.jar for using in classpath -->
+														<if>
+															<length length="0" when="greater">
+																<fileset dir="${zipped.extracted.class.dependencies.directory.path}" followsymlinks="false"/>
+															</length>
+															<then>
+																<jar destfile="${zipped.extracted.class.dependencies.systemPath}">
+																	<fileset dir="${zipped.extracted.class.dependencies.directory.path}">
+																		<include name="**/**" />
+																	</fileset>
+																</jar>
+															</then>
+														</if>
+													</then>
+												</elseif>
+												<else>
+													<echo message="Not found ${zipped.class.dependencies.directory.path} to extract classes from the issued dependencies"/>
+												</else>
+											</if>
+										</target>
+									</configuration>
+								</execution>
+
+								<!--
+									 Unzip all dependency sources to project target/extracted-class-dependencies,
+									 one of them is `com.googlecode:openbeans:1.0:jar`,
+									 or `com.artofsolving:jodconverter-core:3.0-alfresco-patched-20141024:jar`
+								-->
+								<execution>
+									<id>unzip-source-dependencies</id>
+									<phase>generate-sources</phase>
+									<goals>
+										<goal>run</goal>
+									</goals>
+									<configuration>
+										<target name="unzip-source-dependencies">
+											<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.plugin.classpath"/>
+
+											<if>
+												<available file="${zipped.source.dependencies.directory.path}" type="dir"/>
+												<then>
+													<!-- extract all sources from source-dependencies -->
+													<mkdir dir="${zipped.extracted.source.dependencies.directory.path}" />
+													<unzip dest="${zipped.extracted.source.dependencies.directory.path}">
 														<patternset>
 															<exclude name="META-INF/MANIFEST.MF"/>
 															<exclude name="META-INF/*"/>
-															<exclude name="**/Test*.class"/>
+															<exclude name="**/Test*.java"/>
 														</patternset>
-														<fileset dir="${zipped.class.dependencies.directory.path}">
+														<fileset dir="${zipped.source.dependencies.directory.path}">
 															<include name="**/*.zip"/>
 														</fileset>
 													</unzip>
-
-													<!-- create extracted-class-dependencies.jar for using in classpath -->
-													<if>
-														<length length="0" when="greater">
-															<fileset dir="${zipped.extracted.class.dependencies.directory.path}" followsymlinks="false"/>
-														</length>
-														<then>
-															<jar destfile="${zipped.extracted.class.dependencies.systemPath}">
-																<fileset dir="${zipped.extracted.class.dependencies.directory.path}">
-																	<include name="**/**" />
-																</fileset>
-															</jar>
-														</then>
-													</if>
 												</then>
-											</elseif>
-											<else>
-												<echo message="Not found ${zipped.class.dependencies.directory.path} to extract classes from the issued dependencies"/>
-											</else>
-										</if>
-									</target>
-								</configuration>
-							</execution>
+											</if>
+										</target>
+									</configuration>
+								</execution>
+							</executions>
+						</plugin>
 
-							<!--
-								 Unzip all dependency sources to project target/extracted-class-dependencies,
-								 one of them is `com.googlecode:openbeans:1.0:jar`,
-								 or `com.artofsolving:jodconverter-core:3.0-alfresco-patched-20141024:jar`
-							-->
-							<execution>
-								<id>unzip-source-dependencies</id>
-								<phase>generate-sources</phase>
-								<goals>
-									<goal>run</goal>
-								</goals>
-								<configuration>
-									<target name="unzip-source-dependencies">
-										<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.plugin.classpath"/>
-
-										<if>
-											<available file="${zipped.source.dependencies.directory.path}" type="dir"/>
-											<then>
-												<!-- extract all sources from source-dependencies -->
-												<mkdir dir="${zipped.extracted.source.dependencies.directory.path}" />
-												<unzip dest="${zipped.extracted.source.dependencies.directory.path}">
-													<patternset>
-														<exclude name="META-INF/MANIFEST.MF"/>
-														<exclude name="META-INF/*"/>
-														<exclude name="**/Test*.java"/>
-													</patternset>
-													<fileset dir="${zipped.source.dependencies.directory.path}">
-														<include name="**/*.zip"/>
-													</fileset>
-												</unzip>
-											</then>
-										</if>
-									</target>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-
-					<!-- Attach more extracted sources folder -->
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>build-helper-maven-plugin</artifactId>
-						<version>${maven.build.helper.version}</version>
-						<executions>
-							<!-- add extracted sources folder -->
-							<execution>
-								<id>add-extracted-source-dependencies</id>
-								<phase>generate-sources</phase>
-								<goals>
-									<goal>add-source</goal>
-								</goals>
-								<configuration>
-									<sources>
-										<source>${zipped.source.dependencies.directory.path}</source>
-									</sources>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
+						<!-- Attach more extracted sources folder -->
+						<plugin>
+							<groupId>org.codehaus.mojo</groupId>
+							<artifactId>build-helper-maven-plugin</artifactId>
+							<version>${maven.build.helper.version}</version>
+							<executions>
+								<!-- add extracted sources folder -->
+								<execution>
+									<id>add-extracted-source-dependencies</id>
+									<phase>generate-sources</phase>
+									<goals>
+										<goal>add-source</goal>
+									</goals>
+									<configuration>
+										<sources>
+											<source>${zipped.source.dependencies.directory.path}</source>
+										</sources>
+									</configuration>
+								</execution>
+							</executions>
+						</plugin>
+					</plugins>
+				</pluginManagement>
 			</build>
 
 			<!-- Dependencies -->
