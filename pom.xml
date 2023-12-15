@@ -3233,6 +3233,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-antrun-plugin</artifactId>
+						<version>${maven.antrun.version}</version>
 						<executions>
 							<!-- ensure extracted source/class directories -->
 							<execution>
@@ -3270,40 +3271,39 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 											<then>
 												<echo message="Class dependencies has been extracted: ${zipped.extracted.class.dependencies.systemPath}"/>
 											</then>
-											<else>
+											<elseif>
+												<available file="${zipped.class.dependencies.directory.path}" type="dir"/>
 												<then>
-													<if>
-														<available file="${zipped.class.dependencies.directory.path}" type="dir"/>
-														<then>
-															<!-- extract all classes from class-dependencies -->
-															<mkdir dir="${zipped.extracted.class.dependencies.directory.path}" />
-															<unzip dest="${zipped.extracted.class.dependencies.directory.path}">
-																<patternset>
-																	<exclude name="META-INF/MANIFEST.MF"/>
-																	<exclude name="META-INF/*"/>
-																	<exclude name="**/Test*.class"/>
-																</patternset>
-																<fileset dir="${zipped.class.dependencies.directory.path}">
-																	<include name="**/*.zip"/>
-																</fileset>
-															</unzip>
+													<!-- extract all classes from class-dependencies -->
+													<mkdir dir="${zipped.extracted.class.dependencies.directory.path}" />
+													<unzip dest="${zipped.extracted.class.dependencies.directory.path}">
+														<patternset>
+															<exclude name="META-INF/MANIFEST.MF"/>
+															<exclude name="META-INF/*"/>
+															<exclude name="**/Test*.class"/>
+														</patternset>
+														<fileset dir="${zipped.class.dependencies.directory.path}">
+															<include name="**/*.zip"/>
+														</fileset>
+													</unzip>
 
-															<!-- create extracted-class-dependencies.jar for using in classpath -->
-															<if>
-																<length length="0" when="greater">
-																	<fileset dir="${zipped.extracted.class.dependencies.directory.path}" followsymlinks="false"/>
-																</length>
-																<then>
-																	<jar destfile="${zipped.extracted.class.dependencies.systemPath}">
-																		<fileset dir="${zipped.extracted.class.dependencies.directory.path}">
-																			<include name="**/**" />
-																		</fileset>
-																	</jar>
-																</then>
-															</if>
+													<!-- create extracted-class-dependencies.jar for using in classpath -->
+													<if>
+														<length length="0" when="greater">
+															<fileset dir="${zipped.extracted.class.dependencies.directory.path}" followsymlinks="false"/>
+														</length>
+														<then>
+															<jar destfile="${zipped.extracted.class.dependencies.systemPath}">
+																<fileset dir="${zipped.extracted.class.dependencies.directory.path}">
+																	<include name="**/**" />
+																</fileset>
+															</jar>
 														</then>
 													</if>
 												</then>
+											</elseif>
+											<else>
+												<echo message="Not found ${zipped.class.dependencies.directory.path} to extract classes from the issued dependencies"/>
 											</else>
 										</if>
 									</target>
@@ -3352,6 +3352,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>build-helper-maven-plugin</artifactId>
+						<version>${maven.build.helper.version}</version>
 						<executions>
 							<!-- add extracted sources folder -->
 							<execution>
