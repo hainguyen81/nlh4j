@@ -11,7 +11,7 @@ ARG JDK=11
 # -------------------------------------------------
 # *** PREPARATION ***
 # -------------------------------------------------
-FROM ubuntu as base
+FROM alpine:latest as base
 LABEL maintainer="Hai Nguyen (hainguyenjc@gmail.com)"
 
 ARG GITHUB_PROJECT
@@ -64,14 +64,27 @@ RUN git -c http.sslVerify=false clone -b $GIT_BRANCH https://$GITHUB_USER:$GITHU
 FROM maven:3.8.4-eclipse-temurin-$JDK-alpine as jdk
 ARG JDK
 
+# The $MAVEN_CONFIG dir (default to /root/.m2) could be configured as a volume so anything copied there in a Dockerfile at build time is lost.
+# For that reason the dir /usr/share/maven/ref/ exists, and anything in that directory will be copied on container startup to $MAVEN_CONFIG.
+ENV USER_SHARE=/usr/share
+ENV MAVEN_HOME=$USER_SHARE/maven
+ENV MAVEN_CONFIG=$MAVEN_HOME/conf
+ENV MAVEN_REPOSITORY=$MAVEN_HOME/repository
+ENV MAVEN_CERT=$MAVEN_HOME/.cert
+ENV MAVEN_DEP=$MAVEN_HOME/.dep
+RUN	mkdir -p $USER_SHARE \
+	&& mkdir -p $MAVEN_HOME \
+	&& mkdir -p $MAVEN_CONFIG \
+	&& mkdir -p $MAVEN_REPOSITORY \
+	&& mkdir -p $MAVEN_CERT \
+	&& mkdir -p $MAVEN_DEP
+
 # create maven settings.xml, toolchains.xml
-RUN	mkdir -p /root/.m2 && mkdir -p /root/.m2/repository && mkdir -p /root/.m2/.cert && mkdir -p /root/.m2/.dep
-RUN	mkdir -p /usr/share && mkdir -p /usr/share/maven && mkdir -p /usr/share/maven/conf
 RUN echo \
     "<settings xmlns='http://maven.apache.org/SETTINGS/1.0.0\' \
     xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' \
     xsi:schemaLocation='http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd'> \
-        <localRepository>/root/.m2/repository</localRepository> \
+        <localRepository>$MAVEN_REPOSITORY</localRepository> \
 		<pluginGroups> \
 			<pluginGroup>com.sonatype.maven.plugins</pluginGroup> \
 			<pluginGroup>org.sonatype.plugins</pluginGroup> \
@@ -113,21 +126,27 @@ ARG JDK
 # -------------------------------------------------
 RUN	mkdir -p logs
 COPY --from=clone app/* .
-COPY --from=jdk /usr/share/maven/conf/settings.xml .
-COPY --from=jdk /usr/share/maven/conf/toolchains.xml .
-COPY --from=base /data/.cert/jdk$JDK /root/.m2/.cert
+COPY --from=jdk $MAVEN_CONFIG/settings.xml .
+COPY --from=jdk $MAVEN_CONFIG/toolchains.xml .
+COPY --from=base /data/.cert/jdk$JDK $MAVEN_CERT
 
 # Build project: solve dependencies > build project
-RUN echo "[maven-build - dev,jdk$JDK] Resolve dependencies to offline to publish as repository later" \
-	&& mvn -s settings.xml -t toolchains.xml -Dmaven.repo.local=/root/.m2/repository -N -q -T 7 -Dmaven.wagon.http.ssl.insecure=true -DskipTests=true -Dmaven.test.skip=true \
+RUN echo "[maven-build - dev,jdk$JDK] Build root and resolve dependencies offline for publish repository later" \
+	&& mvn \
+	-s settings.xml -t toolchains.xml \
+	-Dmaven.repo.local=$MAVEN_REPOSITORY \
+	-X -N -B -U -ntp -q -T 7 \
+	-Dmaven.wagon.http.ssl.insecure=true -DskipTests=true -Dmaven.test.skip=true \
 	-P dev,jdk$JDK \
-	dependency:resolve dependency:go-offline install \
-	--log-file /logs/maven.build.log \
-	&& echo "[maven-build - dev,jdk$JDK,licenseTool,unzip-dependencies] Build modules based on offline respository - use `unzip-dependencies` profile to unzip dependencies due to issue on docker build" \
-	&& mvn -s settings.xml -t toolchains.xml -Dmaven.repo.local=/root/.m2/repository -q -T 7 -Dmaven.wagon.http.ssl.insecure=true -DskipTests=true -Dmaven.test.skip=true \
-	-P dev,jdk$JDK,licenseTool \
-	clean install \
-	--log-file /logs/build.log
+	clean dependency:resolve dependency:go-offline install \
+	&& echo "[maven-build - dev,jdk$JDK,licenseTool,issuedDep] Build modules based on offline respository - use [issuedDep] profile to unzip dependencies due to issue on docker build" \
+	&& mvn \
+	-s settings.xml -t toolchains.xml \
+	-Dmaven.repo.local=$MAVEN_REPOSITORY \
+	-B -U -npu -ntp -q -T 7 \
+	-Dmaven.wagon.http.ssl.insecure=true -DskipTests=true -Dmaven.test.skip=true \
+	-P dev,jdk$JDK,licenseTool,issuedDep \
+	clean install
 
 
 # -------------------------------------------------

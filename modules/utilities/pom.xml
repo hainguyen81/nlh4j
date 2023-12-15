@@ -29,7 +29,7 @@
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!-- Unpack com.googlecode:openbeans:1.0:jar from maven reqpository -->
 		<profile>
-			<id>unpackDep</id>
+			<id>unpackDepOpenBeans</id>
 			<build>
 				<plugins>
 					<!--
@@ -51,126 +51,15 @@
 								<configuration>
 									<artifactItems>
 										<artifactItem>
-											<groupId>com.googlecode</groupId>
-											<artifactId>openbeans</artifactId>
+											<groupId>com.artofsolving</groupId>
+											<artifactId>jodconverter-core</artifactId>
 											<version>${com.google.openbeans.version}</version>
 											<type>jar</type>
 											<overWrite>true</overWrite>
-											<includes>**/*.class,**/*.properties</includes>
 											<excludes>META-INF/MANIFEST.MF,META-INF/*</excludes>
 											<outputDirectory>${project.build.directory}/classes</outputDirectory>
 										</artifactItem>
 									</artifactItems>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-
-		<!-- Unzip the classes/sources zipped of dependencies from `.docker` folder to project target/classes, one of them is `com.googlecode:openbeans:1.0:jar`  -->
-		<profile>
-			<id>unzipDep</id>
-			<properties>
-				<zipped.dependencies.directory.path>${project.basedir}/.docker</zipped.dependencies.directory.path>
-			</properties>
-			<build>
-				<plugins>
-					<!--
-						FIXME Due to `com.googlecode:openbeans:1.0:jar` zip(jar) END header not found issue on docker.
-						Then extracting its classes/sources to target/classes as project classes for compiling and packaging.
-						And it already was extracted in utilities package. So no need to import it as dependency anymore.
-					-->
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-antrun-plugin</artifactId>
-						<executions>
-							<!-- Unzip all dependency sources to project target/classes, one of them is `com.googlecode:openbeans:1.0:jar` -->
-							<execution>
-								<id>unzip-dependency-sources</id>
-								<phase>generate-sources</phase>
-								<goals>
-									<goal>run</goal>
-								</goals>
-								<configuration>
-									<target name="unzip-dependency-sources">
-										<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.plugin.classpath"/>
-
-										<if>
-											<available file="${zipped.dependencies.directory.path}" type="dir"/>
-											<then>
-												<mkdir dir="${project.build.directory}/extracted-source-dependencies" />
-												<unzip dest="${project.build.directory}/extracted-source-dependencies">
-													<patternset>
-														<include name="**/*.java"/>
-														<exclude name="**/Test*.java"/>
-													</patternset>
-													<fileset dir="${zipped.dependencies.directory.path}">
-														<include name="**/*.zip"/>
-													</fileset>
-												</unzip>
-											</then>
-										</if>
-									</target>
-								</configuration>
-							</execution>
-
-							<!-- Unzip all dependency classes to project target/classes, one of them is `com.googlecode:openbeans:1.0:jar` -->
-							<execution>
-								<id>unzip-dependency-classes</id>
-								<phase>generate-sources</phase>
-								<goals>
-									<goal>run</goal>
-								</goals>
-								<configuration>
-									<target name="unzip-dependency-classes">
-										<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.plugin.classpath"/>
-
-										<if>
-											<available file="${zipped.dependencies.directory.path}" type="dir"/>
-											<then>
-												<mkdir dir="${project.build.directory}/extracted-class-dependencies" />
-												<unzip dest="${project.build.directory}/extracted-class-dependencies">
-													<patternset>
-														<include name="**/*.class"/>
-														<exclude name="**/Test*.class"/>
-													</patternset>
-													<fileset dir="${zipped.dependencies.directory.path}">
-														<include name="**/*.zip"/>
-													</fileset>
-												</unzip>
-												<copy todir="${project.build.directory}/classes"
-												encoding="${project.build.sourceEncoding}" outputencoding="${project.build.sourceEncoding}"
-												enablemultiplemappings="true"
-												overwrite="true" includeEmptyDirs="true" force="true"
-												quiet="false" verbose="true">  
-													<fileset dir="${project.build.directory}/extracted-class-dependencies" includes="**/*" />  
-												</copy>
-											</then>
-										</if>
-									</target>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-
-					<!-- Attach more extracted classes folder -->
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>build-helper-maven-plugin</artifactId>
-						<executions>
-							<!-- add extracted classes folder -->
-							<execution>
-								<id>add-extracted-dependencies</id>
-								<phase>generate-sources</phase>
-								<goals>
-									<goal>add-source</goal>
-								</goals>
-								<configuration>
-									<sources>
-										<source>${project.build.directory}/extracted-source-dependencies</source>
-									</sources>
 								</configuration>
 							</execution>
 						</executions>
