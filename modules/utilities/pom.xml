@@ -51,8 +51,8 @@
 								<configuration>
 									<artifactItems>
 										<artifactItem>
-											<groupId>com.artofsolving</groupId>
-											<artifactId>jodconverter-core</artifactId>
+											<groupId>com.googlecode</groupId>
+											<artifactId>openbeans</artifactId>
 											<version>${com.google.openbeans.version}</version>
 											<type>jar</type>
 											<overWrite>true</overWrite>
