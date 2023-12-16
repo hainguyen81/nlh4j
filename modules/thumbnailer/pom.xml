@@ -164,15 +164,20 @@
 			<artifactId>poi-scratchpad</artifactId>
 		</dependency>
 
+		<!--
+			FIXME Due to com.artofsolving:jodconverter-core:3.0-alfresco-patched-20141024:jar zip END header not found issue on docker.
+			Then extracting its classes to target/classes as project classes for compiling and packaging.
+			And it already was extracted in utilities package. So no need to import it as dependency anymore.
+		-->
 		<!-- Thumbnail Libraries -->
 		<dependency>
 			<groupId>com.artofsolving</groupId>
 			<artifactId>jodconverter</artifactId>
 		</dependency>
-		<dependency>
+		<!--<dependency>
 			<groupId>com.artofsolving</groupId>
 			<artifactId>jodconverter-core</artifactId>
-		</dependency>
+		</dependency>-->
 		<dependency>
 			<groupId>org.semweb4j</groupId>
 			<artifactId>rdf2go.api</artifactId>

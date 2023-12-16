@@ -1,1 +1,0 @@
-Keep this folder to export logs from docker build
