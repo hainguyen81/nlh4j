@@ -36,7 +36,7 @@ docker buildx build ^
 	--progress plain ^
 	--force-rm ^
 	--no-cache ^
-	--tag org.nlh4j:1.0-jre%JDK_MAJOR_VERSION% ^
+	--tag hainguyen81/org.nlh4j:1.0-jre%JDK_MAJOR_VERSION% ^
 	--build-arg BUILDKIT_STEP_LOG_MAX_SIZE=-1 ^
 	--build-arg BUILDKIT_STEP_LOG_MAX_SPEED=-1 ^
 	--build-arg GITHUB_PROJECT=%GITHUB_PROJECT% ^
