@@ -17,6 +17,72 @@
 	<name>nlh4j-thumbnailer</name>
 	<version>${revision}</version>
 	<description>Thumbnail Generator Package for Java Web/Mobile</description>
+	
+	<!-- Profile configuration -->
+	<profiles>
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!--
+			FIXME Because com.artofsolving:jodconverter-core:3.0-alfresco-patched-20141024:jar has problem when building on docker.
+			So using an extracted classes of jodconverter to copy to the project target/classes.
+			On other profile, using `maven-dependency-plugin` to unpack openbeans to the project target/classes.
+		-->
+		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
+		<!-- Unpack com.googlecode:openbeans:1.0:jar from maven reqpository -->
+		<profile>
+			<id>unpackJodConverterDep</id>
+			<build>
+				<plugins>
+					<!--
+						FIXME Due to com.artofsolving:jodconverter-core:3.0-alfresco-patched-20141024:jar zip END header not found issue on docker.
+						Then extracting its classes to target/classes as project classes for compiling and packaging.
+						And it already was extracted in utilities package. So no need to import it as dependency anymore.
+					-->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-dependency-plugin</artifactId>
+						<executions>
+							<!-- Extract com.artofsolving:jodconverter-core:3.0-alfresco-patched-20141024:jar from maven repository -->
+							<execution>
+								<id>generate-source-openbeans</id>
+								<phase>generate-sources</phase>
+								<goals>
+									<goal>unpack</goal>
+								</goals>
+								<configuration>
+									<artifactItems>
+										<artifactItem>
+											<groupId>com.artofsolving</groupId>
+											<artifactId>jodconverter</artifactId>
+											<version>${com.artofsolving.jodconverter-core.version}</version>
+											<type>jar</type>
+											<overWrite>true</overWrite>
+											<excludes>META-INF/MANIFEST.MF,META-INF/*</excludes>
+											<outputDirectory>${project.build.directory}/classes</outputDirectory>
+										</artifactItem>
+									</artifactItems>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<!--
+			 Unzip the classes/sources zipped of dependencies from `.docker` folder to project target/classes,
+			 one of them is `com.googlecode:openbeans:1.0:jar`, or `com.artofsolving:jodconverter-core:3.0-alfresco-patched-20141024:jar`
+		-->
+		<profile>
+			<id>issuedDep</id>
+			<dependencies>
+				<dependency>
+					<groupId>${project.groupId}</groupId>
+					<artifactId>extracted-issued-dependencies</artifactId>
+					<scope>system</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
 
 	<!-- Dependencies -->
 	<dependencies>
@@ -98,15 +164,20 @@
 			<artifactId>poi-scratchpad</artifactId>
 		</dependency>
 
+		<!--
+			FIXME Due to com.artofsolving:jodconverter-core:3.0-alfresco-patched-20141024:jar zip END header not found issue on docker.
+			Then extracting its classes to target/classes as project classes for compiling and packaging.
+			And it already was extracted in utilities package. So no need to import it as dependency anymore.
+		-->
 		<!-- Thumbnail Libraries -->
 		<dependency>
 			<groupId>com.artofsolving</groupId>
 			<artifactId>jodconverter</artifactId>
 		</dependency>
-		<dependency>
+		<!--<dependency>
 			<groupId>com.artofsolving</groupId>
 			<artifactId>jodconverter-core</artifactId>
-		</dependency>
+		</dependency>-->
 		<dependency>
 			<groupId>org.semweb4j</groupId>
 			<artifactId>rdf2go.api</artifactId>
