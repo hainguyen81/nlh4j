@@ -6193,11 +6193,15 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 			    <groupId>org.commonjava.maven.plugins</groupId>
 			    <artifactId>directory-maven-plugin</artifactId>
 			</plugin>
+			<!--
+				FIXME Due to denied permission on docker.
+				Instead of using `maven.multiModuleProjectDirectory` property
+			-->
 			<!-- Groovy for supporting root directory -->
-			<plugin>
+			<!--<plugin>
 				<groupId>org.codehaus.gmaven</groupId>
 				<artifactId>groovy-maven-plugin</artifactId>
-			</plugin>
+			</plugin>-->
 			<!-- Find bugs -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
