@@ -41,4 +41,10 @@ RUN if [ -f .tmp/pom.xml ]; then \
 # Remove temporary
 RUN rm -rf .tmp/
 
+# Create symbolic link to project
+RUN ln -s /git/$PROJECT_NAME $PROJECT_NAME
+
+# Create volume for accessing from another
+VOLUME /git/$PROJECT_NAME
+
 
