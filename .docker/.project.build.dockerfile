@@ -25,7 +25,6 @@ ENV MAVEN_CONFIG=$MAVEN_HOME/conf
 # Build project offline
 RUN echo [maven-build[$PROJECT_NAME] - dev,jdk$JDK_MAJOR_VERSION - MAVEN_REPOSITORY: $MAVEN_REPOSITORY] Build project offline - Profiles dev,jdk$JDK_MAJOR_VERSION,issuedDep,licenseTool \
 	&& mvn \
-	--fail-never \
 	-s $PROJECT_NAME/settings.xml -t $PROJECT_NAME/toolchains.xml \
 	-Dmaven.repo.local=$MAVEN_REPOSITORY \
 	-X -B -U -q -T 7 \
@@ -39,6 +38,6 @@ RUN echo [maven-build[$PROJECT_NAME] - dev,jdk$JDK_MAJOR_VERSION - MAVEN_REPOSIT
 # -------------------------------------------------
 # Turn off CMD/ENTRYPOINT from maven
 ENTRYPOINT []
-CMD []
+CMD [ "ls", "/usr/share/maven/ref/repository" ]
 
 
