@@ -65,6 +65,6 @@ RUN echo [maven-build[$PROJECT_NAME] - dev,jdk$JDK_MAJOR_VERSION] Build root and
 # -------------------------------------------------
 # Turn off CMD/ENTRYPOINT from maven
 ENTRYPOINT []
-CMD []
+CMD [ "ls", "/app/logs" ]
 
 
