@@ -71,9 +71,16 @@ RUN if [ -f .tmp/settings.xml ]; then \
 					</configuration> \
 				</toolchain> \
 			</toolchains>" \
-			> $MAVEN_CONFIG/toolchains.xml \
-		&& cp $MAVEN_CONFIG/toolchains.xml $MAVEN_CONFIG/settings-docker.xml; \
+			> $MAVEN_CONFIG/toolchains.xml; \
 	fi
+RUN	cp $MAVEN_CONFIG/settings.xml $MAVEN_REF/settings-docker.xml \
+	&& cp $MAVEN_CONFIG/settings.xml $MAVEN_REF/settings.xml \
+	&& cp $MAVEN_CONFIG/toolchains.xml $MAVEN_REF/toolchains.xml
 
 # Remove temporary
 RUN rm -rf .tmp/
+
+# Create volume for accessing from another
+VOLUME $MAVEN_HOME
+
+
