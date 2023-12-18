@@ -40,7 +40,7 @@ docker buildx build ^
 		--progress plain ^
 		--force-rm ^
 		--no-cache ^
-		--tag hainguyen81/org.nlh4j.nginx ^
+		--tag hainguyen81/org.nlh4j:nginx ^
 		--build-arg BUILDKIT_STEP_LOG_MAX_SIZE=-1 ^
 		--build-arg BUILDKIT_STEP_LOG_MAX_SPEED=-1 ^
 		--build-arg NGINX_HTTP_PORT=%NGINX_HTTP_PORT% ^
@@ -58,7 +58,7 @@ docker buildx build ^
 		--progress plain ^
 		--force-rm ^
 		--no-cache ^
-		--tag hainguyen81/org.nlh4j.nginx ^
+		--tag hainguyen81/org.nlh4j:nginx ^
 		--build-arg BUILDKIT_STEP_LOG_MAX_SIZE=-1 ^
 		--build-arg BUILDKIT_STEP_LOG_MAX_SPEED=-1 ^
 		--build-arg NGINX_HTTP_PORT=%NGINX_HTTP_PORT% ^

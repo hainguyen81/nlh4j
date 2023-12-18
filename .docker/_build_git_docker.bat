@@ -19,7 +19,7 @@ docker buildx build ^
 		--progress plain ^
 		--force-rm ^
 		--no-cache ^
-		--tag hainguyen81/org.nlh4j.git:%PROJECT_NAME% ^
+		--tag hainguyen81/org.nlh4j:git-%PROJECT_NAME% ^
 		--build-arg BUILDKIT_STEP_LOG_MAX_SIZE=-1 ^
 		--build-arg BUILDKIT_STEP_LOG_MAX_SPEED=-1 ^
 		--build-context project=%LOCAL_PROJECT% ^
@@ -34,7 +34,7 @@ docker buildx build ^
 		--progress plain ^
 		--force-rm ^
 		--no-cache ^
-		--tag hainguyen81/org.nlh4j.git:%PROJECT_NAME% ^
+		--tag hainguyen81/org.nlh4j:git-%PROJECT_NAME% ^
 		--build-arg BUILDKIT_STEP_LOG_MAX_SIZE=-1 ^
 		--build-arg BUILDKIT_STEP_LOG_MAX_SPEED=-1 ^
 		-f .git.dockerfile ^

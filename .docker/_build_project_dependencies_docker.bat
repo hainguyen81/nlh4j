@@ -17,7 +17,7 @@ docker buildx build ^
 		--progress plain ^
 		--force-rm ^
 		--no-cache ^
-		--tag hainguyen81/org.nlh4j:%PROJECT_NAME%-%MAVEN_VERSION%-%JDK_MAJOR_VERSION% ^
+		--tag hainguyen81/org.nlh4j:dependencies-%MAVEN_VERSION%-%JDK_MAJOR_VERSION%-%PROJECT_NAME% ^
 		--build-arg BUILDKIT_STEP_LOG_MAX_SIZE=-1 ^
 		--build-arg BUILDKIT_STEP_LOG_MAX_SPEED=-1 ^
 		--build-arg PROJECT_NAME=%PROJECT_NAME% ^
@@ -25,5 +25,5 @@ docker buildx build ^
 		--build-arg JDK_MAJOR_VERSION=%JDK_MAJOR_VERSION% ^
 		--build-context certificate=%BATCHES_DIR%.certificate ^
 		--build-context dep=%BATCHES_DIR%.dep ^
-		-f .project.build.dockerfile ^
+		-f .project.dependencies.dockerfile ^
 		%BATCHES_DIR%
