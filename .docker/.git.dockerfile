@@ -27,7 +27,7 @@ WORKDIR /git
 # -------------------------------------------------
 # Copy host project if necessary
 RUN mkdir -p .tmp
-ONBUILD COPY --from=project . .tmp/
+ONBUILD COPY --from=project [.] .tmp/
 
 # Clone GIT source branch
 RUN mkdir -p $PROJECT_NAME

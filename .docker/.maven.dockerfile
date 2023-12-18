@@ -24,7 +24,7 @@ ENV MAVEN_CONFIG=$MAVEN_HOME/conf
 # -------------------------------------------------
 # Copy maven settings if necessary
 RUN mkdir -p .tmp
-ONBUILD COPY --from=settings settings.xml .tmp/
+ONBUILD COPY --from=settings settings.xm[l] .tmp/
 
 # -------------------------------------------------
 RUN mkdir -p $MAVEN_REPOSITORY
@@ -38,11 +38,13 @@ RUN echo [jdk] JAVA_HOME: $JAVA_HOME \
 
 # create/copy maven settings.xml, toolchains.xml
 RUN if [ -f .tmp/settings.xml ]; then \
-		cp .tmp/settings.xml $MAVEN_CONFIG/settings.xml \
+		echo copy settings from host \
+		&& cp .tmp/settings.xml $MAVEN_CONFIG/settings.xml \
 		&& cp .tmp/settings.xml $MAVEN_CONFIG/settings-docker.xml \
-		&& cp .tmp/toolchains.xml $MAVEN_CONFIG/toolchains.xml \
+		&& cp .tmp/toolchains.xml $MAVEN_CONFIG/toolchains.xml; \
 	else \
-		echo \
+		echo create default settings \
+		&& echo \
 			"<settings xmlns='http://maven.apache.org/SETTINGS/1.0.0' \
 			xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' \
 			xsi:schemaLocation='http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd'> \
@@ -81,6 +83,7 @@ RUN	cp $MAVEN_CONFIG/settings.xml $MAVEN_REF/settings-docker.xml \
 RUN rm -rf .tmp/
 
 # Create volume for accessing from another
+VOLUME $JAVA_HOME
 VOLUME $MAVEN_HOME
 
 
