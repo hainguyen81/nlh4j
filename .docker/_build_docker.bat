@@ -4,7 +4,8 @@ SET GITHUB_PROJECT=hainguyen81/nlh4j.git
 SET GITHUB_USER=%1
 SET GITHUB_TOKEN=%2
 SET GIT_BRANCH=%3
-SET JDK_MAJOR_VERSION=%4
+SET MAVEN_VERSION=%4
+SET JDK_MAJOR_VERSION=%5
 SET BATCHES_DIR=%~dp0
 
 if "%GIT_BRANCH%" == "" (
@@ -12,7 +13,7 @@ if "%GIT_BRANCH%" == "" (
 )
 
 rem build docker file [.jdk11.dockerfile] under context folder is current directory
-echo [ GITHUB_PROJECT: %GITHUB_PROJECT% - GITHUB_USER: %GITHUB_USER% - GITHUB_TOKEN: %GITHUB_TOKEN% - GIT_BRANCH: %GIT_BRANCH% - JDK_MAJOR_VERSION: %JDK_MAJOR_VERSION% ]
+echo [ GITHUB_PROJECT: %GITHUB_PROJECT% - GITHUB_USER: %GITHUB_USER% - GITHUB_TOKEN: %GITHUB_TOKEN% - GIT_BRANCH: %GIT_BRANCH% - MAVEN_VERSION: %MAVEN_VERSION% - JDK_MAJOR_VERSION: %JDK_MAJOR_VERSION% ]
 echo.
 REM docker buildx build ^
 	REM --progress plain ^
@@ -43,6 +44,7 @@ docker buildx build ^
 	--build-arg GITHUB_USER=%GITHUB_USER% ^
 	--build-arg GITHUB_TOKEN=%GITHUB_TOKEN% ^
 	--build-arg GIT_BRANCH=%GIT_BRANCH% ^
+	--build-arg MAVEN_VERSION=%MAVEN_VERSION% ^
 	--build-arg JDK_MAJOR_VERSION=%JDK_MAJOR_VERSION% ^
 	--build-context certificate=%BATCHES_DIR%.certificate ^
 	--build-context dep=%BATCHES_DIR%.dep ^

@@ -1,6 +1,6 @@
 @echo off
 
-docker image prune --filter="label=unused" --force
+docker image prune --filter="label=hainguyen81" --force
 docker container prune --force
 docker volume prune --all --force
 docker network prune --force
