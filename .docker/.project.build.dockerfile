@@ -19,7 +19,8 @@ ARG PROJECT_NAME
 ENV MAVEN_HOME=/usr/share/maven
 ENV MAVEN_REF=$MAVEN_HOME/ref
 ENV MAVEN_REPOSITORY=$MAVEN_REF/repository
-ENV MAVEN_CONFIG=$MAVEN_HOME/conf
+
+ENV LOG_FILE=$PROJECT_NAME.log
 
 # -------------------------------------------------
 # Build project offline
@@ -32,12 +33,22 @@ RUN echo [maven-build[$PROJECT_NAME] - dev,jdk$JDK_MAJOR_VERSION - MAVEN_REPOSIT
 	clean install \
 	-Dmaven.wagon.http.ssl.insecure=true \
 	-DskipTests=true -Dmaven.test.skip=true \
-	--log-file logs/$PROJECT_NAME.build.log \
+	--log-file $LOG_FILE \
 	-f $PROJECT_NAME/pom.xml
+
+# Remove cloned project after build
+RUN rm -rf /.tmp/$PROJECT_NAME
 
 # -------------------------------------------------
 # Turn off CMD/ENTRYPOINT from maven
-ENTRYPOINT []
-CMD [ "ls", "/usr/share/maven/ref/repository" ]
+# VOLUME $MAVEN_REPOSITORY
+ENTRYPOINT	echo ------------------------------------------------- \
+			&& echo MAVEN REPOSITORY: $MAVEN_REPOSITORY \
+			&& echo ------------------------------------------------- \
+			&& ls $MAVEN_REPOSITORY \
+			&& echo ------------------------------------------------- \
+			&& echo Results: \
+			&& echo ------------------------------------------------- \
+			&& cat $LOG_FILE
 
 

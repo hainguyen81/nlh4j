@@ -82,8 +82,8 @@ RUN	cp $MAVEN_CONFIG/settings.xml $MAVEN_REF/settings-docker.xml \
 # Remove temporary
 RUN rm -rf .tmp/
 
-# Create volume for accessing from another
-VOLUME $JAVA_HOME
-VOLUME $MAVEN_HOME
+# # Create volume for accessing from another
+# VOLUME $JAVA_HOME
+# VOLUME $MAVEN_HOME
 
 

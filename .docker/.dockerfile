@@ -5,6 +5,7 @@ ARG GITHUB_PROJECT=hainguyen81/nlh4j.git
 ARG GITHUB_USER=hainguyen81
 ARG GITHUB_TOKEN=
 ARG GIT_BRANCH=master
+ARG MAVEN_VERSION=3.8.4
 ARG JDK_MAJOR_VERSION=11
 ARG NGINX_PORT=80
 
@@ -14,7 +15,7 @@ ARG NGINX_PORT=80
 # -------------------------------------------------
 # Import certificates
 # -------------------------------------------------
-FROM maven:3.8.4-eclipse-temurin-$JDK_MAJOR_VERSION-alpine as maven
+FROM maven:$MAVEN_VERSION-eclipse-temurin-$JDK_MAJOR_VERSION-alpine as maven
 
 ARG JDK_MAJOR_VERSION
 ENV JDK_MAJOR_VERSION=$JDK_MAJOR_VERSION

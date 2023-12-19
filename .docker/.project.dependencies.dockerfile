@@ -29,16 +29,13 @@ ARG PROJECT_NAME
 ENV MAVEN_HOME=/usr/share/maven
 ENV MAVEN_REF=$MAVEN_HOME/ref
 ENV MAVEN_REPOSITORY=$MAVEN_REF/repository
-ENV MAVEN_CONFIG=$MAVEN_HOME/conf
 
-ENV APP=/app
+ENV LOG_FILE=$PROJECT_NAME.log
 
 # -------------------------------------------------
-VOLUME [ "$APP", "$MAVEN_REPOSITORY" ]
-WORKDIR $APP
+WORKDIR .tmp
 
 # Copy project from GIT to build
-RUN mkdir -p logs
 RUN mkdir -p $PROJECT_NAME
 COPY --from=project /git/$PROJECT_NAME $PROJECT_NAME
 
@@ -59,12 +56,18 @@ RUN echo [maven-build[$PROJECT_NAME] - dev,jdk$JDK_MAJOR_VERSION] Build root and
 	dependency:resolve dependency:go-offline install \
 	-Dmaven.wagon.http.ssl.insecure=true \
 	-DskipTests=true -Dmaven.test.skip=true \
-	--log-file logs/$PROJECT_NAME.resolve.dependencies.log \
+	--log-file $LOG_FILE \
 	-f $PROJECT_NAME/pom.xml
 
 # -------------------------------------------------
 # Turn off CMD/ENTRYPOINT from maven
-ENTRYPOINT []
-CMD [ "ls", "/app/logs" ]
+ENTRYPOINT	echo ------------------------------------------------- \
+			&& echo MAVEN REPOSITORY: $MAVEN_REPOSITORY \
+			&& echo ------------------------------------------------- \
+			&& ls $MAVEN_REPOSITORY \
+			&& echo ------------------------------------------------- \
+			&& echo Results: \
+			&& echo ------------------------------------------------- \
+			&& cat $LOG_FILE
 
 
