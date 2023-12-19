@@ -2,6 +2,7 @@
 # *** ARGUMENTS ***
 # -------------------------------------------------
 ARG GITHUB_USER=hainguyen81
+ARG GITHUB_ORG=$GITHUB_USER
 ARG GITHUB_TOKEN=
 ARG GIT_BRANCH=master
 ARG PROJECT_NAME=nlh4j
@@ -14,14 +15,15 @@ ARG PROJECT_NAME=nlh4j
 # details: https://github.com/docker/for-win/issues/4324 ***
 # -------------------------------------------------
 FROM alpine/git as clone
+ARG GITHUB_ORG
 ARG GITHUB_USER
 ARG GITHUB_TOKEN
 ARG GIT_BRANCH
 ARG PROJECT_NAME
 ARG LOCAL=false
 
-ENV GIT_CLONE_URL=https://github.com/$GITHUB_USER/$PROJECT_NAME.git
-ENV GIT_CLONE_URL_WITH_CREDENTICALS=https://$GITHUB_USER:$GITHUB_TOKEN@github.com/$GITHUB_USER/$PROJECT_NAME.git
+ENV GIT_CLONE_URL=https://github.com/$GITHUB_ORG/$PROJECT_NAME.git
+ENV GIT_CLONE_URL_WITH_CREDENTICALS=https://$GITHUB_USER:$GITHUB_TOKEN@github.com/$GITHUB_ORG/$PROJECT_NAME.git
 
 # -------------------------------------------------
 WORKDIR /git
@@ -30,6 +32,8 @@ WORKDIR /git
 # Copy host project if necessary
 RUN mkdir -p .tmp
 COPY --from=project . .tmp/
+RUN rm -rf .tmp/**/target
+RUN rm -rf .tmp/*.bat
 RUN ls .tmp
 
 # Clone GIT source branch
