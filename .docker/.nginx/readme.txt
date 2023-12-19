@@ -1,0 +1,1 @@
+Keep this folder to transfer nginx conf (httpd.conf) to docker build

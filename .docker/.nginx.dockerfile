@@ -28,7 +28,7 @@ RUN rm /etc/nginx/conf.d/default.conf
 
 # Copy httpd.conf if necessary
 RUN mkdir -p .tmp
-ONBUILD COPY --from=conf httpd.con[f] .tmp/
+COPY --from=conf . .tmp/
 
 # Copy certificate for SSL
 COPY --from=certificate jdk$JDK_MAJOR_VERSION/openssl/jdk$JDK_MAJOR_VERSION.org.nlh4j.keystore.crt-cabundle.crt $CERTS_DIRECTORY/jdk$JDK_MAJOR_VERSION.org.nlh4j.crt
