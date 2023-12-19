@@ -1,0 +1,1 @@
+Keep this folder to transfer maven settings (settings.xml, toolchains.xml) to docker build
