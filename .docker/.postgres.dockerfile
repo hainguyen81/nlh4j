@@ -11,8 +11,6 @@ ARG PG_LANG=en_US
 # -------------------------------------------------
 # *** Pull POSTGRES https://hub.docker.com/_/postgres ***
 # -------------------------------------------------
-# Import certificates
-# -------------------------------------------------
 FROM postgres:latest
 ARG PG_USER
 ARG PG_PWD
