@@ -1,5 +1,7 @@
 @echo off
 
+SET BATCHES_DIR=%~dp0
+
 rem project folder path
 rem SET LOCAL_PROJECT=%BATCHES_DIR%..\
 rem not project folder path
@@ -9,7 +11,6 @@ SET GITHUB_USER=%1
 SET GITHUB_TOKEN=%2
 SET GIT_BRANCH=%3
 SET GITHUB_ORG=%4
-SET BATCHES_DIR=%~dp0
 
 if "%GITHUB_ORG%" == "" (
 	SET GITHUB_ORG=%GITHUB_USER%

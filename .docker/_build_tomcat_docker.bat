@@ -1,9 +1,10 @@
 @echo off
 
+SET BATCHES_DIR=%~dp0
+
 SET JDK_MAJOR_VERSION=%1
 SET TOMCAT_USER=%2
 SET TOMCAT_PASSWORD=%3
-SET BATCHES_DIR=%~dp0
 
 rem build docker file [.jdk11.dockerfile] under context folder is current directory
 echo [ JDK_MAJOR_VERSION: %JDK_MAJOR_VERSION% - TOMCAT_USER: %TOMCAT_USER% - TOMCAT_PASSWORD: %TOMCAT_PASSWORD% ]

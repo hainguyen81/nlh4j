@@ -1,10 +1,11 @@
 @echo off
 
+SET BATCHES_DIR=%~dp0
+
 SET PG_USER=%1
 SET PG_PWD=%2
 SET PG_HOST_AUTH_METHOD=%3
 SET PG_LANG=%4
-SET BATCHES_DIR=%~dp0
 
 if "%PG_USER%" == "" (
 	SET PG_USER=postgres

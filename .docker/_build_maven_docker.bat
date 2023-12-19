@@ -1,8 +1,9 @@
 @echo off
 
+SET BATCHES_DIR=%~dp0
+
 SET MAVEN_VERSION=%1
 SET JDK_MAJOR_VERSION=%2
-SET BATCHES_DIR=%~dp0
 
 rem build docker file [.jdk11.dockerfile] under context folder is current directory
 echo [ MAVEN_VERSION: %MAVEN_VERSION% - JDK_MAJOR_VERSION: %JDK_MAJOR_VERSION% ]
