@@ -1,0 +1,1 @@
+Keep this folder to transfer database scripts to docker build such as *.sql, *.sql.gz, or *.sh scripts

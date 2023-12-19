@@ -10,7 +10,7 @@ ARG JDK_MAJOR_VERSION=11
 # -------------------------------------------------
 # Import certificates
 # -------------------------------------------------
-FROM maven:$MAVEN_VERSION-eclipse-temurin-$JDK_MAJOR_VERSION-alpine as maven
+FROM maven:$MAVEN_VERSION-eclipse-temurin-$JDK_MAJOR_VERSION-alpine
 
 ARG JDK_MAJOR_VERSION
 ENV JDK_MAJOR_VERSION=$JDK_MAJOR_VERSION
@@ -24,7 +24,7 @@ ENV MAVEN_CONFIG=$MAVEN_HOME/conf
 # -------------------------------------------------
 # Copy maven settings if necessary
 RUN mkdir -p .tmp
-ONBUILD COPY --from=settings settings.xm[l] .tmp/
+COPY --from=maven settings.xm[l] .tmp/
 
 # -------------------------------------------------
 RUN mkdir -p $MAVEN_REPOSITORY

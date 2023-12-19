@@ -1,0 +1,1 @@
+Keep this folder to transfer database scripts to docker build

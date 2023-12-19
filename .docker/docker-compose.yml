@@ -1,0 +1,9 @@
+version: '3'
+services:
+  nlh4j-nginx:
+    image: hainguyen81/org.nlh4j:nginx-nlh4j-3.8.4-11
+    container_name: nlh4j-repository
+    restart: always
+    ports:
+      - 80:80
+      - 443:443

@@ -1,0 +1,1 @@
+Keep this folder to transfer tomcat conf (tomcat/webapps/manager) to docker build - should correct the route path in webapps/manager/*

@@ -1,0 +1,1 @@
+Keep this folder to transfer tomcat conf (tomcat/conf) to docker build
