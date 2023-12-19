@@ -1,0 +1,1 @@
+Keep this folder to transfer database configuration to docker build such as pg_hba.conf
