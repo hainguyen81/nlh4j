@@ -1,7 +1,7 @@
 @echo off
 
 rem project folder path
-#SET LOCAL_PROJECT=%BATCHES_DIR%..\
+rem SET LOCAL_PROJECT=%BATCHES_DIR%..\
 rem not project folder path
 SET LOCAL_PROJECT=%BATCHES_DIR%
 SET PROJECT_NAME=nlh4j
