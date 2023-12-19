@@ -36,14 +36,15 @@ ENV PG_DATA=/var/lib/postgresql/data
 # -------------------------------------------------
 WORKDIR .db
 
-ONBUILD COPY --from=db [.] .
+COPY --from=db . .
+RUN ls && echo ------- && ls scripts
 
 # -- including pg_hba.conf
-RUN if [ -d conf ]; then cp -rf conf $PG_HOME; fi
+RUN if [ -d conf ]; then cp -a conf/. $PG_HOME; fi
 # -- including postgresql.conf
-RUN if [ -d conf ]; then cp -rf conf $PG_SHARE; fi
+RUN if [ -d conf ]; then cp -a conf/. $PG_SHARE; fi
 # scripts for initializing DB
-RUN if [ -d scripts ]; then cp -rf scripts $PG_INITDB_ENTRY; fi
+RUN if [ -d scripts ]; then cp -a scripts/. $PG_INITDB_ENTRY; fi
 
 # Locale configuration
 RUN localedef -i $PG_LANG -c -f UTF-8 -A $PG_LOCALE_ALIAS $LOCALE_ALIAS
