@@ -23,7 +23,7 @@ ENV CATALINA_HOME=$CATALINA_BASE
 ENV CATALINA_WEBAPPS=$CATALINA_HOME/webapps
 ENV CATALINA_WEBAPPS_DIST=$CATALINA_HOME/webapps.dist
 ENV CATALINA_WEBAPPS_MANAGER=$CATALINA_WEBAPPS/manager
-ENV CATALINA_CONF=$CATALINA_BASE/conf
+ENV CATALINA_CONF=$CATALINA_HOME/conf
 
 # -------------------------------------------------
 WORKDIR .tc
@@ -64,4 +64,11 @@ RUN if [ ! -f webapps/manager/META-INF/context.xml ]; then \
 				</Context>" \
 			> $CATALINA_WEBAPPS_MANAGER/META-INF/context.xml; \
 	fi
+
+# create symbolic links to tomcat
+RUN ln -s $CATALINA_HOME /tomcat \
+	&& ln -s $CATALINA_CONF /tomcat-conf \
+	&& ln -s $CATALINA_WEBAPPS /tomcat-webapps \
+	&& ln -s $CATALINA_WEBAPPS_MANAGER /tomcat-manager
+
 
