@@ -26,6 +26,10 @@ ENV CATALINA_WEBAPPS_MANAGER=$CATALINA_WEBAPPS/manager
 ENV CATALINA_CONF=$CATALINA_HOME/conf
 
 # -------------------------------------------------
+# Install unzip to extract WAR
+RUN apt-get update -y && apt-get install -y unzip
+
+# -------------------------------------------------
 WORKDIR .tc
 
 COPY --from=tomcat . .
