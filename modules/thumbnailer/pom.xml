@@ -20,6 +20,22 @@
 	
 	<!-- Profile configuration -->
 	<profiles>
+		<!-- Use issued dependencies as normal case -->
+		<profile>
+			<id>unissuedDep</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+
+			<!-- Dependencies -->
+			<dependencies>
+				<dependency>
+					<groupId>com.artofsolving</groupId>
+					<artifactId>jodconverter-core</artifactId>
+				</dependency>
+			</dependencies>
+		</profile>
+
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!--
 			FIXME Because com.artofsolving:jodconverter-core:3.0-alfresco-patched-20141024:jar has problem when building on docker.

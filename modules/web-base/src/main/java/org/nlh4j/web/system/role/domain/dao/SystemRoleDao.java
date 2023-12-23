@@ -6,18 +6,21 @@ package org.nlh4j.web.system.role.domain.dao;
 
 import java.util.List;
 
-import org.seasar.doma.Dao;
-import org.seasar.doma.Delete;
-import org.seasar.doma.Select;
-import org.seasar.doma.Update;
-import org.seasar.doma.jdbc.SelectOptions;
-
 import org.nlh4j.core.annotation.InjectRepository;
 import org.nlh4j.web.core.domain.entity.Role;
 import org.nlh4j.web.core.dto.RoleDto;
 import org.nlh4j.web.system.role.domain.entity.RoleGroup;
 import org.nlh4j.web.system.role.dto.RoleGroupSearchConditions;
 import org.nlh4j.web.system.role.dto.RoleGroupUniqueDto;
+import org.seasar.doma.Dao;
+import org.seasar.doma.Delete;
+import org.seasar.doma.Select;
+import org.seasar.doma.Update;
+import org.seasar.doma.jdbc.SelectOptions;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+
+import jp.doma.dao.BaseDomaDao;
 
 /**
  * The repository of {@link Role}
@@ -26,8 +29,9 @@ import org.nlh4j.web.system.role.dto.RoleGroupUniqueDto;
  *
  */
 @Dao
+@Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 @InjectRepository
-public interface SystemRoleDao {
+public interface SystemRoleDao extends BaseDomaDao<RoleGroup> {
     /**
      * Find the {@link RoleGroup} list by the specified conditions
      *
@@ -38,7 +42,7 @@ public interface SystemRoleDao {
      * @return the {@link RoleGroup} list or null
      */
     @Select
-    public List<RoleGroup> findGroups(RoleGroupSearchConditions conditions, SelectOptions options, String orderBy);
+    List<RoleGroup> findGroups(RoleGroupSearchConditions conditions, SelectOptions options, String orderBy);
     /**
      * Find the {@link RoleGroup} by the specified unique key
      *
@@ -47,7 +51,7 @@ public interface SystemRoleDao {
      * @return the {@link RoleGroup} or null
      */
     @Select
-    public RoleGroup findGroup(RoleGroupUniqueDto unique);
+    RoleGroup findGroup(RoleGroupUniqueDto unique);
     /**
      * Find the {@link RoleGroup} by the specified unique key
      *
@@ -56,7 +60,7 @@ public interface SystemRoleDao {
      * @return the {@link RoleGroup} or null
      */
     @Select
-    public boolean isUniqueConstraint(RoleGroupUniqueDto unique);
+    boolean isUniqueConstraint(RoleGroupUniqueDto unique);
 
     /**
      * Get the roles list that has belong to the specified group unique key

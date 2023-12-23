@@ -28,13 +28,17 @@ COPY --from=maven settings.xm[l] .tmp/
 
 # -------------------------------------------------
 RUN mkdir -p $MAVEN_REPOSITORY
-COPY --from=certificate repo.maven.apache.org.crt $JAVA_HOME/jre/lib/security/
+
+# Copy repository certificate
+# to fix `PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target`
+COPY --from=certificate *.crt $JAVA_HOME/jre/lib/security/
+RUN find $JAVA_HOME/jre/lib/security/ -type f -iname "*.crt" -exec echo {} \;
 RUN echo [jdk] JAVA_HOME: $JAVA_HOME \
-	&& keytool -noprompt -trustcacerts \
+	&& find $JAVA_HOME/jre/lib/security/ -type f -iname "*.crt" -exec \
+	keytool -noprompt -trustcacerts \
 	-keystore $JAVA_HOME/jre/lib/security/cacerts \
 	-storepass changeit -importcert \
-	-alias repo.maven.apache.org \
-	-file $JAVA_HOME/jre/lib/security/repo.maven.apache.org.crt
+	-file {} \;
 
 # create/copy maven settings.xml, toolchains.xml
 RUN if [ -f .tmp/settings.xml ]; then \

@@ -11,6 +11,10 @@ import org.seasar.doma.Delete;
 import org.seasar.doma.Insert;
 import org.seasar.doma.Select;
 import org.seasar.doma.Update;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+
+import jp.doma.dao.BaseDomaDao;
 
 import org.nlh4j.core.annotation.InjectRepository;
 import org.nlh4j.web.core.domain.entity.RoleGroup;
@@ -19,13 +23,12 @@ import org.nlh4j.web.core.domain.entity.RoleGroup;
  * {@link RoleGroup} repository
  *
  * @author Hai Nguyen (hainguyenjc@gmail.com)
- *
- * @author Hai Nguyen (hainguyenjc@gmail.com)
  * @version $Revision:  $  $Date:  $
  */
 @Dao
+@Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 @InjectRepository
-public interface RoleGroupDao {
+public interface RoleGroupDao extends BaseDomaDao<RoleGroup> {
 
     /**
      * Select all {@link RoleGroup}

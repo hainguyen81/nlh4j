@@ -20,6 +20,22 @@
 	
 	<!-- Profile configuration -->
 	<profiles>
+		<!-- Use issued dependencies as normal case -->
+		<profile>
+			<id>unissuedDep</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+
+			<!-- Dependencies -->
+			<dependencies>
+				<dependency>
+				    <groupId>com.googlecode</groupId>
+				    <artifactId>openbeans</artifactId>
+				</dependency>
+			</dependencies>
+		</profile>
+
 		<!-- +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+- -->
 		<!--
 			FIXME Because com.googlecode:openbeans:1.0:jar has problem when building on docker.
