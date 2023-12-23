@@ -10,6 +10,10 @@ import org.seasar.doma.Dao;
 import org.seasar.doma.Delete;
 import org.seasar.doma.Select;
 import org.seasar.doma.jdbc.SelectOptions;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+
+import jp.doma.dao.BaseDomaDao;
 
 import org.nlh4j.core.annotation.InjectRepository;
 import org.nlh4j.web.core.dto.FunctionDto;
@@ -24,8 +28,9 @@ import org.nlh4j.web.system.function.dto.FunctionUniqueDto;
  *
  */
 @Dao
+@Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 @InjectRepository
-public interface SystemFunctionDao {
+public interface SystemFunctionDao extends BaseDomaDao<FunctionDto> {
     /**
      * Find the {@link FunctionDto} list by the specified conditions
      *
@@ -36,7 +41,7 @@ public interface SystemFunctionDao {
      * @return the {@link FunctionDto} list or null
      */
     @Select
-    public List<FunctionDto> findFunctions(FunctionSearchConditions conditions, SelectOptions options, String orderBy);
+    List<FunctionDto> findFunctions(FunctionSearchConditions conditions, SelectOptions options, String orderBy);
     /**
      * Find the {@link FunctionDto} by the specified unique key
      *
@@ -45,7 +50,7 @@ public interface SystemFunctionDao {
      * @return the {@link FunctionDto} or null
      */
     @Select
-    public FunctionDto findFunction(FunctionUniqueDto unique);
+    FunctionDto findFunction(FunctionUniqueDto unique);
     /**
      * Check the specified unique key whether is unique
      *
@@ -54,7 +59,7 @@ public interface SystemFunctionDao {
      * @return true for unique; else false
      */
     @Select
-    public boolean isUniqueConstraint(FunctionUniqueDto unique);
+    boolean isUniqueConstraint(FunctionUniqueDto unique);
 
     /**
      * Find the {@link FunctionDto} list that excluding the specified function codes
@@ -64,7 +69,7 @@ public interface SystemFunctionDao {
      * @return the {@link FunctionDto} list or null
      */
     @Select
-    public List<FunctionDto> findFunctionsExcluded(List<String> codes);
+    List<FunctionDto> findFunctionsExcluded(List<String> codes);
 
     /**
      * Delete function by specified function code

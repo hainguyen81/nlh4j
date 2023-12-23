@@ -9,6 +9,10 @@ import java.util.List;
 import org.seasar.doma.Dao;
 import org.seasar.doma.Select;
 import org.seasar.doma.jdbc.SelectOptions;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+
+import jp.doma.dao.BaseDomaDao;
 
 import org.nlh4j.core.annotation.InjectRepository;
 import org.nlh4j.web.base.changepwd.dto.UserUniqueDto;
@@ -24,8 +28,9 @@ import org.nlh4j.web.system.user.dto.UserSearchConditions;
  *
  */
 @Dao
+@Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 @InjectRepository
-public interface SystemUserDao {
+public interface SystemUserDao extends BaseDomaDao<UserDto> {
     /**
      * Find the {@link UserDto} data list by the specified conditions
      *

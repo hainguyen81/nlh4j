@@ -6,27 +6,29 @@ package org.nlh4j.web.core.domain.dao;
 
 import java.util.List;
 
+import org.nlh4j.core.annotation.InjectRepository;
+import org.nlh4j.web.core.domain.entity.User;
+import org.nlh4j.web.core.domain.entity.UserEx;
 import org.seasar.doma.Dao;
 import org.seasar.doma.Delete;
 import org.seasar.doma.Insert;
 import org.seasar.doma.Select;
 import org.seasar.doma.Update;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 
-import org.nlh4j.core.annotation.InjectRepository;
-import org.nlh4j.web.core.domain.entity.User;
-import org.nlh4j.web.core.domain.entity.UserEx;
+import jp.doma.dao.BaseDomaDao;
 
 /**
  * {@link User} repository
  *
  * @author Hai Nguyen (hainguyenjc@gmail.com)
- *
- * @author Hai Nguyen (hainguyenjc@gmail.com)
  * @version $Revision:  $  $Date:  $
  */
 @Dao
+@Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 @InjectRepository
-public interface UserDao {
+public interface UserDao extends BaseDomaDao<User> {
 
     /**
      * Select all {@link User}

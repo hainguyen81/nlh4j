@@ -6,17 +6,20 @@ package org.nlh4j.web.system.module.domain.dao;
 
 import java.util.List;
 
-import org.seasar.doma.Dao;
-import org.seasar.doma.Delete;
-import org.seasar.doma.Select;
-import org.seasar.doma.Update;
-import org.seasar.doma.jdbc.SelectOptions;
-
 import org.nlh4j.core.annotation.InjectRepository;
 import org.nlh4j.web.core.dto.ModuleDto;
 import org.nlh4j.web.system.module.controller.ModuleController;
 import org.nlh4j.web.system.module.dto.ModuleSearchConditions;
 import org.nlh4j.web.system.module.dto.ModuleUniqueDto;
+import org.seasar.doma.Dao;
+import org.seasar.doma.Delete;
+import org.seasar.doma.Select;
+import org.seasar.doma.Update;
+import org.seasar.doma.jdbc.SelectOptions;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+
+import jp.doma.dao.BaseDomaDao;
 
 /**
  * The repository of {@link ModuleController}
@@ -25,8 +28,9 @@ import org.nlh4j.web.system.module.dto.ModuleUniqueDto;
  *
  */
 @Dao
+@Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 @InjectRepository
-public interface SystemModuleDao {
+public interface SystemModuleDao extends BaseDomaDao<ModuleDto> {
     /**
      * Find the {@link ModuleDto} list by the specified conditions
      *
@@ -37,7 +41,7 @@ public interface SystemModuleDao {
      * @return the {@link ModuleDto} list or null
      */
     @Select
-    public List<ModuleDto> findModules(ModuleSearchConditions conditions, SelectOptions options, String orderBy);
+    List<ModuleDto> findModules(ModuleSearchConditions conditions, SelectOptions options, String orderBy);
     /**
      * Find the {@link ModuleDto} by the specified unique key
      *
@@ -46,7 +50,7 @@ public interface SystemModuleDao {
      * @return the {@link ModuleDto} or null
      */
     @Select
-    public ModuleDto findModule(ModuleUniqueDto unique);
+    ModuleDto findModule(ModuleUniqueDto unique);
     /**
      * Check the specified unique key whether is unique
      *
@@ -55,7 +59,7 @@ public interface SystemModuleDao {
      * @return true for unique; else false
      */
     @Select
-    public boolean isUniqueConstraint(ModuleUniqueDto unique);
+    boolean isUniqueConstraint(ModuleUniqueDto unique);
 
     /**
      * Find the {@link ModuleDto} list that excluding the specified module codes
@@ -65,7 +69,7 @@ public interface SystemModuleDao {
      * @return the {@link ModuleDto} list or null
      */
     @Select
-    public List<ModuleDto> findModulesExcluded(List<String> codes);
+    List<ModuleDto> findModulesExcluded(List<String> codes);
     /**
      * Check the specified module code and url whether is unique
      *
@@ -76,7 +80,7 @@ public interface SystemModuleDao {
      * @return true for unique; else false
      */
     @Select
-    public boolean isUrlUniqueConstraint(Long id, String code, String url);
+    boolean isUrlUniqueConstraint(Long id, String code, String url);
 
     /**
      * Remove all children modules out of the specified module code
