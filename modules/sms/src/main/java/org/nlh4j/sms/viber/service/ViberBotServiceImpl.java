@@ -7,15 +7,15 @@ package org.nlh4j.sms.viber.service;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.nlh4j.core.service.AbstractService;
-import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
-
 import com.viber.bot.ViberSignatureValidator;
 import com.viber.bot.api.ViberBot;
 import com.viber.bot.message.TextMessage;
 import com.viber.bot.profile.BotProfile;
 import com.viber.bot.profile.UserProfile;
+
+import org.nlh4j.core.annotation.InjectService;
+import org.nlh4j.core.service.AbstractService;
+import org.springframework.util.Assert;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -26,7 +26,7 @@ import lombok.Setter;
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  *
  */
-@Service
+@InjectService
 public class ViberBotServiceImpl extends AbstractService implements ViberBotService {
 
 	/**

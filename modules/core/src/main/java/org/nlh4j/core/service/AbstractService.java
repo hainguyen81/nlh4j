@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 import javax.inject.Inject;
 
+import org.nlh4j.core.annotation.InjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  */
+@InjectService
 public abstract class AbstractService implements Serializable {
 
 	/** serial uid **/

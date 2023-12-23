@@ -10,11 +10,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
-
+import org.nlh4j.core.annotation.InjectTransactionalService;
 import org.nlh4j.core.pagination.PaginationSearchDto;
 import org.nlh4j.core.service.AbstractService;
 import org.nlh4j.util.BeanUtils;
@@ -24,6 +20,9 @@ import org.nlh4j.web.core.dto.ModuleDto;
 import org.nlh4j.web.system.module.domain.dao.SystemModuleDao;
 import org.nlh4j.web.system.module.dto.ModuleSearchConditions;
 import org.nlh4j.web.system.module.dto.ModuleUniqueDto;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 /**
  * The implement of {@link SystemModuleService} interface
@@ -31,7 +30,7 @@ import org.nlh4j.web.system.module.dto.ModuleUniqueDto;
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  *
  */
-@Service
+@InjectTransactionalService
 public class SystemModuleServiceImpl extends AbstractService implements SystemModuleService {
 
     /** */

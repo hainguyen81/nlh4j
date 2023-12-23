@@ -10,6 +10,12 @@ import java.util.Locale;
 import javax.annotation.Resource;
 import javax.inject.Inject;
 
+import org.nlh4j.core.annotation.InjectService;
+import org.nlh4j.core.context.profiles.SpringProfiles;
+import org.nlh4j.core.context.profiles.SpringProfilesEnum;
+import org.nlh4j.core.dto.NotificationDto;
+import org.nlh4j.core.dto.NotificationDto.NotificationType;
+import org.nlh4j.core.servlet.SpringContextHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
@@ -17,25 +23,18 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.env.Environment;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
-import org.nlh4j.core.context.profiles.SpringProfiles;
-import org.nlh4j.core.context.profiles.SpringProfilesEnum;
-import org.nlh4j.core.dto.NotificationDto;
-import org.nlh4j.core.dto.NotificationDto.NotificationType;
-import org.nlh4j.core.servlet.SpringContextHelper;
-
 /**
  * MessageServiceImpl.javaのクラス。
  *
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  */
-@Service
+@InjectService
 public class MessageServiceImpl implements MessageService {
 
 	/**

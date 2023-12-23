@@ -8,10 +8,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
-
+import org.nlh4j.core.annotation.InjectTransactionalService;
 import org.nlh4j.core.pagination.PaginationSearchDto;
 import org.nlh4j.core.service.AbstractService;
 import org.nlh4j.core.service.UserService;
@@ -29,6 +26,8 @@ import org.nlh4j.web.system.user.domain.dao.SystemUserDao;
 import org.nlh4j.web.system.user.domain.entity.UserEx;
 import org.nlh4j.web.system.user.dto.UserDto;
 import org.nlh4j.web.system.user.dto.UserSearchConditions;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 /**
  * The implement of {@link SystemUserService} interface
@@ -36,7 +35,7 @@ import org.nlh4j.web.system.user.dto.UserSearchConditions;
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  *
  */
-@Service
+@InjectTransactionalService
 public class SystemUserServiceImpl extends AbstractService implements SystemUserService {
 
     /** */
