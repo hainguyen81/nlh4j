@@ -15,6 +15,7 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.nlh4j.core.annotation.InjectTransactionalService;
 import org.nlh4j.core.context.profiles.SpringProfilesEnum;
 import org.nlh4j.core.dto.UserDetails;
 import org.nlh4j.core.service.AbstractService;
@@ -48,6 +49,7 @@ import lombok.Setter;
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  *
  */
+@InjectTransactionalService
 @Service(value = "userService")
 public class UserServiceImpl extends AbstractService implements UserService {
 

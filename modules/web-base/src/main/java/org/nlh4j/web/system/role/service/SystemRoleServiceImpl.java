@@ -10,6 +10,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.nlh4j.core.annotation.InjectTransactionalService;
 import org.nlh4j.core.pagination.PaginationSearchDto;
 import org.nlh4j.core.service.AbstractService;
 import org.nlh4j.core.util.AuthenticationUtils;
@@ -29,7 +30,6 @@ import org.nlh4j.web.system.role.dto.RoleGroupDto;
 import org.nlh4j.web.system.role.dto.RoleGroupSearchConditions;
 import org.nlh4j.web.system.role.dto.RoleGroupUniqueDto;
 import org.seasar.doma.jdbc.SelectOptions;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -38,7 +38,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  *
  */
-@Service
+@InjectTransactionalService
 public class SystemRoleServiceImpl extends AbstractService implements SystemRoleService {
 
 	/** serial uid **/

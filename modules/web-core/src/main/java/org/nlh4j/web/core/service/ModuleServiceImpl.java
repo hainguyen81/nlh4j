@@ -12,10 +12,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
-
+import org.nlh4j.core.annotation.InjectTransactionalService;
 import org.nlh4j.core.dto.UserDetails;
 import org.nlh4j.core.service.AbstractService;
 import org.nlh4j.util.BeanUtils;
@@ -23,12 +20,16 @@ import org.nlh4j.util.CollectionUtils;
 import org.nlh4j.web.core.domain.dao.ModuleDao;
 import org.nlh4j.web.core.dto.ModuleDto;
 import org.nlh4j.web.core.dto.UserDto;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 /**
  * The implement of {@link ModuleService} interface
  *
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  */
+@InjectTransactionalService
 @Service(value = "moduleService")
 public class ModuleServiceImpl extends AbstractService implements ModuleService {
 

@@ -6,10 +6,7 @@ package org.nlh4j.web.base.changepwd.service;
 
 import javax.inject.Inject;
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
-
+import org.nlh4j.core.annotation.InjectTransactionalService;
 import org.nlh4j.core.dto.AbstractDto;
 import org.nlh4j.core.pagination.PaginationSearchDto;
 import org.nlh4j.core.service.AbstractService;
@@ -18,6 +15,8 @@ import org.nlh4j.util.BeanUtils;
 import org.nlh4j.web.base.changepwd.dto.UserDto;
 import org.nlh4j.web.base.changepwd.dto.UserUniqueDto;
 import org.nlh4j.web.core.service.UserService;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 /**
  * The implement of {@link ChangePasswordService} interface
@@ -25,7 +24,7 @@ import org.nlh4j.web.core.service.UserService;
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  *
  */
-@Service
+@InjectTransactionalService
 public class ChangePasswordServiceImpl extends AbstractService implements ChangePasswordService {
 
     /** */

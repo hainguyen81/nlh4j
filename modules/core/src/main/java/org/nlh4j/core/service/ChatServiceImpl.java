@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.springframework.stereotype.Service;
+import org.nlh4j.core.annotation.InjectTransactionalService;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -21,7 +21,7 @@ import org.springframework.web.socket.WebSocketSession;
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  *
  */
-@Service
+@InjectTransactionalService
 public class ChatServiceImpl extends AbstractService implements ChatService {
 
 	/**

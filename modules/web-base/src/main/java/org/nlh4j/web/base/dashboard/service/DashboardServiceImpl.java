@@ -8,9 +8,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
+import org.nlh4j.core.annotation.InjectTransactionalService;
 import org.nlh4j.core.dto.AbstractDto;
 import org.nlh4j.core.dto.UserDetails;
 import org.nlh4j.core.pagination.PaginationSearchDto;
@@ -20,6 +18,7 @@ import org.nlh4j.web.base.dashboard.dto.ModulePagination;
 import org.nlh4j.web.base.dashboard.dto.ModuleSearchConditions;
 import org.nlh4j.web.core.dto.ModuleDto;
 import org.nlh4j.web.core.service.ModuleService;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * The implement of {@link DashboardService} interface
@@ -27,7 +26,7 @@ import org.nlh4j.web.core.service.ModuleService;
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  *
  */
-@Service
+@InjectTransactionalService
 public class DashboardServiceImpl extends AbstractService implements DashboardService {
 
     /** */
