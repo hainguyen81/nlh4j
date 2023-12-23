@@ -11,7 +11,6 @@ import org.seasar.doma.Annotation;
 import org.seasar.doma.AnnotationTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Autowire repository annotation
@@ -20,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @AnnotateWith(annotations = {
 		@Annotation(target = AnnotationTarget.CLASS, type = Repository.class),
-		@Annotation(target = AnnotationTarget.CLASS, type = Transactional.class),
 		@Annotation(target = AnnotationTarget.CLASS, type = Singleton.class),
 		@Annotation(target = AnnotationTarget.CONSTRUCTOR, type = Autowired.class),
 		@Annotation(target = AnnotationTarget.CONSTRUCTOR_PARAMETER, type = javax.inject.Named.class, elements = "\"config\"") })
