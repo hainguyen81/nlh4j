@@ -7,8 +7,8 @@ package org.nlh4j.web.system.user.service;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
-import org.nlh4j.core.annotation.InjectTransactionalService;
 import org.nlh4j.core.pagination.PaginationSearchDto;
 import org.nlh4j.core.service.AbstractService;
 import org.nlh4j.core.service.UserService;
@@ -26,6 +26,9 @@ import org.nlh4j.web.system.user.domain.dao.SystemUserDao;
 import org.nlh4j.web.system.user.domain.entity.UserEx;
 import org.nlh4j.web.system.user.dto.UserDto;
 import org.nlh4j.web.system.user.dto.UserSearchConditions;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
@@ -35,7 +38,10 @@ import org.springframework.util.CollectionUtils;
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  *
  */
-@InjectTransactionalService
+@Service
+@Transactional
+@Singleton
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class SystemUserServiceImpl extends AbstractService implements SystemUserService {
 
     /** */

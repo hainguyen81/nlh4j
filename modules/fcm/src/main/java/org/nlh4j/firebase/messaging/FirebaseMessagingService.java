@@ -5,7 +5,6 @@
 package org.nlh4j.firebase.messaging;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -13,14 +12,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import org.apache.commons.validator.routines.UrlValidator;
-import org.json.JSONObject;
-import org.nlh4j.firebase.FirebaseService;
-import org.nlh4j.util.HttpUtils;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.util.Assert;
+import javax.inject.Singleton;
 
 import com.google.api.core.ApiFuture;
 import com.google.firebase.messaging.FirebaseMessagingException;
@@ -28,13 +20,30 @@ import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Message.Builder;
 import com.google.firebase.messaging.TopicManagementResponse;
 
+import org.apache.commons.validator.routines.UrlValidator;
+import org.json.JSONObject;
+import org.nlh4j.firebase.FirebaseService;
+import org.nlh4j.util.HttpUtils;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
+
 /**
  * Firebase Messaging Service
  *
  * @author Hai Nguyen
  *
  */
-public class FirebaseMessagingService extends FirebaseService implements Serializable {
+@Component
+@Service
+@Singleton
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
+public class FirebaseMessagingService extends FirebaseService {
 
     /** */
     private static final long serialVersionUID = 1L;

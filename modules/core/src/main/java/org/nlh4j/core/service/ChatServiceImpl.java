@@ -11,7 +11,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.nlh4j.core.annotation.InjectTransactionalService;
+import javax.inject.Singleton;
+
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -21,7 +25,10 @@ import org.springframework.web.socket.WebSocketSession;
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  *
  */
-@InjectTransactionalService
+@Service
+@Transactional
+@Singleton
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class ChatServiceImpl extends AbstractService implements ChatService {
 
 	/**

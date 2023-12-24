@@ -23,7 +23,6 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.apache.commons.lang3.StringUtils;
-import org.nlh4j.core.annotation.InjectService;
 import org.nlh4j.core.servlet.SpringContextHelper;
 import org.nlh4j.util.BeanUtils;
 import org.nlh4j.util.CollectionUtils;
@@ -32,6 +31,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -44,7 +44,7 @@ import lombok.Setter;
  *
  */
 @Component
-@InjectService
+@Service
 @Singleton
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class FirebaseService implements Serializable {

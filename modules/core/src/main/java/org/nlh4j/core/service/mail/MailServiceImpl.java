@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
+import javax.inject.Singleton;
 import javax.mail.BodyPart;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeBodyPart;
@@ -24,17 +25,19 @@ import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.nlh4j.core.annotation.InjectTransactionalService;
 import org.nlh4j.core.context.profiles.SpringProfiles;
 import org.nlh4j.core.dto.mail.Email;
 import org.nlh4j.core.dto.mail.Email.EmailAttachment;
 import org.nlh4j.core.service.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.Scope;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -48,7 +51,10 @@ import lombok.Setter;
  *
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  */
-@InjectTransactionalService
+@Service
+@Transactional
+@Singleton
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 @Profile(value = { SpringProfiles.PROFILE_MAIL, SpringProfiles.PROFILE_FULL })
 public class MailServiceImpl extends AbstractService implements MailService {
 

@@ -8,9 +8,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.nlh4j.core.annotation.InjectTransactionalService;
 import org.nlh4j.core.pagination.PaginationSearchDto;
 import org.nlh4j.core.service.AbstractService;
 import org.nlh4j.util.BeanUtils;
@@ -20,6 +20,9 @@ import org.nlh4j.web.core.dto.FunctionDto;
 import org.nlh4j.web.system.function.domain.dao.SystemFunctionDao;
 import org.nlh4j.web.system.function.dto.FunctionSearchConditions;
 import org.nlh4j.web.system.function.dto.FunctionUniqueDto;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -30,7 +33,10 @@ import org.springframework.util.StringUtils;
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  *
  */
-@InjectTransactionalService
+@Service
+@Transactional
+@Singleton
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class SystemFunctionServiceImpl extends AbstractService implements SystemFunctionService {
 
     /** */

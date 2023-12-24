@@ -8,9 +8,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.nlh4j.core.annotation.InjectTransactionalService;
 import org.nlh4j.core.pagination.PaginationSearchDto;
 import org.nlh4j.core.service.AbstractService;
 import org.nlh4j.core.util.AuthenticationUtils;
@@ -30,6 +30,9 @@ import org.nlh4j.web.system.role.dto.RoleGroupDto;
 import org.nlh4j.web.system.role.dto.RoleGroupSearchConditions;
 import org.nlh4j.web.system.role.dto.RoleGroupUniqueDto;
 import org.seasar.doma.jdbc.SelectOptions;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -38,7 +41,10 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  *
  */
-@InjectTransactionalService
+@Service
+@Transactional
+@Singleton
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class SystemRoleServiceImpl extends AbstractService implements SystemRoleService {
 
 	/** serial uid **/
