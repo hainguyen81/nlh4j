@@ -4,17 +4,20 @@
  */
 package org.nlh4j.core.pagination;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.Objects;
+import java.util.Optional;
 
+import com.machinezoo.noexception.Exceptions;
+
+import org.nlh4j.core.dto.AbstractDto;
+import org.nlh4j.support.IGenericTypeSupport;
+import org.nlh4j.util.BeanUtils;
+import org.nlh4j.util.ExceptionUtils;
 import org.seasar.doma.jdbc.SelectOptions;
 
 import lombok.EqualsAndHashCode;
 import lombok.Setter;
-import org.nlh4j.core.dto.AbstractDto;
-import org.nlh4j.util.BeanUtils;
-import org.nlh4j.util.CollectionUtils;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * The pagination data search information
@@ -24,8 +27,9 @@ import org.nlh4j.util.CollectionUtils;
  * @param <T> the data entity type
  * @param <C> the condition type
  */
+@Slf4j
 @EqualsAndHashCode(callSuper = false)
-public class PaginationSearchDto<T, C> extends AbstractDto {
+public class PaginationSearchDto<T, C> extends AbstractDto implements IGenericTypeSupport {
 
 	private static final long serialVersionUID = 1L;
 
@@ -41,15 +45,7 @@ public class PaginationSearchDto<T, C> extends AbstractDto {
 	public C getSearchConditions() {
 		// detect for creating default condition automatically
 		if (this.searchConditions == null) {
-			Type genSuperClass = this.getClass().getGenericSuperclass();
-			ParameterizedType paramType = BeanUtils.safeType(genSuperClass, ParameterizedType.class);
-			if (paramType != null) {
-				Type[] actualTypeArgs = paramType.getActualTypeArguments();
-				if (CollectionUtils.isElementsNumber(actualTypeArgs, 2)) {
-					Class<C> condClass = (Class<C>) actualTypeArgs[1];
-					this.searchConditions = (C) BeanUtils.newInstance(condClass);
-				}
-			}
+			this.searchConditions = (C) BeanUtils.newInstance(getSearchConditionsType());
 		}
 		// detect for unknown conditions
 		return Objects.requireNonNull(this.searchConditions, "search conditions could not be null/empty!");
@@ -122,5 +118,29 @@ public class PaginationSearchDto<T, C> extends AbstractDto {
 		PaginationUtils pagination = this.getPagination();
 		if (pagination == null) return "";
 		return pagination.getOrderBy();
+	}
+	
+	/**
+	 * Get the data entity type class
+	 * 
+	 * @return the data entity type class
+	 */
+	@SuppressWarnings("unchecked")
+	protected Class<T> getSearchEntityType() {
+		return Optional.ofNullable(getClassGeneraicTypeByIndex(0))
+				.map(ExceptionUtils.wrap(log).function(Exceptions.wrap().function(t -> (Class<T>) t)))
+				.filter(Optional::isPresent).map(Optional::get).orElse(null);
+	}
+	
+	/**
+	 * Get the condition type class
+	 * 
+	 * @return the condition type class
+	 */
+	@SuppressWarnings("unchecked")
+	protected Class<C> getSearchConditionsType() {
+		return Optional.ofNullable(getClassGeneraicTypeByIndex(1))
+				.map(ExceptionUtils.wrap(log).function(Exceptions.wrap().function(t -> (Class<C>) t)))
+				.filter(Optional::isPresent).map(Optional::get).orElse(null);
 	}
 }

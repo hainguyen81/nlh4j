@@ -1,12 +1,10 @@
 package org.nlh4j.support;
 
 import java.io.Serializable;
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import org.nlh4j.util.BeanUtils;
 import org.nlh4j.util.LogUtils;
@@ -24,16 +22,7 @@ public interface IGenericTypeSupport extends Serializable {
      * @return the generic entity class
      */
 	default List<Type> getClassGenericTypes() {
-		try {
-			Type t = this.getClass().getGenericSuperclass();
-			ParameterizedType pt = BeanUtils.safeType(t, ParameterizedType.class);
-			Type[] argTypes = Optional.ofNullable(pt)
-					.map(ParameterizedType::getActualTypeArguments).orElseGet(() -> new Type[0]);
-			return Collections.unmodifiableList(Arrays.asList(argTypes));
-		} catch (Exception e) {
-			LogUtils.logError(getClass(), e.getMessage(), e);
-			return Collections.emptyList();
-		}
+		return Collections.unmodifiableList(Arrays.asList(BeanUtils.getActualTypeArguments(getClass())));
 	}
 	
 	/**
