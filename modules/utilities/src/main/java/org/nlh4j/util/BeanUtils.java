@@ -2280,6 +2280,30 @@ public final class BeanUtils implements Serializable {
     }
 
     /**
+     * Get the actual type arguments of the specified bean class (if class is generic type)
+     *
+     * @param beanClassName 豆クラス名
+     *
+     * @return the actual type arguments or empty array
+     */
+    public static Type[] getClassActualTypeArguments(String beanClassName) {
+    	return getActualTypeArguments(safeClass(beanClassName));
+    }
+    /**
+     * Get the actual type arguments of the specified bean class (if class is generic type)
+     *
+     * @param beanClassName 豆クラス名
+     *
+     * @return the actual type arguments or empty array
+     */
+    public static Type[] getActualTypeArguments(Class<?> beanClass) {
+    	return Optional.ofNullable(beanClass).map(Class::getGenericSuperclass)
+    			.filter(t -> isInstanceOf(t, ParameterizedType.class))
+    			.map(ParameterizedType.class::cast).map(ParameterizedType::getActualTypeArguments)
+    			.orElseGet(() -> new Type[] {});
+    }
+
+    /**
      * Get the actual type arguments of the specified bean field (if field is generic type)
      *
      * @param beanClassName 豆クラス名
@@ -2299,12 +2323,10 @@ public final class BeanUtils implements Serializable {
      * @return the actual type arguments or empty array
      */
     public static Type[] getActualTypeArguments(Class<?> beanClass, String name) {
-        Field fd = getField(beanClass, name);
-        if (fd != null && isInstanceOf(fd.getGenericType(), ParameterizedType.class)) {
-            ParameterizedType pt = (ParameterizedType) fd.getGenericType();
-            if (pt != null) return pt.getActualTypeArguments();
-        }
-        return new Type[] {};
+    	return Optional.ofNullable(getField(beanClass, name)).map(Field::getGenericType)
+    			.filter(t -> isInstanceOf(t, ParameterizedType.class))
+    			.map(ParameterizedType.class::cast).map(ParameterizedType::getActualTypeArguments)
+    			.orElseGet(() -> new Type[] {});
     }
     /**
      * Get the first occurred actual type argument of the specified bean field (if field is generic type)

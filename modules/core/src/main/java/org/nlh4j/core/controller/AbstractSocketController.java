@@ -8,19 +8,24 @@ import java.security.Principal;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
+import com.machinezoo.noexception.Exceptions;
+
+import org.nlh4j.core.dto.AbstractDto;
+import org.nlh4j.core.dto.AbstractSocketDto;
+import org.nlh4j.core.dto.UserDetails;
+import org.nlh4j.util.BeanUtils;
+import org.nlh4j.util.ExceptionUtils;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.handler.annotation.Headers;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 
+import lombok.AccessLevel;
 import lombok.Getter;
-import org.nlh4j.core.dto.AbstractDto;
-import org.nlh4j.core.dto.AbstractSocketDto;
-import org.nlh4j.core.dto.UserDetails;
-import org.nlh4j.util.BeanUtils;
 
 /**
  * Abstract controller for socket
@@ -40,7 +45,7 @@ public abstract class AbstractSocketController<K extends AbstractDto, T extends 
      */
     private static final long serialVersionUID = 1L;
     /** the outbound class of the socket response data */
-    @Getter
+    @Getter(value = AccessLevel.PROTECTED)
     private Class<T> socketDtoClass;
     /** the outbound socket response DTO history */
     protected final Set<T> socketDtoSet = Collections.synchronizedSet(new LinkedHashSet<T>());
@@ -80,4 +85,16 @@ public abstract class AbstractSocketController<K extends AbstractDto, T extends 
     	socketDtoSet.add(socketDto);
     	return socketDto;
     }
+    
+    /**
+	 * Get the real socket response data type class
+	 * 
+	 * @return the real socket response data type class
+	 */
+	@SuppressWarnings("unchecked")
+	protected Class<K> getSocketResponseType() {
+		return Optional.ofNullable(getClassGeneraicTypeByIndex(0))
+				.map(ExceptionUtils.wrap(logger).function(Exceptions.wrap().function(t -> (Class<K>) t)))
+				.filter(Optional::isPresent).map(Optional::get).orElse(null);
+	}
 }

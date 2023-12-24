@@ -4,16 +4,18 @@
  */
 package org.nlh4j.mongo.repositories;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+
+import com.machinezoo.noexception.Exceptions;
 
 import org.nlh4j.mongo.annotation.Database;
 import org.nlh4j.mongo.dto.BaseEntity;
 import org.nlh4j.util.BeanUtils;
 import org.nlh4j.util.CollectionUtils;
+import org.nlh4j.util.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -74,14 +76,9 @@ public class BaseDaoImpl<E extends BaseEntity> extends BaseTemplateDaoImpl imple
 	@Override
 	public final Class<E> getEntityClass() {
 		if (this.entityClass == null) {
-			try {
-				Type t = this.getClass().getGenericSuperclass();
-				ParameterizedType pt = BeanUtils.safeType(t, ParameterizedType.class);
-				Type[] argTypes = (pt == null ? null : pt.getActualTypeArguments());
-				this.entityClass = (CollectionUtils.isEmpty(argTypes) ? null : (Class<E>) argTypes[0]);
-			} catch (Exception e) {
-				logger.error(e.getMessage(), e);
-			}
+			this.entityClass = Optional.ofNullable(getClassGeneraicTypeByIndex(0))
+					.map(ExceptionUtils.wrap(logger).function(Exceptions.wrap().function(t -> (Class<E>) t)))
+					.filter(Optional::isPresent).map(Optional::get).orElse(null);
 		}
 		return this.entityClass;
 	}

@@ -4,28 +4,28 @@
  */
 package org.nlh4j.mongo.repositories;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
+
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import org.nlh4j.support.IGenericTypeSupport;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.AggregationOperation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
-
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.result.DeleteResult;
-import com.mongodb.client.result.UpdateResult;
 
 /**
  * The basic template repository interface
  * @author Hai Nguyen
  */
 @SuppressWarnings("unchecked")
-public interface BaseTemplateDao extends Serializable {
+public interface BaseTemplateDao extends IGenericTypeSupport {
 
 	/**
 	 * Get the current {@link MongoTemplate} instance

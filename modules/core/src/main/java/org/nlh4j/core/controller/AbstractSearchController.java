@@ -3,11 +3,15 @@
  */
 package org.nlh4j.core.controller;
 
-import org.springframework.web.bind.annotation.RestController;
+import java.util.Optional;
+
+import com.machinezoo.noexception.Exceptions;
 
 import org.nlh4j.core.dto.AbstractDto;
 import org.nlh4j.core.dto.BaseEntityParamControllerDto;
 import org.nlh4j.core.dto.BaseSearchParamControllerDto;
+import org.nlh4j.util.ExceptionUtils;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Abstract controller for searching on master screens
@@ -85,6 +89,32 @@ public abstract class AbstractSearchController
 	@Override
 	@Deprecated
 	protected final boolean doDelete(AbstractDto entitypk) {
+		throw new UnsupportedOperationException();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	protected Class<S> getBoundSearchConditionType() {
+		return Optional.ofNullable(getClassGeneraicTypeByIndex(2))
+				.map(ExceptionUtils.wrap(logger).function(Exceptions.wrap().function(t -> (Class<S>) t)))
+				.filter(Optional::isPresent).map(Optional::get).orElse(null);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	protected Class<M> getAttachedUploadDataType() {
+		return Optional.ofNullable(getClassGeneraicTypeByIndex(3))
+				.map(ExceptionUtils.wrap(logger).function(Exceptions.wrap().function(t -> (Class<M>) t)))
+				.filter(Optional::isPresent).map(Optional::get).orElse(null);
+	}
+	
+	@Override
+	protected Class<AbstractDto> getUniqueKeyType() {
+		throw new UnsupportedOperationException();
+	}
+	
+	@Override
+	protected Class<BaseEntityParamControllerDto<AbstractDto>> getBoundUniqueKeyType() {
 		throw new UnsupportedOperationException();
 	}
 }

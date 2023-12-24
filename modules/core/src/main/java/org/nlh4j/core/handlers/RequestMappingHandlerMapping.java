@@ -19,6 +19,7 @@ import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
@@ -41,7 +42,7 @@ import org.nlh4j.core.servlet.SpringContextHelper;
 @Singleton
 public class RequestMappingHandlerMapping
         extends org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
-        implements Serializable {
+        implements DisposableBean, Serializable {
 
     /** */
     private static final long serialVersionUID = 1L;
@@ -101,6 +102,17 @@ public class RequestMappingHandlerMapping
     protected Map<RequestMappingInfo, Pair<Object, Method>> getAmbiguousMap() {
         return Collections.unmodifiableMap(this.ambiguousMap);
     }
+    
+    /** Certainly handler mapping register */
+    private Map<RequestMappingInfo, Pair<Object, Method>> certainHandlersMap =
+            new LinkedHashMap<RequestMappingInfo, Pair<Object,Method>>();
+    /**
+     * Get the ambiguous handler mapping register
+     * @return the ambiguous handler mapping register
+     */
+    protected Map<RequestMappingInfo, Pair<Object, Method>> getCertainHandlersMap() {
+        return Collections.unmodifiableMap(this.certainHandlersMap);
+    }
 
     /* (Non-Javadoc)
      * @see org.springframework.web.servlet.handler.AbstractHandlerMethodMapping#lookupHandlerMethod(java.lang.String, javax.servlet.http.HttpServletRequest)
@@ -140,5 +152,18 @@ public class RequestMappingHandlerMapping
             logger.warn(e.getMessage());
             this.ambiguousMap.put(mapping, new MutablePair<Object, Method>(handler, method));
         }
-    };
+    }
+    
+    @Override
+    public final void destroy() throws Exception {
+    	doDestroy();
+    }
+
+    /**
+     * Release managed resources
+     */
+    protected void doDestroy() {
+    	this.certainHandlersMap.clear();
+    	this.ambiguousMap.clear();
+    }
 }

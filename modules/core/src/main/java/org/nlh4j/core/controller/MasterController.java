@@ -4,15 +4,17 @@
  */
 package org.nlh4j.core.controller;
 
-import org.seasar.doma.internal.util.AssertionUtil;
-import org.springframework.web.bind.annotation.RestController;
-
 import org.nlh4j.core.dto.AbstractDto;
 import org.nlh4j.core.dto.BaseEntityParamControllerDto;
 import org.nlh4j.core.dto.BaseSearchParamControllerDto;
 import org.nlh4j.core.pagination.PaginationSearchDto;
 import org.nlh4j.core.service.MasterService;
 import org.nlh4j.exceptions.ApplicationRuntimeException;
+import org.seasar.doma.internal.util.AssertionUtil;
+import org.springframework.web.bind.annotation.RestController;
+
+import lombok.AccessLevel;
+import lombok.Getter;
 
 /**
  * Abstract controller for master screens
@@ -38,6 +40,7 @@ public abstract class MasterController
 
 	/** */
 	private static final long serialVersionUID = 1L;
+	@Getter(value = AccessLevel.PROTECTED)
 	private Class<Srv> masterServiceClass;
 	private Srv masterService = null;
 

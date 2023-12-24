@@ -4,16 +4,16 @@
  */
 package jp.doma.dao;
 
-import java.io.Serializable;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Optional;
+
+import com.machinezoo.noexception.Exceptions;
 
 import org.nlh4j.core.annotation.InjectRepository;
 import org.nlh4j.core.dto.AbstractDto;
 import org.nlh4j.exceptions.ApplicationUnderConstructionException;
-import org.nlh4j.util.BeanUtils;
-import org.nlh4j.util.CollectionUtils;
+import org.nlh4j.support.IGenericTypeSupport;
+import org.nlh4j.util.ExceptionUtils;
 import org.nlh4j.util.LogUtils;
 import org.seasar.doma.BatchInsert;
 import org.seasar.doma.Delete;
@@ -33,7 +33,7 @@ import org.springframework.context.annotation.Scope;
  */
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 @InjectRepository
-public interface BaseDomaDao<E extends AbstractDto> extends Serializable {
+public interface BaseDomaDao<E extends AbstractDto> extends IGenericTypeSupport {
 
 	/**
      * Select all {@link AbstractDto}
@@ -112,14 +112,11 @@ public interface BaseDomaDao<E extends AbstractDto> extends Serializable {
      */
     @SuppressWarnings("unchecked")
 	default Class<E> getEntityClass() {
-		try {
-			Type t = this.getClass().getGenericSuperclass();
-			ParameterizedType pt = BeanUtils.safeType(t, ParameterizedType.class);
-			Type[] argTypes = (pt == null ? null : pt.getActualTypeArguments());
-			return (CollectionUtils.isEmpty(argTypes) ? null : (Class<E>) argTypes[0]);
-		} catch (Exception e) {
-			LogUtils.logError(getClass(), e.getMessage(), e);
-			return null;
-		}
+    	return Optional.ofNullable(getClassGeneraicTypeByIndex(0))
+				.map(ExceptionUtils.wrap(e -> {
+					LogUtils.logError(getClass(), e.getMessage(), e);
+					return Boolean.TRUE;
+				}).function(Exceptions.wrap().function(t -> (Class<E>) t)))
+				.filter(Optional::isPresent).map(Optional::get).orElse(null);
 	}
 }

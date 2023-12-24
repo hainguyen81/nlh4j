@@ -4,13 +4,20 @@
  */
 package org.nlh4j.core.controller;
 
-import org.seasar.doma.internal.util.AssertionUtil;
-import org.springframework.web.bind.annotation.RestController;
+import java.util.Optional;
+
+import com.machinezoo.noexception.Exceptions;
 
 import org.nlh4j.core.dto.AbstractDto;
 import org.nlh4j.core.dto.BaseEntityParamControllerDto;
 import org.nlh4j.core.service.MasterService;
 import org.nlh4j.exceptions.ApplicationRuntimeException;
+import org.nlh4j.util.ExceptionUtils;
+import org.seasar.doma.internal.util.AssertionUtil;
+import org.springframework.web.bind.annotation.RestController;
+
+import lombok.AccessLevel;
+import lombok.Getter;
 
 /**
  * Abstract controller for master screens
@@ -34,6 +41,7 @@ public abstract class MasterActionController
 
     /** */
     private static final long serialVersionUID = 1L;
+    @Getter(value = AccessLevel.PROTECTED)
     private Class<Srv> masterServiceClass;
     private Srv masterService = null;
 
@@ -119,4 +127,11 @@ public abstract class MasterActionController
         }
     }
 
+    @SuppressWarnings("unchecked")
+	@Override
+    protected Class<M> getAttachedUploadDataType() {
+    	return Optional.ofNullable(getClassGeneraicTypeByIndex(4))
+				.map(ExceptionUtils.wrap(logger).function(Exceptions.wrap().function(t -> (Class<M>) t)))
+				.filter(Optional::isPresent).map(Optional::get).orElse(null);
+    }
 }

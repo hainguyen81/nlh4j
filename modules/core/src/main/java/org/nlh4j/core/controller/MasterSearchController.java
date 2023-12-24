@@ -8,10 +8,18 @@ import org.seasar.doma.internal.util.AssertionUtil;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+
+import java.util.Optional;
+
+import com.machinezoo.noexception.Exceptions;
+
 import org.nlh4j.core.dto.AbstractDto;
 import org.nlh4j.core.dto.BaseSearchParamControllerDto;
 import org.nlh4j.core.pagination.PaginationSearchDto;
 import org.nlh4j.core.service.MasterService;
+import org.nlh4j.util.ExceptionUtils;
 
 /**
  * Abstract controller for searching on master screens
@@ -35,6 +43,7 @@ public abstract class MasterSearchController
 
     /** */
     private static final long serialVersionUID = 1L;
+    @Getter(value = AccessLevel.PROTECTED)
     private Class<Srv> masterServiceClass;
     private Srv masterService = null;
 
@@ -68,5 +77,13 @@ public abstract class MasterSearchController
     @Override
     protected final PaginationSearchDto<T, C> searchEntities(PaginationSearchDto<T, C> search) {
         return this.getMasterService().findEntities(search);
+    }
+    
+    @SuppressWarnings("unchecked")
+	@Override
+    protected Class<M> getAttachedUploadDataType() {
+    	return Optional.ofNullable(getClassGeneraicTypeByIndex(4))
+				.map(ExceptionUtils.wrap(logger).function(Exceptions.wrap().function(t -> (Class<M>) t)))
+				.filter(Optional::isPresent).map(Optional::get).orElse(null);
     }
 }

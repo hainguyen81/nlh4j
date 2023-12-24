@@ -7,11 +7,16 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Optional;
+
+import com.machinezoo.noexception.Exceptions;
+
 import org.nlh4j.core.dto.AbstractDto;
 import org.nlh4j.core.dto.BaseEntityParamControllerDto;
 import org.nlh4j.core.dto.BaseSearchParamControllerDto;
 import org.nlh4j.core.pagination.PaginationSearchDto;
 import org.nlh4j.core.pagination.PagingDto;
+import org.nlh4j.util.ExceptionUtils;
 
 /**
  * Abstract controller for master screens
@@ -66,6 +71,40 @@ public abstract class AbstractActionController
 	@Override
 	@Deprecated
 	protected final PaginationSearchDto<T, AbstractDto> searchEntities(PaginationSearchDto<T, AbstractDto> search) {
+		throw new UnsupportedOperationException();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	protected Class<PK> getUniqueKeyType() {
+		return Optional.ofNullable(getClassGeneraicTypeByIndex(1))
+				.map(ExceptionUtils.wrap(logger).function(Exceptions.wrap().function(t -> (Class<PK>) t)))
+				.filter(Optional::isPresent).map(Optional::get).orElse(null);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	protected Class<U> getBoundUniqueKeyType() {
+		return Optional.ofNullable(getClassGeneraicTypeByIndex(2))
+				.map(ExceptionUtils.wrap(logger).function(Exceptions.wrap().function(t -> (Class<U>) t)))
+				.filter(Optional::isPresent).map(Optional::get).orElse(null);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	protected Class<M> getAttachedUploadDataType() {
+		return Optional.ofNullable(getClassGeneraicTypeByIndex(3))
+				.map(ExceptionUtils.wrap(logger).function(Exceptions.wrap().function(t -> (Class<M>) t)))
+				.filter(Optional::isPresent).map(Optional::get).orElse(null);
+	}
+	
+	@Override
+	protected Class<AbstractDto> getSearchConditionType() {
+		throw new UnsupportedOperationException();
+	}
+	
+	@Override
+	protected Class<BaseSearchParamControllerDto<AbstractDto>> getBoundSearchConditionType() {
 		throw new UnsupportedOperationException();
 	}
 }
