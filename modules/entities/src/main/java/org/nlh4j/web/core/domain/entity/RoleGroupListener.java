@@ -4,44 +4,15 @@
  */
 package org.nlh4j.web.core.domain.entity;
 
-import org.seasar.doma.jdbc.entity.EntityListener;
-import org.seasar.doma.jdbc.entity.PostDeleteContext;
-import org.seasar.doma.jdbc.entity.PostInsertContext;
-import org.seasar.doma.jdbc.entity.PostUpdateContext;
-import org.seasar.doma.jdbc.entity.PreDeleteContext;
-import org.seasar.doma.jdbc.entity.PreInsertContext;
-import org.seasar.doma.jdbc.entity.PreUpdateContext;
+import org.nlh4j.core.domain.entity.AbstractEntityListener;
 
 /**
  *
  * @author Hai Nguyen (hainguyenjc@gmail.com)
- *
- * @author Hai Nguyen (hainguyenjc@gmail.com)
  * @version $Revision:  $  $Date:  $
  */
-public class RoleGroupListener implements EntityListener<RoleGroup> {
+public class RoleGroupListener extends AbstractEntityListener<RoleGroup> {
 
-    @Override
-    public void preInsert(RoleGroup entity, PreInsertContext<RoleGroup> context) {
-    }
-
-    @Override
-    public void preUpdate(RoleGroup entity, PreUpdateContext<RoleGroup> context) {
-    }
-
-    @Override
-    public void preDelete(RoleGroup entity, PreDeleteContext<RoleGroup> context) {
-    }
-
-    @Override
-    public void postInsert(RoleGroup entity, PostInsertContext<RoleGroup> context) {
-    }
-
-    @Override
-    public void postUpdate(RoleGroup entity, PostUpdateContext<RoleGroup> context) {
-    }
-
-    @Override
-    public void postDelete(RoleGroup entity, PostDeleteContext<RoleGroup> context) {
-    }
+	/** */
+	private static final long serialVersionUID = 1L;
 }
