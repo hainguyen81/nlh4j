@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
-import org.nlh4j.core.annotation.InjectTransactionalService;
 import org.nlh4j.core.dto.UserDetails;
 import org.nlh4j.core.service.AbstractService;
 import org.nlh4j.util.BeanUtils;
@@ -20,6 +20,8 @@ import org.nlh4j.util.CollectionUtils;
 import org.nlh4j.web.core.domain.dao.ModuleDao;
 import org.nlh4j.web.core.dto.ModuleDto;
 import org.nlh4j.web.core.dto.UserDto;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -29,8 +31,10 @@ import org.springframework.util.StringUtils;
  *
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  */
-@InjectTransactionalService
 @Service(value = "moduleService")
+@Transactional
+@Singleton
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class ModuleServiceImpl extends AbstractService implements ModuleService {
 
 	/**

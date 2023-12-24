@@ -5,11 +5,13 @@
 package org.nlh4j.firebase.messaging;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import javax.inject.Singleton;
+
+import com.mongodb.client.model.changestream.OperationType;
+import com.mongodb.client.model.changestream.UpdateDescription;
 
 import org.bson.Document;
 import org.nlh4j.util.BeanUtils;
@@ -18,9 +20,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
-import com.mongodb.client.model.changestream.OperationType;
-import com.mongodb.client.model.changestream.UpdateDescription;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -34,7 +33,7 @@ import lombok.Getter;
 @Component
 @Singleton
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
-public abstract class AbstractMessageObserveAction implements IMessageObserveAction, Serializable {
+public abstract class AbstractMessageObserveAction implements IMessageObserveAction {
 
     /** */
     private static final long serialVersionUID = 1L;

@@ -94,8 +94,7 @@ public abstract class AbstractCompositeBigNumberInWordsProcessor extends Abstrac
 	@Override
 	public String getName(String value) {
 		// check valid number processors
-		AbstractNumberHundredInWordsProcessor numberHundredProcessor =
-				Objects.requireNonNull(this.getNumberHundredProcessor(), "numberHundredProcessor");
+		Objects.requireNonNull(this.getNumberHundredProcessor(), "numberHundredProcessor");
 
 		// convert number into words
 		StringBuilder buffer = new StringBuilder();

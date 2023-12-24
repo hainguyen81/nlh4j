@@ -9,12 +9,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.inject.Singleton;
 
 import org.apache.commons.io.FilenameUtils;
-import org.nlh4j.core.annotation.InjectService;
 import org.nlh4j.core.context.profiles.SpringProfiles;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.Scope;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfig;
@@ -30,7 +32,8 @@ import lombok.Setter;
  *
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  */
-@InjectService
+@Singleton
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 @Profile(value = { SpringProfiles.PROFILE_TEMPLATE, SpringProfiles.PROFILE_FULL })
 public class TemplateServiceImpl extends AbstractService implements TemplateService {
 

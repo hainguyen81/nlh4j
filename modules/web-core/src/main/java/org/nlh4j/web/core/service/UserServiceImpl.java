@@ -13,9 +13,9 @@ import java.util.Locale;
 import java.util.Set;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.nlh4j.core.annotation.InjectTransactionalService;
 import org.nlh4j.core.context.profiles.SpringProfilesEnum;
 import org.nlh4j.core.dto.UserDetails;
 import org.nlh4j.core.service.AbstractService;
@@ -33,6 +33,8 @@ import org.nlh4j.web.core.domain.entity.UserEx;
 import org.nlh4j.web.core.domain.entity.UserOnline;
 import org.nlh4j.web.core.dto.RoleDto;
 import org.nlh4j.web.core.dto.UserDto;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.core.env.Environment;
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.query.LdapQueryBuilder;
@@ -49,8 +51,10 @@ import lombok.Setter;
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  *
  */
-@InjectTransactionalService
 @Service(value = "userService")
+@Transactional
+@Singleton
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class UserServiceImpl extends AbstractService implements UserService {
 
     /** */
