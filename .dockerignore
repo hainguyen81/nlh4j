@@ -1,0 +1,12 @@
+*/target
+*/target/*
+target
+
+*/.docker
+*/.docker/*
+.docker
+*/*.dockerfile
+*/.dockerfile
+
+*.log
+*.bat

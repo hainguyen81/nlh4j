@@ -4,7 +4,6 @@
  */
 package org.nlh4j.core.controller;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
@@ -19,6 +18,22 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.nlh4j.core.context.profiles.SpringProfiles;
+import org.nlh4j.core.dto.bindeditor.CustomNumberEditor;
+import org.nlh4j.core.dto.bindeditor.TimeStampEditor;
+import org.nlh4j.core.handlers.RequestMappingHandlerMapping;
+import org.nlh4j.core.service.MessageService;
+import org.nlh4j.core.service.TemplateService;
+import org.nlh4j.core.service.TemplateServiceImpl;
+import org.nlh4j.core.service.mail.MailService;
+import org.nlh4j.core.service.mail.MailServiceImpl;
+import org.nlh4j.core.servlet.ApplicationContextProvider;
+import org.nlh4j.core.servlet.SpringContextHelper;
+import org.nlh4j.exceptions.ApplicationValidationException;
+import org.nlh4j.support.IGenericTypeSupport;
+import org.nlh4j.util.BeanUtils;
+import org.nlh4j.util.RequestUtils;
+import org.nlh4j.util.SessionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
@@ -35,21 +50,6 @@ import org.springframework.web.bind.annotation.RestController;
 import freemarker.template.Configuration;
 import lombok.Getter;
 import lombok.Setter;
-import org.nlh4j.core.context.profiles.SpringProfiles;
-import org.nlh4j.core.dto.bindeditor.CustomNumberEditor;
-import org.nlh4j.core.dto.bindeditor.TimeStampEditor;
-import org.nlh4j.core.handlers.RequestMappingHandlerMapping;
-import org.nlh4j.core.service.MessageService;
-import org.nlh4j.core.service.TemplateService;
-import org.nlh4j.core.service.TemplateServiceImpl;
-import org.nlh4j.core.service.mail.MailService;
-import org.nlh4j.core.service.mail.MailServiceImpl;
-import org.nlh4j.core.servlet.ApplicationContextProvider;
-import org.nlh4j.core.servlet.SpringContextHelper;
-import org.nlh4j.exceptions.ApplicationValidationException;
-import org.nlh4j.util.BeanUtils;
-import org.nlh4j.util.RequestUtils;
-import org.nlh4j.util.SessionUtils;
 
 /**
  * Abstract rest service controller
@@ -57,7 +57,7 @@ import org.nlh4j.util.SessionUtils;
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  */
 @RestController
-public abstract class AbstractController implements Serializable {
+public abstract class AbstractController implements IGenericTypeSupport {
 
 	/** */
 	private static final long serialVersionUID = 1L;

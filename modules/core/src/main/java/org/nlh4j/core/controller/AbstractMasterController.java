@@ -10,11 +10,27 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import com.machinezoo.noexception.Exceptions;
+
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.nlh4j.core.annotation.ExecutePermission;
+import org.nlh4j.core.dto.AbstractDto;
+import org.nlh4j.core.dto.BaseEntityParamControllerDto;
+import org.nlh4j.core.dto.BaseSearchParamControllerDto;
+import org.nlh4j.core.dto.BaseUploadParamControllerDto;
+import org.nlh4j.core.pagination.PaginationSearchDto;
+import org.nlh4j.core.pagination.PagingDto;
+import org.nlh4j.exceptions.ApplicationValidationException;
+import org.nlh4j.util.DownloadUtils;
+import org.nlh4j.util.ExceptionUtils;
+import org.nlh4j.util.JsonUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,18 +46,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
-
-import org.nlh4j.core.annotation.ExecutePermission;
-import org.nlh4j.core.dto.AbstractDto;
-import org.nlh4j.core.dto.BaseEntityParamControllerDto;
-import org.nlh4j.core.dto.BaseSearchParamControllerDto;
-import org.nlh4j.core.dto.BaseUploadParamControllerDto;
-import org.nlh4j.core.pagination.PaginationSearchDto;
-import org.nlh4j.core.pagination.PagingDto;
-import org.nlh4j.exceptions.ApplicationValidationException;
-import org.nlh4j.util.CollectionUtils;
-import org.nlh4j.util.DownloadUtils;
-import org.nlh4j.util.JsonUtils;
 
 /**
  * Abstract controller for master screens
@@ -490,7 +494,7 @@ public abstract class AbstractMasterController
      * @param headers to apply
      */
     protected void applyHttpHeaders(HttpHeaders headers) {
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        headers.setContentType(MediaType.APPLICATION_JSON);
     }
 
 	/**
@@ -632,9 +636,9 @@ public abstract class AbstractMasterController
 
 		// process uploaded data
 		try {
-		    if (!CollectionUtils.isEmpty(files)) {
+		    if (CollectionUtils.isNotEmpty(files)) {
     			return this.processUploadData(new BaseUploadParamControllerDto<M>(files, data));
-		    } else if (!CollectionUtils.isEmpty(request.getFileMap())) {
+		    } else if (MapUtils.isNotEmpty(request.getFileMap())) {
 		        return this.processUploadData(new BaseUploadParamControllerDto<M>(request, data));
 		    } else {
 		        return new ResponseEntity<String>((String) null, headers, HttpStatus.EXPECTATION_FAILED);
@@ -732,7 +736,7 @@ public abstract class AbstractMasterController
 			// check download file path
 		    if (!implemented) {
     			filePath = this.processDownloadPath(data);
-    			if (!CollectionUtils.isEmpty(filePath)) {
+    			if (MapUtils.isNotEmpty(filePath)) {
     				final Iterator<String> it = filePath.keySet().iterator();
     				final String downloadFileName = it.next();
     				final String downloadFilePath = filePath.get(downloadFileName);
@@ -744,7 +748,7 @@ public abstract class AbstractMasterController
 			// check download file
 		    if (!implemented) {
     			file = this.processDownloadFile(data);
-    			if (!CollectionUtils.isEmpty(file)) {
+    			if (MapUtils.isNotEmpty(file)) {
     				final Iterator<String> it = file.keySet().iterator();
     				final String downloadFileName = it.next();
     				final File downloadFile = file.get(downloadFileName);
@@ -756,7 +760,7 @@ public abstract class AbstractMasterController
 			// check download workbook
 		    if (!implemented) {
     			workbook = this.processDownloadWorkbook(data);
-    			if (!CollectionUtils.isEmpty(workbook)) {
+    			if (MapUtils.isNotEmpty(workbook)) {
     				final Iterator<String> it = workbook.keySet().iterator();
     				final String downloadFileName = it.next();
     				final Workbook wrkbk = workbook.get(downloadFileName);
@@ -768,7 +772,7 @@ public abstract class AbstractMasterController
 			// check download stream
 		    if (!implemented) {
     			stream = this.processDownloadStream(data);
-    			if (!CollectionUtils.isEmpty(stream)) {
+    			if (MapUtils.isNotEmpty(stream)) {
     				final Iterator<String> it = stream.keySet().iterator();
     				final String downloadFileName = it.next();
     				final InputStream is = stream.get(downloadFileName);
@@ -783,10 +787,11 @@ public abstract class AbstractMasterController
 		catch(Exception e) {
 			logger.error(e.getMessage(), e);
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
+
 		} finally {
-			if (!CollectionUtils.isEmpty(file)) file.clear();
-			if (!CollectionUtils.isEmpty(workbook)) workbook.clear();
-			if (!CollectionUtils.isEmpty(stream)) stream.clear();
+			if (MapUtils.isNotEmpty(file)) file.clear();
+			if (MapUtils.isNotEmpty(workbook)) workbook.clear();
+			if (MapUtils.isNotEmpty(stream)) stream.clear();
 		}
 		// response status
 		response.setStatus(status.value());
@@ -850,5 +855,77 @@ public abstract class AbstractMasterController
 	 */
 	protected Map<String, InputStream> processDownloadStream(C data) throws Exception {
 		return null;
+	}
+	
+	/**
+	 * Get the main entity type class
+	 * 
+	 * @return the main entity type class
+	 */
+	@SuppressWarnings("unchecked")
+	protected Class<T> getMainEntityType() {
+		return Optional.ofNullable(getClassGeneraicTypeByIndex(0))
+				.map(ExceptionUtils.wrap(logger).function(Exceptions.wrap().function(t -> (Class<T>) t)))
+				.filter(Optional::isPresent).map(Optional::get).orElse(null);
+	}
+
+	/**
+	 * Get the entity search-condition type class
+	 * 
+	 * @return the entity search-condition type class
+	 */
+	@SuppressWarnings("unchecked")
+	protected Class<C> getSearchConditionType() {
+		return Optional.ofNullable(getClassGeneraicTypeByIndex(1))
+				.map(ExceptionUtils.wrap(logger).function(Exceptions.wrap().function(t -> (Class<C>) t)))
+				.filter(Optional::isPresent).map(Optional::get).orElse(null);
+	}
+	
+	/**
+	 * Get the main entity primary unique key type class
+	 * 
+	 * @return the main entity primary unique key type class
+	 */
+	@SuppressWarnings("unchecked")
+	protected Class<PK> getUniqueKeyType() {
+		return Optional.ofNullable(getClassGeneraicTypeByIndex(2))
+				.map(ExceptionUtils.wrap(logger).function(Exceptions.wrap().function(t -> (Class<PK>) t)))
+				.filter(Optional::isPresent).map(Optional::get).orElse(null);
+	}
+	
+	/**
+	 * Get the bound class of searching conditions type class
+	 * 
+	 * @return the bound class of searching conditions type class
+	 */
+	@SuppressWarnings("unchecked")
+	protected Class<S> getBoundSearchConditionType() {
+		return Optional.ofNullable(getClassGeneraicTypeByIndex(3))
+				.map(ExceptionUtils.wrap(logger).function(Exceptions.wrap().function(t -> (Class<S>) t)))
+				.filter(Optional::isPresent).map(Optional::get).orElse(null);
+	}
+	
+	/**
+	 * Get the bound class of entity primary/unique key type class
+	 * 
+	 * @return the bound class of entity primary/unique key type class
+	 */
+	@SuppressWarnings("unchecked")
+	protected Class<U> getBoundUniqueKeyType() {
+		return Optional.ofNullable(getClassGeneraicTypeByIndex(4))
+				.map(ExceptionUtils.wrap(logger).function(Exceptions.wrap().function(t -> (Class<U>) t)))
+				.filter(Optional::isPresent).map(Optional::get).orElse(null);
+	}
+	
+	/**
+	 * Get the attached upload data type class
+	 * 
+	 * @return the attached upload data type class
+	 */
+	@SuppressWarnings("unchecked")
+	protected Class<M> getAttachedUploadDataType() {
+		return Optional.ofNullable(getClassGeneraicTypeByIndex(5))
+				.map(ExceptionUtils.wrap(logger).function(Exceptions.wrap().function(t -> (Class<M>) t)))
+				.filter(Optional::isPresent).map(Optional::get).orElse(null);
 	}
 }
