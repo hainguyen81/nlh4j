@@ -129,7 +129,7 @@ public abstract class MasterActionController
 
     @SuppressWarnings("unchecked")
 	@Override
-    protected Class<M> getAttachedUploadDataType() {
+	public Class<M> getAttachedUploadDataType() {
     	return Optional.ofNullable(getClassGeneraicTypeByIndex(4))
 				.map(ExceptionUtils.wrap(logger).function(Exceptions.wrap().function(t -> (Class<M>) t)))
 				.filter(Optional::isPresent).map(Optional::get).orElse(null);

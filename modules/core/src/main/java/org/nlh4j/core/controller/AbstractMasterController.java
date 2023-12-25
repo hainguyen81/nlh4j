@@ -863,7 +863,7 @@ public abstract class AbstractMasterController
 	 * @return the main entity type class
 	 */
 	@SuppressWarnings("unchecked")
-	protected Class<T> getMainEntityType() {
+	public Class<T> getMainEntityType() {
 		return Optional.ofNullable(getClassGeneraicTypeByIndex(0))
 				.map(ExceptionUtils.wrap(logger).function(Exceptions.wrap().function(t -> (Class<T>) t)))
 				.filter(Optional::isPresent).map(Optional::get).orElse(null);
@@ -875,7 +875,7 @@ public abstract class AbstractMasterController
 	 * @return the entity search-condition type class
 	 */
 	@SuppressWarnings("unchecked")
-	protected Class<C> getSearchConditionType() {
+	public Class<C> getSearchConditionType() {
 		return Optional.ofNullable(getClassGeneraicTypeByIndex(1))
 				.map(ExceptionUtils.wrap(logger).function(Exceptions.wrap().function(t -> (Class<C>) t)))
 				.filter(Optional::isPresent).map(Optional::get).orElse(null);
@@ -887,7 +887,7 @@ public abstract class AbstractMasterController
 	 * @return the main entity primary unique key type class
 	 */
 	@SuppressWarnings("unchecked")
-	protected Class<PK> getUniqueKeyType() {
+	public Class<PK> getUniqueKeyType() {
 		return Optional.ofNullable(getClassGeneraicTypeByIndex(2))
 				.map(ExceptionUtils.wrap(logger).function(Exceptions.wrap().function(t -> (Class<PK>) t)))
 				.filter(Optional::isPresent).map(Optional::get).orElse(null);
@@ -899,7 +899,7 @@ public abstract class AbstractMasterController
 	 * @return the bound class of searching conditions type class
 	 */
 	@SuppressWarnings("unchecked")
-	protected Class<S> getBoundSearchConditionType() {
+	public Class<S> getBoundSearchConditionType() {
 		return Optional.ofNullable(getClassGeneraicTypeByIndex(3))
 				.map(ExceptionUtils.wrap(logger).function(Exceptions.wrap().function(t -> (Class<S>) t)))
 				.filter(Optional::isPresent).map(Optional::get).orElse(null);
@@ -911,7 +911,7 @@ public abstract class AbstractMasterController
 	 * @return the bound class of entity primary/unique key type class
 	 */
 	@SuppressWarnings("unchecked")
-	protected Class<U> getBoundUniqueKeyType() {
+	public Class<U> getBoundUniqueKeyType() {
 		return Optional.ofNullable(getClassGeneraicTypeByIndex(4))
 				.map(ExceptionUtils.wrap(logger).function(Exceptions.wrap().function(t -> (Class<U>) t)))
 				.filter(Optional::isPresent).map(Optional::get).orElse(null);
@@ -923,7 +923,7 @@ public abstract class AbstractMasterController
 	 * @return the attached upload data type class
 	 */
 	@SuppressWarnings("unchecked")
-	protected Class<M> getAttachedUploadDataType() {
+	public Class<M> getAttachedUploadDataType() {
 		return Optional.ofNullable(getClassGeneraicTypeByIndex(5))
 				.map(ExceptionUtils.wrap(logger).function(Exceptions.wrap().function(t -> (Class<M>) t)))
 				.filter(Optional::isPresent).map(Optional::get).orElse(null);
