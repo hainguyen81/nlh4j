@@ -94,7 +94,7 @@ public abstract class AbstractSearchController
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	protected Class<S> getBoundSearchConditionType() {
+	public Class<S> getBoundSearchConditionType() {
 		return Optional.ofNullable(getClassGeneraicTypeByIndex(2))
 				.map(ExceptionUtils.wrap(logger).function(Exceptions.wrap().function(t -> (Class<S>) t)))
 				.filter(Optional::isPresent).map(Optional::get).orElse(null);
@@ -102,19 +102,19 @@ public abstract class AbstractSearchController
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	protected Class<M> getAttachedUploadDataType() {
+	public Class<M> getAttachedUploadDataType() {
 		return Optional.ofNullable(getClassGeneraicTypeByIndex(3))
 				.map(ExceptionUtils.wrap(logger).function(Exceptions.wrap().function(t -> (Class<M>) t)))
 				.filter(Optional::isPresent).map(Optional::get).orElse(null);
 	}
 	
 	@Override
-	protected Class<AbstractDto> getUniqueKeyType() {
+	public Class<AbstractDto> getUniqueKeyType() {
 		throw new UnsupportedOperationException();
 	}
 	
 	@Override
-	protected Class<BaseEntityParamControllerDto<AbstractDto>> getBoundUniqueKeyType() {
+	public Class<BaseEntityParamControllerDto<AbstractDto>> getBoundUniqueKeyType() {
 		throw new UnsupportedOperationException();
 	}
 }

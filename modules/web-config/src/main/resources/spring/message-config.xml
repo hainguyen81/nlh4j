@@ -43,19 +43,31 @@
 
 			    <!-- System -->
 			    <value>classpath*:**/properties/i18n/systemResources</value>
+			    <value>classpath*:**/properties/i18n/systemMessages</value>
 				<value>classpath*:properties/i18n/systemResources</value>
+				<value>classpath*:properties/i18n/systemMessages</value>
 				<value>classpath*:**/i18n/systemResources</value>
+				<value>classpath*:**/i18n/systemMessages</value>
 				<value>classpath*:i18n/systemResources</value>
+				<value>classpath*:i18n/systemMessages</value>
 				<value>classpath*:**/systemResources</value>
+				<value>classpath*:**/systemMessages</value>
 				<value>classpath*:systemResources</value>
+				<value>classpath*:systemMessages</value>
 
 			    <!-- Base -->
 			    <value>classpath*:**/properties/i18n/baseResources</value>
+			    <value>classpath*:**/properties/i18n/baseMessages</value>
 				<value>classpath*:properties/i18n/baseResources</value>
+				<value>classpath*:properties/i18n/baseMessages</value>
 				<value>classpath*:**/i18n/baseResources</value>
+				<value>classpath*:**/i18n/baseMessages</value>
 				<value>classpath*:i18n/baseResources</value>
+				<value>classpath*:i18n/baseMessages</value>
 				<value>classpath*:**/baseResources</value>
+				<value>classpath*:**/baseMessages</value>
 				<value>classpath*:baseResources</value>
+				<value>classpath*:baseMessages</value>
 
 				<!-- Application -->
 				<value>classpath*:**/properties/i18n/ApplicationResources</value>
@@ -73,11 +85,17 @@
 
 				<!-- Module -->
 				<value>classpath*:**/properties/i18n/moduleResources</value>
+				<value>classpath*:**/properties/i18n/moduleMessages</value>
 				<value>classpath*:properties/i18n/moduleResources</value>
+				<value>classpath*:properties/i18n/moduleMessages</value>
 				<value>classpath*:**/i18n/moduleResources</value>
+				<value>classpath*:**/i18n/moduleMessages</value>
 				<value>classpath*:i18n/moduleResources</value>
+				<value>classpath*:i18n/moduleMessages</value>
 				<value>classpath*:**/moduleResources</value>
+				<value>classpath*:**/moduleMessages</value>
 				<value>classpath*:moduleResources</value>
+				<value>classpath*:moduleMessages</value>
 
 				<!-- By Theme -->
 				<value>classpath*:**/properties/i18n/${app.theme}Resources</value>

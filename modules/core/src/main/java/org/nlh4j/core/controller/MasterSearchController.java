@@ -81,7 +81,7 @@ public abstract class MasterSearchController
     
     @SuppressWarnings("unchecked")
 	@Override
-    protected Class<M> getAttachedUploadDataType() {
+	public Class<M> getAttachedUploadDataType() {
     	return Optional.ofNullable(getClassGeneraicTypeByIndex(4))
 				.map(ExceptionUtils.wrap(logger).function(Exceptions.wrap().function(t -> (Class<M>) t)))
 				.filter(Optional::isPresent).map(Optional::get).orElse(null);

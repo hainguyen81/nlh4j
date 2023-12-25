@@ -76,7 +76,7 @@ public abstract class AbstractActionController
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	protected Class<PK> getUniqueKeyType() {
+	public Class<PK> getUniqueKeyType() {
 		return Optional.ofNullable(getClassGeneraicTypeByIndex(1))
 				.map(ExceptionUtils.wrap(logger).function(Exceptions.wrap().function(t -> (Class<PK>) t)))
 				.filter(Optional::isPresent).map(Optional::get).orElse(null);
@@ -84,7 +84,7 @@ public abstract class AbstractActionController
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	protected Class<U> getBoundUniqueKeyType() {
+	public Class<U> getBoundUniqueKeyType() {
 		return Optional.ofNullable(getClassGeneraicTypeByIndex(2))
 				.map(ExceptionUtils.wrap(logger).function(Exceptions.wrap().function(t -> (Class<U>) t)))
 				.filter(Optional::isPresent).map(Optional::get).orElse(null);
@@ -92,19 +92,19 @@ public abstract class AbstractActionController
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	protected Class<M> getAttachedUploadDataType() {
+	public Class<M> getAttachedUploadDataType() {
 		return Optional.ofNullable(getClassGeneraicTypeByIndex(3))
 				.map(ExceptionUtils.wrap(logger).function(Exceptions.wrap().function(t -> (Class<M>) t)))
 				.filter(Optional::isPresent).map(Optional::get).orElse(null);
 	}
 	
 	@Override
-	protected Class<AbstractDto> getSearchConditionType() {
+	public Class<AbstractDto> getSearchConditionType() {
 		throw new UnsupportedOperationException();
 	}
 	
 	@Override
-	protected Class<BaseSearchParamControllerDto<AbstractDto>> getBoundSearchConditionType() {
+	public Class<BaseSearchParamControllerDto<AbstractDto>> getBoundSearchConditionType() {
 		throw new UnsupportedOperationException();
 	}
 }
