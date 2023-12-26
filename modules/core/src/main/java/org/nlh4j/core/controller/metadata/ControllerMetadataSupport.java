@@ -271,5 +271,11 @@ public class ControllerMetadataSupport implements InitializingBean, DisposableBe
      */
     protected void doDestroy() {
     	this.controllersSet.clear();
+    	this.controllerEntityFieldsMap.clear();
+        this.flatControllerEntityFieldsMap.clear();
+        this.controllerEntityColumnFieldsMap.clear();
+        this.flatControllerEntityColumnFieldsMap.clear();
+        this.controllerEntityColumnsMap.clear();
+        this.flatControllerEntityColumnsMap.clear();
     }
 }
