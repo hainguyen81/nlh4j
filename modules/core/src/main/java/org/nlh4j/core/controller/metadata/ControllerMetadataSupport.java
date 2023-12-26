@@ -99,8 +99,8 @@ public class ControllerMetadataSupport implements InitializingBean, DisposableBe
     private Map<? extends AbstractController, Pair<RequestMapping, Class<? extends AbstractDto>>> controllerRequestMappingsMap = new ConcurrentHashMap<>();
     private Map<? extends AbstractController, Entry<Class<? extends AbstractDto>, Set<Field>>> controllerEntityFieldsMap = new LinkedHashMap<>();
     private Map<RequestMapping, Entry<String, Set<String>>> flatControllerEntityFieldsMap = new LinkedHashMap<>();
-    private Map<? extends AbstractController, Entry<Class<? extends AbstractDto>, Set<Field>>> controllerEntityColumnFieldsMap = new LinkedHashMap<>();
-    private Map<RequestMapping, Entry<String, Set<String>>> flatControllerEntityColumnFieldsMap = new LinkedHashMap<>();
+    private Map<? extends AbstractController, Entry<Class<? extends AbstractDto>, Set<Pair<Field, Column>>>> controllerEntityColumnFieldsMap = new LinkedHashMap<>();
+    private Map<RequestMapping, Entry<String, Set<Pair<Field, Column>>>> flatControllerEntityColumnFieldsMap = new LinkedHashMap<>();
     private Map<? extends AbstractController, Entry<Class<? extends AbstractDto>, Set<Column>>> controllerEntityColumnsMap = new LinkedHashMap<>();
     private Map<RequestMapping, Entry<String, Set<String>>> flatControllerEntityColumnsMap = new LinkedHashMap<>();
     /**
@@ -155,7 +155,7 @@ public class ControllerMetadataSupport implements InitializingBean, DisposableBe
      * 
      * @return the cached {@link AbstractMasterController} entity fields map
      */
-    public final Map<? extends AbstractController, Entry<Class<? extends AbstractDto>, Set<Field>>> getMasterControllerEntityColumnFieldsMap() {
+    public final Map<? extends AbstractController, Entry<Class<? extends AbstractDto>, Set<Pair<Field, Column>>>> getMasterControllerEntityColumnFieldsMap() {
     	// detect controllers metadata
     	scanMetadata();
     	return Collections.unmodifiableMap(this.controllerEntityColumnFieldsMap);
@@ -167,7 +167,7 @@ public class ControllerMetadataSupport implements InitializingBean, DisposableBe
      * 
      * @return the cached {@link AbstractMasterController} entity fields map
      */
-    public final Map<RequestMapping, Entry<String, Set<String>>> getFlatMasterControllerEntityColumnFieldsMap() {
+    public final Map<RequestMapping, Entry<String, Set<Pair<Field, Column>>>> getFlatMasterControllerEntityColumnFieldsMap() {
     	// detect controllers metadata
     	scanMetadata();
     	return Collections.unmodifiableMap(this.flatControllerEntityColumnFieldsMap);
@@ -242,7 +242,7 @@ public class ControllerMetadataSupport implements InitializingBean, DisposableBe
     			(Map) this.controllerEntityFieldsMap.entrySet().parallelStream()
     			.map(e -> new SimpleEntry<>(e.getKey(), new SimpleEntry<>(e.getValue().getKey(),
     					e.getValue().getValue().parallelStream()
-    					.filter(f -> BeanUtils.getFieldAnnotation(f, Column.class) != null)
+    					.map(f -> Pair.of(f, BeanUtils.getFieldAnnotation(f, Column.class)))
     					.collect(Collectors.toCollection(LinkedHashSet::new)))))
     			.collect(Collectors.toMap(Entry::getKey, Entry::getValue, (k1, k2) -> k1)));
     	this.flatControllerEntityColumnFieldsMap.putAll(
@@ -253,14 +253,15 @@ public class ControllerMetadataSupport implements InitializingBean, DisposableBe
     					new SimpleEntry<>(
     							this.controllerRequestMappingsMap.get(e.getKey()).getValue().getName(),
     							e.getValue().getValue().parallelStream()
-    							.map(Field::getName).collect(Collectors.toCollection(LinkedHashSet::new)))))
+    							.map(p -> Pair.of(p.getKey().getName(), Optional.ofNullable(p.getValue()).map(Column::name).orElse(null)))
+    							.collect(Collectors.toCollection(LinkedHashSet::new)))))
     			.collect(Collectors.toMap(Entry::getKey, Entry::getValue, (k1, k2) -> k1)));
 
     	this.controllerEntityColumnsMap.putAll(
     			(Map) this.controllerEntityColumnFieldsMap.entrySet().parallelStream()
     			.map(e -> new SimpleEntry<>(e.getKey(), new SimpleEntry<>(e.getValue().getKey(),
     					e.getValue().getValue().parallelStream()
-    					.map(f -> BeanUtils.getFieldAnnotation(f, Column.class))
+    					.filter(p -> p.getValue() != null).map(Pair::getValue)
     					.collect(Collectors.toCollection(LinkedHashSet::new)))))
     			.collect(Collectors.toMap(Entry::getKey, Entry::getValue, (k1, k2) -> k1)));
     	this.flatControllerEntityColumnsMap.putAll(
