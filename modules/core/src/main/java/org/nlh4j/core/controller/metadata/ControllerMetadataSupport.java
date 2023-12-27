@@ -253,7 +253,7 @@ public class ControllerMetadataSupport implements InitializingBean, DisposableBe
     					new SimpleEntry<>(
     							this.controllerRequestMappingsMap.get(e.getKey()).getValue().getName(),
     							e.getValue().getValue().parallelStream()
-    							.map(p -> Pair.of(p.getKey().getName(), Optional.ofNullable(p.getValue()).map(Column::name).orElse(null)))
+    							.map(p -> Pair.of(p.getKey().getName(), p.getValue()))
     							.collect(Collectors.toCollection(LinkedHashSet::new)))))
     			.collect(Collectors.toMap(Entry::getKey, Entry::getValue, (k1, k2) -> k1)));
 
@@ -271,8 +271,7 @@ public class ControllerMetadataSupport implements InitializingBean, DisposableBe
     					this.controllerRequestMappingsMap.get(e.getKey()).getKey(),
     					new SimpleEntry<>(
     							this.controllerRequestMappingsMap.get(e.getKey()).getValue().getName(),
-    							e.getValue().getValue().parallelStream()
-    							.map(Column::name).collect(Collectors.toCollection(LinkedHashSet::new)))))
+    							e.getValue().getValue().parallelStream().collect(Collectors.toCollection(LinkedHashSet::new)))))
     			.collect(Collectors.toMap(Entry::getKey, Entry::getValue, (k1, k2) -> k1)));
     }
     
