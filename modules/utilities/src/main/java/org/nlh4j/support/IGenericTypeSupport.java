@@ -2,9 +2,12 @@ package org.nlh4j.support;
 
 import java.io.Serializable;
 import java.lang.reflect.Type;
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.nlh4j.util.BeanUtils;
 import org.nlh4j.util.LogUtils;
@@ -22,7 +25,9 @@ public interface IGenericTypeSupport extends Serializable {
      * @return the generic entity class
      */
 	default List<Type> getClassGenericTypes() {
-		return Collections.unmodifiableList(Arrays.asList(BeanUtils.getActualTypeArguments(getClass())));
+		return Collections.unmodifiableList(new LinkedList<>(
+				Stream.of((Type[]) BeanUtils.getActualTypeArguments(getClass())).parallel()
+				.filter(Objects::nonNull).collect(Collectors.toCollection(LinkedList::new))));
 	}
 	
 	/**
