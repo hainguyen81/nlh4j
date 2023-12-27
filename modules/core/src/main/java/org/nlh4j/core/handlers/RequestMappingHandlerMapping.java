@@ -6,29 +6,18 @@ package org.nlh4j.core.handlers;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;
-import java.util.AbstractMap.SimpleEntry;
 import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
-import org.nlh4j.core.controller.AbstractController;
-import org.nlh4j.core.controller.AbstractMasterController;
-import org.nlh4j.core.dto.AbstractDto;
 import org.nlh4j.core.servlet.SpringContextHelper;
-import org.nlh4j.util.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
@@ -36,7 +25,6 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 
@@ -125,44 +113,6 @@ public class RequestMappingHandlerMapping
         return Collections.unmodifiableMap(this.certainHandlersMap);
     }
     
-    /** The cached controllers set */
-    private Set<AbstractController> controllersSet = new LinkedHashSet<AbstractController>();
-    private Map<? extends AbstractController, Entry<Class<? extends AbstractDto>, Set<String>>> controllerEntityFieldsMap = new LinkedHashMap<>();
-    private Map<RequestMapping, Entry<String, Set<String>>> flatControllerEntityFieldsMap = new LinkedHashMap<>();
-    /**
-     * Get the cached controllers set
-     * @return the cached controllers set
-     */
-    public final Set<AbstractController> getControllersSet() {
-    	// detect controllers metadata
-    	detectControllersMetadata();
-        return Collections.unmodifiableSet(this.controllersSet);
-    }
-    /**
-     * Get the cached {@link AbstractMasterController} entity fields map:<br>
-     * - key is {@link AbstractMasterController} instance
-     * - value is a map of {@link AbstractMasterController#getMainEntityType()} and the entity field names set
-     * 
-     * @return the cached {@link AbstractMasterController} entity fields map
-     */
-    public final Map<? extends AbstractController, Entry<Class<? extends AbstractDto>, Set<String>>> getMasterControllerEntityFieldsMap() {
-    	// detect controllers metadata
-    	detectControllersMetadata();
-    	return Collections.unmodifiableMap(this.controllerEntityFieldsMap);
-    }
-    /**
-     * Get the cached {@link AbstractMasterController} entity fields map:<br>
-     * - key is {@link RequestMapping} instance
-     * - value is a map of {@link AbstractMasterController#getMainEntityType()} and the entity field names set
-     * 
-     * @return the cached {@link AbstractMasterController} entity fields map
-     */
-    public final Map<RequestMapping, Entry<String, Set<String>>> getFlatMasterControllerEntityFieldsMap() {
-    	// detect controllers metadata
-    	detectControllersMetadata();
-    	return Collections.unmodifiableMap(this.flatControllerEntityFieldsMap);
-    }
-
     /* (Non-Javadoc)
      * @see org.springframework.web.servlet.handler.AbstractHandlerMethodMapping#lookupHandlerMethod(java.lang.String, javax.servlet.http.HttpServletRequest)
      */
@@ -203,45 +153,6 @@ public class RequestMappingHandlerMapping
         }
     }
     
-	@Override
-    public void afterPropertiesSet() {
-    	super.afterPropertiesSet();
-    	// detect controllers metadata
-    	detectControllersMetadata();
-    }
-    
-    /**
-     * Detect {@link AbstractController} for caching
-     */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-	protected final void detectControllersMetadata() {
-    	// if already parsing
-    	if (CollectionUtils.isNotEmpty(this.controllersSet)) {
-    		return;
-    	}
-
-    	// scan controllers
-    	this.controllersSet.addAll(contextHelper.searchBeans(AbstractController.class, true));
-    	this.controllerEntityFieldsMap.putAll(
-    			(Map) this.controllersSet.parallelStream()
-    			.filter(AbstractMasterController.class::isInstance).map(AbstractMasterController.class::cast)
-    			.filter(c -> BeanUtils.isInstanceOf(c.getMainEntityType(), AbstractDto.class))
-    			.map(c -> new SimpleEntry<>(c, new SimpleEntry<>(c.getMainEntityType(),
-    					Collections.unmodifiableSet(new LinkedHashSet<>(BeanUtils.getFieldNames(getClass(), true))))))
-    			.collect(Collectors.toMap(Entry::getKey, Entry::getValue, (k1, k2) -> k1)));
-    	this.flatControllerEntityFieldsMap.putAll(
-    			this.controllerEntityFieldsMap.entrySet().parallelStream()
-    			.filter(e -> BeanUtils.isInstanceOf(e.getKey(), AbstractMasterController.class)
-    					&& Objects.nonNull(BeanUtils.safeType(e.getKey(), AbstractMasterController.class).getMainEntityType())
-    					&& Objects.nonNull(BeanUtils.getClassAnnotation(e.getKey().getClass(), RequestMapping.class)))
-    			.map(e -> new SimpleEntry<>(
-    					BeanUtils.getClassAnnotation(e.getKey().getClass(), RequestMapping.class),
-    					new SimpleEntry<>(
-    							BeanUtils.safeType(e.getKey(), AbstractMasterController.class).getMainEntityType().getName(),
-    							e.getValue().getValue())))
-    			.collect(Collectors.toMap(Entry::getKey, Entry::getValue, (k1, k2) -> k1)));
-    }
-    
     @Override
     public final void destroy() throws Exception {
     	doDestroy();
@@ -253,6 +164,5 @@ public class RequestMappingHandlerMapping
     protected void doDestroy() {
     	this.certainHandlersMap.clear();
     	this.ambiguousMap.clear();
-    	this.controllersSet.clear();
     }
 }
