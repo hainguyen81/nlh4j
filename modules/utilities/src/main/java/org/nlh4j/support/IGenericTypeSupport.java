@@ -40,8 +40,8 @@ public interface IGenericTypeSupport extends Serializable {
 	 */
 	default Type getClassGeneraicTypeByIndex(int genericTypeIdx) {
 		try {
-			List<Type> generaicTypes = getClassGenericTypes();
-			return (generaicTypes.size() <= genericTypeIdx || genericTypeIdx < 0 ? null : generaicTypes.get(0));
+			List<Type> genericTypes = getClassGenericTypes();
+			return (genericTypes.size() <= genericTypeIdx || genericTypeIdx < 0 ? null : genericTypes.get(genericTypeIdx));
 		} catch (Exception e) {
 			LogUtils.logError(getClass(), e.getMessage(), e);
 			return null;
