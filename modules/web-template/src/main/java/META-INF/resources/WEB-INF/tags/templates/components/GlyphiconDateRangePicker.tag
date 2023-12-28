@@ -138,6 +138,7 @@ description="The trigger for showing tooltip (TO) such as click, mouseenter, etc
 			<c:if test="${not empty dtpModelFrom}">ng-model="${dtpModelFrom}" reference-ng-model-controller</c:if>
 			<c:if test="${not empty dtpModelFrom && not empty dtpModelOptionsFrom}">ng-model-options="${dtpModelOptionsFrom}"</c:if>
 	        data-datepicker-popup="${dtpPattern}"
+        	data-uib-datepicker-popup="${dtpPattern}"
 	        <c:if test="${not empty dtpNameFrom}">data-is-open="findData('dtPicker').opened['${dtpNameFrom}']"</c:if>
 	        <c:if test="${empty dtpNameFrom}">data-is-open="findData('dtPicker').opened['dtpicker-from']"</c:if>
 	        data-datepicker-options="${dtpOptions}"
@@ -209,6 +210,7 @@ description="The trigger for showing tooltip (TO) such as click, mouseenter, etc
 			<c:if test="${not empty dtpPlaceHolderTo}">placeholder="${dtpPlaceHolderTo}"</c:if>
 			<c:if test="${not empty dtpModelTo}">ng-model="${dtpModelTo}" reference-ng-model-controller</c:if>
 	        data-datepicker-popup="${dtpPattern}"
+        	data-uib-datepicker-popup="${dtpPattern}"
 	        <c:if test="${not empty dtpNameTo}">data-is-open="findData('dtPicker').opened['${dtpNameTo}']"</c:if>
 	        <c:if test="${empty dtpNameTo}">data-is-open="findData('dtPicker').opened['dtpicker-to']"</c:if>
 	        data-datepicker-options="${dtpOptions}"

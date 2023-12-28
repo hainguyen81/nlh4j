@@ -90,6 +90,7 @@ description="The trigger for showing tooltip such as click, mouseenter, etc."%>
 		<c:if test="${not empty dtpModel}">ng-model="${dtpModel}" reference-ng-model-controller</c:if>
 		<c:if test="${not empty dtpModel && not empty dtpModelOptions}">ng-model-options="${dtpModelOptions}"</c:if>
         data-datepicker-popup="${dtpPattern}"
+        data-uib-datepicker-popup="${dtpPattern}"
         data-is-open="findData('dtPicker').opened['${dtpName}']"
         data-datepicker-options="${dtpOptions}"
         data-current-text="${dtpTodayText}"

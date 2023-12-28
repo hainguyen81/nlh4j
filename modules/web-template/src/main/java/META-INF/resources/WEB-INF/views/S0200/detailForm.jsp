@@ -166,6 +166,7 @@ ng-if="model.user && !model.user.currentUser"></div>
 			data-starting-day="0"
 			data-init-date="calendar.init"
 			data-datepicker-popup="${cmnDateTimePattern}"
+        	data-uib-datepicker-popup="${dtpPattern}"
 			data-is-open="calendar.expiredAt"
 			data-ng-model="model.user.expiredAt"
 			data-datepicker-options="calendar.dateOptions"
