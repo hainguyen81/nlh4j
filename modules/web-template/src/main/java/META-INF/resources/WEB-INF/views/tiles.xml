@@ -13,6 +13,7 @@
         <put-attribute name="headerActions" value="" type="String" />
         <put-attribute name="searchForm" value="" type="String" />
         <put-attribute name="searchFormActions" value="" type="String" />
+        <put-attribute name="customSearchResult" value="" type="String" />
         <put-attribute name="listColumns" value="" type="String" />
         <put-attribute name="listItems" value="" type="String" />
         <put-attribute name="customListItems" value="" type="String" />
@@ -53,6 +54,7 @@
         <put-attribute name="headerActions" value="" type="String" />
         <put-attribute name="searchForm" value="" type="String" />
         <put-attribute name="searchFormActions" value="" type="String" />
+        <put-attribute name="customSearchResult" value="" type="String" />
         <put-attribute name="listColumns" value="" type="String" />
         <put-attribute name="listItems" value="" type="String" />
         <put-attribute name="customListItems" value="" type="String" />

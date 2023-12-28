@@ -4,6 +4,7 @@
  */
 package jp.doma.dao;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,15 +12,16 @@ import com.machinezoo.noexception.Exceptions;
 
 import org.nlh4j.core.annotation.InjectRepository;
 import org.nlh4j.core.dto.AbstractDto;
-import org.nlh4j.exceptions.ApplicationUnderConstructionException;
 import org.nlh4j.support.IGenericTypeSupport;
+import org.nlh4j.util.BeanUtils;
 import org.nlh4j.util.ExceptionUtils;
 import org.nlh4j.util.LogUtils;
-import org.seasar.doma.BatchInsert;
-import org.seasar.doma.Delete;
-import org.seasar.doma.Insert;
+import org.seasar.doma.FetchType;
 import org.seasar.doma.Select;
-import org.seasar.doma.Update;
+import org.seasar.doma.Table;
+import org.seasar.doma.jdbc.Config;
+import org.seasar.doma.jdbc.SqlLogType;
+import org.seasar.doma.jdbc.builder.SelectBuilder;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 
@@ -36,73 +38,44 @@ import org.springframework.context.annotation.Scope;
 public interface BaseDomaDao<E extends AbstractDto> extends IGenericTypeSupport {
 
 	/**
-     * Select all {@link AbstractDto}
-     * 
-     * @return all {@link AbstractDto} entities list
-     */
-    @Select
-    default List<E> selectAll() {
-    	throw new ApplicationUnderConstructionException("Not implemented yet!");
+	 * Get the number of records
+	 * 
+	 * @return the number of records
+	 */
+	default long countAll() {
+		return Optional.ofNullable(getEntityClass())
+			.map(clz -> BeanUtils.getClassAnnotation(clz, Table.class))
+			.map(Table::name).map(tblName -> {
+				Config config = Config.get(this);
+		        SelectBuilder builder = SelectBuilder.newInstance(config);
+		        builder.sql(String.format("SELECT COUNT(1) FROM %s", tblName));
+		        return builder.getScalarSingleResult(long.class);
+			}).orElse(0L);
     }
-
-    /**
-     * Select {@link AbstractDto} by identity
-     *
-     * @param id identity
-     *
-     * @return {@link AbstractDto} by identity
-     */
-    @Select
-    default E selectById(Long id) {
-    	throw new ApplicationUnderConstructionException("Not implemented yet!");
-    }
-
-    /**
-     * Insert the specified {@link AbstractDto}
-     *
-     * @param entity to insert
-     *
-     * @return effected records
-     */
-    @Insert
-    default int insert(E entity) {
-    	throw new ApplicationUnderConstructionException("Not implemented yet!");
-    }
-
-    /**
-     * Update the specified {@link AbstractDto}
-     *
-     * @param entity to update
-     *
-     * @return effected records
-     */
-    @Update
-    default int update(E entity) {
-    	throw new ApplicationUnderConstructionException("Not implemented yet!");
-    }
-
-    /**
-     * Delete the specified {@link AbstractDto}
-     *
-     * @param entity to delete
-     *
-     * @return effected records
-     */
-    @Delete
-    default int delete(E entity) {
-    	throw new ApplicationUnderConstructionException("Not implemented yet!");
-    }
-
-    /**
-     * Insert multiple {@link AbstractDto}
-     *
-     * @param roles {@link AbstractDto} list to insert
-     *
-     * @return effected records
-     */
-    @BatchInsert
-    default int[] batchInsert(List<E> roles) {
-    	throw new ApplicationUnderConstructionException("Not implemented yet!");
+	
+	/**
+	 * Get the number of records
+	 * 
+	 * @return the number of records
+	 */
+	@Select
+	default List<E> selectAll() {
+		final Config config = Config.get(this);
+		config.getJdbcLogger().logDaoMethodEntering(getClass().getName(), "selectAll");
+		return Optional.ofNullable(getEntityClass())
+			.map(clz -> BeanUtils.getClassAnnotation(clz, Table.class))
+			.map(Table::name).map(tblName -> {
+		        SelectBuilder builder = SelectBuilder.newInstance(config);
+		        builder.sql(String.format("SELECT * FROM %s", tblName));
+		        builder.ensureResult(false);
+		        builder.ensureResultMapping(false);
+		        builder.fetch(FetchType.LAZY);
+		        builder.queryTimeout(-1);
+		        builder.maxRows(-1);
+		        builder.fetchSize(-1);
+		        builder.sqlLogType(SqlLogType.FORMATTED);
+		        return builder.getEntityResultList(getEntityClass());
+			}).orElseGet(LinkedList::new);
     }
 
     /**

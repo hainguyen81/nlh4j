@@ -1018,7 +1018,7 @@ importDirective('datepicker', function($document, $http) {
 			dateValidation : '=',
 		},
 		link : linker,
-		controller : 'nlh4jDatepcikerController'
+		controller : 'nlh4jDatepickerController'
 	};
 });
 
