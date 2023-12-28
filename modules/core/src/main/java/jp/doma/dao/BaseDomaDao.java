@@ -15,7 +15,9 @@ import org.nlh4j.exceptions.ApplicationUnderConstructionException;
 import org.nlh4j.support.IGenericTypeSupport;
 import org.nlh4j.util.ExceptionUtils;
 import org.nlh4j.util.LogUtils;
+import org.seasar.doma.BatchDelete;
 import org.seasar.doma.BatchInsert;
+import org.seasar.doma.BatchUpdate;
 import org.seasar.doma.Delete;
 import org.seasar.doma.Insert;
 import org.seasar.doma.Select;
@@ -96,12 +98,36 @@ public interface BaseDomaDao<E extends AbstractDto> extends IGenericTypeSupport 
     /**
      * Insert multiple {@link AbstractDto}
      *
-     * @param roles {@link AbstractDto} list to insert
+     * @param entities {@link AbstractDto} list to insert
      *
      * @return effected records
      */
     @BatchInsert
-    default int[] batchInsert(List<E> roles) {
+    default int[] batchInsert(List<E> entities) {
+    	throw new ApplicationUnderConstructionException("Not implemented yet!");
+    }
+
+    /**
+     * Update multiple {@link AbstractDto}
+     *
+     * @param entities {@link AbstractDto} list to update
+     *
+     * @return effected records
+     */
+    @BatchUpdate
+    default int[] batchUpdate(List<E> entities) {
+    	throw new ApplicationUnderConstructionException("Not implemented yet!");
+    }
+
+    /**
+     * Delete multiple {@link AbstractDto}
+     *
+     * @param entities {@link AbstractDto} list to delete
+     *
+     * @return effected records
+     */
+    @BatchDelete
+    default int[] batchDelete(List<E> entities) {
     	throw new ApplicationUnderConstructionException("Not implemented yet!");
     }
 
