@@ -165,16 +165,43 @@
 	</tag>
 	<!-- JSTL support functions -->
 	<function>
+		<description>Check the specified value whether exists in the specified list</description>
 		<name>contains</name>
 		<function-class>org.nlh4j.core.taglibs.TagUtils</function-class>
 		<function-signature>boolean contains(java.util.List,java.lang.Object)</function-signature>
 	</function>
 	<function>
+		<description>Check the specified key whether exists in the specified map</description>
+		<name>mapContainsKey</name>
+		<function-class>org.nlh4j.core.taglibs.TagUtils</function-class>
+		<function-signature>boolean mapContainsKey(java.util.Map,java.lang.Object)</function-signature>
+	</function>
+	<function>
+		<description>Check the specified value whether exists in the specified map</description>
+		<name>mapContainsValue</name>
+		<function-class>org.nlh4j.core.taglibs.TagUtils</function-class>
+		<function-signature>boolean mapContainsValue(java.util.Map,java.lang.Object)</function-signature>
+	</function>
+	<function>
+		<description>Check the specified values whether exist at least one in the specified map</description>
 		<name>containsAtLeast</name>
 		<function-class>org.nlh4j.core.taglibs.TagUtils</function-class>
 		<function-signature>boolean containsAtLeast(java.util.List,java.lang.Object[])</function-signature>
 	</function>
 	<function>
+		<description>Check the specified keys whether exist at least one in the specified map</description>
+		<name>mapContainsKeyAtLeast</name>
+		<function-class>org.nlh4j.core.taglibs.TagUtils</function-class>
+		<function-signature>boolean mapContainsKeyAtLeast(java.util.Map,java.lang.Object[])</function-signature>
+	</function>
+	<function>
+		<description>Check the specified values whether exist at least one in the specified map</description>
+		<name>mapContainsValueAtLeast</name>
+		<function-class>org.nlh4j.core.taglibs.TagUtils</function-class>
+		<function-signature>boolean mapContainsValueAtLeast(java.util.Map,java.lang.Object[])</function-signature>
+	</function>
+	<function>
+		<description>Get the index of the specified value in the specified list. -1 if not found</description>
 		<name>indexOf</name>
 		<function-class>org.nlh4j.core.taglibs.TagUtils</function-class>
 		<function-signature>int indexOf(java.util.List,java.lang.Object)</function-signature>
