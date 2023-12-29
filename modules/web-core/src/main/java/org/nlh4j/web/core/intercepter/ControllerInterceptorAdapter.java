@@ -78,18 +78,8 @@ public class ControllerInterceptorAdapter extends org.nlh4j.core.intercepter.Con
         // only intercept on RequestMapping methods
         if (!this.isRequestMapping(targetClass, method, medArgs)) return true;
 
-        // clear cache every action
-        UserDto userprofile = AuthenticationUtils.getCurrentProfile(UserDto.class);
-        // TODO Waiting to get authentication from spring socket
-        // If current request is from socket, current authentication will be invalid
-        if (userprofile == null && !ArrayUtils.isEmpty(medArgs)) {
-            for(Object medArg : medArgs) {
-                userprofile = AuthenticationUtils.getProfile(medArg, UserDto.class);
-                if (userprofile != null) break;
-            }
-        }
-
         // check normal user permission (has permission on modules)
+        UserDto userprofile = getInvokeMethodUser(medArgs);
         boolean allowed = (userprofile != null);
         if (allowed && !userprofile.isSysadmin()) {
             // check user has permission
@@ -111,18 +101,8 @@ public class ControllerInterceptorAdapter extends org.nlh4j.core.intercepter.Con
     	// only intercept on RequestMapping methods
         if (!this.isRequestMapping(targetClass, method, medArgs)) return null;
 
-        // clear cache every action
-        UserDto userprofile = AuthenticationUtils.getCurrentProfile(UserDto.class);
-        // TODO Waiting to get authentication from spring socket
-        // If current request is from socket, current authentication will be invalid
-        if (userprofile == null && !ArrayUtils.isEmpty(medArgs)) {
-            for(Object medArg : medArgs) {
-                userprofile = AuthenticationUtils.getProfile(medArg, UserDto.class);
-                if (userprofile != null) break;
-            }
-        }
-
         // check if this forward module
+        UserDto userprofile = getInvokeMethodUser(medArgs);
         if (userprofile != null) {
         	// parse target class permission info
             ExecutePermission medPerm = BeanUtils.getClassAnnotation(targetClass, ExecutePermission.class);
@@ -168,7 +148,7 @@ public class ControllerInterceptorAdapter extends org.nlh4j.core.intercepter.Con
             String moduleCss = (!CollectionUtils.isEmpty(cssModList) ? cssModList.get(0) : null);
 
             // update functions list by current user if not found (such as index page)
-            UserDto userprofile = AuthenticationUtils.getCurrentProfile(UserDto.class);
+            UserDto userprofile = getInvokeMethodUser(medArgs);
             if (CollectionUtils.isEmpty(funcList)
                     && (userprofile == null || !userprofile.isSysadmin())) {
                 Map<String, List<String>> functions = this.moduleService.getModuleFunctions(
@@ -282,5 +262,26 @@ public class ControllerInterceptorAdapter extends org.nlh4j.core.intercepter.Con
             }
         }
         return allowed;
+    }
+    
+    /**
+     * Get the user that has been invoked method
+     * 
+     * @param medArgs method argument to detect
+     * 
+     * @return {@link UserDto}/NULL
+     */
+    protected final UserDto getInvokeMethodUser(Object[] medArgs) {
+    	// clear cache every action
+        UserDto userprofile = AuthenticationUtils.getCurrentProfile(UserDto.class);
+        // TODO Waiting to get authentication from spring socket
+        // If current request is from socket, current authentication will be invalid
+        if (userprofile == null && !ArrayUtils.isEmpty(medArgs)) {
+            for(Object medArg : medArgs) {
+                userprofile = AuthenticationUtils.getProfile(medArg, UserDto.class);
+                if (userprofile != null) break;
+            }
+        }
+        return userprofile;
     }
 }
