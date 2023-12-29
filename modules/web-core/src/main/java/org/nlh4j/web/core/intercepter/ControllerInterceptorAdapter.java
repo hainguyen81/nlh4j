@@ -144,7 +144,7 @@ public class ControllerInterceptorAdapter extends org.nlh4j.core.intercepter.Con
     @Override
     protected void afterInvoke(Class<?> targetClass, String method, Object[] medArgs, Object value) {
         // if result is a model and view; then applying common attribute if necessary
-        // at this moment, it means current user had the accessable permission with this module
+        // at this moment, it means current user had the accessible permission with this module
         if (BeanUtils.isInstanceOf(value, ModelAndView.class)) {
             // parse class module information
             List<String> modList = new ArrayList<String>();
