@@ -11,7 +11,7 @@
 <%@ attribute name="showBaseActions" required="false" type="Boolean" %>
 <%@ attribute name="showPagination" required="false" type="Boolean" %> --%>
 
-<nlh4jTags:Html module="${pageModule}">
+<nlh4jTags:Html module="${pageModule}" page="${pageName}">
 	<nlh4jTags:Head title="${pageModule}.title">
 		<%-- START: Master Script --%>
 		<%@ include file="/WEB-INF/tags/templates/master/MasterScriptCommon.inc" %>
