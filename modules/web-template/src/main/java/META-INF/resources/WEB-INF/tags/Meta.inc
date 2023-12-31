@@ -28,6 +28,8 @@
 <meta http-equiv="Content-Type" content="text/html;charset=Utf-8" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta http-equiv="Content-Script-Type" content="text/javascript" />
+<meta name="module" content="${pageModule}"/>
+<meta name="page" content="${pageName}"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, height=device-height" />
 <meta name="_csrf" content="${_csrf.token}"/>
 <!-- offline URL checker -->

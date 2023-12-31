@@ -7,7 +7,9 @@ package org.nlh4j.core.taglibs;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,6 +65,28 @@ public final class TagUtils implements Serializable {
         return (!CollectionUtils.isEmpty(list) && list.contains(o));
 	}
     /**
+     * Check the specified object key whether existed in the specified map
+     *
+     * @param map the map to check
+     * @param k the key to check
+     *
+     * @return true for existed; else false
+     */
+    public static boolean mapContainsKey(Map<Object, Object> map, Object k) {
+        return (MapUtils.isNotEmpty(map) && map.containsKey(k));
+	}
+    /**
+     * Check the specified object value whether existed in the specified map
+     *
+     * @param map the map to check
+     * @param v the key to check
+     *
+     * @return true for existed; else false
+     */
+    public static boolean mapContainsValue(Map<Object, Object> map, Object v) {
+        return (MapUtils.isNotEmpty(map) && map.containsValue(v));
+	}
+    /**
      * Check the specified object whether existed in the specified list
      *
      * @param list the list to check
@@ -75,6 +99,42 @@ public final class TagUtils implements Serializable {
     	if (!CollectionUtils.isEmpty(list) && !ArrayUtils.isEmpty(objs)) {
     		for(Object o : objs) {
     			contained = list.contains(o);
+    			if (contained) break;
+    		}
+    	}
+        return contained;
+	}
+    /**
+     * Check the specified object keys whether existed in the specified map
+     *
+     * @param map the map to check
+     * @param objs the keys to check
+     *
+     * @return true for existed; else false
+     */
+    public static boolean mapContainsKeyAtLeast(Map<Object, Object> map, Object...objs) {
+    	boolean contained = false;
+    	if (MapUtils.isNotEmpty(map) && !ArrayUtils.isEmpty(objs)) {
+    		for(Object o : objs) {
+    			contained = map.containsKey(o);
+    			if (contained) break;
+    		}
+    	}
+        return contained;
+	}
+    /**
+     * Check the specified object values whether existed in the specified map
+     *
+     * @param map the map to check
+     * @param objs the values to check
+     *
+     * @return true for existed; else false
+     */
+    public static boolean mapContainsValueAtLeast(Map<Object, Object> map, Object...objs) {
+    	boolean contained = false;
+    	if (MapUtils.isNotEmpty(map) && !ArrayUtils.isEmpty(objs)) {
+    		for(Object o : objs) {
+    			contained = map.containsValue(o);
     			if (contained) break;
     		}
     	}

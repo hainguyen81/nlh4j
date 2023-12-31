@@ -26,6 +26,13 @@ ENV MAVEN_CONFIG=$MAVEN_HOME/conf
 RUN mkdir -p .tmp
 COPY --from=maven settings.xm[l] .tmp/
 
+# # -------------------------------------------------
+# # here to install some packages that be needed for later
+# # if issue, then checking it out here: https://github.com/alpinelinux/docker-alpine/issues/98
+# # install inotifywait for watching hot deploy using apk due to alpine OS
+# RUN sed -i 's/https/http/' /etc/apk/repositories
+# RUN apk add --no-cache inotify-tools
+
 # -------------------------------------------------
 RUN mkdir -p $MAVEN_REPOSITORY
 

@@ -19,6 +19,9 @@
 
     <!-- Import properties configure -->
     <import resource="classpath*:spring/properties-config.xml" />
+    
+    <!-- Import AOP configure -->
+    <import resource="classpath*:spring/aop-config.xml" />
 
     <!-- Import multipart configure for uploading file -->
 	<import resource="classpath*:spring/multipart-config.xml" />

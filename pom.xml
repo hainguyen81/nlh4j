@@ -5638,7 +5638,7 @@ encoding/<project>=${project.build.sourceEncoding}]]>
 						<XserializableAspects>true</XserializableAspects>
 						<showWeaveInfo/>
 	                    <!-- START: for working with Lombok -->
-	                    <forceAjcCompile>true</forceAjcCompile>
+	                    <!-- forceAjcCompile>false</forceAjcCompile --> <!-- FIXME Spring AOP not support this -->
 	                    <complianceLevel>${java.version}</complianceLevel>
 	                    <sources/>
 	                    <weaveDirectories>
