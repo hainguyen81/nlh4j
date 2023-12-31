@@ -25,11 +25,6 @@ RUN ls $PROJECT_NAME
 FROM hainguyen81/org.nlh4j:maven-$MAVEN_VERSION-$JDK_MAJOR_VERSION as maven
 ARG PROJECT_NAME
 
-# maven folders enviroment
-ENV MAVEN_HOME=/usr/share/maven
-ENV MAVEN_REF=$MAVEN_HOME/ref
-ENV MAVEN_REPOSITORY=$MAVEN_REF/repository
-
 ENV LOG_FILE=$PROJECT_NAME.log
 
 # -------------------------------------------------
