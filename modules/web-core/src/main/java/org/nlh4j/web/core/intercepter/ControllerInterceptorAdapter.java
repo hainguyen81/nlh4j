@@ -5,6 +5,7 @@
 package org.nlh4j.web.core.intercepter;
 
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  *
  */
+@Configuration
 @Aspect
 @Component(value = "controllerInterceptorAdapter")
 public class ControllerInterceptorAdapter extends AbstractControllerInterceptorAdapter {

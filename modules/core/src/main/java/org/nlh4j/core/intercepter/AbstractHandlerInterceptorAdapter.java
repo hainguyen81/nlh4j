@@ -14,13 +14,15 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.AsyncHandlerInterceptor;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.HandlerAdapter;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
  * AbstractHandlerInterceptorAdapterのクラス。
@@ -29,8 +31,10 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  * @version 0.6
  *
  */
+@Configuration
 @Aspect
-public abstract class AbstractHandlerInterceptorAdapter extends HandlerInterceptorAdapter implements Serializable {
+@Component
+public abstract class AbstractHandlerInterceptorAdapter implements AsyncHandlerInterceptor, Serializable {
 
 	/** */
 	private static final long serialVersionUID = 1L;

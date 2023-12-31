@@ -9,6 +9,9 @@ import java.text.MessageFormat;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
+import org.springframework.util.ClassUtils;
 import org.springframework.util.StopWatch;
 
 import org.nlh4j.exceptions.ApplicationRuntimeException;
@@ -20,17 +23,13 @@ import org.nlh4j.exceptions.ApplicationRuntimeException;
  * @version 0.6
  *
  */
+@Configuration
 @Aspect
+@Component
 public class ServiceInterceptorAdapter extends AbstractHandlerInterceptorAdapter {
 
-	/**
-	 *
-	 */
+	/** */
 	private static final long serialVersionUID = 1L;
-
-	//	/** transaction manager. */
-	//	@Inject
-	//	private PlatformTransactionManager transactionManager;
 
 	/**
 	 * <p>
@@ -41,40 +40,33 @@ public class ServiceInterceptorAdapter extends AbstractHandlerInterceptorAdapter
 	 * @return result after invoking the specified {@link ProceedingJoinPoint}
      * @throws Throwable thrown if processing fail
 	 */
-	@Around("execution(public * org.nlh4j.core.service.AbstractService+.*(..))")
+	@Around("org.nlh4j.core.intercepter.AspectSystemArchitecture.inServiceLayer()")
+//	@Around("execution(public * org.nlh4j.core.service.AbstractService+.*(..))")
 	public Object inServiceLayer(ProceedingJoinPoint joinPoint) throws Throwable {
-		final String method = MessageFormat.format(
-				"{0}.{1}",
-				joinPoint.getTarget().getClass().getName(),
-				joinPoint.getSignature().getName());
-		logger.debug("[START] {}", method);
-
-		// Using transactional of Spring for transaction management
-		//		DefaultTransactionDefinition definition = new DefaultTransactionDefinition();
-		//		definition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-		//		TransactionStatus transactionStatus = transactionManager.getTransaction(definition);
-
+		final String methodName = joinPoint.getSignature().getName();
+		final Class<?> targetClass = (joinPoint.getTarget() == null ? null : joinPoint.getTarget().getClass());
+		final String className = (targetClass == null ? null : targetClass.getName());
+		final String method = MessageFormat.format("{0}.{1}", className, methodName);
+		logger.debug("[START[{}]] {}", ClassUtils.getUserClass(getClass()).getSimpleName(), method);
 		final StopWatch sw = new StopWatch();
 		sw.start();
+
 		Object value = null;
 		try {
 			value = joinPoint.proceed();
-			//transactionManager.commit(transactionStatus);
-			//logger.debug("do commit");
 		} catch (RuntimeException ex) {
-			//transactionManager.rollback(transactionStatus);
-			//logger.debug("do rollback");
-			logger.error(ex.getMessage(), ex);
+			logger.error("[EXCEPTION[{}]] Exception while executing method {}: {}",
+					ClassUtils.getUserClass(getClass()).getSimpleName(), method, ex.getMessage(), ex);
 			throw new ApplicationRuntimeException(ex);
 		} catch (Throwable t) {
-			//transactionManager.rollback(transactionStatus);
-			//logger.debug("do rollback");
-			logger.error(t.getMessage(), t);
+			logger.error("[EXCEPTION[{}]] Exception while executing method {}: {}",
+					ClassUtils.getUserClass(getClass()).getSimpleName(), method, t.getMessage(), t);
 			throw new ApplicationRuntimeException(t);
 		} finally {
 			sw.stop();
 			logger.debug(sw.prettyPrint());
-			logger.debug("[END] {} [time] {} ms", method, sw.getTotalTimeMillis());
+			logger.debug("[END[{}]] {} [time] {} ms",
+					ClassUtils.getUserClass(getClass()).getSimpleName(), method, sw.getTotalTimeMillis());
 		}
 
 		return value;

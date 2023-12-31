@@ -149,9 +149,4 @@
 		    <property name="contentNegotiationManager" ref="contentNegotiationManager" />
 		</bean> -->
 
-	<!-- AOP annotation setting -->
-	<aop:aspectj-autoproxy />
-	<context:annotation-config />
-	<context:component-scan base-package="org.nlh4j" />
-
 </beans>

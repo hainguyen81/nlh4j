@@ -9,8 +9,10 @@ import java.text.MessageFormat;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ClassUtils;
 import org.springframework.util.StopWatch;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,6 +28,7 @@ import org.nlh4j.util.StringUtils;
  * @version 0.6
  *
  */
+@Configuration
 @Aspect
 @Component
 public abstract class ControllerInterceptorAdapter extends AbstractHandlerInterceptorAdapter {
@@ -39,13 +42,14 @@ public abstract class ControllerInterceptorAdapter extends AbstractHandlerInterc
 	 * @return result after invoking the specified {@link ProceedingJoinPoint}
 	 * @throws Throwable thrown if processing fail
 	 */
-	@Around("execution(public * org.nlh4j.core.controller.AbstractController+.*(..))")
+	@Around("org.nlh4j.core.intercepter.AspectSystemArchitecture.inControllerLayer()")
+//	@Around("execution(public * org.nlh4j.core.controller.AbstractController+.*(..))")
 	public final Object inWebLayer(ProceedingJoinPoint joinPoint) throws Throwable {
 		final String methodName = joinPoint.getSignature().getName();
 		final Class<?> targetClass = (joinPoint.getTarget() == null ? null : joinPoint.getTarget().getClass());
 		final String className = (targetClass == null ? null : targetClass.getName());
 		final String method = MessageFormat.format("{0}.{1}", className, methodName);
-		logger.debug("[START] {}", method);
+		logger.debug("[START[{}]] {}", ClassUtils.getUserClass(getClass()).getSimpleName(), method);
 		final StopWatch sw = new StopWatch();
 		sw.start();
 
@@ -79,7 +83,8 @@ public abstract class ControllerInterceptorAdapter extends AbstractHandlerInterc
 				}
 			}
 			else if (supported) {
-				logger.warn("[ERRPERM] Not enough permission to invoking {}", method);
+				logger.warn("[ERRPERM[{}]] Not enough permission to invoking {}",
+						ClassUtils.getUserClass(getClass()).getSimpleName(), method);
 				throw new AccessDeniedException("[ERRPERM] Not enough permission to invoking " + method);
 			}
 
@@ -89,7 +94,8 @@ public abstract class ControllerInterceptorAdapter extends AbstractHandlerInterc
 				this.afterInvoke(targetClass, methodName, medArgs, value);
 			}
 		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
+			logger.error("[EXCEPTION[{}]] Exception while executing {}: {}",
+					ClassUtils.getUserClass(getClass()).getSimpleName(), method, e.getMessage(), e);
 			if (BeanUtils.isInstanceOf(e, AccessDeniedException.class)) {
 				throw new ApplicationRuntimeException(403, e);
 			}
@@ -97,7 +103,8 @@ public abstract class ControllerInterceptorAdapter extends AbstractHandlerInterc
 		} finally {
 			sw.stop();
 			logger.debug(sw.prettyPrint());
-			logger.debug("[END] {} [time] {} ms", method, sw.getTotalTimeMillis());
+			logger.debug("[END[{}]] {} [time] {} ms",
+					ClassUtils.getUserClass(getClass()).getSimpleName(), method, sw.getTotalTimeMillis());
 		}
 		return value;
 	}
