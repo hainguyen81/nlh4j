@@ -18,8 +18,8 @@ ENV JDK_MAJOR_VERSION=$JDK_MAJOR_VERSION
 # maven folders enviroment
 ENV MAVEN_HOME=/usr/share/maven
 ENV MAVEN_REF=$MAVEN_HOME/ref
-ENV MAVEN_REPOSITORY=$MAVEN_REF/repository
 ENV MAVEN_CONFIG=$MAVEN_HOME/conf
+ENV MAVEN_REPOSITORY=$MAVEN_CONFIG/repository
 
 # -------------------------------------------------
 # Copy maven settings if necessary
