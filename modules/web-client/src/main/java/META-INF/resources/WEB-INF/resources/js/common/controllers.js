@@ -291,25 +291,25 @@ importController(
 			 */
             $rootScope.$on('referenceNgModelController', function(e, ctrl) {
                 // check if it is not in array already
-            	if (!$rootScope.hasOwnProperty('$NgModelControlers')) {
-            		$rootScope['$NgModelControlers'] = [];
+            	if (!$rootScope.hasOwnProperty('$$NgModelControllers')) {
+            		$rootScope['$$NgModelControllers'] = [];
             	}
                 // add it to array
             	var found = false;
             	if (ctrl.$name && ctrl.$name.length) {
-	            	$.map($rootScope['$NgModelControlers'], function(c) {
+	            	$.map($rootScope['$$NgModelControllers'], function(c) {
 	            		if (c.$name && ctrl.$name === c.$name) {
 	            			found = true;
 	            		}
 	            	});
             	}
-            	if (!found) $rootScope['$NgModelControlers'].push(ctrl);
+            	if (!found) $rootScope['$$NgModelControllers'].push(ctrl);
                 // for scope
-                if (!$scope.hasOwnProperty('$NgModelControlers')) {
-                	$scope['$NgModelControlers'] = [];
+                if (!$scope.hasOwnProperty('$$NgModelControllers')) {
+                	$scope['$$NgModelControllers'] = [];
             	}
                 // add it to array
-                if (!found) $scope['$NgModelControlers'].push(ctrl);
+                if (!found) $scope['$$NgModelControllers'].push(ctrl);
             	// check for FormController
             	if (ctrl.$$parentForm) {
             		$rootScope.$broadcast('referenceFormController', ctrl.$$parentForm);
@@ -337,20 +337,20 @@ importController(
             		}
             	}
                 // check if it is not in array already
-            	if (!$rootScope.hasOwnProperty('$FormControllers')) {
-            		$rootScope['$FormControllers'] = [];
+            	if (!$rootScope.hasOwnProperty('$$FormControllers')) {
+            		$rootScope['$$FormControllers'] = [];
             	}
-                if ($rootScope['$FormControllers'].indexOf(ctrl) < 0) {
+                if ($rootScope['$$FormControllers'].indexOf(ctrl) < 0) {
                     // add it to array
-                	$rootScope['$FormControllers'].push(ctrl);
+                	$rootScope['$$FormControllers'].push(ctrl);
                 }
                 // for scope
-                if (!$scope.hasOwnProperty('$FormControllers')) {
-                	$scope['$FormControllers'] = [];
+                if (!$scope.hasOwnProperty('$$FormControllers')) {
+                	$scope['$$FormControllers'] = [];
             	}
-                if ($scope['$FormControllers'].indexOf(ctrl) < 0) {
+                if ($scope['$$FormControllers'].indexOf(ctrl) < 0) {
                     // add it to array
-                	$scope['$FormControllers'].push(ctrl);
+                	$scope['$$FormControllers'].push(ctrl);
                 	if (!$.isUndefined(ctrl.$name) && ctrl.$name.length > 0
                 			&& !$scope.hasOwnProperty(ctrl.$name)) {
                 		$scope[ctrl.$name] = ctrl;
@@ -367,10 +367,10 @@ importController(
 				var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
 				var forms = [];
 				// detect by referenceFormController directive
-				if (this.hasOwnProperty('$FormControllers')
-						&& angular.isArray(this['$FormControllers'])
-						&& this['$FormControllers'].length) {
-					forms = forms.concat(this['$FormControllers']);
+				if (this.hasOwnProperty('$$FormControllers')
+						&& angular.isArray(this['$$FormControllers'])
+						&& this['$$FormControllers'].length) {
+					forms = forms.concat(this['$$FormControllers']);
 				}
 				// detect by scope property
 				$.each(this, function(k, v) {
@@ -404,10 +404,10 @@ importController(
 				var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
 				var forms = {};
 				// detect by referenceFormController directive
-				if (this.hasOwnProperty('$FormControllers')
-						&& angular.isArray(this['$FormControllers'])
-						&& this['$FormControllers'].length) {
-					$.map(this['$FormControllers'], function(f) {
+				if (this.hasOwnProperty('$$FormControllers')
+						&& angular.isArray(this['$$FormControllers'])
+						&& this['$$FormControllers'].length) {
+					$.map(this['$$FormControllers'], function(f) {
 						forms[f.$name] = f;
 					});
 				}
