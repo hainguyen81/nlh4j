@@ -152,7 +152,8 @@ description="The trigger for showing tooltip (TO) such as click, mouseenter, etc
 	        <c:if test="${empty dtpNameFrom}">data-is-open="findData('dtPicker').opened['dtpicker-from']"</c:if>
 			<c:if test="${not empty dtpMode}">data-datepicker-mode="${dtpMode}"</c:if>
 			<c:if test="${empty dtpMode}">data-datepicker-mode="'day'"</c:if>
-        	<c:if test="${not empty dtpShowWeeks && dtpShowWeeks['class'].simpleName ne 'Boolean'}">data-datepicker-mode="${dtpShowWeeks}"</c:if>
+        	<c:if test="${dtpShowWeeks eq true}">data-show-weeks="true"</c:if>
+        	<c:if test="${not empty dtpShowWeeks && dtpShowWeeks['class'].simpleName ne 'Boolean'}">data-show-weeks="${dtpShowWeeks}"</c:if>
 			<c:if test="${not empty dtpStartingDay}">data-starting-day="${dtpStartingDay}"</c:if>
 			<c:if test="${not empty dtpInitDateFrom}">data-init-date="${dtpInitDateFrom}"</c:if>
 	        data-datepicker-options="${dtpOptions}"
@@ -228,7 +229,8 @@ description="The trigger for showing tooltip (TO) such as click, mouseenter, etc
 	        <c:if test="${empty dtpNameTo}">data-is-open="findData('dtPicker').opened['dtpicker-to']"</c:if>
 			<c:if test="${not empty dtpMode}">data-datepicker-mode="${dtpMode}"</c:if>
 			<c:if test="${empty dtpMode}">data-datepicker-mode="'day'"</c:if>
-        	<c:if test="${not empty dtpShowWeeks && dtpShowWeeks['class'].simpleName ne 'Boolean'}">data-datepicker-mode="${dtpShowWeeks}"</c:if>
+        	<c:if test="${dtpShowWeeks eq true}">data-show-weeks="true"</c:if>
+        	<c:if test="${not empty dtpShowWeeks && dtpShowWeeks['class'].simpleName ne 'Boolean'}">data-show-weeks="${dtpShowWeeks}"</c:if>
 			<c:if test="${not empty dtpStartingDay}">data-starting-day="${dtpStartingDay}"</c:if>
 			<c:if test="${not empty dtpInitDateTo}">data-init-date="${dtpInitDateTo}"</c:if>
 	        data-datepicker-options="${dtpOptions}"
