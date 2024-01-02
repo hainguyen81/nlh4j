@@ -36,10 +36,14 @@ description="Main input text (TO) place-holder"%>
 description="Specify dropdown calendar whether has been rendered in body HTML tag or current component area (for overlap cases)"%>
 <%@ attribute name="dtpModelFrom" required="false"
 description="Specify angular model (FROM) (ng-model)"%>
+<%@ attribute name="dtpInitDateFrom" required="false"
+description="The initial date view when no model value is specified"%>
 <%@ attribute name="dtpModelOptionsFrom" required="false"
 description="Specify angular model options (FROM) (ng-model-options)"%>
 <%@ attribute name="dtpModelTo" required="true"
 description="Specify angular model (TO) (ng-model)"%>
+<%@ attribute name="dtpInitDateTo" required="false"
+description="The initial date view when no model value is specified"%>
 <%@ attribute name="dtpModelOptionsTo" required="false"
 description="Specify angular model options (TO) (ng-model-options)"%>
 <%@ attribute name="dtpReadonlyFrom" required="false"
@@ -48,6 +52,12 @@ description="Specify component (FROM) is read-only (ng-readony)"%>
 description="Specify component (TO) is read-only (ng-readony)"%>
 <%@ attribute name="dtpPattern" required="true"
 description="Specify date/time pattern of picker"%>
+<%@ attribute name="dtpMode" required="false"
+description="Specify the mode of the datepicker (day|month|year). Can be used to initialize datepicker to specific mode. Default is 'day'"%>
+<%@ attribute name="dtpShowWeeks" required="false"
+description="Whether to display week numbers"%>
+<%@ attribute name="dtpStartingDay" required="false"
+description="Starting day of the week from 0-6 (0=Sunday, ..., 6=Saturday)"%>
 <%@ attribute name="dtpOptions" required="true"
 description="Specify more date/time picker options (JSON object) such as min-date, max-date, etc."%>
 <%@ attribute name="dtpTodayText" required="false"
@@ -138,9 +148,13 @@ description="The trigger for showing tooltip (TO) such as click, mouseenter, etc
 			<c:if test="${not empty dtpModelFrom}">ng-model="${dtpModelFrom}" reference-ng-model-controller</c:if>
 			<c:if test="${not empty dtpModelFrom && not empty dtpModelOptionsFrom}">ng-model-options="${dtpModelOptionsFrom}"</c:if>
 	        data-datepicker-popup="${dtpPattern}"
-        	data-uib-datepicker-popup="${dtpPattern}"
 	        <c:if test="${not empty dtpNameFrom}">data-is-open="findData('dtPicker').opened['${dtpNameFrom}']"</c:if>
 	        <c:if test="${empty dtpNameFrom}">data-is-open="findData('dtPicker').opened['dtpicker-from']"</c:if>
+			<c:if test="${not empty dtpMode}">data-datepicker-mode="${dtpMode}"</c:if>
+			<c:if test="${empty dtpMode}">data-datepicker-mode="'day'"</c:if>
+        	<c:if test="${not empty dtpShowWeeks && dtpShowWeeks['class'].simpleName ne 'Boolean'}">data-datepicker-mode="${dtpShowWeeks}"</c:if>
+			<c:if test="${not empty dtpStartingDay}">data-starting-day="${dtpStartingDay}"</c:if>
+			<c:if test="${not empty dtpInitDateFrom}">data-init-date="${dtpInitDateFrom}"</c:if>
 	        data-datepicker-options="${dtpOptions}"
 	        data-current-text="${dtpTodayText}"
 	        data-close-text="${dtpCloseText}"
@@ -210,9 +224,13 @@ description="The trigger for showing tooltip (TO) such as click, mouseenter, etc
 			<c:if test="${not empty dtpPlaceHolderTo}">placeholder="${dtpPlaceHolderTo}"</c:if>
 			<c:if test="${not empty dtpModelTo}">ng-model="${dtpModelTo}" reference-ng-model-controller</c:if>
 	        data-datepicker-popup="${dtpPattern}"
-        	data-uib-datepicker-popup="${dtpPattern}"
 	        <c:if test="${not empty dtpNameTo}">data-is-open="findData('dtPicker').opened['${dtpNameTo}']"</c:if>
 	        <c:if test="${empty dtpNameTo}">data-is-open="findData('dtPicker').opened['dtpicker-to']"</c:if>
+			<c:if test="${not empty dtpMode}">data-datepicker-mode="${dtpMode}"</c:if>
+			<c:if test="${empty dtpMode}">data-datepicker-mode="'day'"</c:if>
+        	<c:if test="${not empty dtpShowWeeks && dtpShowWeeks['class'].simpleName ne 'Boolean'}">data-datepicker-mode="${dtpShowWeeks}"</c:if>
+			<c:if test="${not empty dtpStartingDay}">data-starting-day="${dtpStartingDay}"</c:if>
+			<c:if test="${not empty dtpInitDateTo}">data-init-date="${dtpInitDateTo}"</c:if>
 	        data-datepicker-options="${dtpOptions}"
 	        data-current-text="${dtpTodayText}"
 	        data-close-text="${dtpCloseText}"

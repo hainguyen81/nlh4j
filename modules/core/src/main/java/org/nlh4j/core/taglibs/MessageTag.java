@@ -20,6 +20,8 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.support.RequestContext;
 import org.springframework.web.util.WebUtils;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Extended message JSP tag for application.
  * Some format message key:
@@ -43,6 +45,7 @@ import org.springframework.web.util.WebUtils;
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  *
  */
+@Slf4j
 public class MessageTag extends org.springframework.web.servlet.tags.MessageTag {
 
     /** */
@@ -313,17 +316,29 @@ public class MessageTag extends org.springframework.web.servlet.tags.MessageTag 
     protected final Exception tryToDetectPageException() {
     	Exception exception = RequestUtils.getRequestAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE, Exception.class);
     	exception = Optional.ofNullable(exception).orElseGet(
-    			() -> Optional.ofNullable(super.pageContext.getAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE, WebRequest.SCOPE_REQUEST))
-    			.filter(Exception.class::isInstance).map(Exception.class::cast).orElse(null));
+    			() -> {
+    				try {
+    					return Optional.ofNullable(super.pageContext.getAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE, WebRequest.SCOPE_REQUEST))
+    			    			.filter(Exception.class::isInstance).map(Exception.class::cast).orElse(null);
+    				} catch (Exception e) {
+    					log.error("Could not detect exception from page context: {}", e.getMessage(), e);
+    					return null;
+    				}
+    			});
     	exception = Optional.ofNullable(exception).orElseGet(
     			() -> {
-    				Map<String, Object> requestModel = Optional.ofNullable(super.getRequestContext())
-    						.map(RequestContext::getModel).orElseGet(LinkedHashMap::new);
-    				return Optional.ofNullable(requestModel.getOrDefault("exception", null))
-    						.filter(Exception.class::isInstance).map(Exception.class::cast)
-    						.orElseGet(() -> requestModel.values().parallelStream()
-    								.filter(Exception.class::isInstance).map(Exception.class::cast)
-    								.findFirst().orElse(null));
+    				try {
+    					Map<String, Object> requestModel = Optional.ofNullable(super.getRequestContext())
+        						.map(RequestContext::getModel).orElseGet(LinkedHashMap::new);
+        				return Optional.ofNullable(requestModel.getOrDefault("exception", null))
+        						.filter(Exception.class::isInstance).map(Exception.class::cast)
+        						.orElseGet(() -> requestModel.values().parallelStream()
+        								.filter(Exception.class::isInstance).map(Exception.class::cast)
+        								.findFirst().orElse(null));
+    				} catch (Exception e) {
+    					log.error("Could not detect exception from page model: {}", e.getMessage(), e);
+    					return null;
+    				}
     			});
     	return exception;
     }

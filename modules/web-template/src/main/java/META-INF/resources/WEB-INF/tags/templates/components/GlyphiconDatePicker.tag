@@ -28,6 +28,14 @@ description="Specify angular model (ng-model)"%>
 description="Specify angular model options (ng-model-options)"%>
 <%@ attribute name="dtpPattern" required="true"
 description="Specify date/time pattern of picker"%>
+<%@ attribute name="dtpMode" required="false"
+description="Specify the mode of the datepicker (day|month|year). Can be used to initialize datepicker to specific mode. Default is 'day'"%>
+<%@ attribute name="dtpShowWeeks" required="false"
+description="Whether to display week numbers. Default is false"%>
+<%@ attribute name="dtpStartingDay" required="false"
+description="Starting day of the week from 0-6 (0=Sunday, ..., 6=Saturday)"%>
+<%@ attribute name="dtpInitDate" required="false"
+description="The initial date view when no model value is specified"%>
 <%@ attribute name="dtpOptions" required="true"
 description="Specify more date/time picker options (JSON object) such as min-date, max-date, etc."%>
 <%@ attribute name="dtpTodayText" required="false"
@@ -91,8 +99,14 @@ description="The change event for date picker"%>
 		<c:if test="${not empty dtpPlaceHolder}">placeholder="${dtpPlaceHolder}"</c:if>
 		<c:if test="${not empty dtpModel}">ng-model="${dtpModel}" reference-ng-model-controller</c:if>
 		<c:if test="${not empty dtpModel && not empty dtpModelOptions}">ng-model-options="${dtpModelOptions}"</c:if>
+		<c:if test="${not empty dtpMode}">data-datepicker-mode="${dtpMode}"</c:if>
+		<c:if test="${empty dtpMode}">data-datepicker-mode="'day'"</c:if>
         data-datepicker-popup="${dtpPattern}"
         data-is-open="findData('dtPicker').opened['${dtpName}']"
+        <c:if test="${dtpShowWeeks eq true}">data-datepicker-mode="true"</c:if>
+        <c:if test="${not empty dtpShowWeeks && dtpShowWeeks['class'].simpleName ne 'Boolean'}">data-datepicker-mode="${dtpShowWeeks}"</c:if>
+		<c:if test="${not empty dtpStartingDay}">data-starting-day="${dtpStartingDay}"</c:if>
+		<c:if test="${not empty dtpInitDate}">data-init-date="${dtpInitDate}"</c:if>
         data-datepicker-options="${dtpOptions}"
         data-current-text="${dtpTodayText}"
         data-close-text="${dtpCloseText}"

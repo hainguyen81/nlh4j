@@ -158,28 +158,16 @@ ng-if="model.user && !model.user.currentUser"></div>
 	<div class="input-label-control-group col-sm-5">
 		<label class="control-label col-sm-3">${u_expired}</label>
 		<div class="input-group col-sm-3">
-			<input type="text"
-			class="form-control text-center"
-			id="expiredAt" name="expiredAt"
-			data-datepicker-mode="'day'"
-			data-show-weeks="false"
-			data-starting-day="0"
-			data-init-date="calendar.init"
-			data-datepicker-popup="${cmnDateTimePattern}"
-        	data-uib-datepicker-popup="${dtpPattern}"
-			data-is-open="calendar.expiredAt"
-			data-ng-model="model.user.expiredAt"
-			data-datepicker-options="calendar.dateOptions"
-			data-current-text="${calBtnToday}"
-			data-close-text="${calBtnClose}"
-			data-clear-text="${calBtnClear}"
-			data-ng-disabled="${!editable}"
-			data-ng-readonly="true" />
-			<span class="input-group-btn">
-				<button type="button" class="btn btn-calendar"
-				data-ng-disabled="${!editable}"
-				data-ng-click="calendar.open($event, 'expiredAt')"></button>
-			</span>
+			<nlh4jTagsComp:GlyphiconDatePicker
+			dtpModel="model.user.expiredAt"
+			dtpOptions="calendar.dateOptions"
+			dtpPattern="${cmnDateTimePattern}"
+			dtpName="expiredAt"
+			dtpCssClass="text-center"
+			dtpShowWeeks="${false}"
+			dtpStartingDay="0"
+			dtpInitDate="calendar.init"
+			/>
 		</div>
 	</div>
 </div>
