@@ -142,6 +142,7 @@ importController(
 					}
 				}
 			};
+			$scope.refreshDatePickerView = $rootScope.refreshDatePickerView;
 
 		    // -------------------------------------------------
 		    // ANALYSING OUTBOUND DATA
