@@ -35,9 +35,9 @@ echo -------------------------------------------------
 echo 3. Build project docker image
 echo -------------------------------------------------
 echo.
-call build.deploy.dockerfile.bat
+call my_build_project_build_docker.bat
 echo -------------------------------------------------
-echo ^>^>^>^>^>^>^> Finished: 3. my_build_project_build_docker.bat
+echo ^>^>^>^>^>^>^> Finished: 3. Build project docker image
 echo -------------------------------------------------
 echo.
 timeout /t 10 /nobreak >nul
