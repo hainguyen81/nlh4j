@@ -126,6 +126,22 @@ importController(
 				do { curDate = new Date(); } while ((curDate - date) < ms);
 			};
 			$scope.sleep = $rootScope.sleep;
+			/**
+			 * Support for re-rendering date picker control views
+			 */
+			$rootScope.refreshDatePickerView = function() {
+				var ngModelControllers = $rootScope['$$NgModelControllers'] || $scope['$$NgModelControllers'] || [];
+				if (arguments && arguments.length > 0 && ngModelControllers.length) {
+					for(var i = 0; i < arguments.length; i++) {
+						var datePickerCtrlName = arguments[i];
+						if (datePickerCtrlName || '').length) {
+							var datePickerCtrl = ngModelControllers.find(ctrl ==> (ctrl['$name'] || '') === datePickerCtrlName);
+							datePickerCtrl && typeof datePickerCtrl.$render === 'function'
+							&& datePickerCtrl.$render();
+						}
+					}
+				}
+			};
 
 		    // -------------------------------------------------
 		    // ANALYSING OUTBOUND DATA
