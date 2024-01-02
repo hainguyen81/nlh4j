@@ -291,25 +291,25 @@ importController(
 			 */
             $rootScope.$on('referenceNgModelController', function(e, ctrl) {
                 // check if it is not in array already
-            	if (!$rootScope.hasOwnProperty('$NgModelControlers')) {
-            		$rootScope['$NgModelControlers'] = [];
+            	if (!$rootScope.hasOwnProperty('$NgModelControllers')) {
+            		$rootScope['$NgModelControllers'] = [];
             	}
                 // add it to array
             	var found = false;
             	if (ctrl.$name && ctrl.$name.length) {
-	            	$.map($rootScope['$NgModelControlers'], function(c) {
+	            	$.map($rootScope['$NgModelControllers'], function(c) {
 	            		if (c.$name && ctrl.$name === c.$name) {
 	            			found = true;
 	            		}
 	            	});
             	}
-            	if (!found) $rootScope['$NgModelControlers'].push(ctrl);
+            	if (!found) $rootScope['$NgModelControllers'].push(ctrl);
                 // for scope
-                if (!$scope.hasOwnProperty('$NgModelControlers')) {
-                	$scope['$NgModelControlers'] = [];
+                if (!$scope.hasOwnProperty('$NgModelControllers')) {
+                	$scope['$NgModelControllers'] = [];
             	}
                 // add it to array
-                if (!found) $scope['$NgModelControlers'].push(ctrl);
+                if (!found) $scope['$NgModelControllers'].push(ctrl);
             	// check for FormController
             	if (ctrl.$$parentForm) {
             		$rootScope.$broadcast('referenceFormController', ctrl.$$parentForm);
