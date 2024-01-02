@@ -135,8 +135,9 @@ importController(
 					for(var i = 0; i < arguments.length; i++) {
 						var datePickerCtrlName = arguments[i];
 						if (datePickerCtrlName || '').length) {
-							var datePickerCtrl = ngModelControllers.find(ctrl ==> (ctrl['$name'] || '') === datePickerCtrlName);
-							datePickerCtrl && typeof datePickerCtrl.$render === 'function'
+							var datePickerCtrl = ngModelControllers.find(ctrl => (ctrl['$name'] || '') === datePickerCtrlName);
+							datePickerCtrl
+							&& typeof datePickerCtrl.$render === 'function'
 							&& datePickerCtrl.$render();
 						}
 					}
