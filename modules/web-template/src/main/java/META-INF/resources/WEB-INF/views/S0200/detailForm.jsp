@@ -164,7 +164,7 @@ ng-if="model.user && !model.user.currentUser"></div>
 			dtpPattern="${cmnDateTimePattern}"
 			dtpName="expiredAt"
 			dtpCssClass="text-center"
-			dtpShowWeeks="false"
+			dtpShowWeeks="${false}"
 			dtpStartingDay="0"
 			dtpInitDate="calendar.init"
 			/>
