@@ -31,7 +31,7 @@ description="Specify date/time pattern of picker"%>
 <%@ attribute name="dtpMode" required="false"
 description="Specify the mode of the datepicker (day|month|year). Can be used to initialize datepicker to specific mode. Default is 'day'"%>
 <%@ attribute name="dtpShowWeeks" required="false"
-description="Whether to display week numbers"%>
+description="Whether to display week numbers. Default is false"%>
 <%@ attribute name="dtpStartingDay" required="false"
 description="Starting day of the week from 0-6 (0=Sunday, ..., 6=Saturday)"%>
 <%@ attribute name="dtpInitDate" required="false"
@@ -103,6 +103,7 @@ description="The change event for date picker"%>
 		<c:if test="${empty dtpMode}">data-datepicker-mode="'day'"</c:if>
         data-datepicker-popup="${dtpPattern}"
         data-is-open="findData('dtPicker').opened['${dtpName}']"
+        <c:if test="${dtpShowWeeks eq true}">data-datepicker-mode="true"</c:if>
         <c:if test="${not empty dtpShowWeeks && dtpShowWeeks['class'].simpleName ne 'Boolean'}">data-datepicker-mode="${dtpShowWeeks}"</c:if>
 		<c:if test="${not empty dtpStartingDay}">data-starting-day="${dtpStartingDay}"</c:if>
 		<c:if test="${not empty dtpInitDate}">data-init-date="${dtpInitDate}"</c:if>
