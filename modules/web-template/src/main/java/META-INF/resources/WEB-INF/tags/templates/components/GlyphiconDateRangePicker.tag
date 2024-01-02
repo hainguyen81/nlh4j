@@ -98,6 +98,10 @@ description="Component (TO) tooltip (usually using for showing error tip)"%>
 description="The placement that tooltip (TO) should be shown such as top, bottom, etc."%>
 <%@ attribute name="dtpTooltipTriggerTo" required="false"
 description="The trigger for showing tooltip (TO) such as click, mouseenter, etc."%>
+<%@ attribute name="onChangeFrom" required="false"
+description="The change event for FROM date picker"%>
+<%@ attribute name="onChangeTo" required="false"
+description="The change event for TO date picker"%>
 
 <%
 	long tm = DateUtils.currentTimestamp().getTime();
@@ -186,6 +190,7 @@ description="The trigger for showing tooltip (TO) such as click, mouseenter, etc
 			<c:if test="${not empty dtpTooltipFrom}">data-tooltip="${dtpTooltipFrom}"</c:if>
 			<c:if test="${not empty dtpTooltipPlacementFrom}">data-tooltip-placement="${dtpTooltipPlacementFrom}"</c:if>
 			<c:if test="${not empty dtpTooltipTriggerFrom}">data-tooltip-trigger="${dtpTooltipTriggerFrom}"</c:if>
+			<c:if test="${not empty onChangeFrom}">ng-change="${onChangeFrom}"</c:if>
 			/>
 			<!-- Calendar button -->
 			<span class="input-group-btn">
@@ -262,6 +267,7 @@ description="The trigger for showing tooltip (TO) such as click, mouseenter, etc
 			<c:if test="${not empty dtpTooltipTo}">data-tooltip="${dtpTooltipTo}"</c:if>
 			<c:if test="${not empty dtpTooltipPlacementTo}">data-tooltip-placement="${dtpTooltipPlacementTo}"</c:if>
 			<c:if test="${not empty dtpTooltipTriggerTo}">data-tooltip-trigger="${dtpTooltipTriggerTo}"</c:if>
+			<c:if test="${not empty onChangeTo}">ng-change="${onChangeTo}"</c:if>
 			/>
 			<!-- Calendar button -->
 			<span class="input-group-btn">
