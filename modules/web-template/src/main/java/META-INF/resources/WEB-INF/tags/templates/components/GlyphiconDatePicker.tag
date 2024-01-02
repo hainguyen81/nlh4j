@@ -103,8 +103,8 @@ description="The change event for date picker"%>
 		<c:if test="${empty dtpMode}">data-datepicker-mode="'day'"</c:if>
         data-datepicker-popup="${dtpPattern}"
         data-is-open="findData('dtPicker').opened['${dtpName}']"
-        <c:if test="${dtpShowWeeks eq true}">data-datepicker-mode="true"</c:if>
-        <c:if test="${not empty dtpShowWeeks && dtpShowWeeks['class'].simpleName ne 'Boolean'}">data-datepicker-mode="${dtpShowWeeks}"</c:if>
+        <c:if test="${dtpShowWeeks eq true}">data-show-weeks="true"</c:if>
+        <c:if test="${not empty dtpShowWeeks && dtpShowWeeks['class'].simpleName ne 'Boolean'}">data-show-weeks="${dtpShowWeeks}"</c:if>
 		<c:if test="${not empty dtpStartingDay}">data-starting-day="${dtpStartingDay}"</c:if>
 		<c:if test="${not empty dtpInitDate}">data-init-date="${dtpInitDate}"</c:if>
         data-datepicker-options="${dtpOptions}"
