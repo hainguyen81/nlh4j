@@ -9,9 +9,12 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
@@ -216,7 +219,7 @@ public abstract class AbstractController implements IGenericTypeSupport {
      * @return bean or NULL
      */
     protected final <K> K findBean(Class<K> beanClass) {
-        return (this.getContextHelper() == null ? null : this.getContextHelper().searchBean(beanClass));
+        return Optional.ofNullable(this.getContextHelper()).map(ctx -> ctx.searchBean(beanClass)).orElse(null);
     }
     /**
      * Get bean by the specified bean class
@@ -226,7 +229,7 @@ public abstract class AbstractController implements IGenericTypeSupport {
      * @return bean or NULL
      */
     protected final <K> List<K> findBeans(Class<K> beanClass) {
-        return (this.getContextHelper() == null ? null : this.getContextHelper().searchBeans(beanClass));
+        return Optional.ofNullable(this.getContextHelper()).map(ctx -> ctx.searchBeans(beanClass)).orElseGet(LinkedList::new);
     }
 
     /**
@@ -254,8 +257,8 @@ public abstract class AbstractController implements IGenericTypeSupport {
             String msgKey = this.getInternalServerErrorReasonKey();
             if (!StringUtils.hasText(msgKey)) msgKey = String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value());
             if (StringUtils.hasText(msgKey)) {
-                this.internalServerErrorReason = msgSrv.getMessage(
-                        this.getInternalServerErrorReasonKey(), (Object[]) null, null);
+                this.internalServerErrorReason = Optional.ofNullable(msgSrv).map(m -> m.getMessage(
+                        this.getInternalServerErrorReasonKey(), (Object[]) null, null)).orElse(null);
             }
         }
         if (!StringUtils.hasText(this.internalServerErrorReason)) {
@@ -278,7 +281,7 @@ public abstract class AbstractController implements IGenericTypeSupport {
         MessageService msgSrv = this.messageService;
         SpringContextHelper helper = this.getContextHelper();
         msgSrv = (msgSrv == null && helper != null ? helper.searchBean(MessageService.class) : msgSrv);
-        String message = msgSrv.getMessage(String.valueOf(status.value()), args, null);
+        String message = Optional.ofNullable(msgSrv).map(m -> m.getMessage(String.valueOf(status.value()), args, null)).orElse(null);
         if (!StringUtils.hasText(message)) {
             message = status.getReasonPhrase();
         }
@@ -309,8 +312,9 @@ public abstract class AbstractController implements IGenericTypeSupport {
      *
      * @param binder data binder
      */
+	/* java:S3776: Cognitive Complexity of methods should not be too high */
     @InitBinder
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "java:S3776" })
     protected void initBinder(WebDataBinder binder) {
     	// 一般的な日付·時刻パターン
     	binder.registerCustomEditor(
@@ -372,13 +376,13 @@ public abstract class AbstractController implements IGenericTypeSupport {
      * @return キー：プロパティ名 － 値：日付と時刻のパターン
      */
     protected Map<String, Map<Class<?>, String>> bindTimestampPattern() {
-    	return null;
+    	return Collections.emptyMap();
     }
     /**
      * カスタム定義された日付と時刻のパターン
      * @return キー：プロパティ名 － 値：日付と時刻のパターン
      */
     protected Map<String, Map<Class<?>, String>> bindNumberPattern() {
-    	return null;
+    	return Collections.emptyMap();
     }
 }
