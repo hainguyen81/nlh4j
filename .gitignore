@@ -56,3 +56,6 @@ github-repo
 .docker
 /.docker/
 
+.extracted-class-dependencies
+/.extracted-class-dependencies/
+
