@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.nlh4j.core.context.profiles.SpringProfiles;
+import org.nlh4j.core.controller.metadata.ControllerMetadataSupport;
 import org.nlh4j.core.dto.bindeditor.CustomNumberEditor;
 import org.nlh4j.core.dto.bindeditor.TimeStampEditor;
 import org.nlh4j.core.handlers.RequestMappingHandlerMapping;
@@ -69,6 +70,10 @@ public abstract class AbstractController implements IGenericTypeSupport {
 	 * slf4j
 	 */
 	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+	
+	/** {@link ControllerMetadataSupport} */
+    @Inject
+    protected ControllerMetadataSupport controllerMetadataSupport;
 
 	/**
 	 * {@link MailService}
