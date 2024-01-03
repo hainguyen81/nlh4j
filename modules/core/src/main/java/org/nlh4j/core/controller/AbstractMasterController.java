@@ -6,6 +6,7 @@ package org.nlh4j.core.controller;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -14,8 +15,6 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-
-import com.machinezoo.noexception.Exceptions;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
@@ -47,6 +46,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.machinezoo.noexception.Exceptions;
+
 /**
  * Abstract controller for master screens
  *
@@ -75,7 +76,7 @@ public abstract class AbstractMasterController
 	protected static final String FUNCTION_UPDATABLE_PERMISSION = "UPDATABLE";
 	protected static final String FUNCTION_DELETABLE_PERMISSION = "DELETABLE";
 	protected static final String FUNCTION_WRITABLE_PERMISSION = "WRITABLE";
-
+	
 	/**
 	 * Attach more attributes into page view.
 	 * TODO Children controllers maybe override this method
@@ -821,7 +822,7 @@ public abstract class AbstractMasterController
 	 * @return the map of download file name and file path to download
 	 */
 	protected Map<String, String> processDownloadPath(C data) throws Exception {
-		return null;
+		return Collections.emptyMap();
 	}
 	/**
 	 * Process downloaded {@link File} and return the {@link File} to download<br>
@@ -832,7 +833,7 @@ public abstract class AbstractMasterController
 	 * @return the map of download file name and {@link File} to download
 	 */
 	protected Map<String, File> processDownloadFile(C data) throws Exception {
-		return null;
+		return Collections.emptyMap();
 	}
 	/**
 	 * Process downloaded excel {@link Workbook} and return the {@link Workbook} to download<br>
@@ -843,7 +844,7 @@ public abstract class AbstractMasterController
 	 * @return the map of download file name and {@link Workbook} to download
 	 */
 	protected Map<String, Workbook> processDownloadWorkbook(C data) throws Exception {
-		return null;
+		return Collections.emptyMap();
 	}
 	/**
 	 * Process downloaded {@link InputStream} and return the {@link InputStream} to download<br>
@@ -854,7 +855,7 @@ public abstract class AbstractMasterController
 	 * @return the map of download file name and {@link InputStream} to download
 	 */
 	protected Map<String, InputStream> processDownloadStream(C data) throws Exception {
-		return null;
+		return Collections.emptyMap();
 	}
 	
 	/**
