@@ -46,6 +46,8 @@
 <!-- jQuery Full Calendar -->
 <nlh4jTags:CssLib src="jquery-fullcalendar/${verJqueryFullCalendar}/fullcalendar${verMinSuffix}.css" />
 <nlh4jTags:CssLib src="jquery-fullcalendar/${verJqueryFullCalendar}/fullcalendar.print${verMinSuffix}.css" media="print" />
+<!-- jQuery TableSaw -->
+<nlh4jTags:CssLib src="jquery-tablesaw/${verJqueryTableSaw}/css/jquery.tablesaw${verMinSuffix}.css" />
 
 <%-- ------------------------------------------------- --%>
 <%-- Angular Plugins CSS library version --%>

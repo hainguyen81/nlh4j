@@ -63,6 +63,8 @@
 <spring:eval var="verJquerySpin" expression="@properties.getProperty('ver.jquery.spin')" scope="application" />
 <%-- Barcode --%>
 <spring:eval var="verJqueryScannerDetection" expression="@properties.getProperty('ver.jquery.scanner.detection')" scope="application" />
+<spring:eval var="verJqueryTableSorter" expression="@properties.getProperty('ver.jquery.tablesorter')" scope="application" />
+<spring:eval var="verJqueryTableSaw" expression="@properties.getProperty('ver.jquery.tablesaw')" scope="application" />
 
 <%-- ------------------------------------------------- --%>
 <%-- Angular Plugins Javascript library version --%>
