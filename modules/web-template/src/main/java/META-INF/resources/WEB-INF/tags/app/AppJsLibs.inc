@@ -102,6 +102,11 @@
 <nlh4jTags:JsLib src="jquery-utils/${verJqueryUtils}/jquery.datetime.utils${verMinSuffix}.js" />
 <nlh4jTags:JsLib src="jquery-utils/${verJqueryUtils}/jquery.string.utils${verMinSuffix}.js" />
 <nlh4jTags:JsLib src="jquery-utils/${verJqueryUtils}/jquery.utils${verMinSuffix}.js" />
+<!-- jQuery TableSorter -->
+<nlh4jTags:JsLib src="jquery-tablesorter/${verJqueryTableSorter}/jquery.tablesorter${verMinSuffix}.js" />
+<!-- jQuery TableSaw -->
+<nlh4jTags:JsLib src="jquery-tablesaw/${verJqueryTableSaw}/js/jquery.tablesaw${verMinSuffix}.js" />
+<nlh4jTags:JsLib src="jquery-tablesaw/${verJqueryTableSaw}/js/jquery.tablesaw.init${verMinSuffix}.js" />
 
 <%-- ------------------------------------------------- --%>
 <%-- Angular Plugins Javascript library version --%>
