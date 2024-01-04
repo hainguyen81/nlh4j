@@ -148,6 +148,7 @@ var APP_INCLUDES = [
                 	, 'sprintf'
                 	, 'ng-appcache'
                 	, 'indexedDB'
+                	, 'Dragtable'
                 	, MOD_FACTORIES
                 	, MOD_SERVICES
                 	, MOD_CONTROLLERS

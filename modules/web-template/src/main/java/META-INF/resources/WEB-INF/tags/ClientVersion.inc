@@ -119,6 +119,8 @@
 <spring:eval var="verAngularAppCache" expression="@properties.getProperty('ver.angular.appcache')" scope="application" />
 <%-- IndexedDB --%>
 <spring:eval var="verAngularIndexedDB" expression="@properties.getProperty('ver.angular.indexed.db')" scope="application" />
+<%-- Drag-Table --%>
+<spring:eval var="verAngularDragTable" expression="@properties.getProperty('ver.angular.drag.table')" scope="application" />
 
 <%-- ------------------------------------------------- --%>
 <%-- Angular Wiz Validation Plugins Javascript library version --%>

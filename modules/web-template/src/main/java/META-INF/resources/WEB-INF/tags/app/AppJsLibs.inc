@@ -205,6 +205,8 @@
 <nlh4jTags:JsLib src="angular-appcache/${verAngularAppCache}/appcache${verMinSuffix}.js" />
 <!-- Angular IndexedDB -->
 <nlh4jTags:JsLib src="angular-indexed-db/${verAngularIndexedDB}/angular-indexed-db${verMinSuffix}.js" />
+<!-- Angular DragTable -->
+<nlh4jTags:JsLib src="angular-dragtable/${verAngularDragTable}/angular-dragtable${verMinSuffix}.js" />
 
 <%-- ------------------------------------------------- --%>
 <%-- Angular Wiz Validation Plugins Javascript library version --%>
