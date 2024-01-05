@@ -59,3 +59,6 @@ github-repo
 .extracted-class-dependencies
 /.extracted-class-dependencies/
 
+.extracted-source-dependencies
+/.extracted-source-dependencies/
+
