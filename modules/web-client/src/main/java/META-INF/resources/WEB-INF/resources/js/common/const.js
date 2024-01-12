@@ -155,4 +155,6 @@ var APP_INCLUDES = [
 	, MOD_FILTERS
 	, MOD_DIRECTIVES
 	, MOD_ANIMATIONS
-].concat(APP_ADDITIONAL_MODULES || []);
+].concat(typeof APP_ADDITIONAL_MODULES !== 'undefined'
+	&& Object.prototype.toString.call(APP_ADDITIONAL_MODULES) === '[object Array]'
+	? APP_ADDITIONAL_MODULES || [] : []);
