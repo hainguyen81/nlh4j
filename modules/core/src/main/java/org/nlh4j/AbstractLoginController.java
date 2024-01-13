@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Login controller
@@ -28,6 +29,7 @@ import lombok.Getter;
  * @author Hai Nguyen (hainguyenjc@gmail.com)
  *
  */
+@Slf4j
 @RestController
 @RequestMapping(value = "/login")
 public abstract class AbstractLoginController extends AbstractController {
@@ -75,14 +77,26 @@ public abstract class AbstractLoginController extends AbstractController {
 	    // check for expired or used by another
 	    boolean expired = RequestUtils.getBooleanParameter("expired");
 	    if (BooleanUtils.isNotTrue(expired)) {
+	    	// detect from RequestContext
 		    if (super.getRequest() != null) {
-			    ae = RequestUtils.getRequestAttribute(
-			    		super.getRequest(), WebAttributes.AUTHENTICATION_EXCEPTION, AuthenticationException.class);
+		    	try {
+				    ae = RequestUtils.getRequestAttribute(
+				    		super.getRequest(), WebAttributes.AUTHENTICATION_EXCEPTION, AuthenticationException.class);
+		    	} catch (Exception e) {
+		    		log.warn("Could not detect authentication exception from RequestContext: {}. Maybe just logging-out.", e.getMessage());
+		    		ae = null;
+		    	}
 		    }
+		    // detect from SessionContext
 		    if (super.getSession() != null && ae == null) {
-		        ae = BeanUtils.safeType(
-		                SessionUtils.getSessionValue(WebAttributes.AUTHENTICATION_EXCEPTION),
-		                AuthenticationException.class);
+		    	try {
+			        ae = BeanUtils.safeType(
+			                SessionUtils.getSessionValue(WebAttributes.AUTHENTICATION_EXCEPTION),
+			                AuthenticationException.class);
+		    	} catch (Exception e) {
+		    		log.warn("Could not detect authentication exception from SessionContext: {}. Maybe just logging-out.", e.getMessage());
+		    		ae = null;
+		    	}
 		    }
 
 		    // as expired or used by another
